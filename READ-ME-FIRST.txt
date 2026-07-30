@@ -1,122 +1,85 @@
-PORTFOLIO IMPORT — everything, one upload
-=========================================
+EVERYTHING OUTSTANDING SINCE YOUR LAST UPLOAD
+=============================================
+27 files. One upload. Nothing else is pending after this.
 
-Unzip, then drag ALL of these into GitHub at once:
-https://github.com/belleofthebot/portfolio → Add file → Upload files
-(GitHub keeps folder structure when you drag a folder in.)
+HOW
+  1. https://github.com/belleofthebot/portfolio → Add file → Upload files
+  2. Drag in all EIGHT top-level items below at once — the four folders and the
+     four loose files. GitHub keeps folder structure when you drag a folder,
+     and uploading never deletes anything that is already there.
+  3. Commit message: "Fonts, Bookspot hero, Passage 2026"
+  4. Wait about a minute for Vercel.
 
-  fonts/                     NEW     3 woff2 files
-  drive-the-505/             NEW     the app
-  proto/                     NEW     both prototypes
-  assets/                    UPDATE  adds app/logo-white.png and the passage/ folder
-  styles.css                 UPDATE  new case-study styles appended at the end
-  index.html                 UPDATE
-  work-bookspot.html         UPDATE
-  work-studio.html           UPDATE
-  work-passage.html          NEW
-  bookspot-preview.jpg       UPDATE  recropped
-  drive-the-505-preview.jpg  NEW
-  passage-preview.jpg        NEW
-  drive-the-505.zip          UPDATE  regenerated to match the folder
+WHAT TO DRAG
 
-Commit message: "Prototypes, Passage, Drive the 505, fonts"
-Vercel redeploys itself in about a minute. Then check:
+  fonts/               3 files   ← the one that changes how the whole site looks
+  proto/               2 files
+  assets/              18 files  (assets/passage/ 3, assets/passage26/ 15)
+  index.html
+  work-bookspot.html
+  work-passage.html
+  passage-preview.jpg
 
-  /                          three cards in "for learning and fun"
-  /work-bookspot.html        the prototype should be running in the hero
-  /work-passage.html         the new case study
-  /work-studio.html          the enriched case study
-  /drive-the-505/            tap "Choosing a Car"
-  /proto/bookspot-app.html   the Bookspot prototype on its own
-  /proto/studiokeeper.html   the dashboard
+WHY EACH ONE IS HERE
 
---------------------------------------------------------------------
-FIXES
+  fonts/
+    Never landed in the last upload. /fonts/... still 404s, so the site is
+    rendering in a system fallback instead of Space Grotesk and IBM Plex Mono.
+    Highest-value item in this folder by a distance.
 
-1. fonts/ — styles.css loads three woff2 files from fonts/, but in the repo they
-   sat loose at the root, so every one 404'd in production and the live site
-   rendered in a system fallback font. The most visible fix on this list.
+  work-bookspot.html
+    Also never landed. This is the version whose hero is the running Bookspot
+    prototype instead of a screenshot, with the "jump to the prototype" button
+    removed. It is also 23 KB instead of 201 KB, because the old hero was a
+    base64 image inlined in the HTML.
 
-2. drive-the-505/ — work-drive-505.html linked to drive-the-505/index.html,
-   which did not exist; only the zip was in the repo. The app runs now.
+  proto/bookspot-app.html
+    Re-uploading to be safe. It gained ?embed=1 support, which is what lets the
+    hero above run it without its own header and screen-jump chips. If the copy
+    already live has that, this changes nothing.
 
-3. drive-the-505-preview.jpg — index.html pointed at it and it did not exist,
-   so that card showed a broken image.
+  proto/passage-app.html
+    New. Your Passage redesign, wired: all fifteen screens, the full flow from
+    your handoff, the floating tab bar, and honest messages on the six things
+    the handoff lists as not yet designed.
 
-4. Both card previews recomposed. They were 980x660 images squeezed into a
-   467x210 well by object-fit:cover, which centred the crop and cut the phones
-   through the middle of their content. Now cropped to the card's own aspect
-   ratio with the ivory margin trimmed, bleeding off the bottom on purpose.
+  assets/passage/       bg3.jpg, bg4.jpg, valley.png — the three paintings the
+                        redesign uses, resized for the web.
+  assets/passage26/     the fifteen screen captures for the case study gallery.
 
-5. assets/app/logo-white.png — the Bookspot logo had a cream ground baked into
-   the JPG, showing as a pale square on the sage splash. Knocked out.
+  work-passage.html     The case study rewritten around the 2026 redesign: the
+                        prototype in the hero, a "the design · 2026" section
+                        with the palette and type, and the fifteen-screen
+                        gallery.
 
-PROTOTYPES — ports of your files, not reconstructions
+  index.html            Passage card copy now mentions the redesign.
+  passage-preview.jpg   Card image rebuilt from the 2026 screens.
 
-6. proto/bookspot-app.html — your 2026 Claude Design prototype in plain HTML.
-   Fifteen London spots, splash, city picker, four-step tour, map and list,
-   genre chips, spot detail with save/unsave, walking directions, the stamp
-   with running progress, the shelf, the full filter with a live count, More
-   and About. State carries through the whole session.
+CHECK AFTERWARDS
 
-7. proto/studiokeeper.html — your Desert Palette dashboard, ported and renamed
-   StudioKeeper. All seven tabs, four time windows, the three-ways-in add flow,
-   aging tasks, orders that open for line items, per-type product filtering,
-   restock radar, quarterly filings. SKUs DP- to SK-; gallery and wholesale
-   venue names scrubbed, per your own rule about client data. Replaces the
-   version I had built from the case study — yours was better.
+  /fonts/space-grotesk-latin-400-normal.woff2
+      should download a file, not show "The page could not be found"
+  /work-bookspot.html          the phone in the hero should be tappable
+  /work-passage.html           same, and the gallery should show 15 screens
+  /proto/passage-app.html      the prototype on its own
 
-   Both had to be ported because .dc.html needs support.js plus the
-   _ds/belleofthebot-design-system-... bundle. These need nothing.
+IF fonts/ FAILS AGAIN
 
-CASE STUDIES
+  The three woff2 files are already live at the repo root — that is where they
+  have always been. So instead of uploading, you can edit styles.css on GitHub
+  and delete "fonts/" from the three url() calls on lines 8, 9 and 10:
+      url('fonts/space-grotesk-latin-400-normal.woff2')
+  becomes
+      url('space-grotesk-latin-400-normal.woff2')
+  Three deletions and the typography works. If you do that, leave the woff2
+  files at the repo root alone in any future cleanup — they become load-bearing.
 
-8. work-bookspot.html — the hero is the running prototype now, not a still of
-   the splash screen. The "jump to the clickable prototype" button is gone; the
-   copy tells people to tap it and scroll for the process. Opened on its own,
-   proto/bookspot-app.html still has its own header and screen-jump chips; the
-   embedded copy hides them via ?embed=1.
+STILL NOT DONE, and not in this folder
 
-9. work-studio.html matches your newer version: the six-source chaos panel
-   funnelling into "one tired artist, reconciling by hand", the
-   what-the-studio-keeps-from-$100 comparison, the five channel tiles, the ten
-   questions grid (solid = answered today, dashed = roadmap), and the products
-   / line items / orders data model. New CSS is appended at the END of
-   styles.css; nothing existing was touched.
-
-10. work-passage.html — NEW. The 2022 team project, scoped the way you
-    described it: your idea, your interface, every painting and illustration
-    yours; Erin, Ian and Tiffany on interviews and the presentation. It says
-    plainly that Ian owned the repo, which is why the commit history is all
-    his. Includes the device shots, the flat home screen, the caregiver
-    illustration, two painted landscapes and two painted trees. There is a new
-    card for it on the homepage, in "for learning and fun".
-
-DRIVE THE 505
-
-11. Choosing a Car is a matcher: six questions, then a ranked shortlist of three
-    from a twelve-car catalogue with fit scores, the reasons each matched your
-    answers, and what to watch for. The "What to look for" criteria table is
-    removed, as you asked.
-
-12. Reordered — the four learning modules first, the checklists last.
-
-13. Every emoji replaced with hand-drawn inline SVG, inheriting the app's gold.
-
-Every href, src and CSS url() in the repo resolves. Nothing 404s.
-
---------------------------------------------------------------------
-STILL OPEN
-
-  - "Bookspot 2026 Facelift", the annotated concept page with the four phone
-    mockups and the what-stays/what-goes panel, is the one Claude Design file
-    not ported. Nothing is broken without it.
-  - A 2026 facelift for Passage, the same way you did Bookspot. Worth doing —
-    the paintings deserve more room than the 2022 chrome gives them.
-
-OPTIONAL CLEANUP
-
-  Image folders exist twice: app/ fig/ people/ screens/ screens26/ sketches/ at
-  the repo root and again under assets/. Only the assets/ copies are used; the
-  root set is about 2 MB of dead weight. Deleting must be done in GitHub's web
-  UI — uploading cannot delete.
+  - The Bookspot 2026 Facelift annotated page (the four mockups and the
+    what-stays / what-goes panel). Nothing is broken without it.
+  - Screens 13 and 15 of Passage have no back button drawn. The tab bar gets
+    you out, so nothing traps you. Add one to the design file if you want it.
+  - The duplicate image folders at the repo root: app/ fig/ people/ screens/
+    screens26/ sketches/ exist there and again under assets/. Only assets/ is
+    used; about 2 MB of dead weight. Deleting has to be done in GitHub's web UI.

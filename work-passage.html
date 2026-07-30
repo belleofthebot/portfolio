@@ -10,6 +10,16 @@
 <meta property="og:title" content="Passage: caretakers need care too — Elizabeth Beier">
 <meta property="og:description" content="An app for people caring for someone with a terminal illness — tracking the care, and the caregiver.">
 <link rel="stylesheet" href="styles.css">
+<style>
+.pg-hero{display:grid;grid-template-columns:1fr 408px;gap:var(--space-5);align-items:center;margin:var(--space-4) 0 var(--space-5)}
+.pg-proto{width:100%;max-width:408px;aspect-ratio:408/862;border:0;display:block;margin:0 auto;background:var(--ground);color-scheme:dark;border-radius:var(--radius-card)}
+.pg-screens{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px 12px}
+.pg-screens img{width:100%;aspect-ratio:390/844;object-fit:cover;border-radius:16px;border:1px solid var(--line);display:block;margin-bottom:7px}
+.pg-swatch{display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:var(--size-mono);color:var(--text-2);padding:5px 0}
+.pg-swatch i{width:16px;height:16px;border-radius:4px;flex:0 0 auto;border:1px solid var(--line-soft)}
+@media(max-width:900px){.pg-hero{grid-template-columns:1fr}.pg-screens{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){.pg-screens{grid-template-columns:repeat(2,1fr)}}
+</style>
 </head>
 <body class="">
 <a class="skip" href="#main">Skip to content</a>
@@ -31,10 +41,17 @@
   <div><span class="n">3</span><span class="l">halves the app is built from: tracking, care, and you</span></div>
   <div><span class="n">4</span><span class="l">of us, and the idea and the interface were mine</span></div>
   <div><span class="n">100%</span><span class="l">of the illustration painted by hand, by me</span></div>
+  <div><span class="n">15</span><span class="l">screens in the 2026 redesign, all clickable</span></div>
 </div>
 
-<img src="assets/passage/shot-hero.png" alt="Passage on a phone: the self-care screen, with guided meditations, daily self-care steps and proactive self-care ideas over painted landscape photography." style="display:block;width:100%;height:auto;border-radius:12px;margin:var(--space-4) 0 var(--space-2)">
-<span class="meta" style="display:block;margin-bottom:var(--space-4)">the For You screen — the half of the app that is about the caregiver, not the patient</span>
+<div class="pg-hero">
+<div>
+<p style="font-size:1rem;line-height:1.65;color:var(--text-2);margin:0 0 var(--space-3)">That is the 2026 redesign, running. Not a picture of it: set up the profiles, give Lucia her morning dose, open the journal, start the meditation. Fifteen screens, wired into the flow they were drawn for.</p>
+<p style="font-size:.95rem;line-height:1.65;color:var(--text-3);margin:0">The 2022 original, the research behind it, and everything that changed are below.</p>
+</div>
+<div><iframe class="pg-proto" src="proto/passage-app.html?embed=1" title="Passage 2026 interactive prototype" loading="lazy"></iframe>
+<span class="meta" style="display:block;text-align:center;margin-top:10px">passage, 2026 · tap it</span></div>
+</div>
 
 <div class="reading well">
 
@@ -81,8 +98,14 @@
 <span class="meta" style="display:block;margin-bottom:var(--space-4)">home, journal and community, and the self-care shortcuts</span>
 
 <div class="reading well">
-<div class="block"><p class="h">what I would change now</p>
-<p>Four years on, the concept holds and the chrome dates it. The screens are dense where they could breathe, the type does a lot of shouting in all-caps, and the painted backgrounds sit behind cards instead of being given room. The same treatment I gave <a href="work-bookspot.html">Bookspot</a> — keep the soul, modernise the surface — is the obvious next thing to do here, and the illustrations are the part worth building around rather than decorating with.</p></div>
+<div class="block"><p class="h">what changed in 2026</p>
+<p>Four years on the concept held and the chrome dated it. The screens were dense, the headings shouted in all caps, and the paintings sat behind cards instead of being given room. So I redrew it: same app, same three halves, same paintings, rebuilt around them.</p>
+<ul>
+<li><strong>Sentence case serif headings.</strong> Cormorant Garamond, no shouting. All caps survives only in the small tracked eyebrows and buttons, where it is doing a job.</li>
+<li><strong>The paintings run full bleed.</strong> Controls float above them on blurred pills instead of boxing them into thumbnails. The valley sits under the home screen as a horizon you scroll toward.</li>
+<li><strong>One accent means one thing.</strong> Deep forest green appears only on what you can act on: a primary button, the active tab, a toggle that is on. On the night screens it flips to pale meadow so it stays legible over the art. Nothing decorative is allowed to use it.</li>
+<li><strong>Onboarding that asks about you too.</strong> Three steps: who you care for, who you are, what their day looks like. Step two asks what restores you, because the app cannot suggest self care it has never asked about.</li>
+</ul></div>
 
 <div class="block"><p class="h">what it taught me</p>
 <ul>
@@ -90,6 +113,51 @@
 <li><strong>Give the neglected job equal billing.</strong> Self-care would have been a settings screen if we had followed the logistics. Putting it in the tab bar is the whole argument of the product.</li>
 <li><strong>Being the one with the idea is not the same as being the one who is right.</strong> The interviews my teammates ran moved things I was attached to, and the app got better for it.</li>
 </ul></div>
+</div>
+
+
+<span class="kicker" style="display:block;margin-top:var(--space-5)">the design · 2026</span>
+<h2 style="font-size:var(--size-h2);font-weight:500;margin:0 0 var(--space-3);max-width:32ch">Meadow mist, and one green that means act</h2>
+<p style="max-width:62ch;line-height:1.65;color:var(--text-2);margin:0 0 var(--space-4)">The palette comes out of the paintings instead of sitting next to them: soft meadow grounds, forest green for anything you can act on, pale meadow when the screen goes dark so the action still reads over the art. Cormorant Garamond carries the headings in sentence case, Raleway does the small tracked labels, Outfit does the interface.</p>
+
+<div class="grid3" style="margin-bottom:var(--space-4)">
+  <div class="card"><span class="kicker">grounds</span>
+    <div class="pg-swatch"><i style="background:#F0F3E9"></i>#F0F3E9 · meadow mist, the screen</div>
+    <div class="pg-swatch"><i style="background:#FBFCF6"></i>#FBFCF6 · card surface</div>
+    <div class="pg-swatch"><i style="background:#0F1E19"></i>#0F1E19 · night ground</div>
+  </div>
+  <div class="card"><span class="kicker">action, and only action</span>
+    <div class="pg-swatch"><i style="background:#2A5F4B"></i>#2A5F4B · forest green</div>
+    <div class="pg-swatch"><i style="background:#DAE8CE"></i>#DAE8CE · pale meadow, on dark</div>
+    <p style="margin:8px 0 0;font-size:var(--size-small);line-height:1.55;color:var(--text-3)">Nothing decorative uses either one. If it is green, you can press it.</p>
+  </div>
+  <div class="card"><span class="kicker">type</span>
+    <div class="pg-swatch">Cormorant Garamond · headings, sentence case</div>
+    <div class="pg-swatch">Raleway 700 · small tracked labels</div>
+    <div class="pg-swatch">Outfit · interface and body</div>
+    <p style="margin:8px 0 0;font-size:var(--size-small);line-height:1.55;color:var(--text-3)">All caps only where it is a label, never where it is a sentence.</p>
+  </div>
+</div>
+
+<div class="protolink"><div><span class="kicker">clickable prototype</span><p class="pl-t">Passage, 2026</p><p class="pl-n">All fifteen screens, wired: onboarding, Lucia&rsquo;s care, your own tab, the journal, the meditation player and the Circle.</p></div><a class="btn" href="proto/passage-app.html" target="_blank" rel="noopener">Open it &rarr;</a></div>
+
+<span class="kicker" style="margin-top:var(--space-5);display:block">all fifteen screens</span>
+<div class="pg-screens" style="margin-top:var(--space-2)">
+  <div><img src="assets/passage26/01-welcome.jpg" alt="Passage 2026, welcome screen" loading="lazy"><span class="meta">welcome · the forest path, full bleed</span></div>
+  <div><img src="assets/passage26/02-build-profiles.jpg" alt="Passage 2026, step 1 screen" loading="lazy"><span class="meta">step 1 · who you care for</span></div>
+  <div><img src="assets/passage26/03-about-you.jpg" alt="Passage 2026, step 2 screen" loading="lazy"><span class="meta">step 2 · about you</span></div>
+  <div><img src="assets/passage26/04-lucias-routine.jpg" alt="Passage 2026, step 3 screen" loading="lazy"><span class="meta">step 3 · her routine</span></div>
+  <div><img src="assets/passage26/05-home.jpg" alt="Passage 2026, home screen" loading="lazy"><span class="meta">home · affirmation, then what is next</span></div>
+  <div><img src="assets/passage26/06-lucia.jpg" alt="Passage 2026, lucia screen" loading="lazy"><span class="meta">lucia · today, and what is coming</span></div>
+  <div><img src="assets/passage26/07-medicines.jpg" alt="Passage 2026, medicines screen" loading="lazy"><span class="meta">medicines · doses grouped by time</span></div>
+  <div><img src="assets/passage26/08-planning-ahead.jpg" alt="Passage 2026, planning ahead screen" loading="lazy"><span class="meta">planning ahead · at your own pace</span></div>
+  <div><img src="assets/passage26/09-for-me.jpg" alt="Passage 2026, for me screen" loading="lazy"><span class="meta">for me · the caregiver tab</span></div>
+  <div><img src="assets/passage26/10-meditation-player.jpg" alt="Passage 2026, meditation screen" loading="lazy"><span class="meta">meditation · the aurora, night mode</span></div>
+  <div><img src="assets/passage26/11-journal.jpg" alt="Passage 2026, journal screen" loading="lazy"><span class="meta">journal · a prompt, not a blank page</span></div>
+  <div><img src="assets/passage26/12-new-entry.jpg" alt="Passage 2026, writing screen" loading="lazy"><span class="meta">writing · autosaves</span></div>
+  <div><img src="assets/passage26/13-circle-community.jpg" alt="Passage 2026, circle screen" loading="lazy"><span class="meta">circle · a moderated community</span></div>
+  <div><img src="assets/passage26/14-article.jpg" alt="Passage 2026, article screen" loading="lazy"><span class="meta">article · the library</span></div>
+  <div><img src="assets/passage26/15-profile.jpg" alt="Passage 2026, profile screen" loading="lazy"><span class="meta">profile · care facts and nudges</span></div>
 </div>
 
 <div class="protolink"><div><span class="kicker">the original</span><p class="pl-t">Passage, 2022</p><p class="pl-n">The site we launched it with — my paintings, parallaxed, and the pitch as we gave it.</p></div><a class="btn" href="https://github.com/capturetheworld/passage" target="_blank" rel="noopener">See the repo →</a></div>
