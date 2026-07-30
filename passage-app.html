@@ -1,0 +1,857 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Passage 2026 — interactive prototype</title>
+<meta name="description" content="Passage, modernized: fifteen screens wired into the real flow. Onboarding, Lucia's care, the caregiver's own space, the journal, the meditation player and the Circle.">
+<style>
+@font-face{font-family:'Space Grotesk';src:url('../fonts/space-grotesk-latin-400-normal.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Space Grotesk';src:url('../fonts/space-grotesk-latin-500-normal.woff2') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'IBM Plex Mono';src:url('../fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2');font-weight:400;font-display:swap}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Raleway:wght@500;600;700&family=Outfit:wght@300;400;500;600&display=swap">
+<style>
+:root{
+  --ground:#17121C; --panel:#241D2B; --line:#423748;
+  --text:#F4F2EE; --text-2:#BBB2C0; --text-3:#8B8494; --rose:#DFA192; --rose-tint:#3A2129;
+  --sans:'Space Grotesk',system-ui,-apple-system,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  --font-display:'Cormorant Garamond',Georgia,serif;
+  --font-serif:'Cormorant Garamond',Georgia,serif;
+  --font-label:'Raleway','Helvetica Neue',Arial,sans-serif;
+  --font-ui:'Outfit','Helvetica Neue',Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--ground);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;padding:26px 18px 48px}
+a{color:var(--rose)}
+header.page{max-width:900px;margin:0 auto 20px}
+.backlink{font-family:var(--mono);font-size:.78rem;color:var(--text-3);text-decoration:none;display:inline-block;margin-bottom:16px}
+.backlink:hover{color:var(--rose)}
+.kicker{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);display:block;margin-bottom:8px}
+h1{font-size:1.5rem;font-weight:500;line-height:1.2;margin:0 0 8px}
+.sub{color:var(--text-2);font-size:.93rem;line-height:1.6;margin:0;max-width:62ch}
+.stage{display:flex;flex-direction:column;align-items:center;gap:16px}
+.device{position:relative;width:408px;max-width:100%;aspect-ratio:408/862;background:#F0F3E9;border:9px solid #2B2333;border-radius:52px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.55);font-family:var(--font-ui);color:#26332B;user-select:none}
+.stack{position:absolute;top:0;left:0;width:390px;height:844px;transform-origin:top left}
+.scr{position:absolute;inset:0;overflow:hidden}
+.scr[hidden]{display:none}
+[data-nav],[data-hint]{cursor:pointer;position:relative}
+[data-nav]::after,[data-hint]::after{content:'';position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:34px;min-height:100%}
+.device::after{content:'';position:absolute;left:14px;right:14px;bottom:18px;height:78px;border-radius:999px;
+  box-shadow:0 0 0 2px rgba(42,95,75,.5);opacity:0;pointer-events:none;transition:opacity .4s;z-index:60}
+.device.nudge::after{opacity:1;animation:pgbreathe 2.6s ease-in-out infinite}
+@keyframes pgbreathe{0%,100%{box-shadow:0 0 0 2px rgba(42,95,75,.16)}50%{box-shadow:0 0 0 3px rgba(42,95,75,.6)}}
+.pgtip{position:absolute;left:50%;transform:translateX(-50%);bottom:104px;background:rgba(15,30,25,.92);color:#F2F5EC;
+  font-family:var(--font-label);font-size:9.5px;font-weight:700;letter-spacing:.16em;padding:7px 14px;border-radius:999px;
+  opacity:0;pointer-events:none;transition:opacity .4s;z-index:61;white-space:nowrap}
+.device.nudge .pgtip{opacity:1}
+@media(prefers-reduced-motion:reduce){.device.nudge::after{animation:none;box-shadow:0 0 0 2px rgba(42,95,75,.5)}}
+.toast{position:absolute;left:50%;bottom:22px;transform:translate(-50%,14px);background:rgba(15,30,25,.95);color:#F2F5EC;border:1px solid rgba(242,245,236,.18);font-family:var(--mono);font-size:.7rem;line-height:1.5;padding:9px 13px;border-radius:9px;max-width:300px;text-align:center;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:99}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.bar{display:flex;gap:7px;align-items:center;flex-wrap:wrap;justify-content:center;max-width:680px}
+.btn{font-family:var(--mono);font-size:.72rem;color:var(--text-2);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer;transition:border-color .15s,color .15s}
+.btn:hover{border-color:var(--rose);color:var(--text)}
+.btn.on{background:var(--rose-tint);border-color:var(--rose);color:var(--rose)}
+.hint{font-family:var(--mono);font-size:.72rem;color:var(--text-3);line-height:1.6;text-align:center;max-width:64ch}
+body.embed{padding:0;background:var(--ground)}
+html:has(body.embed){background:var(--ground)}
+body.embed header.page,body.embed #jumps,body.embed .hint{display:none}
+body.embed .stage{gap:0}
+body.embed .device{box-shadow:0 18px 44px rgba(0,0,0,.45)}
+@media(max-width:460px){ body{padding:18px 10px 30px} h1{font-size:1.25rem} }
+</style>
+</head>
+<body>
+
+<header class="page">
+  <a class="backlink" href="../work-passage.html">← back to the case study</a>
+  <span class="kicker">interactive prototype · passage, 2026</span>
+  <h1>Passage, modernized</h1>
+  <p class="sub">Fifteen screens wired into the flow they were designed for. Set up the profiles from the welcome screen, or jump straight in: Lucia&rsquo;s care on one tab, your own on another, the journal on a third. Anything that was not designed says so rather than pretending.</p>
+</header>
+
+<div class="stage">
+  <div class="device" id="device">
+    <div class="stack" id="stack">
+<div class="scr" data-s="01" hidden><div data-screen-label="01 Welcome" style="width: 390px; height: 844px; overflow: hidden; position: relative; background: #0F1E19; box-shadow: 0 18px 48px rgba(31,46,36,0.3); outline: 1px solid rgba(31,46,36,0.1)">
+        <img src="../assets/passage/bg3.jpg" alt="Forest path painting" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%">
+        <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13,26,21,0.35) 0%, rgba(13,26,21,0) 30%, rgba(13,26,21,0) 45%, rgba(13,26,21,0.82) 100%)"></div>
+        <div style="position: relative; display: flex; justify-content: space-between; align-items: center; padding: 16px 28px 0; font-size: 14px; font-weight: 500; color: #F2F5EC">
+          <span>9:41</span>
+          <svg width="46" height="13" viewBox="0 0 46 13" fill="none"><rect x="0" y="6" width="3" height="7" rx="1" fill="#F2F5EC"></rect><rect x="5" y="4" width="3" height="9" rx="1" fill="#F2F5EC"></rect><rect x="10" y="2" width="3" height="11" rx="1" fill="#F2F5EC"></rect><rect x="15" y="0" width="3" height="13" rx="1" fill="#F2F5EC" opacity="0.4"></rect><rect x="24" y="1" width="19" height="11" rx="3" stroke="#F2F5EC" opacity="0.6"></rect><rect x="26" y="3" width="12" height="7" rx="1.5" fill="#F2F5EC"></rect><rect x="44" y="4.5" width="2" height="4" rx="1" fill="#F2F5EC" opacity="0.6"></rect></svg>
+        </div>
+        <div style="position: absolute; left: 32px; right: 32px; bottom: 44px; display: flex; flex-direction: column; gap: 20px">
+          <span style="font-family: var(--font-display); font-style: italic; font-size: 26px; font-weight: 500; color: #DAE8CE">passage</span>
+          <h2 style="font-family: var(--font-display); font-style: italic; font-size: 42px; font-weight: 500; line-height: 1.06; color: #F5F8F0; margin: 0; text-wrap: pretty">Caretakers need care too.</h2>
+          <p style="margin: 0; font-size: 15px; line-height: 1.6; color: rgba(242,245,236,0.8)">Gentle structure for the hardest season of love. Care for Lucia, and for yourself.</p>
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 6px">
+            <div style="height: 54px; border-radius: 12px; background: #DAE8CE; color: #14261E; display: flex; align-items: center; justify-content: center; font-family: var(--font-label); font-size: 12px; font-weight: 700; letter-spacing: 0.16em; box-shadow: 0 8px 28px rgba(0,0,0,0.35)" data-nav="02">BEGIN</div>
+            <div style="height: 48px; display: flex; align-items: center; justify-content: center; font-size: 14px; color: rgba(242,245,236,0.75)" data-hint="Sign in was not part of this redesign.">I already have an account</div>
+          </div>
+        </div>
+      </div></div>
+<div class="scr" data-s="02" hidden><div data-screen-label="02 Build profiles" style="width: 390px; height: 844px; overflow: hidden; position: relative; background: #F0F3E9; box-shadow: 0 18px 48px rgba(31,46,36,0.3); outline: 1px solid rgba(31,46,36,0.1)">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 28px 0; font-size: 14px; font-weight: 500; color: #26332B">
+          <span>9:41</span>
+          <svg width="46" height="13" viewBox="0 0 46 13" fill="none"><rect x="0" y="6" width="3" height="7" rx="1" fill="#26332B"></rect><rect x="5" y="4" width="3" height="9" rx="1" fill="#26332B"></rect><rect x="10" y="2" width="3" height="11" rx="1" fill="#26332B"></rect><rect x="15" y="0" width="3" height="13" rx="1" fill="#26332B" opacity="0.3"></rect><rect x="24" y="1" width="19" height="11" rx="3" stroke="#26332B" opacity="0.5"></rect><rect x="26" y="3" width="12" height="7" rx="1.5" fill="#26332B"></rect><rect x="44" y="4.5" width="2" height="4" rx="1" fill="#26332B" opacity="0.5"></rect></svg>
+        </div>
+        <div style="padding: 28px 28px 0; display: flex; flex-direction: column; gap: 8px">
+          <div style="display: flex; margin-bottom: 14px"><div style="width: 40px; height: 40px; border-radius: 999px; border: 1px solid rgba(38,51,43,0.14); background: #FBFCF6; display: flex; align-items: center; justify-content: center"><svg width="16" height="14" viewBox="0 0 16 14" fill="none"><path d="M7 1 L1 7 L7 13 M1.5 7 H15" stroke="#26332B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></div>
+          <div style="display: flex; gap: 6px; margin-bottom: 12px">
+            <div style="height: 3px; flex: 1; border-radius: 2px; background: rgba(42,95,75,0.55)"></div>
+            <div style="height: 3px; flex: 1; border-radius: 2px; background: rgba(38,51,43,0.12)"></div>
+            <div style="height: 3px; flex: 1; border-radius: 2px; background: rgba(38,51,43,0.12)"></div>
+          </div>
+          <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: rgba(38,51,43,0.6)">STEP 1 OF 3 · WHO YOU CARE FOR</span>
+          <h2 style="font-family: var(--font-display); font-size: 34px; font-weight: 600; line-height: 1.1; color: #26332B; margin: 6px 0 4px">Tell us about Lucia</h2>
+          <p style="margin: 0 0 20px; font-size: 14px; line-height: 1.6; color: rgba(38,51,43,0.6)">Passage shapes each day around the person you care for. Share what feels right, you can change anything later.</p>
+        </div>
+        <div style="padding: 0 28px; display: flex; flex-direction: column; gap: 14px">
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.16em; color: rgba(38,51,43,0.6)">THEIR NAME</span>
+            <div style="height: 52px; border-radius: 10px; border: 1px solid rgba(38,51,43,0.14); background: #FBFCF6; display: flex; align-items: center; padding: 0 16px; font-size: 15px; color: #26332B">Lucia Alvarez</div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.16em; color: rgba(38,51,43,0.6)">YOUR RELATIONSHIP</span>
+            <div style="height: 52px; border-radius: 10px; border: 1px solid rgba(38,51,43,0.14); background: #FBFCF6; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; font-size: 15px; color: #26332B"><span>Grandmother</span><svg width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1.5 L6 6.5 L11 1.5" stroke="#26332B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path></svg></div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.16em; color: rgba(38,51,43,0.6)">PRIMARY PHYSICIAN</span>
+            <div style="height: 52px; border-radius: 10px; border: 1px solid rgba(38,51,43,0.14); background: #FBFCF6; display: flex; align-items: center; padding: 0 16px; font-size: 15px; color: #26332B">Dr. Sami Whitaker</div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.16em; color: rgba(38,51,43,0.6)">WHAT CARE LOOKS LIKE NOW</span>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px">
+              <span style="padding: 10px 16px; border-radius: 999px; border: 1px solid #2A5F4B; background: rgba(42,95,75,0.08); color: #2A5F4B; font-size: 13px; font-weight: 500">Daily medicines</span>
+              <span style="padding: 10px 16px; border-radius: 999px; border: 1px solid rgba(38,51,43,0.14); color: #26332B; font-size: 13px">Meals</span>
+              <span style="padding: 10px 16px; border-radius: 999px; border: 1px solid #2A5F4B; background: rgba(42,95,75,0.08); color: #2A5F4B; font-size: 13px; font-weight: 500">Mobility help</span>
+              <span style="padding: 10px 16px; border-radius: 999px; border: 1px solid rgba(38,51,43,0.14); color: #26332B; font-size: 13px">Hospice</span>
+              <span style="padding: 10px 16px; border-radius: 999px; border: 1px solid rgba(38,51,43,0.14); color: #26332B; font-size: 13px">Memory care</span>
+            </div>
+          </div>
+        </div>
+        <div style="position: absolute; left: 28px; right: 28px; bottom: 40px; display: flex; flex-direction: column; gap: 8px">
+          <div style="height: 54px; border-radius: 12px; background: #2A5F4B; color: #F2F5EC; display: flex; align-items: center; justify-content: center; font-family: var(--font-label); font-size: 12px; font-weight: 700; letter-spacing: 0.16em; box-shadow: 0 6px 20px rgba(31,46,36,0.18)" data-nav="03">CONTINUE</div>
+          <div style="height: 44px; display: flex; align-items: center; justify-content: center; font-size: 14px; color: rgba(38,51,43,0.6)" data-nav="05">Skip for now</div>
+        </div>
+      </div></div>
+<div class="scr" data-s="03" hidden><div data-screen-label="03 About you" style="width: 390px; height: 844px; overflow: hidden; position: relative; background: #F0F3E9; box-shadow: 0 18px 48px rgba(31,46,36,0.3); outline: 1px solid rgba(31,46,36,0.1)">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 28px 0; font-size: 14px; font-weight: 500; color: #26332B">
+          <span>9:41</span>
+          <svg width="46" height="13" viewBox="0 0 46 13" fill="none"><rect x="0" y="6" width="3" height="7" rx="1" fill="#26332B"></rect><rect x="5" y="4" width="3" height="9" rx="1" fill="#26332B"></rect><rect x="10" y="2" width="3" height="11" rx="1" fill="#26332B"></rect><rect x="15" y="0" width="3" height="13" rx="1" fill="#26332B" opacity="0.3"></rect><rect x="24" y="1" width="19" height="11" rx="3" stroke="#26332B" opacity="0.5"></rect><rect x="26" y="3" width="12" height="7" rx="1.5" fill="#26332B"></rect><rect x="44" y="4.5" width="2" height="4" rx="1" fill="#26332B" opacity="0.5"></rect></svg>
+        </div>
+        <div style="padding: 28px 28px 0; display: flex; flex-direction: column; gap: 8px">
+          <div style="display: flex; margin-bottom: 14px"><div style="width: 40px; height: 40px; border-radius: 999px; border: 1px solid rgba(38,51,43,0.14); background: #FBFCF6; display: flex; align-items: center; justify-content: center"><svg width="16" height="14" viewBox="0 0 16 14" fill="none"><path d="M7 1 L1 7 L7 13 M1.5 7 H15" stroke="#26332B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></div>
+          <div style="display: flex; gap: 6px; margin-bottom: 12px"><div style="height: 3px; flex: 1; border-radius: 2px; background: rgba(42,95,75,0.55)"></div><div style="height: 3px; flex: 1; border-radius: 2px; background: rgba(42,95,75,0.55)"></div><div style="height: 3px; flex: 1; border-radius: 2px; background: rgba(38,51,43,0.12)"></div></div>
+          <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: rgba(38,51,43,0.6)">STEP 2 OF 3 · ABOUT YOU</span>
+          <h2 style="font-family: var(--font-display); font-size: 34px; font-weight: 600; line-height: 1.1; color: #26332B; margin: 6px 0 4px">And a little about you</h2>
+          <p style="margin: 0 0 20px; font-size: 14px; line-height: 1.6; color: rgba(38,51,43,0.6)">Passage cares for the caretaker too. This shapes the quieter half of the app, the part that is only yours.</p>
+        </div>
+        <div style="padding: 0 28px; display: flex; flex-direction: column; gap: 14px">
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.16em; color: rgba(38,51,43,0.6)">YOUR NAME</span>
+            <div style="height: 52px; border-radius: 10px; border: 1px solid rgba(38,51,43,0.14); background: #FBFCF6; display: flex; align-items: center; padding: 0 16px; font-size: 15px; color: #26332B">Selena Kyle</div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.16em; color: rgba(38,51,43,0.6)">LUCIA IS YOUR</span>
+            <div style="height: 52px; border-radius: 10px; border: 1px solid rgba(38,51,43,0.14); background: #FBFCF6; display: flex; align-items: center; padding: 0 16px; font-size: 15px; color: #26332B; justify-content: space-between"><span>Grandmother</span><svg width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1.5 L6 6.5 L11 1.5" stroke="#26332B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path></svg></div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.16em; color: rgba(38,51,43,0.6)">HOW CLOSE IS YOUR CARE</span>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px">
+              <span style="padding: 10px 16px; border-radius: 999px; border: 1px solid #2A5F4B; background: rgba(42,95,75,0.08); color: #2A5F4B; font-size: 13px; font-weight: 500">I live with her</span>
+              <span style="padding: 10px 16px; border-radius: 999px; border: 1px solid rgba(38,51,43,0.14); color: #26332B; font-size: 13px">Daily visits</span>
+              <span style="padding: 10px 16px; border-radius: 999px; border: 1px solid rgba(38,51,43,0.14); color: #26332B; font-size: 13px">A few days a week</span>
+              <span style="padding: 10px 16px; border-radius: 999px; border: 1px solid rgba(38,51,43,0.14); color: #26332B; font-size: 13px">Sharing care with family</span>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.16em; color: rgba(38,51,43,0.6)">WHAT RESTORES YOU</span>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px">
+              <span style="padding: 10px 16px; border-radius: 999px; border: 1px solid #2A5F4B; background: rgba(42,95,75,0.08); color: #2A5F4B; font-size: 13px; font-weight: 500">Walking</span>
+              <span style="padding: 10px 16px; border-radius: 999px; border: 1px solid #2A5F4B; background: rgba(42,95,75,0.08); color: #2A5F4B; font-size: 13px; font-weight: 500">Journaling</span>
+              <span style="padding: 10px 16px; border-radius: 999px; border: 1px solid rgba(38,51,43,0.14); color: #26332B; font-size: 13px">Cooking</span>
+              <span style="padding: 10px 16px; border-radius: 999px; border: 1px solid rgba(38,51,43,0.14); color: #26332B; font-size: 13px">Time with friends</span>
+              <span style="padding: 10px 16px; border-radius: 999px; border: 1px solid rgba(38,51,43,0.14); color: #26332B; font-size: 13px">Quiet mornings</span>
+            </div>
+          </div>
+        </div>
+        <div style="position: absolute; left: 28px; right: 28px; bottom: 40px; display: flex; flex-direction: column; gap: 8px">
+          <div style="height: 54px; border-radius: 12px; background: #2A5F4B; color: #F2F5EC; display: flex; align-items: center; justify-content: center; font-family: var(--font-label); font-size: 12px; font-weight: 700; letter-spacing: 0.16em; box-shadow: 0 6px 20px rgba(31,46,36,0.18)" data-nav="04">CONTINUE</div>
+          <div style="height: 44px; display: flex; align-items: center; justify-content: center; font-size: 14px; color: rgba(38,51,43,0.6)">Skip for now</div>
+        </div>
+      </div></div>
+<div class="scr" data-s="04" hidden><div data-screen-label="04 Lucia's routine" style="width: 390px; height: 844px; overflow: hidden; position: relative; background: #F0F3E9; box-shadow: 0 18px 48px rgba(31,46,36,0.3); outline: 1px solid rgba(31,46,36,0.1)">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 28px 0; font-size: 14px; font-weight: 500; color: #26332B">
+          <span>9:41</span>
+          <svg width="46" height="13" viewBox="0 0 46 13" fill="none"><rect x="0" y="6" width="3" height="7" rx="1" fill="#26332B"></rect><rect x="5" y="4" width="3" height="9" rx="1" fill="#26332B"></rect><rect x="10" y="2" width="3" height="11" rx="1" fill="#26332B"></rect><rect x="15" y="0" width="3" height="13" rx="1" fill="#26332B" opacity="0.3"></rect><rect x="24" y="1" width="19" height="11" rx="3" stroke="#26332B" opacity="0.5"></rect><rect x="26" y="3" width="12" height="7" rx="1.5" fill="#26332B"></rect><rect x="44" y="4.5" width="2" height="4" rx="1" fill="#26332B" opacity="0.5"></rect></svg>
+        </div>
+        <div style="padding: 28px 28px 0; display: flex; flex-direction: column; gap: 8px">
+          <div style="display: flex; margin-bottom: 14px"><div style="width: 40px; height: 40px; border-radius: 999px; border: 1px solid rgba(38,51,43,0.14); background: #FBFCF6; display: flex; align-items: center; justify-content: center"><svg width="16" height="14" viewBox="0 0 16 14" fill="none"><path d="M7 1 L1 7 L7 13 M1.5 7 H15" stroke="#26332B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></div>
+          <div style="display: flex; gap: 6px; margin-bottom: 12px"><div style="height: 3px; flex: 1; border-radius: 2px; background: rgba(42,95,75,0.55)"></div><div style="height: 3px; flex: 1; border-radius: 2px; background: rgba(42,95,75,0.55)"></div><div style="height: 3px; flex: 1; border-radius: 2px; background: rgba(42,95,75,0.55)"></div></div>
+          <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: rgba(38,51,43,0.6)">STEP 3 OF 3 · LUCIA’S ROUTINE</span>
+          <h2 style="font-family: var(--font-display); font-size: 34px; font-weight: 600; line-height: 1.1; color: #26332B; margin: 6px 0 4px">What Lucia needs each day</h2>
+          <p style="margin: 0 0 18px; font-size: 14px; line-height: 1.6; color: rgba(38,51,43,0.6)">Add her medicines and daily care. Passage turns these into gentle reminders at the right moments.</p>
+        </div>
+        <div style="padding: 0 28px; display: flex; flex-direction: column; gap: 16px">
+          <div>
+            <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.16em; color: rgba(38,51,43,0.6)">MEDICINES</span>
+            <div style="border-radius: 14px; background: #FBFCF6; border: 1px solid rgba(38,51,43,0.12); overflow: hidden; margin-top: 8px">
+              <div style="display: flex; align-items: center; justify-content: space-between; padding: 15px 18px; border-bottom: 1px solid rgba(38,51,43,0.06)">
+                <div><div style="font-size: 15px; font-weight: 500; color: #26332B">Metformin</div><div style="font-size: 12.5px; color: rgba(38,51,43,0.6)">500 mg · with food</div></div>
+                <span style="font-size: 13px; color: rgba(38,51,43,0.6)">8:00</span>
+              </div>
+              <div style="display: flex; align-items: center; justify-content: space-between; padding: 15px 18px; border-bottom: 1px solid rgba(38,51,43,0.06)">
+                <div><div style="font-size: 15px; font-weight: 500; color: #26332B">Lopressor</div><div style="font-size: 12.5px; color: rgba(38,51,43,0.6)">100 mg · with lunch</div></div>
+                <span style="font-size: 13px; color: rgba(38,51,43,0.6)">12:00</span>
+              </div>
+              <div style="display: flex; align-items: center; justify-content: space-between; padding: 15px 18px">
+                <div><div style="font-size: 15px; font-weight: 500; color: #26332B">Lexapro</div><div style="font-size: 12.5px; color: rgba(38,51,43,0.6)">10 mg</div></div>
+                <span style="font-size: 13px; color: rgba(38,51,43,0.6)">12:00</span>
+              </div>
+            </div>
+            <div style="margin-top: 8px; border: 1.5px dashed rgba(42,95,75,0.45); border-radius: 12px; padding: 13px 18px; display: flex; align-items: center; justify-content: center; gap: 8px; color: #2A5F4B; font-size: 14px; font-weight: 500" data-hint="The add-medicine form is on the not-yet-designed list."><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M7 1 V13 M1 7 H13" stroke="#2A5F4B" stroke-width="1.7" stroke-linecap="round"></path></svg>Add a medicine</div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.16em; color: rgba(38,51,43,0.6)">DAILY CARE</span>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px">
+              <span style="padding: 10px 16px; border-radius: 999px; border: 1px solid #2A5F4B; background: rgba(42,95,75,0.08); color: #2A5F4B; font-size: 13px; font-weight: 500">Breakfast, soft foods</span>
+              <span style="padding: 10px 16px; border-radius: 999px; border: 1px solid #2A5F4B; background: rgba(42,95,75,0.08); color: #2A5F4B; font-size: 13px; font-weight: 500">Morning wash</span>
+              <span style="padding: 10px 16px; border-radius: 999px; border: 1px solid rgba(38,51,43,0.14); color: #26332B; font-size: 13px">Gentle movement</span>
+              <span style="padding: 10px 16px; border-radius: 999px; border: 1px solid rgba(38,51,43,0.14); color: #26332B; font-size: 13px">Evening check in</span>
+            </div>
+          </div>
+        </div>
+        <div style="position: absolute; left: 28px; right: 28px; bottom: 40px; display: flex; flex-direction: column; gap: 8px">
+          <div style="height: 54px; border-radius: 12px; background: #2A5F4B; color: #F2F5EC; display: flex; align-items: center; justify-content: center; font-family: var(--font-label); font-size: 12px; font-weight: 700; letter-spacing: 0.16em; box-shadow: 0 6px 20px rgba(31,46,36,0.18)" data-nav="05">FINISH SETUP</div>
+          <div style="height: 44px; display: flex; align-items: center; justify-content: center; font-size: 14px; color: rgba(38,51,43,0.6)">I’ll do this later</div>
+        </div>
+      </div></div>
+<div class="scr" data-s="05" hidden><div data-screen-label="05 Home" style="width: 390px; height: 844px; overflow: hidden; position: relative; background: #F0F3E9; box-shadow: 0 18px 48px rgba(31,46,36,0.3); outline: 1px solid rgba(31,46,36,0.1)">
+        <img src="../assets/passage/valley.png" alt="Valley painting" style="position: absolute; left: -30px; bottom: -60px; width: 450px; opacity: 0.5">
+        <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 300px; background: linear-gradient(180deg, #F0F3E9 0%, rgba(240,243,233,0.15) 100%)"></div>
+        <div style="position: relative"><div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 28px 0; font-size: 14px; font-weight: 500; color: #26332B">
+          <span>9:41</span>
+          <svg width="46" height="13" viewBox="0 0 46 13" fill="none"><rect x="0" y="6" width="3" height="7" rx="1" fill="#26332B"></rect><rect x="5" y="4" width="3" height="9" rx="1" fill="#26332B"></rect><rect x="10" y="2" width="3" height="11" rx="1" fill="#26332B"></rect><rect x="15" y="0" width="3" height="13" rx="1" fill="#26332B" opacity="0.3"></rect><rect x="24" y="1" width="19" height="11" rx="3" stroke="#26332B" opacity="0.5"></rect><rect x="26" y="3" width="12" height="7" rx="1.5" fill="#26332B"></rect><rect x="44" y="4.5" width="2" height="4" rx="1" fill="#26332B" opacity="0.5"></rect></svg>
+        </div></div>
+        <div style="position: relative; padding: 24px 28px 0; display: flex; flex-direction: column; gap: 18px">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 14px">
+            <div style="display: flex; flex-direction: column; gap: 10px">
+              <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: rgba(38,51,43,0.6)">TUESDAY, JULY 28 · TODAY’S AFFIRMATION</span>
+              <div style="font-family: var(--font-display); font-style: italic; font-size: 30px; font-weight: 500; line-height: 1.18; color: #26332B; text-wrap: pretty">You are doing a hard thing with a soft heart.</div>
+            </div>
+            <div style="width: 42px; height: 42px; border-radius: 999px; border: 1px solid rgba(38,51,43,0.14); background: #FBFCF6; display: flex; align-items: center; justify-content: center; position: relative; flex: 0 0 auto">
+              <svg width="18" height="20" viewBox="0 0 18 20" fill="none"><path d="M9 2 C5.7 2 3.8 4.4 3.8 7.4 C3.8 12 2 13.4 2 13.4 H16 C16 13.4 14.2 12 14.2 7.4 C14.2 4.4 12.3 2 9 2 Z" stroke="#26332B" stroke-width="1.5" stroke-linejoin="round"></path><path d="M7.4 16.5 C7.7 17.6 8.3 18 9 18 C9.7 18 10.3 17.6 10.6 16.5" stroke="#26332B" stroke-width="1.5" stroke-linecap="round"></path></svg>
+              <span style="position: absolute; top: -3px; right: -3px; width: 16px; height: 16px; border-radius: 999px; background: #2A5F4B; color: #F2F5EC; font-size: 10px; font-weight: 600; display: flex; align-items: center; justify-content: center">2</span>
+            </div>
+          </div>
+          <div style="height: 1px; background: rgba(38,51,43,0.12)"></div>
+          <div>
+            <div style="display: flex; align-items: baseline; justify-content: space-between">
+              <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: rgba(38,51,43,0.6)">NEXT UP FOR LUCIA</span>
+              <a href="#" style="font-size: 13px; color: #2A5F4B; text-decoration: none; font-weight: 500" data-nav="06">Everything for Lucia →</a>
+            </div>
+            <div style="border-radius: 14px; background: #FBFCF6; border: 1px solid rgba(38,51,43,0.12); overflow: hidden; margin-top: 10px">
+              <div style="display: flex; align-items: center; gap: 14px; padding: 15px 18px; border-bottom: 1px solid rgba(38,51,43,0.06)">
+                <div style="width: 24px; height: 24px; border-radius: 999px; border: 1.5px solid rgba(38,51,43,0.18); flex: 0 0 auto"></div>
+                <div style="flex: 1"><div style="font-size: 15px; font-weight: 500; color: #26332B">Metformin, 500 mg</div><div style="font-size: 12.5px; color: rgba(38,51,43,0.6)">Due now · with breakfast</div></div>
+                <div style="padding: 9px 16px; border-radius: 999px; background: #2A5F4B; color: #F2F5EC; font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.14em" data-hint="Marks the dose done. State is not wired in this walkthrough.">GIVE</div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 14px; padding: 15px 18px">
+                <div style="width: 24px; height: 24px; border-radius: 999px; border: 1.5px solid rgba(38,51,43,0.18); flex: 0 0 auto"></div>
+                <div style="flex: 1"><div style="font-size: 15px; font-weight: 500; color: #26332B">Lopressor, 100 mg</div><div style="font-size: 12.5px; color: rgba(38,51,43,0.6)">With lunch</div></div>
+                <span style="font-size: 13px; color: rgba(38,51,43,0.6)">12:00</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div style="display: flex; align-items: baseline; justify-content: space-between">
+              <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: rgba(38,51,43,0.6)">NEXT UP FOR YOU</span>
+              <a href="#" style="font-size: 13px; color: #2A5F4B; text-decoration: none; font-weight: 500" data-nav="09">Everything for you →</a>
+            </div>
+            <div style="border-radius: 14px; background: #FBFCF6; border: 1px solid rgba(38,51,43,0.12); overflow: hidden; margin-top: 10px">
+              <div style="display: flex; align-items: center; gap: 14px; padding: 15px 18px; border-bottom: 1px solid rgba(38,51,43,0.06)">
+                <div style="width: 24px; height: 24px; border-radius: 999px; border: 1.5px solid rgba(38,51,43,0.18); flex: 0 0 auto"></div>
+                <div style="flex: 1"><div style="font-size: 15px; font-weight: 500; color: #26332B">Write in your journal</div><div style="font-size: 12.5px; color: rgba(38,51,43,0.6)">Today’s prompt is waiting</div></div>
+                <div style="padding: 9px 16px; border-radius: 999px; background: #2A5F4B; color: #F2F5EC; font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.14em" data-nav="12">OPEN</div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 14px; padding: 15px 18px; border-bottom: 1px solid rgba(38,51,43,0.06)">
+                <div style="width: 24px; height: 24px; border-radius: 999px; background: #E2E9D8; display: flex; align-items: center; justify-content: center; flex: 0 0 auto"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5 L4 7.5 L10 1.5" stroke="#26332B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path></svg></div>
+                <div style="flex: 1"><div style="font-size: 15px; color: rgba(38,51,43,0.6)">Go for a walk</div><div style="font-size: 12.5px; color: rgba(38,51,43,0.45)">22 min this morning</div></div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 14px; padding: 15px 18px">
+                <div style="width: 24px; height: 24px; border-radius: 999px; border: 1.5px solid rgba(38,51,43,0.18); flex: 0 0 auto"></div>
+                <div style="flex: 1"><div style="font-size: 15px; font-weight: 500; color: #26332B">Tonight’s meditation</div><div style="font-size: 12.5px; color: rgba(38,51,43,0.6)" data-nav="10">The northern road · 12 min</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="position: absolute; left: 20px; right: 20px; bottom: 18px; height: 66px; border-radius: 999px; background: rgba(251,252,246,0.92); backdrop-filter: blur(12px); box-shadow: 0 6px 20px rgba(31,46,36,0.14); border: 1px solid rgba(38,51,43,0.12); display: flex; align-items: center; justify-content: space-around; padding: 0 10px">
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: #2A5F4B"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 11 L12 4 L20 11 V19 A1 1 0 0 1 19 20 H5 A1 1 0 0 1 4 19 Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path></svg><span style="font-family: var(--font-label); font-size: 9px; font-weight: 700; letter-spacing: 0.12em" data-nav="05">HOME</span></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: rgba(38,51,43,0.55)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 20 C7.2 15.8 4 13 4 9.8 A4.4 4.4 0 0 1 12 7.3 A4.4 4.4 0 0 1 20 9.8 C20 13 16.8 15.8 12 20 Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path></svg><span style="font-family: var(--font-label); font-size: 9px; font-weight: 700; letter-spacing: 0.12em" data-nav="06">LUCIA</span></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: rgba(38,51,43,0.55)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="1.7"></circle><path d="M5 20 C6.4 16.6 9 15 12 15 C15 15 17.6 16.6 19 20" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path></svg><span style="font-family: var(--font-label); font-size: 9px; font-weight: 700; letter-spacing: 0.12em" data-nav="09">YOU</span></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: rgba(38,51,43,0.55)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M5 5 A2 2 0 0 1 7 3 H19 V19 H7 A2 2 0 0 0 5 21 Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path><path d="M5 19 A2 2 0 0 1 7 17 H19" stroke="currentColor" stroke-width="1.7"></path></svg><span style="font-family: var(--font-label); font-size: 9px; font-weight: 700; letter-spacing: 0.12em" data-nav="11">JOURNAL</span></div>
+        </div>
+      </div></div>
+<div class="scr" data-s="06" hidden><div data-screen-label="06 Lucia" style="width: 390px; height: 844px; overflow: hidden; position: relative; background: #F0F3E9; box-shadow: 0 18px 48px rgba(31,46,36,0.3); outline: 1px solid rgba(31,46,36,0.1)">
+        <img src="../assets/passage/valley.png" alt="Valley painting" style="position: absolute; left: -30px; bottom: -60px; width: 450px; opacity: 0.5">
+        <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 300px; background: linear-gradient(180deg, #F0F3E9 0%, rgba(240,243,233,0.15) 100%)"></div>
+        <div style="position: relative; display: flex; justify-content: space-between; align-items: center; padding: 16px 28px 0; font-size: 14px; font-weight: 500; color: #26332B">
+          <span>9:41</span>
+          <svg width="46" height="13" viewBox="0 0 46 13" fill="none"><rect x="0" y="6" width="3" height="7" rx="1" fill="#26332B"></rect><rect x="5" y="4" width="3" height="9" rx="1" fill="#26332B"></rect><rect x="10" y="2" width="3" height="11" rx="1" fill="#26332B"></rect><rect x="15" y="0" width="3" height="13" rx="1" fill="#26332B" opacity="0.3"></rect><rect x="24" y="1" width="19" height="11" rx="3" stroke="#26332B" opacity="0.5"></rect><rect x="26" y="3" width="12" height="7" rx="1.5" fill="#26332B"></rect><rect x="44" y="4.5" width="2" height="4" rx="1" fill="#26332B" opacity="0.5"></rect></svg>
+        </div>
+        <div style="position: relative; padding: 22px 28px 0; display: flex; flex-direction: column; gap: 16px">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start">
+            <div>
+              <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: rgba(38,51,43,0.6)">TUESDAY, JULY 28</span>
+              <h2 style="font-family: var(--font-display); font-size: 32px; font-weight: 600; line-height: 1.08; color: #26332B; margin: 6px 0 0">Lucia’s day</h2>
+            </div>
+            <div style="width: 42px; height: 42px; border-radius: 999px; border: 1px solid rgba(38,51,43,0.14); background: #FBFCF6; display: flex; align-items: center; justify-content: center; position: relative">
+              <svg width="18" height="20" viewBox="0 0 18 20" fill="none"><path d="M9 2 C5.7 2 3.8 4.4 3.8 7.4 C3.8 12 2 13.4 2 13.4 H16 C16 13.4 14.2 12 14.2 7.4 C14.2 4.4 12.3 2 9 2 Z" stroke="#26332B" stroke-width="1.5" stroke-linejoin="round"></path><path d="M7.4 16.5 C7.7 17.6 8.3 18 9 18 C9.7 18 10.3 17.6 10.6 16.5" stroke="#26332B" stroke-width="1.5" stroke-linecap="round"></path></svg>
+              <span style="position: absolute; top: -3px; right: -3px; width: 16px; height: 16px; border-radius: 999px; background: #2A5F4B; color: #F2F5EC; font-size: 10px; font-weight: 600; display: flex; align-items: center; justify-content: center">2</span>
+            </div>
+          </div>
+          <p style="margin: 0; font-size: 14px; line-height: 1.5; color: rgba(38,51,43,0.6)">Nine of twelve done. Three things need you before noon.</p><div style="border-radius:14px;background:#FBFCF6;border:1px solid rgba(38,51,43,0.12);padding:18px 16px 16px"><div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;padding:0 2px"><span style="font-family:var(--font-label);font-size:10px;font-weight:700;letter-spacing:0.2em;color:rgba(38,51,43,0.6)">TODAY AT A GLANCE</span><span style="font-size:12.5px;color:rgba(38,51,43,0.45)">9 of 12 done</span></div><div style="display:flex;justify-content:space-between;gap:4px"><div style="display:flex;flex-direction:column;align-items:center;gap:7px"><div style="position:relative;width:60px;height:60px"><svg width="60" height="60" viewBox="0 0 60 60" style="display:block;transform:rotate(-90deg)"><circle cx="30" cy="30" r="25" fill="none" stroke="rgba(38,51,43,0.10)" stroke-width="4"></circle><circle cx="30" cy="30" r="25" fill="none" stroke="rgba(38,51,43,0.55)" stroke-width="4" stroke-linecap="round" stroke-dasharray="94.2 157.1"></circle></svg><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:17px;font-weight:600;color:#26332B">3/5</span></div><span style="font-family:var(--font-label);font-size:9px;font-weight:700;letter-spacing:0.14em;color:rgba(38,51,43,0.6)">MEDICINES</span></div><div style="display:flex;flex-direction:column;align-items:center;gap:7px"><div style="position:relative;width:60px;height:60px"><svg width="60" height="60" viewBox="0 0 60 60" style="display:block;transform:rotate(-90deg)"><circle cx="30" cy="30" r="25" fill="#E2E9D8" stroke="rgba(38,51,43,0.10)" stroke-width="4"></circle><circle cx="30" cy="30" r="25" fill="none" stroke="rgba(38,51,43,0.55)" stroke-width="4" stroke-linecap="round" stroke-dasharray="157.1 157.1"></circle></svg><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:17px;font-weight:600;color:#26332B">2/2</span></div><span style="font-family:var(--font-label);font-size:9px;font-weight:700;letter-spacing:0.14em;color:rgba(38,51,43,0.6)">MEALS</span></div><div style="display:flex;flex-direction:column;align-items:center;gap:7px"><div style="position:relative;width:60px;height:60px"><svg width="60" height="60" viewBox="0 0 60 60" style="display:block;transform:rotate(-90deg)"><circle cx="30" cy="30" r="25" fill="#E2E9D8" stroke="rgba(38,51,43,0.10)" stroke-width="4"></circle><circle cx="30" cy="30" r="25" fill="none" stroke="rgba(38,51,43,0.55)" stroke-width="4" stroke-linecap="round" stroke-dasharray="157.1 157.1"></circle></svg><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:17px;font-weight:600;color:#26332B">2/2</span></div><span style="font-family:var(--font-label);font-size:9px;font-weight:700;letter-spacing:0.14em;color:rgba(38,51,43,0.6)">HYGIENE</span></div><div style="display:flex;flex-direction:column;align-items:center;gap:7px"><div style="position:relative;width:60px;height:60px"><svg width="60" height="60" viewBox="0 0 60 60" style="display:block;transform:rotate(-90deg)"><circle cx="30" cy="30" r="25" fill="#E2E9D8" stroke="rgba(38,51,43,0.10)" stroke-width="4"></circle><circle cx="30" cy="30" r="25" fill="none" stroke="rgba(38,51,43,0.55)" stroke-width="4" stroke-linecap="round" stroke-dasharray="157.1 157.1"></circle></svg><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:17px;font-weight:600;color:#26332B">1/1</span></div><span style="font-family:var(--font-label);font-size:9px;font-weight:700;letter-spacing:0.14em;color:rgba(38,51,43,0.6)">MOVEMENT</span></div><div style="display:flex;flex-direction:column;align-items:center;gap:7px"><div style="position:relative;width:60px;height:60px"><svg width="60" height="60" viewBox="0 0 60 60" style="display:block;transform:rotate(-90deg)"><circle cx="30" cy="30" r="25" fill="none" stroke="rgba(38,51,43,0.10)" stroke-width="4"></circle><circle cx="30" cy="30" r="25" fill="none" stroke="rgba(38,51,43,0.55)" stroke-width="4" stroke-linecap="round" stroke-dasharray="78.5 157.1"></circle></svg><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:17px;font-weight:600;color:#26332B">1/2</span></div><span style="font-family:var(--font-label);font-size:9px;font-weight:700;letter-spacing:0.14em;color:rgba(38,51,43,0.6)">REST</span></div></div></div>
+          <div style="border-radius: 14px; background: #FBFCF6; border: 1px solid rgba(38,51,43,0.12); overflow: hidden">
+            <div style="display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-bottom: 1px solid rgba(38,51,43,0.06)">
+              <div style="width: 24px; height: 24px; border-radius: 999px; border: 1.5px solid rgba(38,51,43,0.18); flex: 0 0 auto"></div>
+              <div style="flex: 1">
+                <div style="font-size: 15px; font-weight: 500; color: #26332B">Metformin, 500 mg</div>
+                <div style="font-size: 12.5px; color: rgba(38,51,43,0.6)">Due now · 8:00 with breakfast</div>
+              </div>
+              <div style="padding: 9px 16px; border-radius: 999px; background: #2A5F4B; color: #F2F5EC; font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.14em" data-hint="Marks the dose done. State is not wired in this walkthrough.">GIVE</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-bottom: 1px solid rgba(38,51,43,0.06)">
+              <div style="width: 24px; height: 24px; border-radius: 999px; background: #E2E9D8; display: flex; align-items: center; justify-content: center; flex: 0 0 auto"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5 L4 7.5 L10 1.5" stroke="#26332B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path></svg></div>
+              <div style="flex: 1">
+                <div style="font-size: 15px; color: rgba(38,51,43,0.6)">Breakfast, soft foods</div>
+                <div style="font-size: 12.5px; color: rgba(38,51,43,0.45)">Done at 7:40</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-bottom: 1px solid rgba(38,51,43,0.06)">
+              <div style="width: 24px; height: 24px; border-radius: 999px; background: #E2E9D8; display: flex; align-items: center; justify-content: center; flex: 0 0 auto"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5 L4 7.5 L10 1.5" stroke="#26332B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path></svg></div>
+              <div style="flex: 1">
+                <div style="font-size: 15px; color: rgba(38,51,43,0.6)">Morning wash</div>
+                <div style="font-size: 12.5px; color: rgba(38,51,43,0.45)">Done at 8:10</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 14px; padding: 16px 18px">
+              <div style="width: 24px; height: 24px; border-radius: 999px; border: 1.5px solid rgba(38,51,43,0.18); flex: 0 0 auto"></div>
+              <div style="flex: 1">
+                <div style="font-size: 15px; font-weight: 500; color: #26332B">Lopressor, 100 mg</div>
+                <div style="font-size: 12.5px; color: rgba(38,51,43,0.6)">12:00 with lunch</div>
+              </div>
+              <span style="font-size: 13px; color: rgba(38,51,43,0.6)">12:00</span>
+            </div>
+          </div>
+          <div style="display: flex; gap: 18px"><a href="#" style="font-size: 14px; color: #2A5F4B; text-decoration: none; font-weight: 500" data-nav="07">All of today's care →</a><a href="#" style="font-size: 14px; color: #2A5F4B; text-decoration: none; font-weight: 500" data-nav="08">Planning ahead →</a></div>
+          <div>
+            <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: rgba(38,51,43,0.6)">COMING UP</span>
+            <div style="display: flex; gap: 12px; margin-top: 10px">
+              <div style="flex: 1; border-radius: 14px; background: #FBFCF6; border: 1px solid rgba(38,51,43,0.12); padding: 14px 16px">
+                <div style="font-family: var(--font-display); font-size: 19px; font-weight: 600; color: #26332B; line-height: 1.15">Brain scan</div>
+                <div style="font-size: 12.5px; color: rgba(38,51,43,0.6); margin-top: 4px">UCSF · Aug 21, 10:30</div>
+              </div>
+              <div style="flex: 1; border-radius: 14px; background: #FBFCF6; border: 1px solid rgba(38,51,43,0.12); padding: 14px 16px">
+                <div style="font-family: var(--font-display); font-size: 19px; font-weight: 600; color: #26332B; line-height: 1.15">Refill pill box</div>
+                <div style="font-size: 12.5px; color: rgba(38,51,43,0.6); margin-top: 4px">Sunday, Aug 15</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="position: absolute; left: 20px; right: 20px; bottom: 18px; height: 66px; border-radius: 999px; background: rgba(251,252,246,0.92); backdrop-filter: blur(12px); box-shadow: 0 6px 20px rgba(31,46,36,0.14); border: 1px solid rgba(38,51,43,0.12); display: flex; align-items: center; justify-content: space-around; padding: 0 10px">
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: rgba(38,51,43,0.55)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 11 L12 4 L20 11 V19 A1 1 0 0 1 19 20 H5 A1 1 0 0 1 4 19 Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path></svg><span style="font-family: var(--font-label); font-size: 9px; font-weight: 700; letter-spacing: 0.12em" data-nav="05">HOME</span></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: #2A5F4B"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 20 C7.2 15.8 4 13 4 9.8 A4.4 4.4 0 0 1 12 7.3 A4.4 4.4 0 0 1 20 9.8 C20 13 16.8 15.8 12 20 Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path></svg><span style="font-family: var(--font-label); font-size: 9px; font-weight: 700; letter-spacing: 0.12em" data-nav="06">LUCIA</span></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: rgba(38,51,43,0.55)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="1.7"></circle><path d="M5 20 C6.4 16.6 9 15 12 15 C15 15 17.6 16.6 19 20" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path></svg><span style="font-family: var(--font-label); font-size: 9px; font-weight: 700; letter-spacing: 0.12em" data-nav="09">YOU</span></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: rgba(38,51,43,0.55)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M5 5 A2 2 0 0 1 7 3 H19 V19 H7 A2 2 0 0 0 5 21 Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path><path d="M5 19 A2 2 0 0 1 7 17 H19" stroke="currentColor" stroke-width="1.7"></path></svg><span style="font-family: var(--font-label); font-size: 9px; font-weight: 700; letter-spacing: 0.12em" data-nav="11">JOURNAL</span></div>
+        </div>
+      </div></div>
+<div class="scr" data-s="07" hidden><div data-screen-label="07 Medicines" style="width: 390px; height: 844px; overflow: hidden; position: relative; background: #F0F3E9; box-shadow: 0 18px 48px rgba(31,46,36,0.3); outline: 1px solid rgba(31,46,36,0.1)">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 28px 0; font-size: 14px; font-weight: 500; color: #26332B">
+          <span>9:41</span>
+          <svg width="46" height="13" viewBox="0 0 46 13" fill="none"><rect x="0" y="6" width="3" height="7" rx="1" fill="#26332B"></rect><rect x="5" y="4" width="3" height="9" rx="1" fill="#26332B"></rect><rect x="10" y="2" width="3" height="11" rx="1" fill="#26332B"></rect><rect x="15" y="0" width="3" height="13" rx="1" fill="#26332B" opacity="0.3"></rect><rect x="24" y="1" width="19" height="11" rx="3" stroke="#26332B" opacity="0.5"></rect><rect x="26" y="3" width="12" height="7" rx="1.5" fill="#26332B"></rect><rect x="44" y="4.5" width="2" height="4" rx="1" fill="#26332B" opacity="0.5"></rect></svg>
+        </div>
+        <div style="padding: 20px 28px 0; display: flex; flex-direction: column; gap: 18px">
+          <div style="display: flex; align-items: center; gap: 14px">
+            <div style="width: 40px; height: 40px; border-radius: 999px; border: 1px solid rgba(38,51,43,0.14); background: #FBFCF6; display: flex; align-items: center; justify-content: center" data-nav="06"><svg width="16" height="14" viewBox="0 0 16 14" fill="none"><path d="M7 1 L1 7 L7 13 M1.5 7 H15" stroke="#26332B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+            <div>
+              <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: rgba(38,51,43,0.6)">TUESDAY, JULY 28 · FOR LUCIA</span>
+              <h2 style="font-family: var(--font-display); font-size: 32px; font-weight: 600; color: #26332B; margin: 2px 0 0">Medicines</h2>
+            </div>
+          </div>
+          <div style="display: flex; align-items: baseline; gap: 10px">
+            <span style="font-family: var(--font-display); font-size: 26px; font-weight: 600; color: #26332B">3 of 5</span>
+            <span style="font-size: 13.5px; color: rgba(38,51,43,0.6)">given so far today</span>
+          </div>
+          <div>
+            <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: rgba(38,51,43,0.6)">MORNING · 8:00</span>
+            <div style="border-radius: 14px; background: #FBFCF6; border: 1px solid rgba(38,51,43,0.12); overflow: hidden; margin-top: 10px">
+              <div style="display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-bottom: 1px solid rgba(38,51,43,0.06)">
+                <div style="flex: 1">
+                  <div style="font-size: 15px; font-weight: 500; color: #26332B">Metformin</div>
+                  <div style="font-size: 12.5px; color: rgba(38,51,43,0.6)">500 mg · with food</div>
+                </div>
+                <div style="padding: 9px 16px; border-radius: 999px; background: #2A5F4B; color: #F2F5EC; font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.14em">GIVE NOW</div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-bottom: 1px solid rgba(38,51,43,0.06)">
+                <div style="flex: 1">
+                  <div style="font-size: 15px; color: rgba(38,51,43,0.6)">Colace</div>
+                  <div style="font-size: 12.5px; color: rgba(38,51,43,0.45)">100 mg · given 8:02</div>
+                </div>
+                <div style="width: 24px; height: 24px; border-radius: 999px; background: #E2E9D8; display: flex; align-items: center; justify-content: center"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5 L4 7.5 L10 1.5" stroke="#26332B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path></svg></div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 14px; padding: 16px 18px">
+                <div style="flex: 1">
+                  <div style="font-size: 15px; color: rgba(38,51,43,0.6)">MV1 multivitamin</div>
+                  <div style="font-size: 12.5px; color: rgba(38,51,43,0.45)">1 tab · given 8:02</div>
+                </div>
+                <div style="width: 24px; height: 24px; border-radius: 999px; background: #E2E9D8; display: flex; align-items: center; justify-content: center"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5 L4 7.5 L10 1.5" stroke="#26332B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path></svg></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: rgba(38,51,43,0.6)">MIDDAY · 12:00</span>
+            <div style="border-radius: 14px; background: #FBFCF6; border: 1px solid rgba(38,51,43,0.12); overflow: hidden; margin-top: 10px">
+              <div style="display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-bottom: 1px solid rgba(38,51,43,0.06)">
+                <div style="flex: 1">
+                  <div style="font-size: 15px; font-weight: 500; color: #26332B">Lopressor</div>
+                  <div style="font-size: 12.5px; color: rgba(38,51,43,0.6)">100 mg · with lunch</div>
+                </div>
+                <div style="width: 24px; height: 24px; border-radius: 999px; border: 1.5px solid rgba(38,51,43,0.18)"></div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 14px; padding: 16px 18px">
+                <div style="flex: 1">
+                  <div style="font-size: 15px; font-weight: 500; color: #26332B">Lexapro</div>
+                  <div style="font-size: 12.5px; color: rgba(38,51,43,0.6)">10 mg</div>
+                </div>
+                <div style="width: 24px; height: 24px; border-radius: 999px; border: 1.5px solid rgba(38,51,43,0.18)"></div>
+              </div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 4px 2px">
+            <span style="font-size: 14px; color: #26332B">Remind me when a dose is due</span>
+            <div style="width: 48px; height: 28px; border-radius: 999px; background: #2A5F4B; position: relative"><div style="position: absolute; top: 3px; right: 3px; width: 22px; height: 22px; border-radius: 999px; background: #F2F5EC; box-shadow: 0 1px 2px rgba(31,46,36,0.2)"></div></div>
+          </div>
+        </div>
+        <div style="position: absolute; left: 20px; right: 20px; bottom: 18px; height: 66px; border-radius: 999px; background: rgba(251,252,246,0.92); backdrop-filter: blur(12px); box-shadow: 0 6px 20px rgba(31,46,36,0.14); border: 1px solid rgba(38,51,43,0.12); display: flex; align-items: center; justify-content: space-around; padding: 0 10px">
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: rgba(38,51,43,0.55)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 11 L12 4 L20 11 V19 A1 1 0 0 1 19 20 H5 A1 1 0 0 1 4 19 Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path></svg><span style="font-family: var(--font-label); font-size: 9px; font-weight: 700; letter-spacing: 0.12em" data-nav="05">HOME</span></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: #2A5F4B"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 20 C7.2 15.8 4 13 4 9.8 A4.4 4.4 0 0 1 12 7.3 A4.4 4.4 0 0 1 20 9.8 C20 13 16.8 15.8 12 20 Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path></svg><span style="font-family: var(--font-label); font-size: 9px; font-weight: 700; letter-spacing: 0.12em" data-nav="06">LUCIA</span></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: rgba(38,51,43,0.55)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="1.7"></circle><path d="M5 20 C6.4 16.6 9 15 12 15 C15 15 17.6 16.6 19 20" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path></svg><span style="font-family: var(--font-label); font-size: 9px; font-weight: 700; letter-spacing: 0.12em" data-nav="09">YOU</span></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: rgba(38,51,43,0.55)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M5 5 A2 2 0 0 1 7 3 H19 V19 H7 A2 2 0 0 0 5 21 Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path><path d="M5 19 A2 2 0 0 1 7 17 H19" stroke="currentColor" stroke-width="1.7"></path></svg><span style="font-family: var(--font-label); font-size: 9px; font-weight: 700; letter-spacing: 0.12em" data-nav="11">JOURNAL</span></div>
+        </div>
+      </div></div>
+<div class="scr" data-s="08" hidden><div data-screen-label="08 Planning ahead" style="width: 390px; height: 844px; overflow: hidden; position: relative; background: #F0F3E9; box-shadow: 0 18px 48px rgba(31,46,36,0.3); outline: 1px solid rgba(31,46,36,0.1)">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 28px 0; font-size: 14px; font-weight: 500; color: #26332B">
+          <span>9:41</span>
+          <svg width="46" height="13" viewBox="0 0 46 13" fill="none"><rect x="0" y="6" width="3" height="7" rx="1" fill="#26332B"></rect><rect x="5" y="4" width="3" height="9" rx="1" fill="#26332B"></rect><rect x="10" y="2" width="3" height="11" rx="1" fill="#26332B"></rect><rect x="15" y="0" width="3" height="13" rx="1" fill="#26332B" opacity="0.3"></rect><rect x="24" y="1" width="19" height="11" rx="3" stroke="#26332B" opacity="0.5"></rect><rect x="26" y="3" width="12" height="7" rx="1.5" fill="#26332B"></rect><rect x="44" y="4.5" width="2" height="4" rx="1" fill="#26332B" opacity="0.5"></rect></svg>
+        </div>
+        <div style="padding: 24px 28px 0; display: flex; flex-direction: column; gap: 16px">
+          <div style="display: flex; align-items: center; gap: 14px">
+            <div style="width: 40px; height: 40px; border-radius: 999px; border: 1px solid rgba(38,51,43,0.14); background: #FBFCF6; display: flex; align-items: center; justify-content: center" data-nav="06"><svg width="16" height="14" viewBox="0 0 16 14" fill="none"><path d="M7 1 L1 7 L7 13 M1.5 7 H15" stroke="#26332B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+            <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: rgba(38,51,43,0.6)">AT YOUR OWN PACE</span>
+          </div>
+          <h2 style="font-family: var(--font-display); font-size: 36px; font-weight: 600; line-height: 1.08; color: #26332B; margin: 0">Planning ahead</h2>
+          <p style="margin: 0; font-family: var(--font-serif); font-size: 19px; font-style: italic; line-height: 1.5; color: #35443B; text-wrap: pretty">Small steps now spare hard choices later. Nothing here is urgent, and nothing has to be finished today.</p>
+          <div style="display: flex; align-items: center; gap: 12px">
+            <div style="flex: 1; height: 3px; border-radius: 2px; background: rgba(38,51,43,0.12); overflow: hidden"><div style="width: 35%; height: 100%; background: rgba(38,51,43,0.35)"></div></div>
+            <span style="font-size: 12.5px; color: rgba(38,51,43,0.6)">2 of 6 begun</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 4px">
+            <div style="border-radius: 14px; background: #FBFCF6; border: 1px solid rgba(38,51,43,0.12); padding: 18px 18px 16px">
+              <div style="font-family: var(--font-display); font-size: 21px; font-weight: 600; color: #26332B; line-height: 1.15">Find in home hospice care</div>
+              <div style="font-size: 13px; color: rgba(38,51,43,0.6); margin-top: 5px">Two providers saved · notes from Dr. Whitaker attached</div>
+              <div style="display: inline-flex; margin-top: 14px; padding: 10px 18px; border-radius: 999px; background: #2A5F4B; color: #F2F5EC; font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.14em" data-hint="The planning checklist flow is on the not-yet-designed list.">RESUME</div>
+            </div>
+            <div style="border-radius: 14px; background: #FBFCF6; border: 1px solid rgba(38,51,43,0.12); padding: 18px">
+              <div style="font-family: var(--font-display); font-size: 21px; font-weight: 600; color: #26332B; line-height: 1.15">Gather the important papers</div>
+              <div style="font-size: 13px; color: rgba(38,51,43,0.6); margin-top: 5px">Will, insurance, advance directive · a checklist walks you through</div>
+            </div>
+            <div style="border-radius: 14px; background: #FBFCF6; border: 1px solid rgba(38,51,43,0.12); padding: 18px">
+              <div style="font-family: var(--font-display); font-size: 21px; font-weight: 600; color: #26332B; line-height: 1.15">Choose a funeral home</div>
+              <div style="font-size: 13px; color: rgba(38,51,43,0.6); margin-top: 5px">Compare gently, save questions to ask</div>
+            </div>
+            <div style="border-radius: 14px; background: #FBFCF6; border: 1px solid rgba(38,51,43,0.12); padding: 18px">
+              <div style="font-family: var(--font-display); font-size: 21px; font-weight: 600; color: #26332B; line-height: 1.15">Write the eulogy</div>
+              <div style="font-size: 13px; color: rgba(38,51,43,0.6); margin-top: 5px">With prompts, drawn from your journal if you wish</div>
+            </div>
+          </div>
+          <p style="margin: 4px 0 0; font-size: 13px; line-height: 1.6; color: rgba(38,51,43,0.6)">Whenever you open this page, remember: doing this early is a kindness, not a surrender.</p>
+        </div>
+      </div></div>
+<div class="scr" data-s="09" hidden><div data-screen-label="09 For me" style="width: 390px; height: 844px; overflow: hidden; position: relative; background: #F0F3E9; box-shadow: 0 18px 48px rgba(31,46,36,0.3); outline: 1px solid rgba(31,46,36,0.1)">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 28px 0; font-size: 14px; font-weight: 500; color: #26332B">
+          <span>9:41</span>
+          <svg width="46" height="13" viewBox="0 0 46 13" fill="none"><rect x="0" y="6" width="3" height="7" rx="1" fill="#26332B"></rect><rect x="5" y="4" width="3" height="9" rx="1" fill="#26332B"></rect><rect x="10" y="2" width="3" height="11" rx="1" fill="#26332B"></rect><rect x="15" y="0" width="3" height="13" rx="1" fill="#26332B" opacity="0.3"></rect><rect x="24" y="1" width="19" height="11" rx="3" stroke="#26332B" opacity="0.5"></rect><rect x="26" y="3" width="12" height="7" rx="1.5" fill="#26332B"></rect><rect x="44" y="4.5" width="2" height="4" rx="1" fill="#26332B" opacity="0.5"></rect></svg>
+        </div>
+        <div style="padding: 22px 28px 0; display: flex; flex-direction: column; gap: 16px">
+          <div style="display: flex; justify-content: space-between; align-items: center"><h2 style="font-family: var(--font-display); font-size: 32px; font-weight: 600; line-height: 1.08; color: #26332B; margin: 0">This part is for you</h2><div style="width: 42px; height: 42px; border-radius: 999px; background: #E2E9D8; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 18px; font-weight: 600; color: #26332B" data-nav="15">S</div></div>
+          <div style="border-radius: 16px; overflow: hidden; position: relative; height: 220px; box-shadow: 0 6px 20px rgba(31,46,36,0.16)">
+            <img src="../assets/passage/bg4.jpg" alt="Aurora painting" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%">
+            <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13,26,21,0) 30%, rgba(13,26,21,0.72) 100%)"></div>
+            <div style="position: absolute; left: 18px; right: 18px; bottom: 16px; display: flex; align-items: flex-end; justify-content: space-between; gap: 12px">
+              <div>
+                <span style="font-family: var(--font-label); font-size: 9.5px; font-weight: 700; letter-spacing: 0.18em; color: #DAE8CE">TONIGHT'S MEDITATION</span>
+                <div style="font-family: var(--font-display); font-style: italic; font-size: 24px; font-weight: 500; color: #F5F8F0; line-height: 1.1; margin-top: 4px" data-nav="10">The northern road · 12 min</div>
+              </div>
+              <div style="width: 52px; height: 52px; border-radius: 999px; background: #DAE8CE; display: flex; align-items: center; justify-content: center; flex: 0 0 auto; box-shadow: 0 6px 20px rgba(0,0,0,0.4)"><svg width="16" height="18" viewBox="0 0 16 18" fill="none"><path d="M2 1.5 L14.5 9 L2 16.5 Z" fill="#14261E"></path></svg></div>
+            </div>
+          </div>
+          <div>
+            <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: rgba(38,51,43,0.6)">TODAY, THREE SMALL THINGS</span>
+            <div style="border-radius: 14px; background: #FBFCF6; border: 1px solid rgba(38,51,43,0.12); overflow: hidden; margin-top: 10px">
+              <div style="display: flex; align-items: center; gap: 14px; padding: 15px 18px; border-bottom: 1px solid rgba(38,51,43,0.06)">
+                <div style="width: 24px; height: 24px; border-radius: 999px; background: #E2E9D8; display: flex; align-items: center; justify-content: center; flex: 0 0 auto"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5 L4 7.5 L10 1.5" stroke="#26332B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path></svg></div>
+                <span style="flex: 1; font-size: 15px; color: rgba(38,51,43,0.6)">Go for a walk</span>
+                <span style="font-size: 12.5px; color: rgba(38,51,43,0.45)">22 min this morning</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 14px; padding: 15px 18px; border-bottom: 1px solid rgba(38,51,43,0.06)">
+                <div style="width: 24px; height: 24px; border-radius: 999px; border: 1.5px solid rgba(38,51,43,0.18); flex: 0 0 auto"></div>
+                <span style="flex: 1; font-size: 15px; font-weight: 500; color: #26332B">Write in your journal</span>
+                <div style="padding: 9px 16px; border-radius: 999px; background: #2A5F4B; color: #F2F5EC; font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.14em" data-nav="12">OPEN</div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 14px; padding: 15px 18px">
+                <div style="width: 24px; height: 24px; border-radius: 999px; border: 1.5px solid rgba(38,51,43,0.18); flex: 0 0 auto"></div>
+                <span style="flex: 1; font-size: 15px; font-weight: 500; color: #26332B">Call or text a friend</span>
+                <span style="font-size: 12.5px; color: rgba(38,51,43,0.6)">Brian, maybe</span>
+              </div>
+            </div>
+          </div>
+          <div style="border-radius: 14px; border: 1px solid rgba(38,51,43,0.12); padding: 15px 18px; display: flex; align-items: center; justify-content: space-between; background: #FBFCF6">
+            <div>
+              <div style="font-size: 15px; font-weight: 500; color: #26332B">Therapy with Maren</div>
+              <div style="font-size: 12.5px; color: rgba(38,51,43,0.6); margin-top: 3px">Thursday 3:00 · video</div>
+            </div>
+            <span style="font-size: 13px; color: #2A5F4B; font-weight: 500">Add to calendar</span>
+          </div>
+          <div style="display: flex; gap: 18px"><a href="#" style="font-size: 14px; color: #2A5F4B; text-decoration: none; font-weight: 500" data-nav="13">Visit the Circle →</a><a href="#" style="font-size: 14px; color: #2A5F4B; text-decoration: none; font-weight: 500" data-nav="14">From the library →</a></div>
+        </div>
+        <div style="position: absolute; left: 20px; right: 20px; bottom: 18px; height: 66px; border-radius: 999px; background: rgba(251,252,246,0.92); backdrop-filter: blur(12px); box-shadow: 0 6px 20px rgba(31,46,36,0.14); border: 1px solid rgba(38,51,43,0.12); display: flex; align-items: center; justify-content: space-around; padding: 0 10px">
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: rgba(38,51,43,0.55)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 11 L12 4 L20 11 V19 A1 1 0 0 1 19 20 H5 A1 1 0 0 1 4 19 Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path></svg><span style="font-family: var(--font-label); font-size: 9px; font-weight: 700; letter-spacing: 0.12em" data-nav="05">HOME</span></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: rgba(38,51,43,0.55)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 20 C7.2 15.8 4 13 4 9.8 A4.4 4.4 0 0 1 12 7.3 A4.4 4.4 0 0 1 20 9.8 C20 13 16.8 15.8 12 20 Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path></svg><span style="font-family: var(--font-label); font-size: 9px; font-weight: 700; letter-spacing: 0.12em" data-nav="06">LUCIA</span></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: #2A5F4B"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="1.7"></circle><path d="M5 20 C6.4 16.6 9 15 12 15 C15 15 17.6 16.6 19 20" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path></svg><span style="font-family: var(--font-label); font-size: 9px; font-weight: 700; letter-spacing: 0.12em" data-nav="09">YOU</span></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: rgba(38,51,43,0.55)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M5 5 A2 2 0 0 1 7 3 H19 V19 H7 A2 2 0 0 0 5 21 Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path><path d="M5 19 A2 2 0 0 1 7 17 H19" stroke="currentColor" stroke-width="1.7"></path></svg><span style="font-family: var(--font-label); font-size: 9px; font-weight: 700; letter-spacing: 0.12em" data-nav="11">JOURNAL</span></div>
+        </div>
+      </div></div>
+<div class="scr" data-s="10" hidden><div data-screen-label="10 Meditation player" style="width: 390px; height: 844px; overflow: hidden; position: relative; background: #0F1E19; box-shadow: 0 18px 48px rgba(31,46,36,0.3); outline: 1px solid rgba(31,46,36,0.1)">
+        <img src="../assets/passage/bg4.jpg" alt="Aurora over a night road, painting" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%">
+        <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13,26,21,0.4) 0%, rgba(13,26,21,0) 25%, rgba(13,26,21,0) 50%, rgba(13,26,21,0.85) 100%)"></div>
+        <div style="position: relative; display: flex; justify-content: space-between; align-items: center; padding: 16px 28px 0; font-size: 14px; font-weight: 500; color: #F2F5EC">
+          <span>9:41</span>
+          <svg width="46" height="13" viewBox="0 0 46 13" fill="none"><rect x="0" y="6" width="3" height="7" rx="1" fill="#F2F5EC"></rect><rect x="5" y="4" width="3" height="9" rx="1" fill="#F2F5EC"></rect><rect x="10" y="2" width="3" height="11" rx="1" fill="#F2F5EC"></rect><rect x="15" y="0" width="3" height="13" rx="1" fill="#F2F5EC" opacity="0.4"></rect><rect x="24" y="1" width="19" height="11" rx="3" stroke="#F2F5EC" opacity="0.6"></rect><rect x="26" y="3" width="12" height="7" rx="1.5" fill="#F2F5EC"></rect><rect x="44" y="4.5" width="2" height="4" rx="1" fill="#F2F5EC" opacity="0.6"></rect></svg>
+        </div>
+        <div style="position: relative; padding: 14px 24px 0; display: flex; justify-content: space-between; align-items: center">
+          <div style="width: 42px; height: 42px; border-radius: 999px; background: rgba(13,26,21,0.45); backdrop-filter: blur(10px); border: 1px solid rgba(242,245,236,0.2); display: flex; align-items: center; justify-content: center" data-nav="09"><svg width="14" height="12" viewBox="0 0 16 14" fill="none"><path d="M7 1 L1 7 L7 13 M1.5 7 H15" stroke="#F2F5EC" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+          <div style="padding: 10px 16px; border-radius: 999px; background: rgba(13,26,21,0.45); backdrop-filter: blur(10px); border: 1px solid rgba(242,245,236,0.2); font-family: var(--font-label); font-size: 9.5px; font-weight: 700; letter-spacing: 0.18em; color: rgba(242,245,236,0.85)">SLEEP AFTER</div>
+        </div>
+        <div style="position: absolute; left: 28px; right: 28px; bottom: 44px; display: flex; flex-direction: column; gap: 18px">
+          <div>
+            <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: #DAE8CE">GUIDED MEDITATION</span>
+            <div style="font-family: var(--font-display); font-style: italic; font-size: 36px; font-weight: 500; color: #F5F8F0; line-height: 1.08; margin-top: 6px">The northern road</div>
+            <div style="font-size: 14px; color: rgba(242,245,236,0.75); margin-top: 8px">Let the day settle behind you. Twelve minutes.</div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <div style="height: 3px; border-radius: 2px; background: rgba(242,245,236,0.25); position: relative"><div style="width: 38%; height: 100%; border-radius: 2px; background: #DAE8CE"></div><div style="position: absolute; left: 38%; top: 50%; transform: translate(-50%, -50%); width: 12px; height: 12px; border-radius: 999px; background: #DAE8CE; box-shadow: 0 2px 8px rgba(0,0,0,0.4)"></div></div>
+            <div style="display: flex; justify-content: space-between; font-size: 12px; color: rgba(242,245,236,0.7)"><span>4:32</span><span>12:00</span></div>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: center; gap: 34px">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M13 3 A10 10 0 1 0 23 13" stroke="#F2F5EC" stroke-width="1.6" stroke-linecap="round" opacity="0.85"></path><path d="M13 0.5 L13 6 L18 3.2 Z" fill="#F2F5EC" opacity="0.85"></path></svg>
+            <div style="width: 68px; height: 68px; border-radius: 999px; background: #DAE8CE; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,0.45)"><svg width="18" height="22" viewBox="0 0 18 22" fill="none"><rect x="2" y="2" width="4.5" height="18" rx="1.5" fill="#14261E"></rect><rect x="11.5" y="2" width="4.5" height="18" rx="1.5" fill="#14261E"></rect></svg></div>
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M13 3 A10 10 0 1 1 3 13" stroke="#F2F5EC" stroke-width="1.6" stroke-linecap="round" opacity="0.85"></path><path d="M13 0.5 L13 6 L8 3.2 Z" fill="#F2F5EC" opacity="0.85"></path></svg>
+          </div>
+        </div>
+      </div></div>
+<div class="scr" data-s="11" hidden><div data-screen-label="11 Journal" style="width: 390px; height: 844px; overflow: hidden; position: relative; background: #F0F3E9; box-shadow: 0 18px 48px rgba(31,46,36,0.3); outline: 1px solid rgba(31,46,36,0.1)">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 28px 0; font-size: 14px; font-weight: 500; color: #26332B">
+          <span>9:41</span>
+          <svg width="46" height="13" viewBox="0 0 46 13" fill="none"><rect x="0" y="6" width="3" height="7" rx="1" fill="#26332B"></rect><rect x="5" y="4" width="3" height="9" rx="1" fill="#26332B"></rect><rect x="10" y="2" width="3" height="11" rx="1" fill="#26332B"></rect><rect x="15" y="0" width="3" height="13" rx="1" fill="#26332B" opacity="0.3"></rect><rect x="24" y="1" width="19" height="11" rx="3" stroke="#26332B" opacity="0.5"></rect><rect x="26" y="3" width="12" height="7" rx="1.5" fill="#26332B"></rect><rect x="44" y="4.5" width="2" height="4" rx="1" fill="#26332B" opacity="0.5"></rect></svg>
+        </div>
+        <div style="padding: 22px 28px 0; display: flex; flex-direction: column; gap: 16px">
+          <h2 style="font-family: var(--font-display); font-size: 32px; font-weight: 600; color: #26332B; margin: 0">Journal</h2>
+          <div style="border-radius: 16px; overflow: hidden; position: relative; box-shadow: 0 6px 20px rgba(31,46,36,0.16)">
+            <img src="../assets/passage/bg3.jpg" alt="Forest painting" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 65%">
+            <div style="position: absolute; inset: 0; background: rgba(13,26,21,0.55)"></div>
+            <div style="position: relative; padding: 22px 20px 20px; display: flex; flex-direction: column; gap: 12px">
+              <span style="font-family: var(--font-label); font-size: 9.5px; font-weight: 700; letter-spacing: 0.18em; color: #DAE8CE">TODAY'S PROMPT</span>
+              <div style="font-family: var(--font-display); font-style: italic; font-size: 24px; font-weight: 500; color: #F5F8F0; line-height: 1.2; text-wrap: pretty">Describe a memory with Lucia that makes you laugh.</div>
+              <div style="display: inline-flex; align-self: flex-start; padding: 11px 20px; border-radius: 999px; background: #DAE8CE; color: #14261E; font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.14em" data-nav="12">WRITE</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: baseline; justify-content: space-between">
+            <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: rgba(38,51,43,0.6)">EARLIER ENTRIES</span>
+            <span style="font-size: 13px; color: rgba(38,51,43,0.6)">14 this month</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 12px">
+            <div style="border-radius: 14px; background: #FBFCF6; border: 1px solid rgba(38,51,43,0.12); padding: 16px 18px">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px">
+                <div style="font-family: var(--font-display); font-size: 20px; font-weight: 600; color: #26332B">Changes to Lucia's appetite</div>
+                <span style="font-size: 12px; color: rgba(38,51,43,0.6); flex: 0 0 auto">Jul 26</span>
+              </div>
+              <p style="margin: 6px 0 0; font-size: 13.5px; line-height: 1.55; color: rgba(38,51,43,0.6)">She barely touched the posole, but she asked for it again at nine and we ate together at the counter...</p>
+            </div>
+            <div style="border-radius: 14px; background: #FBFCF6; border: 1px solid rgba(38,51,43,0.12); padding: 16px 18px">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px">
+                <div style="font-family: var(--font-display); font-size: 20px; font-weight: 600; color: #26332B">Conversation with Dr. Whitaker</div>
+                <span style="font-size: 12px; color: rgba(38,51,43,0.6); flex: 0 0 auto">Jul 22</span>
+              </div>
+              <p style="margin: 6px 0 0; font-size: 13.5px; line-height: 1.55; color: rgba(38,51,43,0.6)">Wrote down the questions before the call this time. It helped. She says the new dose should ease the...</p>
+            </div>
+            <div style="border-radius: 14px; background: #FBFCF6; border: 1px solid rgba(38,51,43,0.12); padding: 16px 18px">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px">
+                <div style="font-family: var(--font-display); font-size: 20px; font-weight: 600; color: #26332B">A good day</div>
+                <span style="font-size: 12px; color: rgba(38,51,43,0.6); flex: 0 0 auto">Jul 18</span>
+              </div>
+              <p style="margin: 6px 0 0; font-size: 13.5px; line-height: 1.55; color: rgba(38,51,43,0.6)">We sat on the porch through the whole monsoon. She named the clouds like they were old friends...</p>
+            </div>
+          </div>
+        </div>
+        <div style="position: absolute; right: 24px; bottom: 100px; width: 58px; height: 58px; border-radius: 999px; background: #2A5F4B; display: flex; align-items: center; justify-content: center; box-shadow: 0 18px 48px rgba(31,46,36,0.35)"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3 V17 M3 10 H17" stroke="#F2F5EC" stroke-width="1.8" stroke-linecap="round"></path></svg></div>
+        <div style="position: absolute; left: 20px; right: 20px; bottom: 18px; height: 66px; border-radius: 999px; background: rgba(251,252,246,0.92); backdrop-filter: blur(12px); box-shadow: 0 6px 20px rgba(31,46,36,0.14); border: 1px solid rgba(38,51,43,0.12); display: flex; align-items: center; justify-content: space-around; padding: 0 10px">
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: rgba(38,51,43,0.55)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 11 L12 4 L20 11 V19 A1 1 0 0 1 19 20 H5 A1 1 0 0 1 4 19 Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path></svg><span style="font-family: var(--font-label); font-size: 9px; font-weight: 700; letter-spacing: 0.12em" data-nav="05">HOME</span></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: rgba(38,51,43,0.55)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 20 C7.2 15.8 4 13 4 9.8 A4.4 4.4 0 0 1 12 7.3 A4.4 4.4 0 0 1 20 9.8 C20 13 16.8 15.8 12 20 Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path></svg><span style="font-family: var(--font-label); font-size: 9px; font-weight: 700; letter-spacing: 0.12em" data-nav="06">LUCIA</span></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: rgba(38,51,43,0.55)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="1.7"></circle><path d="M5 20 C6.4 16.6 9 15 12 15 C15 15 17.6 16.6 19 20" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path></svg><span style="font-family: var(--font-label); font-size: 9px; font-weight: 700; letter-spacing: 0.12em" data-nav="09">YOU</span></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: #2A5F4B"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M5 5 A2 2 0 0 1 7 3 H19 V19 H7 A2 2 0 0 0 5 21 Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path><path d="M5 19 A2 2 0 0 1 7 17 H19" stroke="currentColor" stroke-width="1.7"></path></svg><span style="font-family: var(--font-label); font-size: 9px; font-weight: 700; letter-spacing: 0.12em" data-nav="11">JOURNAL</span></div>
+        </div>
+      </div></div>
+<div class="scr" data-s="12" hidden><div data-screen-label="12 New entry" style="width: 390px; height: 844px; overflow: hidden; position: relative; background: #F0F3E9; box-shadow: 0 18px 48px rgba(31,46,36,0.3); outline: 1px solid rgba(31,46,36,0.1)">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 28px 0; font-size: 14px; font-weight: 500; color: #26332B">
+          <span>9:41</span>
+          <svg width="46" height="13" viewBox="0 0 46 13" fill="none"><rect x="0" y="6" width="3" height="7" rx="1" fill="#26332B"></rect><rect x="5" y="4" width="3" height="9" rx="1" fill="#26332B"></rect><rect x="10" y="2" width="3" height="11" rx="1" fill="#26332B"></rect><rect x="15" y="0" width="3" height="13" rx="1" fill="#26332B" opacity="0.3"></rect><rect x="24" y="1" width="19" height="11" rx="3" stroke="#26332B" opacity="0.5"></rect><rect x="26" y="3" width="12" height="7" rx="1.5" fill="#26332B"></rect><rect x="44" y="4.5" width="2" height="4" rx="1" fill="#26332B" opacity="0.5"></rect></svg>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 24px 0">
+          <div style="width: 42px; height: 42px; border-radius: 999px; border: 1px solid rgba(38,51,43,0.14); background: #FBFCF6; display: flex; align-items: center; justify-content: center" data-nav="11"><svg width="14" height="12" viewBox="0 0 16 14" fill="none"><path d="M7 1 L1 7 L7 13 M1.5 7 H15" stroke="#26332B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+          <div style="padding: 11px 22px; border-radius: 999px; background: #2A5F4B; color: #F2F5EC; font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.16em; box-shadow: 0 1px 2px rgba(31,46,36,0.15)" data-nav="11">SAVE</div>
+        </div>
+        <div style="padding: 26px 30px 0; display: flex; flex-direction: column; gap: 14px">
+          <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: rgba(38,51,43,0.6)">TODAY'S PROMPT · JULY 28</span>
+          <div style="font-family: var(--font-serif); font-style: italic; font-size: 22px; font-weight: 500; line-height: 1.3; color: #35443B; text-wrap: pretty">Describe a memory with Lucia that makes you laugh.</div>
+          <div style="height: 1px; background: rgba(38,51,43,0.12); margin: 6px 0"></div>
+          <p style="margin: 0; font-family: var(--font-serif); font-size: 20px; line-height: 1.65; color: #35443B">The summer I turned nine she taught me to drive the truck in the arroyo, both of us barely able to see over the wheel. She kept yelling left when she meant right, and we laughed so hard we had to stop and let the dust settle around us.</p>
+          <p style="margin: 0; font-family: var(--font-serif); font-size: 20px; line-height: 1.65; color: #35443B">I told her that story again this morning while I set out her pills. She said, who was driving?<span style="display: inline-block; width: 2px; height: 22px; background: #2A5F4B; vertical-align: text-bottom; margin-left: 2px"></span></p>
+        </div>
+        <div style="position: absolute; left: 30px; right: 30px; bottom: 28px; display: flex; justify-content: space-between; align-items: center">
+          <span style="font-size: 12.5px; color: rgba(38,51,43,0.6)">84 words · saves as you write</span>
+          <span style="font-size: 12.5px; color: rgba(38,51,43,0.6)">Aa</span>
+        </div>
+      </div></div>
+<div class="scr" data-s="13" hidden><div data-screen-label="13 Circle community" style="width: 390px; height: 844px; overflow: hidden; position: relative; background: #F0F3E9; box-shadow: 0 18px 48px rgba(31,46,36,0.3); outline: 1px solid rgba(31,46,36,0.1)">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 28px 0; font-size: 14px; font-weight: 500; color: #26332B">
+          <span>9:41</span>
+          <svg width="46" height="13" viewBox="0 0 46 13" fill="none"><rect x="0" y="6" width="3" height="7" rx="1" fill="#26332B"></rect><rect x="5" y="4" width="3" height="9" rx="1" fill="#26332B"></rect><rect x="10" y="2" width="3" height="11" rx="1" fill="#26332B"></rect><rect x="15" y="0" width="3" height="13" rx="1" fill="#26332B" opacity="0.3"></rect><rect x="24" y="1" width="19" height="11" rx="3" stroke="#26332B" opacity="0.5"></rect><rect x="26" y="3" width="12" height="7" rx="1.5" fill="#26332B"></rect><rect x="44" y="4.5" width="2" height="4" rx="1" fill="#26332B" opacity="0.5"></rect></svg>
+        </div>
+        <div style="padding: 22px 28px 0; display: flex; flex-direction: column; gap: 6px">
+          <h2 style="font-family: var(--font-display); font-size: 32px; font-weight: 600; color: #26332B; margin: 0">Circle</h2>
+          <p style="margin: 0 0 14px; font-size: 14px; color: rgba(38,51,43,0.6)">Caretakers who understand. Moderated, anonymous if you wish.</p>
+          <div style="display: flex; gap: 8px; margin-bottom: 16px">
+            <span style="padding: 9px 16px; border-radius: 999px; background: rgba(38,51,43,0.09); font-size: 13px; font-weight: 500; color: #26332B">All</span>
+            <span style="padding: 9px 16px; border-radius: 999px; border: 1px solid rgba(38,51,43,0.14); font-size: 13px; color: rgba(38,51,43,0.6)">Grief</span>
+            <span style="padding: 9px 16px; border-radius: 999px; border: 1px solid rgba(38,51,43,0.14); font-size: 13px; color: rgba(38,51,43,0.6)">Daily care</span>
+            <span style="padding: 9px 16px; border-radius: 999px; border: 1px solid rgba(38,51,43,0.14); font-size: 13px; color: rgba(38,51,43,0.6)">Wins</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 12px">
+            <div style="border-radius: 14px; background: #FBFCF6; border: 1px solid rgba(38,51,43,0.12); padding: 16px 18px">
+              <div style="display: flex; gap: 12px; align-items: center">
+                <div style="width: 38px; height: 38px; border-radius: 999px; background: #E2E9D8; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 17px; font-weight: 600; color: #26332B; flex: 0 0 auto">A</div>
+                <div style="flex: 1">
+                  <div style="font-size: 15px; font-weight: 500; color: #26332B; line-height: 1.3">Books about the grieving process?</div>
+                  <div style="font-size: 12.5px; color: rgba(38,51,43,0.6); margin-top: 3px">Ashley R · 2 hr ago · 14 replies</div>
+                </div>
+              </div>
+              <p style="margin: 10px 0 0; font-size: 13.5px; line-height: 1.55; color: rgba(38,51,43,0.6)">Mom's decline is speeding up and I want to be ready in whatever way a person can be. What helped you?</p>
+            </div>
+            <div style="border-radius: 14px; background: #FBFCF6; border: 1px solid rgba(38,51,43,0.12); padding: 16px 18px">
+              <div style="display: flex; gap: 12px; align-items: center">
+                <div style="width: 38px; height: 38px; border-radius: 999px; background: #E2E9D8; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 17px; font-weight: 600; color: #26332B; flex: 0 0 auto">B</div>
+                <div style="flex: 1">
+                  <div style="font-size: 15px; font-weight: 500; color: #26332B; line-height: 1.3">How do you rest when you can't leave?</div>
+                  <div style="font-size: 12.5px; color: rgba(38,51,43,0.6); margin-top: 3px">Brian K · 5 hr ago · 9 replies</div>
+                </div>
+              </div>
+              <p style="margin: 10px 0 0; font-size: 13.5px; line-height: 1.55; color: rgba(38,51,43,0.6)">Respite care fell through again. Looking for small ways to recover inside the house, ten minutes at a time.</p>
+            </div>
+            <div style="border-radius: 14px; background: #FBFCF6; border: 1px solid rgba(38,51,43,0.12); padding: 16px 18px">
+              <div style="display: flex; gap: 12px; align-items: center">
+                <div style="width: 38px; height: 38px; border-radius: 999px; background: #E2E9D8; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 17px; font-weight: 600; color: #26332B; flex: 0 0 auto">L</div>
+                <div style="flex: 1">
+                  <div style="font-size: 15px; font-weight: 500; color: #26332B; line-height: 1.3">A small win today</div>
+                  <div style="font-size: 12.5px; color: rgba(38,51,43,0.6); margin-top: 3px">Lauren W · yesterday · 31 replies</div>
+                </div>
+              </div>
+              <p style="margin: 10px 0 0; font-size: 13.5px; line-height: 1.55; color: rgba(38,51,43,0.6)">Dad remembered my daughter's name at dinner. Sharing because you all understand what that means.</p>
+            </div>
+          </div>
+        </div>
+        <div style="position: absolute; right: 24px; bottom: 100px; display: inline-flex; align-items: center; gap: 8px; padding: 14px 20px; border-radius: 999px; background: #2A5F4B; color: #F2F5EC; font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.16em; box-shadow: 0 18px 48px rgba(31,46,36,0.35)" data-hint="The composer is on the not-yet-designed list."><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1 V13 M1 7 H13" stroke="#F2F5EC" stroke-width="1.7" stroke-linecap="round"></path></svg>NEW POST</div>
+        <div style="position: absolute; left: 20px; right: 20px; bottom: 18px; height: 66px; border-radius: 999px; background: rgba(251,252,246,0.92); backdrop-filter: blur(12px); box-shadow: 0 6px 20px rgba(31,46,36,0.14); border: 1px solid rgba(38,51,43,0.12); display: flex; align-items: center; justify-content: space-around; padding: 0 10px">
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: rgba(38,51,43,0.55)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 11 L12 4 L20 11 V19 A1 1 0 0 1 19 20 H5 A1 1 0 0 1 4 19 Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path></svg><span style="font-family: var(--font-label); font-size: 9px; font-weight: 700; letter-spacing: 0.12em" data-nav="05">HOME</span></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: rgba(38,51,43,0.55)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 20 C7.2 15.8 4 13 4 9.8 A4.4 4.4 0 0 1 12 7.3 A4.4 4.4 0 0 1 20 9.8 C20 13 16.8 15.8 12 20 Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path></svg><span style="font-family: var(--font-label); font-size: 9px; font-weight: 700; letter-spacing: 0.12em" data-nav="06">LUCIA</span></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: #2A5F4B"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="1.7"></circle><path d="M5 20 C6.4 16.6 9 15 12 15 C15 15 17.6 16.6 19 20" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path></svg><span style="font-family: var(--font-label); font-size: 9px; font-weight: 700; letter-spacing: 0.12em" data-nav="09">YOU</span></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: rgba(38,51,43,0.55)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M5 5 A2 2 0 0 1 7 3 H19 V19 H7 A2 2 0 0 0 5 21 Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path><path d="M5 19 A2 2 0 0 1 7 17 H19" stroke="currentColor" stroke-width="1.7"></path></svg><span style="font-family: var(--font-label); font-size: 9px; font-weight: 700; letter-spacing: 0.12em" data-nav="11">JOURNAL</span></div>
+        </div>
+      </div></div>
+<div class="scr" data-s="14" hidden><div data-screen-label="14 Article" style="width: 390px; height: 844px; overflow: hidden; position: relative; background: #F0F3E9; box-shadow: 0 18px 48px rgba(31,46,36,0.3); outline: 1px solid rgba(31,46,36,0.1)">
+        <div style="position: relative; height: 300px; overflow: hidden">
+          <img src="../assets/passage/bg4.jpg" alt="Aurora painting" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%">
+          <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13,26,21,0.3) 0%, rgba(13,26,21,0) 40%, rgba(240,243,233,0) 70%, #F0F3E9 100%)"></div>
+          <div style="position: relative; display: flex; justify-content: space-between; align-items: center; padding: 16px 28px 0; font-size: 14px; font-weight: 500; color: #F2F5EC">
+            <span>9:41</span>
+            <svg width="46" height="13" viewBox="0 0 46 13" fill="none"><rect x="0" y="6" width="3" height="7" rx="1" fill="#F2F5EC"></rect><rect x="5" y="4" width="3" height="9" rx="1" fill="#F2F5EC"></rect><rect x="10" y="2" width="3" height="11" rx="1" fill="#F2F5EC"></rect><rect x="15" y="0" width="3" height="13" rx="1" fill="#F2F5EC" opacity="0.4"></rect><rect x="24" y="1" width="19" height="11" rx="3" stroke="#F2F5EC" opacity="0.6"></rect><rect x="26" y="3" width="12" height="7" rx="1.5" fill="#F2F5EC"></rect><rect x="44" y="4.5" width="2" height="4" rx="1" fill="#F2F5EC" opacity="0.6"></rect></svg>
+          </div>
+          <div style="position: relative; padding: 14px 24px 0">
+            <div style="width: 42px; height: 42px; border-radius: 999px; background: rgba(13,26,21,0.45); backdrop-filter: blur(10px); border: 1px solid rgba(242,245,236,0.2); display: flex; align-items: center; justify-content: center" data-nav="09"><svg width="14" height="12" viewBox="0 0 16 14" fill="none"><path d="M7 1 L1 7 L7 13 M1.5 7 H15" stroke="#F2F5EC" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+          </div>
+        </div>
+        <div style="padding: 6px 30px 0; display: flex; flex-direction: column; gap: 14px">
+          <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: rgba(38,51,43,0.6)">FROM THE LIBRARY · 6 MIN READ</span>
+          <h2 style="font-family: var(--font-display); font-size: 34px; font-weight: 600; line-height: 1.12; color: #26332B; margin: 0; text-wrap: pretty">Ten gentle tips for caretakers</h2>
+          <p style="margin: 0; font-family: var(--font-serif); font-size: 19px; font-style: italic; line-height: 1.5; color: #35443B">You cannot pour from an empty cup, but no one tells you how to refill it while someone depends on you every hour.</p>
+          <p style="margin: 0; font-size: 15px; line-height: 1.7; color: #35443B">Start smaller than you think you should. A caretaker's rest rarely arrives in weekends; it arrives in minutes. The first tip is to stop waiting for the big break and claim the ten quiet minutes that already exist in your day, the kettle boiling, the porch after the morning meds, the car before you go back inside.</p>
+          <p style="margin: 0; font-size: 15px; line-height: 1.7; color: #35443B">Second, tell one person the truth about how it is going. Not the polished version...</p>
+          <div style="display: flex; align-items: center; gap: 10px; padding-top: 4px">
+            <span style="font-size: 13px; color: #2A5F4B; font-weight: 500">Save for later</span>
+            <span style="color: rgba(38,51,43,0.35)">·</span>
+            <span style="font-size: 13px; color: #2A5F4B; font-weight: 500">Share</span>
+          </div>
+        </div>
+      </div></div>
+<div class="scr" data-s="15" hidden><div data-screen-label="15 Profile" style="width: 390px; height: 844px; overflow: hidden; position: relative; background: #F0F3E9; box-shadow: 0 18px 48px rgba(31,46,36,0.3); outline: 1px solid rgba(31,46,36,0.1)">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 28px 0; font-size: 14px; font-weight: 500; color: #26332B">
+          <span>9:41</span>
+          <svg width="46" height="13" viewBox="0 0 46 13" fill="none"><rect x="0" y="6" width="3" height="7" rx="1" fill="#26332B"></rect><rect x="5" y="4" width="3" height="9" rx="1" fill="#26332B"></rect><rect x="10" y="2" width="3" height="11" rx="1" fill="#26332B"></rect><rect x="15" y="0" width="3" height="13" rx="1" fill="#26332B" opacity="0.3"></rect><rect x="24" y="1" width="19" height="11" rx="3" stroke="#26332B" opacity="0.5"></rect><rect x="26" y="3" width="12" height="7" rx="1.5" fill="#26332B"></rect><rect x="44" y="4.5" width="2" height="4" rx="1" fill="#26332B" opacity="0.5"></rect></svg>
+        </div>
+        <div style="padding: 26px 28px 0; display: flex; flex-direction: column; gap: 18px">
+          <div style="display: flex; align-items: center; gap: 16px">
+            <div style="width: 64px; height: 64px; border-radius: 999px; background: #E2E9D8; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 26px; font-weight: 600; color: #26332B">S</div>
+            <div>
+              <h2 style="font-family: var(--font-display); font-size: 30px; font-weight: 600; color: #26332B; margin: 0; line-height: 1.1">Selena Kyle</h2>
+              <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.18em; color: rgba(38,51,43,0.6)">PRIMARY CAREGIVER</span>
+            </div>
+          </div>
+          <div style="border-radius: 14px; background: #FBFCF6; border: 1px solid rgba(38,51,43,0.12); overflow: hidden">
+            <div style="display: flex; justify-content: space-between; padding: 14px 18px; border-bottom: 1px solid rgba(38,51,43,0.06)"><span style="font-size: 14px; color: rgba(38,51,43,0.6)">Caring for</span><span style="font-size: 14px; font-weight: 500; color: #26332B">Lucia Alvarez, grandmother</span></div>
+            <div style="display: flex; justify-content: space-between; padding: 14px 18px; border-bottom: 1px solid rgba(38,51,43,0.06)"><span style="font-size: 14px; color: rgba(38,51,43,0.6)">Location</span><span style="font-size: 14px; font-weight: 500; color: #26332B">Seattle, WA</span></div>
+            <div style="display: flex; justify-content: space-between; padding: 14px 18px; border-bottom: 1px solid rgba(38,51,43,0.06)"><span style="font-size: 14px; color: rgba(38,51,43,0.6)">Lucia's physician</span><span style="font-size: 14px; font-weight: 500; color: #26332B">Dr. Sami Whitaker</span></div>
+            <div style="display: flex; justify-content: space-between; padding: 14px 18px"><span style="font-size: 14px; color: rgba(38,51,43,0.6)">Caring since</span><span style="font-size: 14px; font-weight: 500; color: #26332B">March 2025</span></div>
+          </div>
+          <div>
+            <span style="font-family: var(--font-label); font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: rgba(38,51,43,0.6)">YOUR SELF CARE ROUTINE</span>
+            <div style="border-radius: 14px; background: #FBFCF6; border: 1px solid rgba(38,51,43,0.12); overflow: hidden; margin-top: 10px">
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; border-bottom: 1px solid rgba(38,51,43,0.06)">
+                <div><div style="font-size: 14.5px; font-weight: 500; color: #26332B">Journaling</div><div style="font-size: 12px; color: rgba(38,51,43,0.6); margin-top: 2px">emotional clarity</div></div>
+                <span style="font-size: 13px; color: rgba(38,51,43,0.6)">3 to 5 times a week</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; border-bottom: 1px solid rgba(38,51,43,0.06)">
+                <div><div style="font-size: 14.5px; font-weight: 500; color: #26332B">Walking</div><div style="font-size: 12px; color: rgba(38,51,43,0.6); margin-top: 2px">enhanced mood</div></div>
+                <span style="font-size: 13px; color: rgba(38,51,43,0.6)">daily</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; border-bottom: 1px solid rgba(38,51,43,0.06)">
+                <div><div style="font-size: 14.5px; font-weight: 500; color: #26332B">Calling a friend</div><div style="font-size: 12px; color: rgba(38,51,43,0.6); margin-top: 2px">receive support</div></div>
+                <span style="font-size: 13px; color: rgba(38,51,43,0.6)">2 to 4 times a week</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 18px">
+                <div><div style="font-size: 14.5px; font-weight: 500; color: #26332B">Baking</div><div style="font-size: 12px; color: rgba(38,51,43,0.6); margin-top: 2px">joy and relaxation</div></div>
+                <span style="font-size: 13px; color: rgba(38,51,43,0.6)">weekly</span>
+              </div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 2px 2px">
+            <span style="font-size: 14px; color: #26332B">Gentle nudges for your routine</span>
+            <div style="width: 48px; height: 28px; border-radius: 999px; background: #2A5F4B; position: relative"><div style="position: absolute; top: 3px; right: 3px; width: 22px; height: 22px; border-radius: 999px; background: #F2F5EC; box-shadow: 0 1px 2px rgba(31,46,36,0.2)"></div></div>
+          </div>
+          <span style="font-size: 14px; color: rgba(38,51,43,0.6)">Sign out</span>
+        </div>
+        <div style="position: absolute; left: 20px; right: 20px; bottom: 18px; height: 66px; border-radius: 999px; background: rgba(251,252,246,0.92); backdrop-filter: blur(12px); box-shadow: 0 6px 20px rgba(31,46,36,0.14); border: 1px solid rgba(38,51,43,0.12); display: flex; align-items: center; justify-content: space-around; padding: 0 10px">
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: rgba(38,51,43,0.55)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 11 L12 4 L20 11 V19 A1 1 0 0 1 19 20 H5 A1 1 0 0 1 4 19 Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path></svg><span style="font-family: var(--font-label); font-size: 9px; font-weight: 700; letter-spacing: 0.12em" data-nav="05">HOME</span></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: rgba(38,51,43,0.55)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 20 C7.2 15.8 4 13 4 9.8 A4.4 4.4 0 0 1 12 7.3 A4.4 4.4 0 0 1 20 9.8 C20 13 16.8 15.8 12 20 Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path></svg><span style="font-family: var(--font-label); font-size: 9px; font-weight: 700; letter-spacing: 0.12em" data-nav="06">LUCIA</span></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: #2A5F4B"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="1.7"></circle><path d="M5 20 C6.4 16.6 9 15 12 15 C15 15 17.6 16.6 19 20" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path></svg><span style="font-family: var(--font-label); font-size: 9px; font-weight: 700; letter-spacing: 0.12em" data-nav="09">YOU</span></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: rgba(38,51,43,0.55)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M5 5 A2 2 0 0 1 7 3 H19 V19 H7 A2 2 0 0 0 5 21 Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path><path d="M5 19 A2 2 0 0 1 7 17 H19" stroke="currentColor" stroke-width="1.7"></path></svg><span style="font-family: var(--font-label); font-size: 9px; font-weight: 700; letter-spacing: 0.12em" data-nav="11">JOURNAL</span></div>
+        </div>
+      </div></div>
+    </div>
+    <div class="pgtip">TAP THE TABS TO MOVE AROUND</div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+  <div class="bar" id="jumps"></div>
+  <p class="hint">The tab bar at the bottom of the phone moves you between Lucia&rsquo;s care, your own space and the journal &middot; or tap any screen name above to jump straight there</p>
+</div>
+
+<script>
+const NAMES = {
+  '01': "Welcome",
+  '02': "Build profiles",
+  '03': "About you",
+  '04': "Lucia's routine",
+  '05': "Home",
+  '06': "Lucia",
+  '07': "Medicines",
+  '08': "Planning ahead",
+  '09': "For me",
+  '10': "Meditation player",
+  '11': "Journal",
+  '12': "New entry",
+  '13': "Circle community",
+  '14': "Article",
+  '15': "Profile"
+};
+// NB: never Object.keys() here — JS hoists integer-like keys, so '10'..'15'
+// would jump ahead of '01' and the prototype would open on the meditation player.
+const ORDER = ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15'];
+let current = ORDER[0];
+let touched = false;
+const dev=document.getElementById('device'), stack=document.getElementById('stack'), toastEl=document.getElementById('toast');
+let tmr=null;
+
+function fit(){ stack.style.transform='scale('+(dev.clientWidth/390)+')'; }
+// Some targets in the design file are tiny label spans sitting next to a 22px
+// icon — the tab bar most of all. Tapping the icon did nothing. So after each
+// paint, any target rendering smaller than a finger climbs to the first
+// ancestor big enough to hit, bounded so nothing swallows the screen.
+function growHitAreas(scr){
+  scr.querySelectorAll('[data-nav],[data-hint]').forEach(el=>{
+    let r=el.getBoundingClientRect();
+    if(r.width>=28 && r.height>=28) return;
+    const key = el.hasAttribute('data-nav') ? 'data-nav' : 'data-hint';
+    const val = el.getAttribute(key);
+    let node=el.parentElement, hops=0;
+    while(node && node!==scr && hops<3){
+      const pr=node.getBoundingClientRect();
+      if(pr.width>300 || pr.height>90) break;
+      if(pr.width>=20 && pr.height>=28){
+        el.removeAttribute(key); node.setAttribute(key,val); return;
+      }
+      node=node.parentElement; hops++;
+    }
+  });
+}
+function paint(){
+  stack.querySelectorAll('.scr').forEach(s=>{ s.hidden = s.dataset.s!==current; });
+  const live=[...stack.querySelectorAll('.scr')].find(s=>!s.hidden);
+  if(live) growHitAreas(live);
+  dev.classList.toggle('nudge', !touched && !!(live && live.querySelector('.pg-tabs, [data-nav]')));
+  document.querySelectorAll('#jumps .btn').forEach(b=>b.classList.toggle('on', b.dataset.j===current));
+}
+function go(k){ if(!NAMES[k]) return; touched=true; current=k; toastEl.classList.remove('on'); paint(); }
+function toast(msg){ toastEl.textContent=msg; toastEl.classList.add('on'); clearTimeout(tmr); tmr=setTimeout(()=>toastEl.classList.remove('on'),3400); }
+
+dev.addEventListener('click', e=>{
+  const nav=e.target.closest('[data-nav]');
+  if(nav){ go(nav.dataset.nav); return; }
+  const hint=e.target.closest('[data-hint]');
+  if(hint){ touched=true; paint(); toast(hint.dataset.hint); }
+});
+document.getElementById('jumps').innerHTML =
+  ORDER.map(k=>`<button class="btn" type="button" data-j="${k}">${k} ${NAMES[k].toLowerCase()}</button>`).join('') +
+  '<button class="btn" type="button" data-j="__reset">restart</button>';
+document.getElementById('jumps').addEventListener('click', e=>{
+  const b=e.target.closest('[data-j]'); if(!b) return;
+  go(b.dataset.j==='__reset' ? ORDER[0] : b.dataset.j);
+});
+if(location.search.includes('embed')) document.body.classList.add('embed');
+addEventListener('resize', fit);
+fit(); paint();
+</script>
+</body>
+</html>

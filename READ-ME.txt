@@ -1,61 +1,51 @@
-PASSAGE — TAP TARGETS, THE NUDGE, CLEAN THUMBNAILS
-==================================================
-Replaces the previous fixes zip. Drag all five top-level items in at once.
+LATEST — replaces every zip before it
+=====================================
+Drag all six top-level items in at once.
 
-  styles.css               ← still the one that fixes your typography
+  styles.css                 ← the one that fixes your typography
   work-bookspot.html
   work-passage.html
-  passage-preview.jpg
-  proto/                   passage-app.html
-  assets/passage26/        all 15 thumbnails, recaptured
+  passage-preview.jpg        rebuilt
+  bookspot-preview.jpg       rebuilt
+  drive-the-505-preview.jpg  rebuilt
+  proto/                     passage-app.html
+  assets/passage26/          all 15 thumbnails
 
-1. THE TAB BAR NOW WORKS FROM THE ICON
+ALL THREE CARD PREVIEWS, REBUILT
 
-   You were right, and the reason is unglamorous: the wiring had landed on
-   the 9px label span instead of the tab item, so only the word HOME was
-   live, not the little house above it. A 31x10 target. Nobody aims at that.
+  The Drive the 505 and Bookspot cards had the same faults you spotted on
+  Passage: pale slivers where the mockups' rounded phone tops met the ivory
+  well, the three panels sitting at slightly different heights, and thin
+  strips of background showing between them.
 
-   Rather than patch each one by hand, the prototype now measures its own
-   targets after every screen change. Anything rendering smaller than a
-   finger gets promoted to the first ancestor big enough to hit, bounded so
-   nothing ends up swallowing half the screen. Thin text links like
-   "Everything for Lucia" get a transparent vertical hit extender that
-   leaves the layout untouched. Checked every tab on every screen that has
-   one: all four navigate from the icon now.
+  All three are built the same way now — three screens captured from the
+  running apps at 390x844, butted edge to edge with no gaps, top aligned,
+  bleeding off the bottom, filling the full frame so no card background
+  shows through anywhere.
 
-2. THE NUDGE
+    Drive the 505   home · car knowledge · the Albuquerque map
+    Passage         home · for me · the meditation player
+    Bookspot        the London map · Platform 9¾ · the stamp
 
-   Until the first tap, a slow ring breathes around the tab bar and a small
-   TAP THE TABS TO MOVE AROUND chip sits just above it. Both disappear the
-   moment you interact and never come back in that session, and the
-   animation holds still for anyone with reduced motion turned on. The line
-   under the phone on the case study now says the same thing in words.
+  Bookspot's and Passage's come from their own prototypes, so the cards now
+  show exactly what someone gets when they click through. Nothing is a
+  photograph of a mockup any more.
 
-3. THE THUMBNAILS
+ALSO IN HERE, FROM THE LAST ROUND
 
-   Diagnosed: I had been capturing each screen through the phone frame, so
-   its 52px corner radius clipped the dark page background into all four
-   corners of every image. That dark corner then sat inside the gallery's
-   own 16px rounding, which is exactly the sliver you were seeing.
-
-   Recaptured with the frame chrome stripped, so every screen is square
-   edged and full bleed. The Passage card preview is rebuilt too: three
-   panels butted edge to edge with no gaps, the same construction as the
-   Bookspot card.
-
-4. STILL CARRYING THE TWO STRAYS
-
-   styles.css — each @font-face lists fonts/<file>.woff2 first and
-   <file>.woff2 second, so the browser falls through to the copies already
-   at your repo root. Upload this one file and the typography starts
-   working, no folder needed.
-
-   work-bookspot.html — has never landed. The hero is the running Bookspot
-   prototype.
+  proto/passage-app.html   tabs work from the icon, not just the 9px label;
+                           a ring breathes around the tab bar until first tap
+  assets/passage26/        15 thumbnails recaptured without the phone frame
+                           clipping dark corners into them
+  styles.css               @font-face falls through to the woff2 files already
+                           at your repo root, so the type works without the
+                           fonts/ folder ever landing
+  work-bookspot.html       still has never uploaded; hero is the live prototype
+  work-passage.html        caption fix
 
 CHECK AFTER DEPLOY
 
-  /                        the whole site changes typeface
-  /work-passage.html       tap a tab icon in the hero phone; gallery is clean
-  /proto/passage-app.html  opens on Welcome, ring breathes around the tabs
+  /                        typeface changes site-wide; all three cards clean
+  /work-passage.html       tap a tab icon in the hero phone
+  /proto/passage-app.html  opens on Welcome
   /work-bookspot.html      the phone in the hero is tappable
