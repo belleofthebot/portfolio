@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Analytics infrastructure and the executive dashboard — Elizabeth Beier</title>
+<meta name="description" content="Built a company's entire web measurement capability from zero: governance, tracking architecture, and a dashboard leadership opens themselves.">
+<meta name="author" content="Elizabeth Beier">
+<meta name="theme-color" content="#17121C">
+<meta property="og:title" content="Analytics infrastructure and the executive dashboard — Elizabeth Beier">
+<meta property="og:description" content="Built a company's entire web measurement capability from zero: governance, tracking architecture, and a dashboard leadership opens themselves.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="">
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav"><div class="nav-in">
+<a class="mark" href="index.html">belleofthe<span class="bot">bot</span><span class="cur">_</span></a>
+<a class="link" href="index.html">work</a><a class="link" href="resume.html">résumé</a><a class="link" href="index.html#stack">stack</a><a class="link" href="index.html#about">about</a><a class="link" href="index.html#contact">contact</a></div></header>
+<main id="main">
+<div class="wrap narrow case-hero">
+<a class="backlink" href="index.html">← back to work</a>
+<span class="kicker">case study · analytics</span>
+<h1>Analytics infrastructure and the executive dashboard</h1>
+<p class="meta">a commercial led lighting manufacturer · 2026 · small marketing team, no in house developer, no software spend</p>
+<p class="oneline">Built a company's entire web measurement capability from zero: governance, tracking architecture, and a dashboard leadership opens themselves.</p>
+</div>
+<div class="wrap narrow">
+
+<div class="reading well">
+<div class="block"><p class="h">the problem</p>
+<p><strong>The relaunch shipped five interactive tools that had never existed before, and there was no way to know whether anyone used them.</strong> A product configurator, a comparison tool, a lighting layout tool, a rebate finder, and a redesigned distributor portal. Some carry ongoing subscription costs. All were built on the assumption that customers wanted them. Nobody could prove it either way, because none of them emitted a single measurable signal.</p>
+<p>Around that sat the wider gap: no way to see which product documents drive demand, no way to compare the new site against the old, no visibility into who was logging into the distributor portal. And a relaunch destroys the historical baseline unless the migration is planned deliberately. That window closes on launch day and does not reopen.</p></div>
+
+<div class="block"><p class="h">every event was tied to a live business question</p>
+<div class="qa">
+<div class="qh"><span>event</span><span>the question it answers</span></div>
+<div><span>Configurator used</span><span>Does the tool get used, and do configurations succeed or fail?</span></div>
+<div><span>Comparison tool used</span><span>Is this subscription worth renewing?</span></div>
+<div><span>Lighting layout launched</span><span>Is anyone reaching the third party tool we pay for?</span></div>
+<div><span>Form submissions by type</span><span>Which forms convert, and which collect abandonments?</span></div>
+<div><span>Portal login by customer type</span><span>Who uses the distributor portal: internal staff, agents, or customers?</span></div>
+<div><span>Downloads by type and product</span><span>Which spec sheets and guides actually drive demand?</span></div>
+</div>
+<p style="margin-top:14px">The segmentation on that fifth row is the one worth pausing on. Login volume tells you the portal is busy. Login volume by user type tells you whether it is reaching distributors or just being used internally. Those are different businesses.</p></div>
+
+<div class="block"><p class="h">layer 0 · the audit, and what it found</p>
+<ul>
+<li><strong>The container was under the wrong account.</strong> The container provisioned for the new site sat under IT's account rather than Marketing's, meaning marketing would not own or be able to administer its own measurement infrastructure. I created a replacement under the correct account, coordinated with IT on access, briefed the agency to swap the installed snippet, and confirmed the old container was fully removed rather than left firing in parallel. That is access governance, not tagging, and it was caught before launch rather than during a crisis.</li>
+<li><strong>The legacy containers were empty.</strong> Both pre existing marketing containers held no tags, meaning the live site ran on hard coded on page tracking. That explained why nothing had ever been changeable without a developer, and justified building the new site differently.</li>
+<li><strong>Advertising tags were about to be orphaned.</strong> Ad platform and social insight tags on the legacy site had not been carried across to the new build. Flagged pre launch with a remediation path rather than discovered later as a silent gap in conversion data.</li>
+</ul></div>
+
+<div class="block"><p class="h">layer 1 · relaunch readiness</p>
+<ul>
+<li>Three properties configured in parallel, covering the new site, the legacy site and the distributor portal, so post launch performance had a real baseline to compare against.</li>
+<li>Tracking built and verified on staging before go live, not retrofitted. Configuration tags confirmed firing on every page via preview mode and hit level inspection, screenshotted for the record and confirmed back to the agency.</li>
+<li>Measurement live on day one, including a cross property migration comparison, so the first question leadership asked after launch already had an answer waiting.</li>
+</ul></div>
+
+<div class="block"><p class="h">layer 2 · the tags, built by hand</p>
+<p>No auto events, no plugins. Each system specified, built, tested in preview, verified in hit detail, published, and paired with a registered custom dimension so the data was reportable rather than merely collected.</p>
+<ul>
+<li><strong>File downloads.</strong> Document type resolved through a RegEx table variable mapping seven document categories, with product code extracted via custom JavaScript, so downloads report by what and by which product rather than as an undifferentiated total.</li>
+<li><strong>Product configurator.</strong> Event on the request button, with element variables reading the generated SKU and a validity attribute, capturing failed configurations too, because failure is a UX signal rather than noise.</li>
+<li><strong>Comparison tool.</strong> Element visibility trigger on the results container, with custom JavaScript extracting every compared product name plus a count, feeding the renewal case directly.</li>
+<li><strong>Interactive tools.</strong> Click tags scoped by destination URL, with one form tag deliberately scoped to the form's unique identifier rather than the page, preventing misfires on a form embedded in several locations.</li>
+<li><strong>Portal logins.</strong> Custom JavaScript variable reading user role from a page body class, firing a login event with a user type parameter, turning an untracked authenticated area into a segmentable audience with no backend work.</li>
+</ul></div>
+
+<div class="block"><p class="h">two judgment calls worth naming</p>
+<ul>
+<li><strong>The tracking I chose not to build.</strong> A third party rebate widget turned out to be a component library embed generating non deterministic element IDs on every render. DOM based tracking against it would have appeared to work and broken silently on the vendor's next release. I used the vendor's own reporting and shipped a page view metric as an honest interim measure. Declining to build fragile tracking is the harder call.</li>
+<li><strong>The discovery that avoided a backend project.</strong> Portal login tracking looked like API work with an external development partner. Inspecting the post login page showed the user role was already exposed in the markup, which collapsed a cross vendor project into a single variable.</li>
+</ul></div>
+
+<div class="block"><p class="h">layer 3 · the dashboard</p>
+<p>A custom, access controlled web dashboard querying the analytics Data API directly. Eleven named report queries: totals, daily active users, top events, top pages, traffic sources by source and medium, file downloads by filename, product page performance, distributor portal logins by user type, portal logins daily, portal section usage, and form starts versus submissions. A twelfth cross property query produces the migration comparison, legacy platform against new, over a fixed since launch window. Date range selector and PDF export for circulation.</p>
+<p>The engineering underneath is the part I would want asked about:</p>
+<ul>
+<li><strong>Service account authentication was hand rolled,</strong> not lifted from an SDK. Constructing and RSA signing a JWT assertion in code, exchanging it for an access token, and caching that token just under its expiry window. I read the authentication specification and implemented it.</li>
+<li><strong>Two tier caching:</strong> a token cache and a per date range payload cache, to stay well inside API quota.</li>
+<li><strong>Queries batched</strong> in groups of five per request rather than fired individually.</li>
+<li><strong>Least privilege by design.</strong> The service account holds read only viewer access and nothing else, documented at the top of the file.</li>
+<li><strong>Graceful degradation.</strong> Missing configuration returns a clear disabled state with the reason, rather than an error.</li>
+</ul>
+<p><strong>Why custom rather than off the shelf.</strong> Commercial reporting tools were evaluated and used first. They hit real limits: filters silently dropping between report views and needing reapplication, and interface changes that removed controls the team relied on. Building directly against the Data API gave complete control over what was measured, how it was filtered and how it was presented, at no recurring cost.</p></div>
+
+<div class="block"><p class="h">architecture</p>
+<div class="flow">
+<div class="flow-node"><span class="t">site, portal &amp; tools</span><span class="d">DOM events, data attributes, body classes</span></div>
+<div class="flow-arrow">→</div>
+<div class="flow-node"><span class="t">tag manager</span><span class="d">Custom JS, RegEx table, element visibility triggers</span></div>
+<div class="flow-arrow">→</div>
+<div class="flow-node"><span class="t">ga4</span><span class="d">Three properties, registered custom dimensions</span></div>
+<div class="flow-arrow">→</div>
+<div class="flow-node"><span class="t">data api</span><span class="d">Hand rolled JWT, token cache, batched queries</span></div>
+<div class="flow-arrow">→</div>
+<div class="flow-node"><span class="t">dashboard</span><span class="d">Twelve queries, PDF export, access controlled</span></div>
+</div>
+<p class="flow-cap">no vendor in the chain past the analytics platform itself · nothing in it that needs a developer to change</p></div>
+
+<div class="outcome"><p class="h">outcome</p>
+<p>Every event was specified against a business question rather than collected by default. The five interactive tools introduced in the relaunch went from producing no measurable signal at all to being individually reportable, including subscription carrying tools whose renewal case now rests on usage data rather than assumption.</p>
+<ul>
+<li>Measurement verified on staging and live on day one of the relaunch, with a cross property migration comparison available from launch.</li>
+<li>Six custom event families feeding a new property, plus two further properties configured to preserve the pre relaunch baseline.</li>
+<li>In daily use by the marketing team at zero recurring tooling cost, replacing recurring hours of manual reporting each week.</li>
+<li>Measurement infrastructure now owned and administered by Marketing rather than borrowed from IT.</li>
+</ul></div>
+
+<div class="diff"><p class="h">honest limitation</p>
+<p>A majority of early portal login events recorded a blank user type. I found it, documented it as a post launch refinement item and flagged it to stakeholders rather than presenting the data as clean. Until it is fixed that segment is directional rather than authoritative, and I would rather say so than have someone build a decision on it.</p></div>
+</div>
+
+<div class="tags"><span class="tag rose">ga4</span><span class="tag ">google tag manager</span><span class="tag ">custom javascript variables</span><span class="tag ">regex table variables</span><span class="tag ">element visibility triggers</span><span class="tag ">custom dimensions</span><span class="tag ">analytics data api</span><span class="tag ">jwt &amp; oauth</span><span class="tag ">caching &amp; batching</span><span class="tag ">least privilege</span><span class="tag ">migration planning</span><span class="tag ">access governance</span></div>
+<p class="note">This dashboard is employer owned and touches company data, so it is described here rather than linked or published. I can walk through the architecture, the event schema and the QA process in a conversation.</p>
+<div class="nextprev"><a href="work-deck-generator.html">← the product deck generator</a><a href="work-email-generator.html">the email campaign generator →</a></div>
+</div>
+<div class="contact" id="contact"><div class="wrap">
+<p class="avail"><span class="pulse-dot"></span> open to marketing operations, analytics and martech roles</p>
+<h2>Let's talk.</h2>
+<p>Remote, or Albuquerque and hybrid. If you want the architecture behind any of the work here, ask me and I will walk you through it.</p>
+<div class="contact-links">
+<a class="clink primary" href="mailto:elizabethbportfolio@gmail.com">elizabethbportfolio@gmail.com</a>
+<a class="clink" href="resume.html">résumé</a>
+<a class="clink" href="https://github.com/belleofthebot" target="_blank" rel="noopener">github</a>
+<a class="clink" href="https://www.instagram.com/paintingthesouthwest/" target="_blank" rel="noopener">instagram</a>
+</div></div></div>
+<footer><div class="wrap"><span>elizabeth beier · albuquerque, new mexico</span><span>designed, built, and measured by me</span></div></footer>
+</main>
+</body>
+</html>

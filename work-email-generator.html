@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The email campaign generator — Elizabeth Beier</title>
+<meta name="description" content="Made brand compliance and link tracking structurally impossible to get wrong.">
+<meta name="author" content="Elizabeth Beier">
+<meta name="theme-color" content="#17121C">
+<meta property="og:title" content="The email campaign generator — Elizabeth Beier">
+<meta property="og:description" content="Made brand compliance and link tracking structurally impossible to get wrong.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="">
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav"><div class="nav-in">
+<a class="mark" href="index.html">belleofthe<span class="bot">bot</span><span class="cur">_</span></a>
+<a class="link" href="index.html">work</a><a class="link" href="resume.html">résumé</a><a class="link" href="index.html#stack">stack</a><a class="link" href="index.html#about">about</a><a class="link" href="index.html#contact">contact</a></div></header>
+<main id="main">
+<div class="wrap narrow case-hero">
+<a class="backlink" href="index.html">← back to work</a>
+<span class="kicker">case study · marketing operations</span>
+<h1>The email campaign generator</h1>
+<p class="meta">a commercial led lighting manufacturer · 2026 · shipped with a written standard operating procedure</p>
+<p class="oneline">Made brand compliance and link tracking structurally impossible to get wrong.</p>
+</div>
+<div class="wrap narrow">
+<div class="statrow"><div><span class="n">75 min</span><span class="l">measured manual build, per campaign</span></div><div><span class="n">9</span><span class="l">link types in the UTM taxonomy</span></div><div><span class="n">100%</span><span class="l">of links audited by code, every run</span></div><div><span class="n">0</span><span class="l">ways to omit the opt out</span></div></div>
+<div class="reading well">
+<div class="block"><p class="h">the problem</p>
+<p>Campaign emails were built by hand every time: source the copy from the product page, rebuild the layout, get it rendering in Outlook, apply the brand system, tag every link correctly for attribution, and remember the compliance opt out. Every step was a place to introduce an error, and the errors were invisible until after send. A mistagged link does not look broken. It just quietly corrupts campaign reporting.</p>
+<p>I timed the full manual build at <strong>75 minutes per campaign</strong>, measured rather than estimated. On a weekly send that is roughly 65 hours a year spent rebuilding the same layout.</p></div>
+
+<div class="block"><p class="h">what I built</p>
+<ul>
+<li><strong>Source copy fetched automatically</strong> from a product page URL server side, or from an uploaded sell sheet, so nothing is pasted by hand.</li>
+<li><strong>The base template lives in the repository</strong> and loads every session, so it never has to be re supplied.</li>
+<li><strong>The brand and technical specification is encoded in the system prompt:</strong> 600px table based centred layout, inline CSS only, Outlook desktop rendering via MSO conditional comments and VML bulletproof buttons, no grid or flex, no web fonts, no reliance on background images for critical content, specified colour roles, hidden preheader. This is email development knowledge written down as a machine enforceable standard.</li>
+<li><strong>UTM tagging enforced on every link,</strong> with a documented taxonomy of medium names by element type: header logo, hero image, action CTA, document download, section image, section text link, footer logo, footer link, and social by platform. Mailto links, anchors and merge tags are explicitly exempted.</li>
+<li><strong>Placeholder tokens instead of invented URLs.</strong> Any asset without a final URL gets a named token, listed in a comment block at the top of the file. The model is forbidden from guessing a URL.</li>
+<li><strong>A self generated audit trail</strong> appended to every output: one line per link, with element, destination and tag.</li>
+</ul></div>
+
+<div class="block"><p class="h">the idea the whole thing is built around</p>
+<p>Rather than training people to remember the unsubscribe link and the tagging convention, both were made structurally impossible to omit. The compliance link is not a field someone fills in, it is a server side constant the generator cannot be asked to leave out. The tagging is not a checklist item, it is audited against the actual output, in code, every time.</p>
+<p>That is the difference between a process document and a system.</p></div>
+
+<div class="block"><p class="h">the detail I would want a hiring manager to notice</p>
+<p>The audit is deterministic JavaScript parsing the real output HTML. It is not the language model checking its own work. Knowing where AI belongs in a pipeline and where it emphatically does not is a more useful signal than the generator itself.</p></div>
+
+<div class="outcome"><p class="h">outcome</p>
+<ul>
+<li>Campaign email drafted from a product page URL rather than rebuilt from scratch.</li>
+<li>Opt out compliance cannot be omitted, because omitting it is not a state the system can produce.</li>
+<li>UTM tagging verified deterministically on every output, so attribution data stops silently degrading.</li>
+</ul></div>
+
+<div class="diff"><p class="h">what I would do differently</p>
+<p>Same admission as the deck generator: the tool shipped before the measurement did. I have since timed the manual baseline properly and instrumented the generator, so both halves will exist shortly. The compliance argument never needed a number to stand up, but the time argument does, and I should not have had to go back for it.</p></div>
+</div>
+
+<div class="tags"><span class="tag rose">compliance by design</span><span class="tag ">utm taxonomy</span><span class="tag ">email html</span><span class="tag ">mso conditionals &amp; vml</span><span class="tag ">prompt as specification</span><span class="tag ">deterministic verification</span><span class="tag ">sop authoring</span></div>
+
+<div class="nextprev"><a href="work-analytics.html">← a measurement capability from zero</a><a href="work-website.html">a website reimagining, without voiding the contract →</a></div>
+</div>
+<div class="contact" id="contact"><div class="wrap">
+<p class="avail"><span class="pulse-dot"></span> open to marketing operations, analytics and martech roles</p>
+<h2>Let's talk.</h2>
+<p>Remote, or Albuquerque and hybrid. If you want the architecture behind any of the work here, ask me and I will walk you through it.</p>
+<div class="contact-links">
+<a class="clink primary" href="mailto:elizabethbportfolio@gmail.com">elizabethbportfolio@gmail.com</a>
+<a class="clink" href="resume.html">résumé</a>
+<a class="clink" href="https://github.com/belleofthebot" target="_blank" rel="noopener">github</a>
+<a class="clink" href="https://www.instagram.com/paintingthesouthwest/" target="_blank" rel="noopener">instagram</a>
+</div></div></div>
+<footer><div class="wrap"><span>elizabeth beier · albuquerque, new mexico</span><span>designed, built, and measured by me</span></div></footer>
+</main>
+</body>
+</html>
