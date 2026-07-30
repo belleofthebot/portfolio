@@ -1,0 +1,50 @@
+PORTFOLIO FIXES — upload these to belleofthebot/portfolio
+=========================================================
+
+Unzip this folder. It contains exactly four things:
+
+  fonts/            <- NEW folder, 3 woff2 files
+  drive-the-505/    <- NEW folder, the app unpacked from drive-the-505.zip
+  index.html        <- REPLACES the current one
+  work-studio.html  <- REPLACES the current one
+
+To upload:
+  1. Go to https://github.com/belleofthebot/portfolio
+  2. Add file -> Upload files
+  3. Drag all four items in at once (folders included - GitHub keeps the
+     folder structure when you drag a folder).
+  4. Commit message: "Fix fonts, Drive the 505 link, StudioKeeper rename"
+  5. Commit. Vercel redeploys on its own in about a minute.
+
+WHAT CHANGED
+
+1. fonts/ — styles.css loads the three woff2 files from fonts/, but in the
+   repo they sit loose at the root. Every one was 404ing in production, so
+   the live site has been rendering in a system fallback font, not Space
+   Grotesk / IBM Plex Mono. This is the fix that will visibly change the
+   site the most.
+
+2. drive-the-505/ — work-drive-505.html links to drive-the-505/index.html,
+   which did not exist; only the zip was in the repo. Unpacked it, so the
+   app now runs at yoursite.com/drive-the-505/.
+
+3. index.html — the work card still read "Desert Palette." Now StudioKeeper.
+
+4. work-studio.html — "Desert Palette" replaced in the page title, the OG
+   tag, the h1, and the prototype label; the demo button now points at
+   proto/studiokeeper.html.
+
+STILL BROKEN (I need files from you)
+
+  drive-the-505-preview.jpg   index.html's Drive the 505 card points here.
+                              A copy is in the Belle project as
+                              drivethe505preview.jpg — attach it in chat.
+  proto/bookspot-app.html     The Bookspot "Open it" button.
+  proto/studiokeeper.html     The StudioKeeper demo button.
+
+OPTIONAL CLEANUP
+
+  Your image folders exist twice: app/ fig/ people/ screens/ screens26/
+  sketches/ at the repo root, and again under assets/. The pages only use
+  the assets/ copies. The root set is about 2 MB of dead weight. Deleting
+  it has to be done in GitHub's web UI (uploading can't delete).
