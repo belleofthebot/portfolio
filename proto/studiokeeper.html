@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>StudioKeeper — studio dashboard</title>
+<meta name="description" content="StudioKeeper: the one screen for an art business that sells the same work five different ways. Revenue by channel, insights with their caveats attached, restock radar, tax envelope.">
+<style>
+@font-face{font-family:'Space Grotesk';src:url('../fonts/space-grotesk-latin-400-normal.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Space Grotesk';src:url('../fonts/space-grotesk-latin-500-normal.woff2') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'IBM Plex Mono';src:url('../fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2');font-weight:400;font-display:swap}
+
+:root{
+  --ground:#17121C; --panel:#241D2B; --screen:#141019; --tile:#1D1724;
+  --line:#423748; --line-soft:#2E2735;
+  --text:#F4F2EE; --text-2:#BBB2C0; --text-3:#8B8494;
+  --rose:#DFA192; --on-rose:#2A120B; --rose-tint:#3A2129;
+  --mint:#7FD6BC;
+  --sans:'Space Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace;
+  --radius:8px; --radius-card:12px;
+
+  /* categorical series — validated for this dark surface with the
+     dataviz palette validator (adjacent CVD ΔE 8.4, normal-vision 19.3) */
+  --series-1:#3987e5;  /* market      */
+  --series-2:#d95926;  /* gallery     */
+  --series-3:#199e70;  /* wholesale   */
+  --series-4:#c98500;  /* online      */
+  --series-5:#d55181;  /* commission  */
+
+  /* reserved status colours — never reused as a series */
+  --st-good:#199e70; --st-warn:#c98500; --st-serious:#d95926; --st-crit:#e66767;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--ground);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;padding:26px 20px 60px}
+.wrap{max-width:1060px;margin:0 auto}
+a{color:var(--rose)}
+.mono{font-family:var(--mono)}
+
+/* ---------- head ---------- */
+.backlink{font-family:var(--mono);font-size:.78rem;color:var(--text-3);text-decoration:none;display:inline-block;margin-bottom:16px}
+.backlink:hover{color:var(--rose)}
+.kicker{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);display:block;margin-bottom:8px}
+h1{font-size:1.6rem;font-weight:500;margin:0 0 8px;line-height:1.2}
+.sub{color:var(--text-2);font-size:.93rem;line-height:1.6;margin:0 0 6px;max-width:70ch}
+.sample{font-family:var(--mono);font-size:.72rem;color:var(--text-3);border:1px dashed var(--line);border-radius:999px;padding:5px 12px;display:inline-block;margin:14px 0 24px}
+
+/* ---------- window switcher ---------- */
+.filters{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:22px}
+.filters .lbl{font-family:var(--mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-right:4px}
+.chip{font-family:var(--mono);font-size:.76rem;color:var(--text-2);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer;transition:border-color .15s,color .15s,background .15s}
+.chip:hover{border-color:var(--rose);color:var(--text)}
+.chip[aria-pressed="true"]{background:var(--rose-tint);border-color:var(--rose);color:var(--rose)}
+
+/* ---------- stat tiles ---------- */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:14px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-card);padding:16px 18px}
+.stat .n{font-size:1.75rem;font-weight:500;display:block;line-height:1.1;letter-spacing:-.01em}
+.stat .l{font-size:.8rem;color:var(--text-2);display:block;margin-top:7px;line-height:1.45}
+.stat .d{font-family:var(--mono);font-size:.7rem;color:var(--text-3);display:block;margin-top:8px}
+.stat.accent{border-color:var(--rose)}
+.stat.accent .n{color:var(--rose)}
+
+/* ---------- panels ---------- */
+.grid{display:grid;grid-template-columns:1.55fr 1fr;gap:14px;margin-top:14px;align-items:start}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-card);padding:18px 20px}
+.card h2{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);font-weight:400;margin:0 0 4px}
+.card .note{font-size:.8rem;color:var(--text-3);margin:0 0 16px;line-height:1.5}
+.card h3{font-size:1rem;font-weight:500;margin:0 0 10px}
+
+/* ---------- chart: stacked bars ---------- */
+.chartTop{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:nowrap}
+.chartTop>div{flex:1 1 auto;min-width:0}
+.chartTop>button{flex:0 0 auto}
+.legend{display:flex;flex-wrap:wrap;gap:10px 16px;margin:0 0 14px;padding:0;list-style:none}
+.legend li{font-family:var(--mono);font-size:.72rem;color:var(--text-2);display:flex;align-items:center;gap:7px}
+.swatch{width:10px;height:10px;border-radius:2px;display:inline-block;flex:0 0 auto}
+.plot{position:relative;height:228px;display:flex;align-items:flex-end;gap:8px;padding-top:22px}
+.gridlines{position:absolute;left:0;right:0;top:22px;bottom:0;pointer-events:none}
+.gridlines i{position:absolute;left:0;right:0;height:1px;background:var(--line-soft)}
+.gridlines b{position:absolute;left:0;transform:translateY(-100%);font-family:var(--mono);font-size:.6rem;font-weight:400;color:var(--text-3);background:var(--panel);padding-right:5px}
+.col{flex:1 1 0;display:flex;flex-direction:column;justify-content:flex-end;gap:2px;height:100%;position:relative;min-width:0}
+.seg{border-radius:2px;transition:filter .12s;cursor:default}
+.col .seg:first-child{border-radius:4px 4px 2px 2px}
+.seg:hover{filter:brightness(1.25)}
+.xaxis{display:flex;gap:8px;margin-top:9px}
+.xaxis span{flex:1 1 0;text-align:center;font-family:var(--mono);font-size:.68rem;color:var(--text-3);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.colTotal{position:absolute;left:0;right:0;text-align:center;font-family:var(--mono);font-size:.63rem;color:var(--text-3);transform:translateY(-100%);pointer-events:none}
+.tip{position:fixed;z-index:40;background:#0D0A11;border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-family:var(--mono);font-size:.7rem;line-height:1.55;color:var(--text);pointer-events:none;opacity:0;transition:opacity .12s;max-width:230px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.tip.on{opacity:1}
+.tip b{color:var(--rose);font-weight:400}
+
+table.tv{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:.72rem;margin-top:14px}
+table.tv th,table.tv td{text-align:right;padding:6px 8px;border-bottom:1px solid var(--line-soft);color:var(--text-2)}
+table.tv th:first-child,table.tv td:first-child{text-align:left}
+table.tv th{color:var(--text-3);font-weight:400;text-transform:uppercase;letter-spacing:.06em}
+.hidden{display:none}
+
+/* ---------- channel rows ---------- */
+.chrow{padding:12px 0;border-bottom:1px solid var(--line-soft)}
+.chrow:last-child{border-bottom:0}
+.chrow .top{display:flex;align-items:baseline;gap:8px;margin-bottom:8px}
+.chrow .nm{font-size:.93rem;display:flex;align-items:center;gap:8px}
+.chrow .bh{margin-left:auto;font-family:var(--mono);font-size:.72rem;color:var(--text-3)}
+.bar2{height:9px;border-radius:4px;margin-bottom:4px;min-width:2px}
+.bar2.kept{opacity:.42}
+.chrow .meta{font-family:var(--mono);font-size:.68rem;color:var(--text-3);margin-top:6px}
+
+/* ---------- insights ---------- */
+.ins{background:var(--tile);border:1px solid var(--line-soft);border-left:2px solid var(--rose);border-radius:var(--radius);padding:13px 15px;margin-bottom:10px}
+.ins p{margin:0;font-size:.88rem;line-height:1.6;color:var(--text)}
+.ins .cav{display:block;margin-top:7px;font-family:var(--mono);font-size:.7rem;color:var(--text-3);line-height:1.55}
+.ins.gentle{border-left-color:var(--st-warn)}
+
+/* ---------- lists ---------- */
+.rowlist{list-style:none;margin:0;padding:0}
+.rowlist li{border-bottom:1px solid var(--line-soft)}
+.rowlist li:last-child{border-bottom:0}
+.orow{width:100%;background:none;border:0;padding:12px 0;display:flex;align-items:center;gap:12px;cursor:pointer;text-align:left;color:inherit;font-family:inherit}
+.orow:hover .od{color:var(--rose)}
+.orow .dot{width:9px;height:9px;border-radius:2px;flex:0 0 auto}
+.orow .od{font-size:.88rem}
+.orow .oc{font-family:var(--mono);font-size:.68rem;color:var(--text-3)}
+.orow .ov{margin-left:auto;font-family:var(--mono);font-size:.8rem;color:var(--text-2)}
+.orow .car{font-family:var(--mono);font-size:.7rem;color:var(--text-3);width:12px;text-align:center}
+.lines{padding:0 0 12px 33px;margin:0;list-style:none}
+.lines li{display:flex;gap:10px;font-family:var(--mono);font-size:.7rem;color:var(--text-3);padding:4px 0;border:0}
+.lines li span:last-child{margin-left:auto;color:var(--text-2)}
+
+.tasks{list-style:none;margin:0;padding:0}
+.tasks li{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--line-soft);font-size:.85rem;line-height:1.45}
+.tasks li:last-child{border-bottom:0}
+.tasks input{margin:2px 0 0;accent-color:var(--mint);width:15px;height:15px;flex:0 0 auto}
+.tasks li.done label{color:var(--text-3);text-decoration:line-through}
+.tasks .when{font-family:var(--mono);font-size:.66rem;color:var(--text-3);margin-left:auto;padding-left:10px;white-space:nowrap}
+.prog{font-family:var(--mono);font-size:.7rem;color:var(--text-3);margin-top:12px}
+
+.status{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.06em;border-radius:999px;padding:3px 9px;border:1px solid}
+.status.out{color:var(--st-crit);border-color:var(--st-crit)}
+.status.low{color:var(--st-warn);border-color:var(--st-warn)}
+.status.ok{color:var(--st-good);border-color:var(--st-good)}
+.stkrow{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line-soft);flex-wrap:wrap}
+.stkrow:last-child{border-bottom:0}
+.stkrow .sk{font-family:var(--mono);font-size:.66rem;color:var(--text-3);display:block;margin-top:3px}
+.stkrow .nm2{font-size:.87rem}
+.stkrow .act{margin-left:auto;display:flex;align-items:center;gap:10px}
+.mini{font-family:var(--mono);font-size:.68rem;color:var(--text-3)}
+.linkbtn{font-family:var(--mono);font-size:.68rem;color:var(--rose);background:none;border:1px solid var(--line);border-radius:999px;padding:5px 11px;cursor:pointer}
+.linkbtn:hover{border-color:var(--rose)}
+.linkbtn:disabled{color:var(--text-3);border-color:var(--line-soft);cursor:default}
+
+/* tax envelope */
+.meter{height:10px;border-radius:5px;background:var(--tile);border:1px solid var(--line-soft);overflow:hidden;margin:12px 0 8px}
+.meter i{display:block;height:100%;background:var(--mint);border-radius:5px}
+.taxrow{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.72rem;color:var(--text-2);padding:5px 0}
+.taxrow span:last-child{color:var(--text)}
+.foot{font-family:var(--mono);font-size:.68rem;color:var(--text-3);line-height:1.6;margin-top:14px}
+
+@media(max-width:900px){
+  .grid{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:560px){
+  body{padding:18px 12px 40px}
+  .stats{grid-template-columns:1fr}
+  h1{font-size:1.3rem}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<a class="backlink" href="../work-studio.html">← back to the case study</a>
+<span class="kicker">clickable prototype</span>
+<h1>StudioKeeper</h1>
+<p class="sub">One screen for a studio that sells the same work five different ways. Switch the window, read the insights, work the task list, open an order for its line items, check the restock radar and the tax envelope.</p>
+<span class="sample">sample data · the real order rows are customers, venues and tax records, so they stay out</span>
+
+<div class="filters" role="group" aria-label="Time window">
+  <span class="lbl">window</span>
+  <button class="chip" type="button" data-win="d30">last 30 days</button>
+  <button class="chip" type="button" data-win="ytd" aria-pressed="true">year to date</button>
+  <button class="chip" type="button" data-win="ly">2025</button>
+  <button class="chip" type="button" data-win="all">all time</button>
+</div>
+
+<div class="stats" id="stats"></div>
+
+<div class="grid">
+  <div class="col-main">
+
+    <div class="card">
+      <div class="chartTop">
+        <div>
+          <h2>revenue booked</h2>
+          <p class="note" id="chartNote"></p>
+        </div>
+        <button class="chip" type="button" id="tvBtn" aria-pressed="false">table view</button>
+      </div>
+      <ul class="legend" id="legend"></ul>
+      <div class="plot" id="plot"><div class="gridlines" id="gridlines"></div></div>
+      <div class="xaxis" id="xaxis"></div>
+      <div id="tableWrap" class="hidden"></div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h2>channels</h2>
+      <p class="note">Booked is what the sale was worth. Kept is what reaches the studio after the channel takes its cut — the number that decides what to make next.</p>
+      <div id="channels"></div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h2>orders</h2>
+      <p class="note">Newest first. Open one for its line items — a market weekend is many pieces on one order.</p>
+      <ul class="rowlist" id="orders"></ul>
+    </div>
+
+  </div>
+
+  <div class="col-side">
+
+    <div class="card">
+      <h2>insights</h2>
+      <p class="note">Every one reads as a sentence, with its asterisk attached.</p>
+      <div id="insights"></div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h2>restock radar</h2>
+      <p class="note" id="restockNote"></p>
+      <div id="restock"></div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h2>tax envelope</h2>
+      <p class="note">Set aside as the money arrives, not in April.</p>
+      <div id="tax"></div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h2>this week</h2>
+      <ul class="tasks" id="tasks"></ul>
+      <p class="prog" id="taskProg"></p>
+    </div>
+
+  </div>
+</div>
+
+<p class="foot">
+  StudioKeeper reads a Google Sheet and Notion, builds on GitHub and serves from Vercel. $0 a month.<br>
+  Figures shown here are sample data in the real structure. Nothing on this page is tax advice — set-aside rates and filing dates change, and mine are checked with an accountant.
+</p>
+
+<div class="tip" id="tip" role="status" aria-live="polite"></div>
+</div>
+
+<script>
+// ---------------------------------------------------------------- data
+const CH = [
+  {key:'market',    name:'Market weekends', short:'Market',     keep:1.00, css:'var(--series-1)', pay:'cash, same day',        note:'full margin, costs a weekend'},
+  {key:'gallery',   name:'Gallery',         short:'Gallery',    keep:0.50, css:'var(--series-2)', pay:'consignment, ~6 weeks', note:'takes half, reaches new buyers'},
+  {key:'wholesale', name:'Wholesale',       short:'Wholesale',  keep:1.00, css:'var(--series-3)', pay:'net 30',                note:'booked at half retail, moves volume'},
+  {key:'online',    name:'Online shop',     short:'Online',     keep:0.92, css:'var(--series-4)', pay:'2 days',                note:'8% platform and payment fees'},
+  {key:'civic',     name:'Commission',      short:'Commission', keep:1.00, css:'var(--series-5)', pay:'net 30',                note:'lands once, moves every number'}
+];
+
+// 2026, by month, by channel — the authored spine
+const M26 = {
+  Jan:[900,1200,800,520,0], Feb:[1100,900,1150,480,0], Mar:[1500,1400,900,610,0],
+  Apr:[2400,1600,1100,890,0], May:[1900,1300,850,700,0], Jun:[1900,1200,800,640,6000],
+  Jul:[1700,1300,700,760,0]
+};
+// July by week, for the 30-day window
+const W_JUL = {'Jul 1–7':[0,400,200,180,0],'Jul 8–14':[900,300,150,190,0],'Jul 15–21':[800,300,200,200,0],'Jul 22–30':[0,300,150,190,0]};
+// annual channel totals for the years we do not itemise by month
+const Y25 = [9800,9100,7300,3450,2200];
+const Y24 = [4900,4200,3100,1250,1800];
+const SEASON = [.055,.06,.075,.105,.095,.10,.09,.075,.08,.085,.09,.09]; // 12-month shape
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+// distribute a total across weights, exact to the dollar (largest remainder)
+function spread(total, weights){
+  const raw = weights.map(w=>total*w), out = raw.map(Math.floor);
+  let rem = total - out.reduce((a,b)=>a+b,0);
+  raw.map((v,i)=>[v-Math.floor(v),i]).sort((a,b)=>b[0]-a[0]).forEach(([,i])=>{ if(rem>0){out[i]++;rem--;} });
+  return out;
+}
+function yearByMonth(totals){
+  const per = totals.map(t=>spread(t,SEASON));
+  return MONTHS.map((m,i)=>[m, per.map(p=>p[i])]);
+}
+
+const WIN = {
+  d30:{label:'last 30 days', note:'Four weeks of July, stacked by channel. No market on the first or last weekend — that is the shape of a month with one booth date.',
+       cols:Object.entries(W_JUL), cmp:null},
+  ytd:{label:'year to date', note:'January through July 2026, stacked by channel. June carries the one civic commission.',
+       cols:Object.entries(M26), cmp:{was:18980, pct:96}},
+  ly :{label:'2025', note:'All twelve months of 2025, stacked by channel. Monthly split is modelled from the annual channel totals.',
+       cols:yearByMonth(Y25), cmp:null},
+  all:{label:'all time', note:'Three years, stacked by channel. 2026 is seven months in.',
+       cols:[['2024',Y24],['2025',Y25],['2026 ytd',CH.map((_,i)=>Object.values(M26).reduce((a,r)=>a+r[i],0))]], cmp:null}
+};
+
+const STOCK = [
+  {sku:'PRT-VERBENA-1114', name:'Desert Verbena, 11×14 print', type:'edition', stock:6,  point:8,  cost:4.20,  reorder:24},
+  {sku:'CRD-SET-06',       name:'Notecard set of six',          type:'edition', stock:3,  point:12, cost:2.10,  reorder:36},
+  {sku:'CRD-HOLIDAY-08',   name:'Holiday cards, set of eight',  type:'edition', stock:0,  point:20, cost:2.65,  reorder:40},
+  {sku:'PRT-CANYON-1620',  name:'Canyon Road, 16×20 print',     type:'edition', stock:14, point:10, cost:7.40,  reorder:0},
+  {sku:'PRT-SAGE-0810',    name:'Sage Light, 8×10 print',       type:'edition', stock:22, point:12, cost:3.10,  reorder:0},
+  {sku:'STK-VINYL-01',     name:'Vinyl sticker, yucca',         type:'edition', stock:41, point:25, cost:0.55,  reorder:0},
+  {sku:'ORG-MESA-2436',    name:'Mesa Light, 24×36 original',   type:'original',stock:1,  point:0,  cost:96.00, reorder:0},
+  {sku:'ORG-RIO-1824',     name:'Rio Grande Bosque, 18×24 original', type:'original', stock:1, point:0, cost:64.00, reorder:0}
+];
+
+const ORDERS = [
+  {date:'2026-07-19', ch:'market',    ref:'booth weekend',        lines:[['PRT-VERBENA-1114 × 6','$270'],['CRD-SET-06 × 8','$144'],['PRT-SAGE-0810 × 9','$261'],['STK-VINYL-01 × 25','$125']]},
+  {date:'2026-07-16', ch:'gallery',   ref:'consignment, July',    lines:[['ORG-RIO-1824 × 1','$1,150'],['PRT-CANYON-1620 × 2','$150']]},
+  {date:'2026-07-14', ch:'online',    ref:'shop order',           lines:[['PRT-VERBENA-1114 × 2','$90'],['CRD-SET-06 × 1','$18']]},
+  {date:'2026-07-09', ch:'wholesale', ref:'retail account',        lines:[['PRT-SAGE-0810 × 20','$290'],['CRD-SET-06 × 24','$216'],['STK-VINYL-01 × 60','$150']]},
+  {date:'2026-07-05', ch:'online',    ref:'shop order',           lines:[['PRT-CANYON-1620 × 1','$75'],['STK-VINYL-01 × 4','$20']]},
+  {date:'2026-06-22', ch:'civic',     ref:'public commission',     lines:[['Commissioned panel, 48×60','$6,000']]}
+];
+
+const TASKS = [
+  {t:'Reorder Desert Verbena and the notecard sets before the Aug 8 booth', when:'by Aug 3', done:false},
+  {t:'Photograph Mesa Light for the shop listing', when:'this week', done:false},
+  {t:'Invoice the gallery for the July consignment', when:'Aug 1', done:true},
+  {t:'Move July’s GRT set-aside into the tax account', when:'Aug 25', done:false},
+  {t:'Confirm the booth fee and load-in time for Aug 8', when:'this week', done:true}
+];
+
+// ---------------------------------------------------------------- helpers
+const $=s=>document.querySelector(s), money=n=>'$'+Math.round(n).toLocaleString('en-US');
+const moneyK=n=>n>=10000?'$'+(n/1000).toFixed(1)+'K':money(n);
+let win='ytd', tableOn=false;
+const chOf=k=>CH.find(c=>c.key===k);
+
+function totalsFor(w){
+  const t=[0,0,0,0,0];
+  WIN[w].cols.forEach(([,v])=>v.forEach((n,i)=>t[i]+=n));
+  return t;
+}
+
+// ---------------------------------------------------------------- stat tiles
+function renderStats(){
+  const t=totalsFor(win), booked=t.reduce((a,b)=>a+b,0);
+  const kept=t.reduce((a,b,i)=>a+b*CH[i].keep,0);
+  const cmp=WIN[win].cmp;
+  const live=t.filter(n=>n>0).length;
+  $('#stats').innerHTML=`
+    <div class="stat accent"><span class="n">${moneyK(booked)}</span><span class="l">booked, ${WIN[win].label}</span><span class="d">${money(booked)} exactly</span></div>
+    <div class="stat"><span class="n">${moneyK(kept)}</span><span class="l">kept by the studio after channel cuts</span><span class="d">${Math.round(kept/booked*100)}% of booked</span></div>
+    ${cmp
+      ? `<div class="stat"><span class="n">+${cmp.pct}%</span><span class="l">against the same point in 2025</span><span class="d">was ${money(cmp.was)}</span></div>`
+      : `<div class="stat"><span class="n">${live}</span><span class="l">channel${live===1?'':'s'} with revenue in this window</span><span class="d">of five set up</span></div>`}
+    <div class="stat"><span class="n">$0</span><span class="l">monthly cost to run this dashboard</span><span class="d">sheets → github → vercel</span></div>`;
+}
+
+// ---------------------------------------------------------------- stacked bars
+function renderChart(){
+  const cols=WIN[win].cols;
+  const maxTotal=Math.max(...cols.map(([,v])=>v.reduce((a,b)=>a+b,0)));
+  const step=maxTotal>20000?10000:maxTotal>8000?5000:maxTotal>3000?1000:500;
+
+  $('#chartNote').textContent=WIN[win].note;
+  $('#legend').innerHTML=CH.map(c=>`<li><span class="swatch" style="background:${c.css}"></span>${c.short}</li>`).join('');
+
+  const gl=$('#gridlines'); gl.innerHTML='';
+  for(let v=step; v<=maxTotal; v+=step){
+    const i=document.createElement('i'); i.style.bottom=(v/maxTotal*100)+'%'; gl.appendChild(i);
+    const l=document.createElement('b'); l.style.bottom=(v/maxTotal*100)+'%'; l.textContent=moneyK(v); gl.appendChild(l);
+  }
+
+  const plot=$('#plot');
+  [...plot.querySelectorAll('.col')].forEach(n=>n.remove());
+  const labelAll=cols.length<=7;
+  const peak=cols.reduce((bi,[,v],i,arr)=>v.reduce((a,b)=>a+b,0)>arr[bi][1].reduce((a,b)=>a+b,0)?i:bi,0);
+  cols.forEach(([label,vals],ci)=>{
+    const total=vals.reduce((a,b)=>a+b,0);
+    const col=document.createElement('div'); col.className='col';
+    if(labelAll||ci===peak||ci===cols.length-1){
+      const tot=document.createElement('span'); tot.className='colTotal'; tot.textContent=moneyK(total);
+      tot.style.bottom=(total/maxTotal*100)+'%'; col.appendChild(tot);
+    }
+    // top-down so the first child is the visual top (rounded end)
+    CH.map((c,i)=>({c,v:vals[i]})).filter(o=>o.v>0).reverse().forEach(({c,v})=>{
+      const seg=document.createElement('div');
+      seg.className='seg';
+      seg.style.background=c.css;
+      seg.style.height=`calc(${(v/maxTotal*100)}% - 2px)`;
+      seg.tabIndex=0;
+      seg.setAttribute('aria-label',`${label}, ${c.short}: ${money(v)}`);
+      const body=`<b>${label} · ${c.short}</b><br>${money(v)} booked<br>${money(v*c.keep)} kept · ${c.pay}<br>${Math.round(v/total*100)}% of the month`;
+      seg.addEventListener('mousemove',e=>showTip(e,body));
+      seg.addEventListener('mouseleave',hideTip);
+      seg.addEventListener('focus',e=>showTipAt(seg,body));
+      seg.addEventListener('blur',hideTip);
+      col.appendChild(seg);
+    });
+    plot.appendChild(col);
+  });
+  $('#xaxis').innerHTML=cols.map(([l])=>`<span>${l}</span>`).join('');
+
+  $('#tableWrap').innerHTML=`<table class="tv"><caption class="hidden">Revenue booked by ${WIN[win].label}</caption>
+    <thead><tr><th>Period</th>${CH.map(c=>`<th>${c.short}</th>`).join('')}<th>Total</th></tr></thead>
+    <tbody>${cols.map(([l,v])=>`<tr><td>${l}</td>${v.map(n=>`<td>${n?money(n):'—'}</td>`).join('')}<td>${money(v.reduce((a,b)=>a+b,0))}</td></tr>`).join('')}</tbody></table>`;
+}
+
+const tip=$('#tip');
+function showTip(e,html){ tip.innerHTML=html; tip.classList.add('on'); place(e.clientX,e.clientY); }
+function showTipAt(el,html){ const r=el.getBoundingClientRect(); tip.innerHTML=html; tip.classList.add('on'); place(r.right,r.top+r.height/2); }
+function place(x,y){
+  const r=tip.getBoundingClientRect();
+  tip.style.left=Math.min(x+14, innerWidth-r.width-12)+'px';
+  tip.style.top=Math.max(10, y-r.height-12)+'px';
+}
+function hideTip(){ tip.classList.remove('on'); }
+
+// ---------------------------------------------------------------- channels
+function renderChannels(){
+  const t=totalsFor(win), booked=t.reduce((a,b)=>a+b,0);
+  const max=Math.max(...t);
+  $('#channels').innerHTML=CH.map((c,i)=>{
+    const b=t[i], k=b*c.keep;
+    if(!b) return `<div class="chrow"><div class="top"><span class="nm"><span class="swatch" style="background:${c.css}"></span>${c.name}</span><span class="bh">no revenue in this window</span></div></div>`;
+    return `<div class="chrow">
+      <div class="top"><span class="nm"><span class="swatch" style="background:${c.css}"></span>${c.name}</span>
+        <span class="bh">${money(b)} booked · ${money(k)} kept</span></div>
+      <div class="bar2" style="width:${b/max*100}%;background:${c.css}"></div>
+      <div class="bar2 kept" style="width:${k/max*100}%;background:${c.css}"></div>
+      <div class="meta">${Math.round(b/booked*100)}% of booked · keeps ${Math.round(c.keep*100)}% · ${c.pay} · ${c.note}</div>
+    </div>`;
+  }).join('');
+}
+
+// ---------------------------------------------------------------- insights
+function renderInsights(){
+  const t=totalsFor(win), booked=t.reduce((a,b)=>a+b,0);
+  const kept=t.reduce((a,b,i)=>a+b*CH[i].keep,0);
+  const pctB=i=>Math.round(t[i]/booked*100), pctK=i=>Math.round(t[i]*CH[i].keep/kept*100);
+  const low=STOCK.filter(s=>s.type==='edition'&&s.stock<s.point);
+  const reorderCost=low.reduce((a,s)=>a+s.reorder*s.cost,0);
+  const out=[];
+
+  if(WIN[win].cmp) out.push({t:`Up ${WIN[win].cmp.pct}% on the same point last year — and part of that is bookkeeping.`,
+    c:'2025 predates logging market cash the same day it came in. Call roughly 8 of those points better recording rather than new sales.', gentle:true});
+
+  out.push({t:`Market weekends are ${pctB(0)}% of what you book and ${pctK(0)}% of what you keep, in your hand the same day.`,
+    c:'The cost is a weekend, which this number cannot see. Two booths a month is the ceiling before painting time goes.'});
+
+  out.push({t:`The gallery looks bigger than it is: ${pctB(1)}% of booked, ${pctK(1)}% of kept.`,
+    c:'It takes half and pays on consignment about six weeks out, so it is also the slowest money on this page.'});
+
+  if(t[4]>0) out.push({t:`One commission is ${pctB(4)}% of the year's booked revenue.`,
+    c:'A single sale carrying a fifth of the year is not a repeatable plan. Read the growth number with that in mind.'});
+
+  if(low.length) out.push({t:`${low.length} edition${low.length===1?'':'s'} sit${low.length===1?'s':''} under ${low.length===1?'its':'their'} restock point with a booth on Aug 8.`,
+    c:`Reordering all of them costs ${money(reorderCost)} at current print prices and covers roughly nine weeks of the current sell-through.`});
+
+  $('#insights').innerHTML=out.map(o=>`<div class="ins${o.gentle?' gentle':''}"><p>${o.t}<span class="cav">${o.c}</span></p></div>`).join('');
+}
+
+// ---------------------------------------------------------------- orders
+function renderOrders(){
+  $('#orders').innerHTML=ORDERS.map((o,i)=>{
+    const c=chOf(o.ch);
+    const total=o.lines.reduce((a,[,v])=>a+Number(v.replace(/[$,]/g,'')),0);
+    return `<li>
+      <button class="orow" type="button" aria-expanded="false" data-i="${i}">
+        <span class="dot" style="background:${c.css}"></span>
+        <span><span class="od">${c.short} · ${o.ref}</span><br><span class="oc">${o.date} · ${o.lines.length} line item${o.lines.length===1?'':'s'} · keeps ${money(total*c.keep)}</span></span>
+        <span class="ov">${money(total)}</span><span class="car">+</span>
+      </button>
+      <ul class="lines hidden" id="lines-${i}">${o.lines.map(([n,v])=>`<li><span>${n}</span><span>${v}</span></li>`).join('')}</ul>
+    </li>`;
+  }).join('');
+  $('#orders').querySelectorAll('.orow').forEach(b=>b.addEventListener('click',()=>{
+    const box=document.getElementById('lines-'+b.dataset.i);
+    const open=box.classList.toggle('hidden')===false;
+    b.setAttribute('aria-expanded',String(open));
+    b.querySelector('.car').textContent=open?'−':'+';
+  }));
+}
+
+// ---------------------------------------------------------------- restock
+function renderRestock(){
+  const rows=[...STOCK].sort((a,b)=>{
+    const sa=a.type==='original'?3:a.stock===0?0:a.stock<a.point?1:2;
+    const sb=b.type==='original'?3:b.stock===0?0:b.stock<b.point?1:2;
+    return sa-sb;
+  });
+  const low=STOCK.filter(s=>s.type==='edition'&&s.stock<s.point).length;
+  $('#restockNote').textContent=low
+    ? `${low} under their restock point. Next booth is Aug 8, so a reorder placed by Aug 3 arrives in time.`
+    : 'Everything above its restock point.';
+  $('#restock').innerHTML=rows.map(s=>{
+    let cls='ok', word='in stock';
+    if(s.type==='original'){ cls='ok'; word='one of one'; }
+    else if(s.stock===0){ cls='out'; word='out'; }
+    else if(s.stock<s.point){ cls='low'; word='low'; }
+    const icon=cls==='out'?'✕':cls==='low'?'!':'✓';
+    const act=(s.type==='edition'&&s.stock<s.point)
+      ? `<button class="linkbtn" type="button" data-sku="${s.sku}">reorder ${s.reorder} · ${money(s.reorder*s.cost)}</button>`
+      : `<span class="mini">${s.type==='original'?'not reorderable':`${s.stock} on hand`}</span>`;
+    return `<div class="stkrow">
+      <div><span class="nm2">${s.name}</span><span class="sk">${s.sku} · ${s.type==='edition'?`${s.stock} of ${s.point} restock point`:'original'}</span></div>
+      <div class="act"><span class="status ${cls}"><span aria-hidden="true">${icon}</span>${word}</span>${act}</div>
+    </div>`;
+  }).join('');
+  $('#restock').querySelectorAll('.linkbtn').forEach(b=>b.addEventListener('click',()=>{
+    const s=STOCK.find(x=>x.sku===b.dataset.sku);
+    TASKS.unshift({t:`Order ${s.reorder} × ${s.name} (${money(s.reorder*s.cost)})`, when:'added just now', done:false});
+    b.disabled=true; b.textContent='added to this week';
+    renderTasks();
+  }));
+}
+
+// ---------------------------------------------------------------- tax
+function renderTax(){
+  const t=totalsFor('ytd');
+  const retail=t[0]+t[3]+t[4];              // market, online, commission — taxable at retail
+  const grt=retail*0.0775;
+  const kept=t.reduce((a,b,i)=>a+b*CH[i].keep,0);
+  const income=kept*0.20;
+  const setAside=6900;
+  const owed=grt+income;
+  $('#tax').innerHTML=`
+    <div class="taxrow"><span>Retail-channel sales, year to date</span><span>${money(retail)}</span></div>
+    <div class="taxrow"><span>Gross receipts set-aside at 7.75%</span><span>${money(grt)}</span></div>
+    <div class="taxrow"><span>Income set-aside, 20% of kept</span><span>${money(income)}</span></div>
+    <div class="taxrow"><span><strong>Should be in the envelope</strong></span><span><strong>${money(owed)}</strong></span></div>
+    <div class="meter"><i style="width:${Math.min(100,setAside/owed*100)}%"></i></div>
+    <div class="taxrow"><span>Actually set aside</span><span>${money(setAside)} · ${Math.round(setAside/owed*100)}%</span></div>
+    <div class="taxrow"><span>Short by</span><span>${money(owed-setAside)}</span></div>
+    <p class="foot" style="margin-top:10px">Next estimated payment: Sep 15, 2026. The envelope fills itself from each order as it is logged; this window shows year to date regardless of the filter above.</p>`;
+}
+
+// ---------------------------------------------------------------- tasks
+function renderTasks(){
+  $('#tasks').innerHTML=TASKS.map((k,i)=>`<li class="${k.done?'done':''}">
+    <input type="checkbox" id="tk${i}" ${k.done?'checked':''}>
+    <label for="tk${i}">${k.t}</label><span class="when">${k.when}</span></li>`).join('');
+  $('#tasks').querySelectorAll('input').forEach((c,i)=>c.addEventListener('change',()=>{ TASKS[i].done=c.checked; renderTasks(); }));
+  const done=TASKS.filter(k=>k.done).length;
+  $('#taskProg').textContent=`${done} of ${TASKS.length} done · restock alerts land here automatically when stock crosses a restock point`;
+}
+
+// ---------------------------------------------------------------- wiring
+function renderAll(){ renderStats(); renderChart(); renderChannels(); renderInsights(); }
+document.querySelectorAll('.chip[data-win]').forEach(b=>b.addEventListener('click',()=>{
+  win=b.dataset.win;
+  document.querySelectorAll('.chip[data-win]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+  renderAll();
+}));
+$('#tvBtn').addEventListener('click',()=>{
+  tableOn=!tableOn;
+  $('#tvBtn').setAttribute('aria-pressed',String(tableOn));
+  $('#tvBtn').textContent=tableOn?'chart view':'table view';
+  $('#tableWrap').classList.toggle('hidden',!tableOn);
+  $('#plot').classList.toggle('hidden',tableOn);
+  $('#xaxis').classList.toggle('hidden',tableOn);
+  $('#legend').classList.toggle('hidden',tableOn);
+});
+window.addEventListener('scroll',hideTip,{passive:true});
+
+renderAll(); renderOrders(); renderRestock(); renderTax(); renderTasks();
+</script>
+</body>
+</html>

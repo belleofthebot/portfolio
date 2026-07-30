@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bookspot — clickable walkthrough</title>
+<meta name="description" content="A clickable walkthrough of Bookspot, built from the hi-fi London screens. Tap through the real flow: map, filter, spot detail, walking directions, the spotted stamp and the shelf.">
+<style>
+@font-face{font-family:'Space Grotesk';src:url('../fonts/space-grotesk-latin-400-normal.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Space Grotesk';src:url('../fonts/space-grotesk-latin-500-normal.woff2') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'IBM Plex Mono';src:url('../fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2');font-weight:400;font-display:swap}
+
+:root{
+  --ground:#17121C; --panel:#241D2B; --tile:#1D1724;
+  --line:#423748; --line-soft:#2E2735;
+  --text:#F4F2EE; --text-2:#BBB2C0; --text-3:#8B8494;
+  --rose:#DFA192; --on-rose:#2A120B; --rose-tint:#3A2129;
+  --mint:#7FD6BC;
+  --sans:'Space Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--ground);color:var(--text);font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;
+  padding:26px 18px 40px;
+}
+a{color:var(--rose)}
+
+/* ---------- header ---------- */
+header{width:100%;max-width:940px;margin:0 auto 22px}
+.kicker{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);display:block;margin-bottom:8px}
+h1{font-size:1.5rem;font-weight:500;line-height:1.2;margin:0 0 8px}
+.sub{color:var(--text-2);font-size:.93rem;line-height:1.6;margin:0;max-width:60ch}
+.backlink{font-family:var(--mono);font-size:.78rem;color:var(--text-3);text-decoration:none;display:inline-block;margin-bottom:18px}
+.backlink:hover{color:var(--rose)}
+
+/* ---------- stage ---------- */
+.stage{display:flex;gap:34px;align-items:flex-start;justify-content:center;flex-wrap:wrap;width:100%;max-width:940px}
+
+.deviceCol{display:flex;flex-direction:column;align-items:center;gap:14px}
+.device{
+  position:relative;width:390px;height:844px;flex:0 0 auto;
+  background:#0D0A11;border:9px solid #2B2333;border-radius:52px;
+  box-shadow:0 30px 70px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.05) inset;
+  overflow:hidden;
+}
+.screens{position:absolute;inset:0;border-radius:43px;overflow:hidden;background:#F5F2ED}
+.screens img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+  opacity:0;transition:opacity .22s ease;
+}
+.screens img.on{opacity:1}
+
+/* hotspots */
+.hot{
+  position:absolute;margin:0;padding:0;border:0;background:transparent;
+  cursor:pointer;border-radius:10px;-webkit-tap-highlight-color:transparent;
+}
+.hot:focus-visible{outline:2px solid var(--rose);outline-offset:2px}
+body.reveal .hot{
+  background:rgba(223,161,146,.20);
+  box-shadow:0 0 0 1.5px rgba(223,161,146,.85) inset;
+}
+.hot:hover{background:rgba(223,161,146,.16);box-shadow:0 0 0 1.5px rgba(223,161,146,.7) inset}
+.hot.dead:hover{background:rgba(255,255,255,.07);box-shadow:0 0 0 1.5px rgba(255,255,255,.28) inset}
+body.reveal .hot.dead{background:rgba(255,255,255,.06);box-shadow:0 0 0 1.5px rgba(255,255,255,.22) inset}
+
+/* toast */
+.toast{
+  position:absolute;left:50%;bottom:22px;transform:translate(-50%,14px);
+  background:rgba(13,10,17,.94);color:#F4F2EE;border:1px solid rgba(255,255,255,.16);
+  font-family:var(--mono);font-size:.72rem;line-height:1.45;
+  padding:9px 13px;border-radius:9px;max-width:300px;text-align:center;
+  opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;
+}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* ---------- controls / caption ---------- */
+.bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center}
+.btn{
+  font-family:var(--mono);font-size:.75rem;color:var(--text-2);
+  background:var(--panel);border:1px solid var(--line);border-radius:999px;
+  padding:7px 14px;cursor:pointer;transition:border-color .15s,color .15s;
+}
+.btn:hover{border-color:var(--rose);color:var(--text)}
+.btn[aria-pressed="true"]{background:var(--rose-tint);border-color:var(--rose);color:var(--rose)}
+.btn:disabled{opacity:.4;cursor:not-allowed;border-color:var(--line-soft)}
+
+.notes{flex:1 1 300px;max-width:340px;min-width:260px}
+.notes h2{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);font-weight:400;margin:0 0 12px}
+.caption{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:18px}
+.caption .cname{font-size:1.05rem;margin:0 0 6px;font-weight:500}
+.caption .ctext{color:var(--text-2);font-size:.88rem;line-height:1.6;margin:0}
+.trail{list-style:none;margin:0;padding:0}
+.trail li{
+  font-family:var(--mono);font-size:.76rem;color:var(--text-3);
+  padding:7px 0 7px 22px;position:relative;border-bottom:1px solid var(--line-soft);
+}
+.trail li::before{content:'○';position:absolute;left:2px;color:var(--line)}
+.trail li.seen{color:var(--text-2)}
+.trail li.seen::before{content:'●';color:var(--mint)}
+.trail li.here{color:var(--rose)}
+.trail li.here::before{content:'●';color:var(--rose)}
+.hint{font-family:var(--mono);font-size:.72rem;color:var(--text-3);line-height:1.6;margin-top:16px}
+
+@media(max-width:900px){
+  .stage{gap:24px}
+  .notes{max-width:390px;flex:1 1 100%;order:2}
+  .deviceCol{order:1;margin:0 auto}
+}
+@media(max-width:460px){
+  body{padding:18px 10px 30px}
+  .device{width:100%;max-width:360px;height:auto;aspect-ratio:390/844;border-width:7px;border-radius:44px}
+  h1{font-size:1.25rem}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="backlink" href="../work-bookspot.html">← back to the case study</a>
+  <span class="kicker">clickable walkthrough</span>
+  <h1>Bookspot, London edition</h1>
+  <p class="sub">The real hi-fi screens, wired together in the flow they were designed for. Tap the interface — the map pin at King's Cross, the filter, the walking directions, the stamp. Turn on <em>show tap targets</em> if you would rather see where the hotspots are.</p>
+</header>
+
+<div class="stage">
+  <div class="deviceCol">
+    <div class="device">
+      <div class="screens" id="screens"></div>
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </div>
+    <div class="bar">
+      <button class="btn" id="back" type="button">← back</button>
+      <button class="btn" id="reveal" type="button" aria-pressed="false">show tap targets</button>
+      <button class="btn" id="restart" type="button">restart</button>
+    </div>
+  </div>
+
+  <div class="notes">
+    <h2>where you are</h2>
+    <div class="caption">
+      <p class="cname" id="cname">Splash</p>
+      <p class="ctext" id="ctext"></p>
+    </div>
+    <h2>the flow</h2>
+    <ul class="trail" id="trail"></ul>
+    <p class="hint">Eight screens, no dead ends. Only the King&rsquo;s Cross spot is built out in full — the other rows tell you so rather than pretending. Arrow keys work; Esc goes back.</p>
+  </div>
+</div>
+
+<script>
+// ---- screens, in flow order -------------------------------------------------
+const TAB = [ // shared bottom tab bar, same geometry on every screen that has one
+  {x:12,   y:92.4, w:20, h:7.2, go:'home-map', label:'Explore tab'},
+  {x:33.5, y:92.4, w:17, h:7.2, go:'filter',   label:'Filter tab'},
+  {x:51,   y:92.4, w:17, h:7.2, go:'shelf',    label:'Shelf tab'},
+  {x:68.5, y:92.4, w:19, h:7.2, dead:'The More tab was not part of the tested flow, so there is no screen for it.', label:'More tab'}
+];
+const ROWMSG = 'Only the King’s Cross spot is built out in this walkthrough. Tap “…Harry catches his train”.';
+
+const SCREENS = {
+  'splash': {
+    name:'Splash',
+    text:'The one screen that earns its keep by getting out of the way. Tap anywhere.',
+    hots:[{x:0,y:0,w:100,h:100,go:'home-map',label:'Let’s go'}]
+  },
+  'home-map': {
+    name:'Explore — map',
+    text:'Fifteen London spots as book covers, not pins. The ringed cover at King’s Cross is Platform 9¾ — tap it.',
+    hots:[
+      {x:30.5,y:20,w:12,h:6,go:'detail',label:'King’s Cross spot'},
+      {x:69,y:66,w:27,h:6,go:'home-list',label:'Switch to list'},
+      {x:3,y:8.5,w:93,h:7.5,dead:'Search is live in the app; this walkthrough uses the fixed London set.',label:'Search spots'},
+      {x:3,y:16.5,w:85,h:5.5,go:'filter',label:'Genre chips'},
+      {x:2,y:71.5,w:96,h:8.5,dead:ROWMSG,label:'Mrs Dalloway row'},
+      {x:2,y:80.5,w:96,h:8.5,dead:ROWMSG,label:'Sherlock Holmes row'},
+      ...TAB
+    ]
+  },
+  'home-list': {
+    name:'Explore — list',
+    text:'The same fifteen spots, ranked by distance. Readers in testing flipped between map and list constantly, so both are one tap apart.',
+    hots:[
+      {x:69,y:19.5,w:27,h:6,go:'home-map',label:'Back to map'},
+      {x:2,y:42.5,w:96,h:9.5,go:'detail',label:'Harry catches his train'},
+      {x:3,y:8.5,w:93,h:7.5,dead:'Search is live in the app; this walkthrough uses the fixed London set.',label:'Search spots'},
+      {x:3,y:16,w:85,h:5.5,go:'filter',label:'Genre chips'},
+      {x:2,y:23.5,w:96,h:8,dead:ROWMSG,label:'Mrs Dalloway row'},
+      {x:2,y:31.5,w:96,h:10,dead:ROWMSG,label:'Sherlock Holmes row'},
+      {x:2,y:52.5,w:96,h:8,dead:ROWMSG,label:'Dorian Gray row'},
+      {x:2,y:60.5,w:96,h:8.5,dead:ROWMSG,label:'Bridget Jones row'},
+      {x:2,y:69.5,w:96,h:9.5,dead:ROWMSG,label:'Peter Pan row'},
+      {x:2,y:79.5,w:96,h:9,dead:ROWMSG,label:'Hortense row'},
+      ...TAB
+    ]
+  },
+  'filter': {
+    name:'Filter',
+    text:'Genre, author, era, and the one that mattered most in interviews: only spots I can walk to.',
+    hots:[
+      {x:5.5,y:81,w:89,h:9,go:'home-list',label:'Show 15 spots'},
+      {x:81,y:11.5,w:15,h:5,dead:'Reset clears every selection. The walkthrough does not capture filter state.',label:'Reset'},
+      {x:6,y:22,w:88,h:14,dead:'Filter state is not captured in this walkthrough — tap “Show 15 spots”.',label:'Genre options'},
+      {x:6,y:38,w:88,h:8,dead:'Filter state is not captured in this walkthrough — tap “Show 15 spots”.',label:'Written by options'},
+      {x:6,y:49,w:88,h:8,dead:'Filter state is not captured in this walkthrough — tap “Show 15 spots”.',label:'Era options'},
+      {x:6,y:58,w:88,h:7,dead:'Filter state is not captured in this walkthrough — tap “Show 15 spots”.',label:'Walking distance toggle'},
+      ...TAB
+    ]
+  },
+  'detail': {
+    name:'Spot detail',
+    text:'One spot, one scene, and the practical facts a reader standing on the pavement actually needs: how far, how much, and what to look for.',
+    hots:[
+      {x:3,y:7,w:14,h:7,go:'home-map',label:'Back'},
+      {x:5.5,y:79,w:89,h:8.5,go:'directions',label:'Get directions'},
+      {x:5.5,y:87.3,w:89,h:8,go:'shelf',label:'Save for later'},
+      {x:73,y:7.5,w:22,h:6.5,go:'shelf',label:'Add to shelf'},
+      {x:4,y:67.5,w:92,h:10,dead:'The Peter Pan spot is real in the app; this walkthrough only builds out King’s Cross.',label:'Nearby spot'}
+    ]
+  },
+  'directions': {
+    name:'Walking directions',
+    text:'Four steps, distances, no re-routing theatre. Testers wanted to look up from the phone, not at it.',
+    hots:[
+      {x:5,y:11.5,w:14,h:6,go:'detail',label:'Back'},
+      {x:5.5,y:91.5,w:89,h:8,go:'spotted',label:'I made it to the spot'},
+      {x:6,y:19,w:88,h:22,dead:'The map is live in the app. The walkthrough keeps the designed state.',label:'Route map'}
+    ]
+  },
+  'spotted': {
+    name:'Well spotted',
+    text:'The payoff. A stamp, a count, and one obvious next thing to go and find.',
+    hots:[
+      {x:5.5,y:61.5,w:89,h:8.5,go:'shelf',label:'See my shelf'},
+      {x:5.5,y:71,w:89,h:8.5,go:'home-map',label:'Next spot'}
+    ]
+  },
+  'shelf': {
+    name:'My shelf',
+    text:'Stamps collected and spots saved for later — the reason to come back after the first walk.',
+    hots:[
+      {x:4,y:37,w:92,h:10,go:'detail',label:'Saved spot'},
+      {x:19,y:23,w:11,h:8.5,dead:'The King’s Cross stamp opens the spot you collected it at — tap the saved row below.',label:'Stamp'},
+      ...TAB
+    ]
+  }
+};
+
+const ORDER = ['splash','home-map','home-list','filter','detail','directions','spotted','shelf'];
+const LABEL = {'splash':'Splash','home-map':'Explore — map','home-list':'Explore — list','filter':'Filter','detail':'Spot detail','directions':'Walking directions','spotted':'Well spotted','shelf':'My shelf'};
+
+// ---- build ------------------------------------------------------------------
+const screensEl = document.getElementById('screens');
+const toastEl   = document.getElementById('toast');
+const trailEl   = document.getElementById('trail');
+const cname     = document.getElementById('cname');
+const ctext     = document.getElementById('ctext');
+const backBtn   = document.getElementById('back');
+const seen = new Set();
+let current = null, history = [], toastTimer = null;
+
+ORDER.forEach(key=>{
+  const s = SCREENS[key];
+  const img = document.createElement('img');
+  img.src = '../assets/screens26/'+key+'.jpg';
+  img.alt = 'Bookspot — '+s.name;
+  img.dataset.key = key;
+  img.decoding = 'async';
+  if(key!=='splash') img.loading = 'eager';
+  screensEl.appendChild(img);
+
+  s.hots.forEach(h=>{
+    const b = document.createElement('button');
+    b.type='button'; b.className='hot'+(h.dead?' dead':'');
+    b.style.cssText = `left:${h.x}%;top:${h.y}%;width:${h.w}%;height:${h.h}%`;
+    b.setAttribute('aria-label', h.label + (h.dead?' (not in this walkthrough)':''));
+    b.dataset.screen = key;
+    b.hidden = true;
+    b.addEventListener('click', ()=> h.dead ? toast(h.dead) : go(h.go));
+    screensEl.appendChild(b);
+  });
+});
+
+ORDER.forEach(key=>{
+  const li=document.createElement('li');
+  li.textContent = LABEL[key];
+  li.dataset.key = key;
+  trailEl.appendChild(li);
+});
+
+function toast(msg){
+  toastEl.textContent = msg;
+  toastEl.classList.add('on');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>toastEl.classList.remove('on'), 3400);
+}
+
+function paint(){
+  screensEl.querySelectorAll('img').forEach(i=>i.classList.toggle('on', i.dataset.key===current));
+  screensEl.querySelectorAll('.hot').forEach(b=>{ b.hidden = b.dataset.screen!==current; });
+  cname.textContent = SCREENS[current].name;
+  ctext.textContent = SCREENS[current].text;
+  trailEl.querySelectorAll('li').forEach(li=>{
+    li.classList.toggle('seen', seen.has(li.dataset.key));
+    li.classList.toggle('here', li.dataset.key===current);
+  });
+  backBtn.disabled = history.length===0;
+}
+
+function go(key, push=true){
+  if(!SCREENS[key] || key===current) return;
+  if(push && current) history.push(current);
+  current = key; seen.add(key);
+  toastEl.classList.remove('on');
+  paint();
+}
+
+backBtn.addEventListener('click', ()=>{
+  const prev = history.pop();
+  if(prev){ current = prev; paint(); }
+});
+document.getElementById('restart').addEventListener('click', ()=>{
+  history = []; seen.clear(); current=null; go('splash', false);
+});
+const revealBtn = document.getElementById('reveal');
+revealBtn.addEventListener('click', ()=>{
+  const on = document.body.classList.toggle('reveal');
+  revealBtn.setAttribute('aria-pressed', String(on));
+  revealBtn.textContent = on ? 'hide tap targets' : 'show tap targets';
+});
+document.addEventListener('keydown', e=>{
+  if(e.key==='Escape'||e.key==='ArrowLeft'){ backBtn.click(); }
+  else if(e.key==='ArrowRight'){
+    const i = ORDER.indexOf(current);
+    if(i>-1 && i<ORDER.length-1) go(ORDER[i+1]);
+  }
+});
+
+go('splash', false);
+</script>
+</body>
+</html>

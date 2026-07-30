@@ -1,61 +1,76 @@
-PORTFOLIO FIXES — upload these to belleofthebot/portfolio
+PORTFOLIO UPDATE — upload these to belleofthebot/portfolio
 =========================================================
 
-Unzip this folder. It contains six things:
+Unzip. Seven items:
 
   fonts/                     NEW folder, 3 woff2 files
   drive-the-505/             NEW folder, the app unpacked from drive-the-505.zip
+  proto/                     NEW folder, the two prototypes
   drive-the-505-preview.jpg  NEW - index.html referenced this and it did not exist
   bookspot-preview.jpg       REPLACES the current one (recropped)
   index.html                 REPLACES the current one
   work-studio.html           REPLACES the current one
 
 To upload:
-  1. Go to https://github.com/belleofthebot/portfolio
+  1. https://github.com/belleofthebot/portfolio
   2. Add file -> Upload files
-  3. Drag all six items in at once (folders included - GitHub keeps the
-     folder structure when you drag a folder).
-  4. Commit message: "Fix fonts, Drive the 505, StudioKeeper, card previews"
+  3. Drag all seven items in at once. GitHub keeps folder structure when
+     you drag a folder.
+  4. Commit message: "Fonts, Drive the 505, previews, prototypes"
   5. Commit. Vercel redeploys on its own in about a minute.
+
+Then check these four URLs on the live site:
+  /                          the two app cards should show recropped previews
+  /drive-the-505/            the app itself
+  /proto/bookspot-app.html   the walkthrough
+  /proto/studiokeeper.html   the dashboard
 
 WHAT CHANGED
 
-1. fonts/ - styles.css loads the three woff2 files from fonts/, but in the
-   repo they sit loose at the root. Every one was 404ing in production, so
-   the live site has been rendering in a system fallback font, not Space
-   Grotesk / IBM Plex Mono. This is the fix that will visibly change the
-   site the most.
+1. fonts/ - styles.css loads three woff2 files from fonts/, but in the repo
+   they sat loose at the root, so every one 404'd in production and the live
+   site rendered in a system fallback font. This is the most visible fix.
 
-2. drive-the-505/ - work-drive-505.html links to drive-the-505/index.html,
-   which did not exist; only the zip was in the repo. Unpacked it, so the
-   app now runs at yoursite.com/drive-the-505/.
+2. drive-the-505/ - work-drive-505.html linked to drive-the-505/index.html,
+   which did not exist; only the zip was in the repo. Now the app runs at
+   yoursite.com/drive-the-505/.
 
-3. The two card previews, recomposed. Both were 980x660 images being
-   squeezed into a 467x210 well by object-fit:cover, which centred the crop
-   and sliced the phones through the middle of their content. Both are now
-   cropped to the card's own aspect ratio with the ivory margin trimmed, so
-   the screens run edge to edge and bleed off the bottom - a deliberate
-   crop rather than an accidental one. object-position:top holds the bleed
-   at the bottom at any card width.
+3. Card previews recomposed. Both were 980x660 images squeezed into a
+   467x210 well by object-fit:cover, which centred the crop and sliced the
+   phones through the middle of their content. Both are now cropped to the
+   card's aspect ratio with the ivory margin trimmed, so the screens run
+   edge to edge and bleed off the bottom - a deliberate crop, not an
+   accidental one.
 
-4. index.html - the work card said "Desert Palette." Now StudioKeeper.
+4. proto/bookspot-app.html - a clickable walkthrough built from the eight
+   hi-fi London screens already in assets/screens26/. The whole designed
+   flow is wired: splash, map, list, filter, spot detail, walking
+   directions, the spotted stamp, the shelf, plus the bottom tab bar.
+   There is a "show tap targets" toggle, back, restart, keyboard support,
+   and a flow trail down the side. Every hotspot either navigates or tells
+   you why it does not - no dead ends, and no pretending something is built
+   when it is not.
 
-5. work-studio.html - "Desert Palette" replaced in the page title, the OG
-   tag, the h1, and the prototype label; the demo button now points at
-   proto/studiokeeper.html.
+5. proto/studiokeeper.html - the dashboard rebuilt from the case study's
+   own structure. Four time windows (30 days, YTD, 2025, all time), revenue
+   stacked by channel with hover tooltips and a table view, booked versus
+   kept per channel, insights that carry their own caveats, orders that
+   open for line items, a restock radar whose reorder button files a task,
+   and the tax envelope. Sample data, labelled as sample on the page.
+
+6. index.html + work-studio.html - the last "Desert Palette" references are
+   now StudioKeeper, and the prototype button points at proto/studiokeeper.html.
+
+Every href, src and CSS url() in the repo now resolves. Nothing 404s.
 
 STILL OPEN
 
-  proto/bookspot-app.html     The Bookspot "Open it" button 404s.
-  proto/studiokeeper.html     The StudioKeeper demo button 404s.
-
-  Both files were built in an earlier Claude session's sandbox, which is
-  gone - they were never in the repo. Nothing to find on your machine
-  unless you downloaded them at the time. See the chat for options.
+  Choosing a Car, inside Drive the 505, still reads as your own shopping
+  criteria. Turning it into a quiz that recommends cars is next.
 
 OPTIONAL CLEANUP
 
   Your image folders exist twice: app/ fig/ people/ screens/ screens26/
-  sketches/ at the repo root, and again under assets/. The pages only use
-  the assets/ copies. The root set is about 2 MB of dead weight. Deleting
-  it has to be done in GitHub's web UI (uploading can't delete).
+  sketches/ at the repo root and again under assets/. Only the assets/
+  copies are used; the root set is about 2 MB of dead weight. Deleting has
+  to be done in GitHub's web UI - uploading cannot delete.
