@@ -185,6 +185,32 @@ label.item.done span{ text-decoration:line-through; text-decoration-color:var(--
 .leap-card{ background:linear-gradient(135deg,rgba(224,138,82,.16),rgba(95,194,189,.12)); border:1px solid var(--rose); border-radius:14px; padding:1rem; margin:0.6rem 0; }
 .leap-card p{ font-size:0.85rem; color:var(--charcoal); line-height:1.55; margin:0; }
 .chk-reset{ display:block; margin:1rem auto 0; font-family:'DM Sans',sans-serif; font-weight:600; font-size:0.72rem; color:var(--silver-dark); background:transparent; border:1px solid var(--silver); border-radius:20px; padding:0.45rem 1.1rem; cursor:pointer; }
+
+/* ---------- Choosing a Car: the matcher ---------- */
+.cm-lede{font-size:.86rem;line-height:1.6;color:var(--charcoal-soft);margin:.4rem 0 .2rem}
+.cm-bar{height:4px;border-radius:4px;background:#2a3055;overflow:hidden;margin:0 0 1rem}
+.cm-bar i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,var(--sky),var(--rose-soft));transition:width .35s ease}
+.cm-help{font-size:.74rem;color:var(--silver-dark);margin:.55rem .15rem 0;line-height:1.5}
+.cm-actions{display:flex;align-items:center;gap:.6rem;margin-top:1rem}
+.cm-ghost{background:none;border:1px solid var(--silver);color:var(--silver-dark);border-radius:8px;padding:.5rem .9rem;font-family:'DM Sans',sans-serif;font-size:.75rem;cursor:pointer}
+.cm-ghost:hover{border-color:var(--sky);color:var(--charcoal)}
+.cm-opt{display:flex!important;flex-direction:column;gap:.15rem;cursor:pointer}
+.cm-opt .cm-t{font-size:.88rem;font-weight:600;color:var(--charcoal)}
+.cm-opt .cm-s{font-size:.73rem;color:var(--silver-dark);line-height:1.4}
+.cm-opt.cm-on{border-color:var(--rose);background:linear-gradient(135deg,rgba(224,138,82,.18),rgba(95,194,189,.10))}
+.cm-opt.cm-on .cm-t{color:var(--rose-soft)}
+.cm-head{display:flex;align-items:center;justify-content:space-between;margin:1.4rem .15rem .7rem}
+.cm-kick{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--rose-soft);font-weight:700}
+.cm-res .cm-rank{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sky);font-weight:700;margin-bottom:.3rem}
+.cm-meter{height:6px;border-radius:6px;background:#2a3055;overflow:hidden;margin:.7rem 0 .35rem}
+.cm-meter i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--sky),var(--rose-soft))}
+.cm-fit{font-size:.72rem;color:var(--silver-dark);margin-bottom:.7rem}
+.cm-good{font-size:.85rem;line-height:1.6;color:var(--charcoal);margin:0 0 .7rem}
+.cm-why{list-style:none;margin:0 0 .6rem;padding:0}
+.cm-why li{display:flex;gap:.5rem;font-size:.79rem;line-height:1.5;color:var(--charcoal-soft);padding:.22rem 0}
+.cm-why li span{color:var(--sage);font-weight:700;flex:0 0 auto}
+.cm-why.cm-warn li span{color:var(--rose-soft)}
+.cm-fine{font-size:.72rem;color:var(--silver-dark);line-height:1.55;margin:.8rem .15rem 0;font-style:italic}
 </style>
 </head>
 <body>
@@ -255,11 +281,37 @@ label.item.done span{ text-decoration:line-through; text-decoration-color:var(--
   </div>
   <div class="section" id="sec-mycar">
     <div class="module-header">Choosing a Car</div>
-    <div class="module-sub">WHAT ACTUALLY MATTERS WHEN THE CAR IS PART OF THE CONFIDENCE</div>
+    <div class="module-sub">SIX QUESTIONS, THEN CARS THAT SUIT A NERVOUS DRIVER</div>
     <div class="rose-accent"></div>
+
+    <div class="spec-card" id="cmCard">
+      <div id="cmRecap" style="display:none"></div>
+      <div id="cmIntro">
+        <div class="car-name">Find your shortlist</div>
+        <div class="car-trim">Six questions, about a minute</div>
+        <p class="cm-lede">There is no single right first car. There is a right one for your budget, your streets and the things that make you nervous. Answer these and you get a shortlist you can actually go and drive, with the reason each one is on it.</p>
+        <button class="quiz-btn" onclick="cmStart()">Start</button>
+      </div>
+
+      <div id="cmQuiz" style="display:none">
+        <div class="cm-bar"><i id="cmBarFill"></i></div>
+        <div class="quiz-q-num" id="cmNum"></div>
+        <div class="quiz-question" id="cmQ"></div>
+        <div id="cmOpts"></div>
+        <p class="cm-help" id="cmHelp"></p>
+        <div class="cm-actions">
+          <button class="cm-ghost" onclick="cmBack()" id="cmBackBtn">← back</button>
+          <button class="quiz-next show" onclick="cmNext()" id="cmNextBtn" style="display:none">See the shortlist →</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="cmResults"></div>
+
+    <div id="cmChecklist">
     <div class="spec-card">
       <div class="car-name">What to look for</div>
-      <div class="car-trim">A nervous driver's priorities, in order</div>
+      <div class="car-trim">The checklist behind every pick above</div>
       <div class="spec"><span class="k">Visibility</span><span class="v">High seating position, large windows, thin pillars</span></div>
       <div class="spec"><span class="k">Size</span><span class="v">Compact SUV or hatchback is easiest to place in a lane</span></div>
       <div class="spec"><span class="k">Transmission</span><span class="v">Automatic, unless you already love a manual</span></div>
@@ -287,6 +339,7 @@ label.item.done span{ text-decoration:line-through; text-decoration-color:var(--
     </div>
     <div class="leap-card">
       <p><b>Test drive it properly.</b> Fifteen minutes in a parking lot tells you nothing. Drive it on a road you find hard. Merge onto a highway. Reverse into a space. Park it. If a car makes a road you fear feel manageable, that is the car.</p>
+    </div>
     </div>
     <p class="mantra">You are not doing this alone. The right car is helping.</p>
   </div>
@@ -1018,6 +1071,260 @@ function resetChecklist(prefix){
     var l = cb.closest('label'); if(l){ l.classList.remove('done'); }
   });
   saveState();
+}
+</script>
+<script>
+/* ---------- Choosing a Car: the matcher ---------- */
+const CM_Q = [
+  {k:'budget', q:'What can you spend, all in?',
+   help:'Out the door, not sticker. Tax, title and fees are real money.',
+   opts:[
+     {v:'lo',  t:'Under $10,000',  s:'An older car in good health'},
+     {v:'mid', t:'$10,000 – $18,000', s:'Where modern safety tech starts showing up'},
+     {v:'hi',  t:'$18,000 – $28,000', s:'Three to six years old, most features standard'},
+     {v:'top', t:'Over $28,000', s:'Nearly new, or new'}
+   ]},
+  {k:'where', q:'Where will you actually be driving?',
+   help:'Pick the one you dread most, not the one you do most.',
+   opts:[
+     {v:'city', t:'City streets and parking',  s:'Narrow lanes, tight spaces, a lot of stopping'},
+     {v:'hwy',  t:'Highway miles',             s:'Merging, speed, long stretches'},
+     {v:'snow', t:'Snow, rain or dirt roads',  s:'Weather and surfaces you cannot control'},
+     {v:'mix',  t:'A bit of everything',       s:'No single road worries me most'}
+   ]},
+  {k:'size', q:'What size car feels manageable?',
+   help:'Bigger is not safer if you cannot tell where its corners are.',
+   opts:[
+     {v:'small', t:'Small — I want to place it easily', s:'Hatchback or compact sedan'},
+     {v:'tall',  t:'Small, but sitting up high',        s:'Small SUV: short body, tall seat'},
+     {v:'mid',   t:'Room for people and gear',          s:'Compact SUV or midsize sedan'}
+   ]},
+  {k:'park', q:'Where does the car sleep?',
+   help:'Parking is the part most new drivers actually dread.',
+   opts:[
+     {v:'tight', t:'Tight street parking',   s:'Parallel parking, most days'},
+     {v:'easy',  t:'Driveway or garage',     s:'Straight in, no audience'},
+     {v:'lot',   t:'Mostly big lots',        s:'Pull-through spaces'}
+   ]},
+  {k:'must', q:'Which of these would settle your nerves most?',
+   help:'Pick up to three. Tap again to unpick.', multi:3,
+   opts:[
+     {v:'bsm', t:'Blind spot monitoring',     s:'A light in the mirror before you change lanes'},
+     {v:'acc', t:'Adaptive cruise control',   s:'The car holds a gap on the highway'},
+     {v:'cam', t:'Camera and parking sensors',s:'Beeps and a picture when reversing'},
+     {v:'cp',  t:'CarPlay or Android Auto',   s:'Your maps on the car screen, not your lap'},
+     {v:'awd', t:'All wheel drive',           s:'Grip in weather and on dirt'}
+   ]},
+  {k:'stance', q:'How do you feel about buying used?',
+   help:'There is no wrong answer. It changes which cars make sense.',
+   opts:[
+     {v:'used', t:'Cheapest thing that is still safe', s:'Private sale is fine if it inspects clean'},
+     {v:'cpo',  t:'Certified pre owned, with a warranty', s:'Dealer inspected, costs a bit more'},
+     {v:'new',  t:'New, and keep it a long time',        s:'Full warranty, highest price'}
+   ]}
+];
+
+/* Typical Albuquerque-market used prices, wide bands on purpose.
+   tech = the earliest model year the feature is common at sensible trims. */
+const CM_CARS = [
+  {n:'Honda Fit',        yr:'2015–2020', lo:8,  hi:14, size:'small', awd:'no',   park:5, viz:5,
+   tech:{bsm:'trim', acc:'no', cam:'std', cp:'2018+'},
+   good:'The most usable small car ever made. Huge glass, thin pillars, and a back seat that folds flat enough to move a bookshelf.',
+   watch:'No all wheel drive, ever, and no adaptive cruise. Road noise on the highway is real.'},
+  {n:'Toyota Corolla',   yr:'2019–2022', lo:15, hi:24, size:'small', awd:'no',   park:4, viz:4,
+   tech:{bsm:'trim', acc:'std', cam:'std', cp:'2020+'},
+   good:'Toyota Safety Sense is standard from 2019, so adaptive cruise and lane keeping come on even the cheap ones. Famously boring to own, which is the compliment.',
+   watch:'No AWD. Blind spot monitoring only on higher trims — check the mirror for the little icon.'},
+  {n:'Mazda3',           yr:'2019–2022', lo:17, hi:27, size:'small', awd:'opt',  park:4, viz:3,
+   tech:{bsm:'std', acc:'std', cam:'std', cp:'std'},
+   good:'The one that feels expensive for the money, and one of the few small cars you can get with all wheel drive.',
+   watch:'Thick rear pillars and a small back window. Sit in it and check over your shoulder before you fall for the interior.'},
+  {n:'Kia Soul',         yr:'2020–2022', lo:15, hi:22, size:'tall',  awd:'no',   park:5, viz:5,
+   tech:{bsm:'trim', acc:'trim', cam:'std', cp:'std'},
+   good:'Boxy in the way that helps: you can see all four corners, the seat is high, and it parks like something much smaller.',
+   watch:'No AWD. Some trims skip blind spot monitoring — confirm before you commit.'},
+  {n:'Honda HR-V',       yr:'2019–2022', lo:18, hi:26, size:'tall',  awd:'opt',  park:5, viz:4,
+   tech:{bsm:'trim', acc:'2023+', cam:'std', cp:'2019+'},
+   good:'A tall seat and a short body — the easiest small SUV to place in a lane and in a space. AWD is an option.',
+   watch:'Adaptive cruise did not arrive until the 2023 redesign. Slow on a highway on-ramp.'},
+  {n:'Subaru Crosstrek', yr:'2018–2022', lo:18, hi:28, size:'tall',  awd:'std',  park:4, viz:5,
+   tech:{bsm:'trim', acc:'std', cam:'std', cp:'std'},
+   good:'All wheel drive standard, EyeSight adaptive cruise standard with the automatic, and visibility that makes snow and dirt roads feel ordinary.',
+   watch:'Not quick. Merging onto I-25 takes planning. Check the automatic, not the manual, for EyeSight.'},
+  {n:'Subaru Forester',  yr:'2019–2022', lo:19, hi:29, size:'mid',   awd:'std',  park:4, viz:5,
+   tech:{bsm:'trim', acc:'std', cam:'std', cp:'std'},
+   good:'More glass than almost anything else on the road — the visibility benchmark. AWD and EyeSight standard on every one.',
+   watch:'Bigger than it looks in a parking structure. Blind spot monitoring is trim-dependent.'},
+  {n:'Hyundai Kona',     yr:'2019–2022', lo:16, hi:25, size:'tall',  awd:'opt',  park:5, viz:4,
+   tech:{bsm:'trim', acc:'trim', cam:'std', cp:'std'},
+   good:'Small footprint, tall seat, and the best warranty in the business if you buy it certified.',
+   watch:'Tight back seat. Adaptive cruise and blind spot monitoring are both trim-dependent.'},
+  {n:'Toyota RAV4',      yr:'2019–2022', lo:22, hi:32, size:'mid',   awd:'opt',  park:3, viz:4,
+   tech:{bsm:'trim', acc:'std', cam:'std', cp:'2019+'},
+   good:'Safety Sense standard, AWD available, and enough room that you stop planning around the car.',
+   watch:'The most in-demand used SUV there is, so you pay for it. Bigger to park than the small SUVs.'},
+  {n:'Honda CR-V',       yr:'2018–2022', lo:20, hi:30, size:'mid',   awd:'opt',  park:3, viz:5,
+   tech:{bsm:'trim', acc:'std', cam:'std', cp:'2018+'},
+   good:'Excellent outward visibility for its size, Honda Sensing standard on most, and a genuinely enormous back seat.',
+   watch:'Honda Sensing was optional on the base 2018 LX — confirm the year and trim.'},
+  {n:'Toyota Camry',     yr:'2019–2022', lo:19, hi:29, size:'mid',   awd:'2020+',park:3, viz:4,
+   tech:{bsm:'trim', acc:'std', cam:'std', cp:'2019+'},
+   good:'The calmest highway car on this list. Safety Sense standard, and AWD became available in 2020.',
+   watch:'Long. Parallel parking takes practice. Low seating position if you like sitting up high.'},
+  {n:'Volvo XC40',       yr:'2019–2022', lo:24, hi:36, size:'mid',   awd:'opt',  park:4, viz:4,
+   tech:{bsm:'std', acc:'std', cam:'std', cp:'std'},
+   good:'Blind spot monitoring, adaptive cruise and a 360 camera as standard equipment, in a small-feeling SUV.',
+   watch:'The priciest here, and Volvo servicing costs more than the Japanese cars. Get the repair-cost estimate first.'}
+];
+
+const CM = {i:0, a:{}, done:false};
+
+function cmStart(){ CM.i=0; CM.a={}; CM.done=false; document.getElementById('cmIntro').style.display='none'; document.getElementById('cmRecap').style.display='none'; document.getElementById('cmQuiz').style.display='block'; document.getElementById('cmResults').innerHTML=''; cmRender(); }
+function cmBack(){ if(CM.i>0){ CM.i--; cmRender(); } else { document.getElementById('cmQuiz').style.display='none'; document.getElementById('cmIntro').style.display='block'; } }
+function cmNext(){ if(CM.i<CM_Q.length-1){ CM.i++; cmRender(); } else { cmFinish(); } }
+
+function cmRender(){
+  const q=CM_Q[CM.i];
+  document.getElementById('cmBarFill').style.width=((CM.i)/CM_Q.length*100)+'%';
+  document.getElementById('cmNum').textContent='Question '+(CM.i+1)+' of '+CM_Q.length;
+  document.getElementById('cmQ').textContent=q.q;
+  document.getElementById('cmHelp').textContent=q.help;
+  const cur=CM.a[q.k];
+  document.getElementById('cmOpts').innerHTML=q.opts.map(o=>{
+    const on=q.multi ? (cur||[]).includes(o.v) : cur===o.v;
+    return `<button class="quiz-option cm-opt${on?' cm-on':''}" onclick="cmPick('${q.k}','${o.v}',${!!q.multi},${q.multi||0})">
+      <span class="cm-t">${o.t}</span><span class="cm-s">${o.s}</span></button>`;
+  }).join('');
+  const answered = q.multi ? (cur&&cur.length>0) : !!cur;
+  const nb=document.getElementById('cmNextBtn');
+  nb.style.display = answered ? 'inline-block' : 'none';
+  nb.textContent = CM.i===CM_Q.length-1 ? 'See the shortlist →' : 'Next →';
+  document.getElementById('cmBackBtn').textContent = CM.i===0 ? '← start over' : '← back';
+}
+
+function cmPick(k,v,multi,max){
+  if(multi){
+    const cur=CM.a[k]||[];
+    const i=cur.indexOf(v);
+    if(i>-1) cur.splice(i,1); else { if(cur.length>=max) cur.shift(); cur.push(v); }
+    CM.a[k]=cur;
+    cmRender();
+  } else {
+    CM.a[k]=v;
+    cmRender();
+    if(CM.i<CM_Q.length-1) setTimeout(cmNext,190); else setTimeout(cmFinish,190);
+  }
+}
+
+function cmBudget(a){ return {lo:[0,10],mid:[10,18],hi:[18,28],top:[28,60]}[a]; }
+
+function cmScore(car,a){
+  let s=0, why=[], why2=[];
+  const [bLo,bHi]=cmBudget(a.budget);
+  const overlap=Math.max(0, Math.min(car.hi,bHi)-Math.max(car.lo,bLo));
+  const span=Math.max(1, car.hi-car.lo);
+  const fit=Math.min(1, overlap/Math.min(span,bHi-bLo));
+  s += fit*30;
+  if(fit>=0.6) why.push(`Sits inside your budget at $${car.lo}–${car.hi}k for a ${car.yr} example`);
+  else if(fit>0) why2.push(`Only the older, higher-mileage end of ${car.yr} lands in your budget`);
+
+  const awdYes = car.awd==='std' || car.awd==='opt' || car.awd==='2020+';
+  if(a.where==='snow'){
+    if(car.awd==='std'){ s+=26; why.push('All wheel drive on every one, so you cannot buy the wrong version'); }
+    else if(awdYes){ s+=17; why2.push('AWD exists but is optional — you have to find the right car, not just the right model'); }
+    else { why2.push('Front wheel drive only, which is workable with good tires but is not what you asked for'); }
+  } else if(a.where==='hwy'){
+    if(car.tech.acc==='std'){ s+=20; why.push('Adaptive cruise standard, which is the feature that makes highway miles restful'); }
+    else if(car.tech.acc==='trim'){ s+=11; }
+    else { why2.push('No adaptive cruise on these years'); }
+    if(car.size!=='small') s+=5;
+  } else if(a.where==='city'){
+    s += car.park*4;
+    if(car.park>=5) why.push('Easy to place in a lane and in a space — the small-street car on this list');
+  } else {
+    s += car.park*2 + (car.tech.acc==='std'?9:4) + (awdYes?7:0);
+  }
+
+  if(a.size==='small'&&car.size==='small'){ s+=20; why.push('The size you said felt manageable'); }
+  else if(a.size==='tall'&&car.size==='tall'){ s+=20; why.push('Short body, tall seat — small to drive, high to sit in'); }
+  else if(a.size==='mid'&&car.size==='mid'){ s+=20; why.push('Room for people and gear without becoming a truck'); }
+  else if((a.size==='small'&&car.size==='tall')||(a.size==='tall'&&car.size==='small')||(a.size==='tall'&&car.size==='mid')||(a.size==='mid'&&car.size==='tall')) s+=10;
+
+  if(a.park==='tight'){ s+=car.park*3; if(car.park>=5) why.push('Parks like something a size smaller'); if(car.park<=3) why2.push('A handful in tight street parking until you know its corners'); }
+  else if(a.park==='easy') s+=8;
+  else s+=6;
+
+  s += car.viz*3;
+  if(car.viz>=5) why.push('Outward visibility is its standout feature — you can see out of every window');
+
+  (a.must||[]).forEach(m=>{
+    if(m==='awd'){ if(car.awd==='std'){s+=10; why.push('All wheel drive comes standard');} else if(awdYes){s+=6;} else {why2.push('Cannot be had with all wheel drive');} return; }
+    const v=car.tech[m];
+    const label={bsm:'Blind spot monitoring',acc:'Adaptive cruise control',cam:'Camera and parking sensors',cp:'CarPlay or Android Auto'}[m];
+    if(v==='std'){ s+=10; why.push(label+' is standard equipment'); }
+    else if(v==='trim'||/^\d{4}\+$/.test(v)){ s+=6; why2.push(label+' depends on the trim or year — check the specific car'); }
+    else { why2.push(label+' is not available on these years'); }
+  });
+
+  if(a.stance==='new'){ if(car.hi>=28) s+=8; else why2.push('Long out of production new — you would be buying this one used'); }
+  else if(a.stance==='cpo'){ s+=6; }
+  else { if(car.lo<=15){ s+=8; } }
+
+  return {s, why:why.slice(0,3), why2:why2.slice(0,2)};
+}
+
+function cmFinish(){
+  CM.done=true;
+  const a=CM.a;
+  // collapse the questions into a one-line recap of what was answered
+  const chips=CM_Q.map(q=>{
+    const v=a[q.k];
+    const names=(q.multi?(v||[]):[v]).map(x=>{const o=q.opts.find(o=>o.v===x);return o?o.t:null;}).filter(Boolean);
+    return names.map(nm=>`<span class="pill">${nm}</span>`).join('');
+  }).join('');
+  document.getElementById('cmQuiz').style.display='none';
+  const rc=document.getElementById('cmRecap');
+  rc.style.display='block';
+  rc.innerHTML=`<div class="car-name">Your answers</div>
+    <div class="car-trim">Tap retake to change any of them</div>
+    <div class="pills">${chips}</div>
+    <button class="cm-ghost" style="margin-top:.9rem" onclick="cmStart()">retake \u21bb</button>`;
+  const ranked=CM_CARS.map(c=>({c, ...cmScore(c,a)})).sort((x,y)=>y.s-x.s);
+  const top=ranked.slice(0,3);
+  const best=top[0].s;
+
+  const budgetNote = a.budget==='lo'
+    ? `<div class="leap-card"><p><b>An honest word about under $10,000.</b> At this budget you are usually choosing between modern safety tech and low miles — you rarely get both. Everything below is what gets closest, and the pre purchase inspection matters more here than anywhere else on this page.</p></div>`
+    : '';
+
+  const cards = top.map((r,i)=>`
+    <div class="spec-card cm-res">
+      <div class="cm-rank">${['Best match','Also worth driving','Third to look at'][i]}</div>
+      <div class="car-name">${r.c.n}</div>
+      <div class="car-trim">${r.c.yr} · about $${r.c.lo},000 – $${r.c.hi},000 used</div>
+      <div class="cm-meter"><i style="width:${Math.round(r.s/best*100)}%"></i></div>
+      <div class="cm-fit">${Math.round(r.s/best*100)}% fit against your answers</div>
+      <p class="cm-good">${r.c.good}</p>
+      ${r.why.length?`<ul class="cm-why">${r.why.map(w=>`<li><span aria-hidden="true">✓</span>${w}</li>`).join('')}</ul>`:''}
+      ${r.why2.length?`<ul class="cm-why cm-warn">${r.why2.map(w=>`<li><span aria-hidden="true">!</span>${w}</li>`).join('')}</ul>`:''}
+      <p class="car-note"><b>Watch out for:</b> ${r.c.watch}</p>
+    </div>`).join('');
+
+  const rest = ranked.slice(3).map(r=>`<span class="pill">${r.c.n}</span>`).join('');
+
+  document.getElementById('cmResults').innerHTML = `
+    <div class="cm-head"><span class="cm-kick">your shortlist</span>
+      <button class="cm-ghost" onclick="cmStart()">retake ↻</button></div>
+    ${budgetNote}
+    ${cards}
+    <div class="spec-card">
+      <div class="car-trim" style="margin-bottom:.6rem">Ranked lower for you, but still good cars</div>
+      <div class="pills">${rest}</div>
+      <p class="car-note">Nothing here is a bad car. They just fit your answers less well than the three above.</p>
+    </div>
+    <div class="leap-card"><p><b>Take this list to the lot, not the internet.</b> Drive all three on a road you find hard. The one that makes that road feel manageable is your answer, whatever the ranking says.</p></div>
+    <p class="cm-fine">Price bands are typical used-market ranges and move with mileage, condition and the time of year. Feature availability changes by trim and model year — confirm on the actual car, on the actual window sticker.</p>`;
+  document.getElementById('cmResults').scrollIntoView({behavior:'smooth', block:'start'});
 }
 </script>
 </body>

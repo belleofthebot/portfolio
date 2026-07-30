@@ -1,72 +1,78 @@
 PORTFOLIO UPDATE — upload these to belleofthebot/portfolio
 =========================================================
 
-Unzip. Seven items:
+Unzip. Eight items:
 
   fonts/                     NEW folder, 3 woff2 files
-  drive-the-505/             NEW folder, the app unpacked from drive-the-505.zip
+  drive-the-505/             NEW folder, the app (with the new car matcher)
   proto/                     NEW folder, the two prototypes
   drive-the-505-preview.jpg  NEW - index.html referenced this and it did not exist
   bookspot-preview.jpg       REPLACES the current one (recropped)
+  drive-the-505.zip          REPLACES the current one (regenerated to match the folder)
   index.html                 REPLACES the current one
   work-studio.html           REPLACES the current one
 
 To upload:
   1. https://github.com/belleofthebot/portfolio
   2. Add file -> Upload files
-  3. Drag all seven items in at once. GitHub keeps folder structure when
+  3. Drag all eight items in at once. GitHub keeps folder structure when
      you drag a folder.
-  4. Commit message: "Fonts, Drive the 505, previews, prototypes"
+  4. Commit message: "Fonts, Drive the 505 matcher, previews, prototypes"
   5. Commit. Vercel redeploys on its own in about a minute.
 
-Then check these four URLs on the live site:
-  /                          the two app cards should show recropped previews
-  /drive-the-505/            the app itself
-  /proto/bookspot-app.html   the walkthrough
-  /proto/studiokeeper.html   the dashboard
+Then check these on the live site:
+  /                              the two app cards, recropped previews
+  /drive-the-505/                the app - tap "Choosing a Car"
+  /proto/bookspot-app.html       the walkthrough
+  /proto/studiokeeper.html       the dashboard
 
 WHAT CHANGED
 
 1. fonts/ - styles.css loads three woff2 files from fonts/, but in the repo
    they sat loose at the root, so every one 404'd in production and the live
-   site rendered in a system fallback font. This is the most visible fix.
+   site rendered in a system fallback font. Most visible fix on the list.
 
 2. drive-the-505/ - work-drive-505.html linked to drive-the-505/index.html,
-   which did not exist; only the zip was in the repo. Now the app runs at
+   which did not exist; only the zip was in the repo. The app now runs at
    yoursite.com/drive-the-505/.
 
-3. Card previews recomposed. Both were 980x660 images squeezed into a
+3. Choosing a Car is now a matcher, not a list of your criteria. Six
+   questions - budget, the road you dread most, size, where the car parks,
+   which features would settle your nerves, how you feel about buying used
+   - then a ranked shortlist of three from a twelve-car catalogue. Each pick
+   shows a fit score, the specific reasons it matched YOUR answers, the
+   caveats counting against it, and what to watch out for on that model.
+   It is honest where it matters: under $10k it says out loud that you are
+   usually choosing between modern safety tech and low miles; anything that
+   depends on trim or model year says so instead of being claimed; the cars
+   that ranked lower are still listed as good cars. Your original "what to
+   look for" checklist stays, reframed as the reasoning behind the picks.
+   Built on the app's existing quiz styling, so it looks native.
+
+4. Card previews recomposed. Both were 980x660 images squeezed into a
    467x210 well by object-fit:cover, which centred the crop and sliced the
    phones through the middle of their content. Both are now cropped to the
    card's aspect ratio with the ivory margin trimmed, so the screens run
-   edge to edge and bleed off the bottom - a deliberate crop, not an
-   accidental one.
+   edge to edge and bleed off the bottom.
 
-4. proto/bookspot-app.html - a clickable walkthrough built from the eight
+5. proto/bookspot-app.html - a clickable walkthrough built from the eight
    hi-fi London screens already in assets/screens26/. The whole designed
-   flow is wired: splash, map, list, filter, spot detail, walking
-   directions, the spotted stamp, the shelf, plus the bottom tab bar.
-   There is a "show tap targets" toggle, back, restart, keyboard support,
-   and a flow trail down the side. Every hotspot either navigates or tells
-   you why it does not - no dead ends, and no pretending something is built
-   when it is not.
+   flow: splash, map, list, filter, spot detail, walking directions, the
+   spotted stamp, the shelf, and the bottom tab bar. "Show tap targets"
+   toggle, back, restart, keyboard support, flow trail. Every hotspot either
+   navigates or tells you why it does not.
 
-5. proto/studiokeeper.html - the dashboard rebuilt from the case study's
-   own structure. Four time windows (30 days, YTD, 2025, all time), revenue
-   stacked by channel with hover tooltips and a table view, booked versus
-   kept per channel, insights that carry their own caveats, orders that
-   open for line items, a restock radar whose reorder button files a task,
-   and the tax envelope. Sample data, labelled as sample on the page.
+6. proto/studiokeeper.html - the dashboard rebuilt from the case study's own
+   structure. Four time windows, revenue stacked by channel with hover
+   tooltips and a table view, booked versus kept per channel, insights that
+   carry their own caveats, orders that open for line items, a restock radar
+   whose reorder button files a task, the tax envelope. Sample data,
+   labelled as sample on the page.
 
-6. index.html + work-studio.html - the last "Desert Palette" references are
+7. index.html + work-studio.html - the last "Desert Palette" references are
    now StudioKeeper, and the prototype button points at proto/studiokeeper.html.
 
-Every href, src and CSS url() in the repo now resolves. Nothing 404s.
-
-STILL OPEN
-
-  Choosing a Car, inside Drive the 505, still reads as your own shopping
-  criteria. Turning it into a quiz that recommends cars is next.
+Every href, src and CSS url() in the repo resolves. Nothing 404s.
 
 OPTIONAL CLEANUP
 
