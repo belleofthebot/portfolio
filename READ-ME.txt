@@ -1,0 +1,37 @@
+THE TWO ITEMS THAT DID NOT LAND
+===============================
+
+Everything else from the big import is live and correct. These two are missing:
+
+  fonts/               3 woff2 files — /fonts/... still returns 404, so the site
+                       is STILL rendering in a system fallback font
+  work-bookspot.html   the version with the live prototype in the hero
+
+Upload just these two:
+  1. https://github.com/belleofthebot/portfolio → Add file → Upload files
+  2. Drag in the "fonts" folder AND work-bookspot.html
+  3. Commit
+
+Likely cause: GitHub's web uploader takes about 100 files per commit, and the
+import was exactly 100. The tail got dropped. Two items is well inside the limit.
+
+Then confirm both:
+  https://portfolio-nine-opal-18.vercel.app/fonts/space-grotesk-latin-400-normal.woff2
+     should download a file, not show "The page could not be found"
+  https://portfolio-nine-opal-18.vercel.app/work-bookspot.html
+     the phone in the hero should be tappable
+
+IF THE FONTS FOLDER FAILS AGAIN — a fix that needs no file upload
+
+The three woff2 files are ALREADY live at the repo root (that is where they have
+always been). So you can just point the CSS at them:
+
+  1. Open styles.css on GitHub, click the pencil to edit
+  2. On lines 8, 9 and 10, delete "fonts/" from each url() — so
+       url('fonts/space-grotesk-latin-400-normal.woff2')
+     becomes
+       url('space-grotesk-latin-400-normal.woff2')
+  3. Commit
+
+Three deletions, and the typography works. Note if you do this: the woff2 files
+at the repo root are then load-bearing — do not delete them in any cleanup.
