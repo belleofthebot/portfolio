@@ -1,117 +1,118 @@
-PORTFOLIO IMPORT — everything in one go
-=======================================
+PORTFOLIO IMPORT — everything, one upload
+=========================================
 
-Unzip and drag ALL of these into GitHub at once:
+Unzip, then drag ALL of these into GitHub at once:
 https://github.com/belleofthebot/portfolio → Add file → Upload files
-(GitHub keeps folder structure when you drag a folder.)
+(GitHub keeps folder structure when you drag a folder in.)
 
-  fonts/                     NEW    3 woff2 files
-  drive-the-505/             NEW    the app
-  proto/                     NEW    both prototypes
-  assets/                    UPDATE one new file inside: app/logo-white.png
-  styles.css                 UPDATE new case-study styles appended at the end
+  fonts/                     NEW     3 woff2 files
+  drive-the-505/             NEW     the app
+  proto/                     NEW     both prototypes
+  assets/                    UPDATE  adds app/logo-white.png and the passage/ folder
+  styles.css                 UPDATE  new case-study styles appended at the end
   index.html                 UPDATE
+  work-bookspot.html         UPDATE
   work-studio.html           UPDATE
+  work-passage.html          NEW
+  bookspot-preview.jpg       UPDATE  recropped
   drive-the-505-preview.jpg  NEW
-  bookspot-preview.jpg       UPDATE recropped
-  drive-the-505.zip          UPDATE regenerated to match the folder
+  passage-preview.jpg        NEW
+  drive-the-505.zip          UPDATE  regenerated to match the folder
 
-Commit message: "Fonts, prototypes, Drive the 505, StudioKeeper"
+Commit message: "Prototypes, Passage, Drive the 505, fonts"
 Vercel redeploys itself in about a minute. Then check:
 
-  /                          the two app cards
+  /                          three cards in "for learning and fun"
+  /work-bookspot.html        the prototype should be running in the hero
+  /work-passage.html         the new case study
   /work-studio.html          the enriched case study
   /drive-the-505/            tap "Choosing a Car"
-  /proto/bookspot-app.html   the Bookspot prototype
+  /proto/bookspot-app.html   the Bookspot prototype on its own
   /proto/studiokeeper.html   the dashboard
 
 --------------------------------------------------------------------
-WHAT CHANGED
-
 FIXES
 
-1. fonts/ — styles.css loads three woff2 files from fonts/, but in the repo
-   they sat loose at the root, so every one 404'd in production and the live
-   site rendered in a system fallback font. The most visible fix on this list.
+1. fonts/ — styles.css loads three woff2 files from fonts/, but in the repo they
+   sat loose at the root, so every one 404'd in production and the live site
+   rendered in a system fallback font. The most visible fix on this list.
 
 2. drive-the-505/ — work-drive-505.html linked to drive-the-505/index.html,
-   which did not exist; only the zip was in the repo. The app now runs at
-   yoursite.com/drive-the-505/.
+   which did not exist; only the zip was in the repo. The app runs now.
 
 3. drive-the-505-preview.jpg — index.html pointed at it and it did not exist,
-   so that work card showed a broken image.
+   so that card showed a broken image.
 
 4. Both card previews recomposed. They were 980x660 images squeezed into a
-   467x210 well by object-fit:cover, which centred the crop and sliced the
-   phones through the middle of their content. Now cropped to the card's own
-   aspect ratio with the ivory margin trimmed, so the screens run edge to edge
-   and bleed off the bottom — a deliberate crop rather than an accidental one.
+   467x210 well by object-fit:cover, which centred the crop and cut the phones
+   through the middle of their content. Now cropped to the card's own aspect
+   ratio with the ivory margin trimmed, bleeding off the bottom on purpose.
 
 5. assets/app/logo-white.png — the Bookspot logo had a cream ground baked into
-   the JPG, showing as a pale square on the sage splash. Knocked out to
-   transparency.
+   the JPG, showing as a pale square on the sage splash. Knocked out.
 
-PROTOTYPES — both are ports of YOUR files, not reconstructions
+PROTOTYPES — ports of your files, not reconstructions
 
-6. proto/bookspot-app.html — your 2026 prototype from Claude Design, ported to
-   plain HTML. Fifteen London spots, splash, city picker, the four-step tour,
-   map and list views, quick genre chips, spot detail with save/unsave, walking
-   directions, the stamp screen with running progress, the shelf holding stamps
-   and saved spots, the full filter (genre, author, era, walking distance) with
-   a live count, More and About. Every bit of state carries through the session.
+6. proto/bookspot-app.html — your 2026 Claude Design prototype in plain HTML.
+   Fifteen London spots, splash, city picker, four-step tour, map and list,
+   genre chips, spot detail with save/unsave, walking directions, the stamp
+   with running progress, the shelf, the full filter with a live count, More
+   and About. State carries through the whole session.
 
 7. proto/studiokeeper.html — your Desert Palette dashboard, ported and renamed
    StudioKeeper. All seven tabs, four time windows, the three-ways-in add flow,
-   aging tasks, orders that open for line items, per-type product filtering, the
-   restock radar, the quarterly filing table. SKUs renamed DP- to SK-; gallery
-   and wholesale venue names scrubbed to match your red line about client data.
-   This replaces the version I had built from the case study — yours is better.
+   aging tasks, orders that open for line items, per-type product filtering,
+   restock radar, quarterly filings. SKUs DP- to SK-; gallery and wholesale
+   venue names scrubbed, per your own rule about client data. Replaces the
+   version I had built from the case study — yours was better.
 
-   Why both had to be ported: the .dc.html format needs support.js plus the
-   _ds/belleofthebot-design-system-... bundle to run. These ports need nothing,
-   so they work on your own domain permanently.
+   Both had to be ported because .dc.html needs support.js plus the
+   _ds/belleofthebot-design-system-... bundle. These need nothing.
 
-CASE STUDY
+CASE STUDIES
 
-8. work-studio.html now matches your newer version. Added: the six-source chaos
-   panel funnelling into "one tired artist, reconciling by hand", the
-   what-the-studio-keeps-from-$100 margin comparison, the five channel tiles,
-   the ten questions grid (solid = answered today, dashed = roadmap), and the
-   products / line items / orders data model. New CSS for these is appended at
-   the end of styles.css — nothing existing was changed.
+8. work-bookspot.html — the hero is the running prototype now, not a still of
+   the splash screen. The "jump to the clickable prototype" button is gone; the
+   copy tells people to tap it and scroll for the process. Opened on its own,
+   proto/bookspot-app.html still has its own header and screen-jump chips; the
+   embedded copy hides them via ?embed=1.
 
-   work-bookspot.html already matched: it has the 2026 facelift section, the
-   prototype link and the hi-fi screen grid.
+9. work-studio.html matches your newer version: the six-source chaos panel
+   funnelling into "one tired artist, reconciling by hand", the
+   what-the-studio-keeps-from-$100 comparison, the five channel tiles, the ten
+   questions grid (solid = answered today, dashed = roadmap), and the products
+   / line items / orders data model. New CSS is appended at the END of
+   styles.css; nothing existing was touched.
+
+10. work-passage.html — NEW. The 2022 team project, scoped the way you
+    described it: your idea, your interface, every painting and illustration
+    yours; Erin, Ian and Tiffany on interviews and the presentation. It says
+    plainly that Ian owned the repo, which is why the commit history is all
+    his. Includes the device shots, the flat home screen, the caregiver
+    illustration, two painted landscapes and two painted trees. There is a new
+    card for it on the homepage, in "for learning and fun".
 
 DRIVE THE 505
 
-9.  Choosing a Car is a matcher now. Six questions — budget, the road you dread,
-    size, where the car parks, which features would settle your nerves, how you
-    feel about buying used — then a ranked shortlist of three from a twelve-car
-    catalogue, each with a fit score, the reasons it matched your answers, the
-    caveats against it, and what to watch for on that model. It says out loud
-    that under $10k you are usually choosing between modern safety tech and low
-    miles, and anything trim- or year-dependent says so. The "What to look for"
-    criteria table is removed, as you asked.
+11. Choosing a Car is a matcher: six questions, then a ranked shortlist of three
+    from a twelve-car catalogue with fit scores, the reasons each matched your
+    answers, and what to watch for. The "What to look for" criteria table is
+    removed, as you asked.
 
-10. Reordered: Car Knowledge, Driving Theory, NM Road Rules and ABQ Geography
-    come first; Choosing a Car, Buying a Car and First Month follow, so the
-    checklists sit at the end.
+12. Reordered — the four learning modules first, the checklists last.
 
-11. Every emoji replaced with hand-drawn inline SVG — nav, home cards, module
-    cards, the Study / Flashcards / Quiz tabs, both map switches. They use
-    currentColor so they take the app's gold automatically.
+13. Every emoji replaced with hand-drawn inline SVG, inheriting the app's gold.
 
 Every href, src and CSS url() in the repo resolves. Nothing 404s.
 
 --------------------------------------------------------------------
-NOT DONE — one piece, on purpose
+STILL OPEN
 
-  "Bookspot 2026 Facelift" (the annotated concept page with the four phone
-  mockups and the what-stays/what-goes panel) is the only Claude Design file I
-  did not port. The case study covers the 2026 design and links to the working
-  prototype, so nothing is broken without it — but if you want that page on the
-  site too, say so and it is a straightforward next job.
+  - "Bookspot 2026 Facelift", the annotated concept page with the four phone
+    mockups and the what-stays/what-goes panel, is the one Claude Design file
+    not ported. Nothing is broken without it.
+  - A 2026 facelift for Passage, the same way you did Bookspot. Worth doing —
+    the paintings deserve more room than the 2022 chrome gives them.
 
 OPTIONAL CLEANUP
 
