@@ -4,567 +4,408 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>StudioKeeper — studio dashboard</title>
-<meta name="description" content="StudioKeeper: the one screen for an art business that sells the same work five different ways. Revenue by channel, insights with their caveats attached, restock radar, tax envelope.">
+<meta name="description" content="StudioKeeper: the one screen for an art business that sells the same work five different ways. Overview, tasks, insights, orders, products, inventory and taxes — switch the window and it all re-slices.">
 <style>
 @font-face{font-family:'Space Grotesk';src:url('../fonts/space-grotesk-latin-400-normal.woff2') format('woff2');font-weight:400;font-display:swap}
 @font-face{font-family:'Space Grotesk';src:url('../fonts/space-grotesk-latin-500-normal.woff2') format('woff2');font-weight:500;font-display:swap}
 @font-face{font-family:'IBM Plex Mono';src:url('../fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2');font-weight:400;font-display:swap}
-
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&display=swap">
+<style>
 :root{
-  --ground:#17121C; --panel:#241D2B; --screen:#141019; --tile:#1D1724;
-  --line:#423748; --line-soft:#2E2735;
-  --text:#F4F2EE; --text-2:#BBB2C0; --text-3:#8B8494;
-  --rose:#DFA192; --on-rose:#2A120B; --rose-tint:#3A2129;
-  --mint:#7FD6BC;
+  --ground:#17121C; --panel:#241D2B; --line:#423748;
+  --text:#F4F2EE; --text-2:#BBB2C0; --text-3:#8B8494; --rose:#DFA192;
   --sans:'Space Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;
   --mono:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace;
-  --radius:8px; --radius-card:12px;
-
-  /* categorical series — validated for this dark surface with the
-     dataviz palette validator (adjacent CVD ΔE 8.4, normal-vision 19.3) */
-  --series-1:#3987e5;  /* market      */
-  --series-2:#d95926;  /* gallery     */
-  --series-3:#199e70;  /* wholesale   */
-  --series-4:#c98500;  /* online      */
-  --series-5:#d55181;  /* commission  */
-
-  /* reserved status colours — never reused as a series */
-  --st-good:#199e70; --st-warn:#c98500; --st-serious:#d95926; --st-crit:#e66767;
+  /* the dashboard's own light palette */
+  --sheet:#F6EFE4; --tile:#FBF6EC; --ink:#33241E; --ink-2:#4C3A31; --ink-3:#6E5A4E; --ink-4:#8A776C;
+  --rust:#B04E2E; --olive:#6E7F5C; --hair:rgba(59,42,36,.12);
+  --good-bg:#E3EBDD; --good:#3F6B4F;
+  --warn-bg:#F6EAD2; --warn:#8A6A1E;
+  --hot-bg:#F4DCD3; --hot:#A4432E;
+  --neutral-bg:#EFE8DA; --neutral:#6E5A4E;
+  --serif:'Newsreader',Georgia,serif;
+  --ui:-apple-system,'Helvetica Neue',sans-serif;
 }
 *{box-sizing:border-box}
 html,body{margin:0}
 body{background:var(--ground);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;padding:26px 20px 60px}
-.wrap{max-width:1060px;margin:0 auto}
+.wrap{max-width:1120px;margin:0 auto}
 a{color:var(--rose)}
-.mono{font-family:var(--mono)}
-
-/* ---------- head ---------- */
 .backlink{font-family:var(--mono);font-size:.78rem;color:var(--text-3);text-decoration:none;display:inline-block;margin-bottom:16px}
 .backlink:hover{color:var(--rose)}
 .kicker{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);display:block;margin-bottom:8px}
 h1{font-size:1.6rem;font-weight:500;margin:0 0 8px;line-height:1.2}
-.sub{color:var(--text-2);font-size:.93rem;line-height:1.6;margin:0 0 6px;max-width:70ch}
-.sample{font-family:var(--mono);font-size:.72rem;color:var(--text-3);border:1px dashed var(--line);border-radius:999px;padding:5px 12px;display:inline-block;margin:14px 0 24px}
+.lede{color:var(--text-2);font-size:.93rem;line-height:1.6;margin:0 0 22px;max-width:72ch}
+.fine{font-family:var(--mono);font-size:.75rem;color:var(--text-3);margin:14px 0 0;line-height:1.65}
 
-/* ---------- window switcher ---------- */
-.filters{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:22px}
-.filters .lbl{font-family:var(--mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-right:4px}
-.chip{font-family:var(--mono);font-size:.76rem;color:var(--text-2);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer;transition:border-color .15s,color .15s,background .15s}
-.chip:hover{border-color:var(--rose);color:var(--text)}
-.chip[aria-pressed="true"]{background:var(--rose-tint);border-color:var(--rose);color:var(--rose)}
+.sheet{background:var(--sheet);border-radius:16px;border:1px solid var(--line);overflow:hidden;color:var(--ink);font-family:var(--ui)}
+.sheet-head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:26px 32px 0}
+.brand{font-family:var(--serif);font-size:27px}
+.brand-sub{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-4);margin-left:14px}
+.badge-illus{font-size:12px;font-weight:600;color:var(--hot);background:var(--hot-bg);border-radius:999px;padding:5px 12px}
 
-/* ---------- stat tiles ---------- */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:14px}
-.stat{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-card);padding:16px 18px}
-.stat .n{font-size:1.75rem;font-weight:500;display:block;line-height:1.1;letter-spacing:-.01em}
-.stat .l{font-size:.8rem;color:var(--text-2);display:block;margin-top:7px;line-height:1.45}
-.stat .d{font-family:var(--mono);font-size:.7rem;color:var(--text-3);display:block;margin-top:8px}
-.stat.accent{border-color:var(--rose)}
-.stat.accent .n{color:var(--rose)}
+.tabs{display:flex;gap:2px;padding:18px 32px 0;border-bottom:1px solid var(--hair);flex-wrap:wrap}
+.tabs button{padding:10px 16px;font-size:14px;cursor:pointer;border:1px solid transparent;border-bottom:none;border-radius:8px 8px 0 0;background:transparent;color:var(--ink-4);font-family:var(--ui)}
+.tabs button.on{color:var(--ink);font-weight:600;background:var(--tile);border-color:rgba(59,42,36,.18)}
+.body{padding:24px 32px 36px}
 
-/* ---------- panels ---------- */
-.grid{display:grid;grid-template-columns:1.55fr 1fr;gap:14px;margin-top:14px;align-items:start}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-card);padding:18px 20px}
-.card h2{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);font-weight:400;margin:0 0 4px}
-.card .note{font-size:.8rem;color:var(--text-3);margin:0 0 16px;line-height:1.5}
-.card h3{font-size:1rem;font-weight:500;margin:0 0 10px}
+.winrow{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{padding:8px 16px;border-radius:999px;font-size:13px;cursor:pointer;background:var(--tile);color:var(--ink);border:1px solid rgba(59,42,36,.18);font-family:var(--ui)}
+.pill.on{background:var(--ink);color:var(--sheet);border-color:transparent}
+.headline{margin:0 0 22px;font-size:15px}
+.headline .h{font-family:var(--serif);font-size:17px}
+.headline .c{color:var(--ink-3)}
 
-/* ---------- chart: stacked bars ---------- */
-.chartTop{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:nowrap}
-.chartTop>div{flex:1 1 auto;min-width:0}
-.chartTop>button{flex:0 0 auto}
-.legend{display:flex;flex-wrap:wrap;gap:10px 16px;margin:0 0 14px;padding:0;list-style:none}
-.legend li{font-family:var(--mono);font-size:.72rem;color:var(--text-2);display:flex;align-items:center;gap:7px}
-.swatch{width:10px;height:10px;border-radius:2px;display:inline-block;flex:0 0 auto}
-.plot{position:relative;height:228px;display:flex;align-items:flex-end;gap:8px;padding-top:22px}
-.gridlines{position:absolute;left:0;right:0;top:22px;bottom:0;pointer-events:none}
-.gridlines i{position:absolute;left:0;right:0;height:1px;background:var(--line-soft)}
-.gridlines b{position:absolute;left:0;transform:translateY(-100%);font-family:var(--mono);font-size:.6rem;font-weight:400;color:var(--text-3);background:var(--panel);padding-right:5px}
-.col{flex:1 1 0;display:flex;flex-direction:column;justify-content:flex-end;gap:2px;height:100%;position:relative;min-width:0}
-.seg{border-radius:2px;transition:filter .12s;cursor:default}
-.col .seg:first-child{border-radius:4px 4px 2px 2px}
-.seg:hover{filter:brightness(1.25)}
-.xaxis{display:flex;gap:8px;margin-top:9px}
-.xaxis span{flex:1 1 0;text-align:center;font-family:var(--mono);font-size:.68rem;color:var(--text-3);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.colTotal{position:absolute;left:0;right:0;text-align:center;font-family:var(--mono);font-size:.63rem;color:var(--text-3);transform:translateY(-100%);pointer-events:none}
-.tip{position:fixed;z-index:40;background:#0D0A11;border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-family:var(--mono);font-size:.7rem;line-height:1.55;color:var(--text);pointer-events:none;opacity:0;transition:opacity .12s;max-width:230px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
-.tip.on{opacity:1}
-.tip b{color:var(--rose);font-weight:400}
+.k4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}
+.box{background:var(--tile);border:1px solid var(--hair);border-radius:12px;padding:16px 18px}
+.lab{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-4);margin-bottom:6px}
+.box .fig{font-family:var(--serif);font-size:30px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.panel{background:var(--tile);border:1px solid var(--hair);border-radius:12px;padding:20px 22px}
+.panel h3{font-family:var(--serif);font-size:19px;margin:0 0 14px;font-weight:400}
+.meter{height:8px;border-radius:4px;background:rgba(59,42,36,.08)}
+.meter i{display:block;height:100%;border-radius:4px}
+.mrow{margin-bottom:12px}
+.mrow .top{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;gap:10px}
+.mrow .dim{color:var(--ink-4)}
+.months{display:flex;align-items:flex-end;gap:10px;height:120px}
+.months .col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px;height:100%}
+.months .col span{font-size:11px;color:var(--ink-4)}
+.months .col i{width:100%;max-width:54px;border-radius:6px 6px 0 0;background:var(--rust);display:block;min-height:3px}
 
-table.tv{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:.72rem;margin-top:14px}
-table.tv th,table.tv td{text-align:right;padding:6px 8px;border-bottom:1px solid var(--line-soft);color:var(--text-2)}
-table.tv th:first-child,table.tv td:first-child{text-align:left}
-table.tv th{color:var(--text-3);font-weight:400;text-transform:uppercase;letter-spacing:.06em}
-.hidden{display:none}
+.stack{background:var(--tile);border:1px solid var(--hair);border-left:4px solid var(--hair);border-radius:10px;padding:15px 20px;margin-bottom:9px;display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap}
+.stack .t{font-size:14.5px;font-weight:600;margin-bottom:3px}
+.stack .b{font-size:13px;color:var(--ink-3)}
+.stack .r{display:flex;align-items:baseline;gap:12px}
+.age{font-size:12px;color:var(--ink-4)}
+.chipst{font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:999px;white-space:nowrap}
 
-/* ---------- channel rows ---------- */
-.chrow{padding:12px 0;border-bottom:1px solid var(--line-soft)}
-.chrow:last-child{border-bottom:0}
-.chrow .top{display:flex;align-items:baseline;gap:8px;margin-bottom:8px}
-.chrow .nm{font-size:.93rem;display:flex;align-items:center;gap:8px}
-.chrow .bh{margin-left:auto;font-family:var(--mono);font-size:.72rem;color:var(--text-3)}
-.bar2{height:9px;border-radius:4px;margin-bottom:4px;min-width:2px}
-.bar2.kept{opacity:.42}
-.chrow .meta{font-family:var(--mono);font-size:.68rem;color:var(--text-3);margin-top:6px}
+.insight{background:var(--tile);border:1px solid var(--hair);border-radius:12px;padding:22px 26px;margin-bottom:14px}
+.insight h4{font-family:var(--serif);font-size:21px;margin:0 0 8px;font-weight:400}
+.insight p{margin:0;font-size:14.5px;line-height:1.6;color:var(--ink-2);max-width:90ch}
 
-/* ---------- insights ---------- */
-.ins{background:var(--tile);border:1px solid var(--line-soft);border-left:2px solid var(--rose);border-radius:var(--radius);padding:13px 15px;margin-bottom:10px}
-.ins p{margin:0;font-size:.88rem;line-height:1.6;color:var(--text)}
-.ins .cav{display:block;margin-top:7px;font-family:var(--mono);font-size:.7rem;color:var(--text-3);line-height:1.55}
-.ins.gentle{border-left-color:var(--st-warn)}
+.listhead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;flex-wrap:wrap;gap:10px}
+.listhead h3{font-family:var(--serif);font-size:21px;margin:0;font-weight:400}
+.addbtn{padding:8px 16px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;background:var(--rust);color:var(--sheet);border:0;font-family:var(--ui)}
+.addbox{background:var(--tile);border:1px solid rgba(176,78,46,.4);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+.add3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.addopt{border:1px solid rgba(59,42,36,.15);background:var(--tile);border-radius:10px;padding:14px 16px;cursor:pointer}
+.addopt.on{border-color:var(--rust);background:rgba(176,78,46,.06)}
+.addopt .t{font-size:14px;font-weight:600;display:flex;align-items:center;gap:9px;margin-bottom:5px}
+.addopt .d{font-size:12.5px;line-height:1.5;color:var(--ink-3)}
+.addnote{margin-top:12px;padding:10px 14px;border-radius:8px;background:rgba(176,78,46,.08);font-size:13px;color:var(--ink-3)}
 
-/* ---------- lists ---------- */
-.rowlist{list-style:none;margin:0;padding:0}
-.rowlist li{border-bottom:1px solid var(--line-soft)}
-.rowlist li:last-child{border-bottom:0}
-.orow{width:100%;background:none;border:0;padding:12px 0;display:flex;align-items:center;gap:12px;cursor:pointer;text-align:left;color:inherit;font-family:inherit}
-.orow:hover .od{color:var(--rose)}
-.orow .dot{width:9px;height:9px;border-radius:2px;flex:0 0 auto}
-.orow .od{font-size:.88rem}
-.orow .oc{font-family:var(--mono);font-size:.68rem;color:var(--text-3)}
-.orow .ov{margin-left:auto;font-family:var(--mono);font-size:.8rem;color:var(--text-2)}
-.orow .car{font-family:var(--mono);font-size:.7rem;color:var(--text-3);width:12px;text-align:center}
-.lines{padding:0 0 12px 33px;margin:0;list-style:none}
-.lines li{display:flex;gap:10px;font-family:var(--mono);font-size:.7rem;color:var(--text-3);padding:4px 0;border:0}
-.lines li span:last-child{margin-left:auto;color:var(--text-2)}
+.ohead,.orow{display:grid;grid-template-columns:100px 74px 1.4fr 1fr 60px 84px 130px;gap:10px}
+.ohead,.phead{padding:8px 14px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-4)}
+.ocard{background:var(--tile);border:1px solid var(--hair);border-radius:10px;margin-bottom:8px;overflow:hidden}
+.ocard.open{border-color:rgba(176,78,46,.5)}
+.orow{padding:13px 14px;font-size:13.5px;cursor:pointer;align-items:baseline}
+.lines{border-top:1px solid rgba(59,42,36,.1);padding:10px 14px 12px;background:rgba(59,42,36,.02)}
+.line{display:grid;grid-template-columns:130px 1.6fr 70px 90px 90px;gap:10px;padding:6px 0;font-size:13px;border-bottom:1px dashed rgba(59,42,36,.1)}
+.sku{color:var(--ink-4);font-family:ui-monospace,monospace;font-size:12px}
 
-.tasks{list-style:none;margin:0;padding:0}
-.tasks li{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--line-soft);font-size:.85rem;line-height:1.45}
-.tasks li:last-child{border-bottom:0}
-.tasks input{margin:2px 0 0;accent-color:var(--mint);width:15px;height:15px;flex:0 0 auto}
-.tasks li.done label{color:var(--text-3);text-decoration:line-through}
-.tasks .when{font-family:var(--mono);font-size:.66rem;color:var(--text-3);margin-left:auto;padding-left:10px;white-space:nowrap}
-.prog{font-family:var(--mono);font-size:.7rem;color:var(--text-3);margin-top:12px}
+.phead,.prow{display:grid;grid-template-columns:120px 1.7fr 110px 80px 64px 84px 104px 104px;gap:10px}
+.prow{padding:12px 14px;font-size:13.5px;background:var(--tile);border:1px solid var(--hair);border-radius:10px;margin-bottom:6px;align-items:center}
+.prow .nm{font-family:var(--serif);font-size:15px}
+.ty{display:inline-flex;align-items:center;gap:7px;color:var(--ink-3)}
+.right{text-align:right}.center{text-align:center}
 
-.status{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.06em;border-radius:999px;padding:3px 9px;border:1px solid}
-.status.out{color:var(--st-crit);border-color:var(--st-crit)}
-.status.low{color:var(--st-warn);border-color:var(--st-warn)}
-.status.ok{color:var(--st-good);border-color:var(--st-good)}
-.stkrow{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line-soft);flex-wrap:wrap}
-.stkrow:last-child{border-bottom:0}
-.stkrow .sk{font-family:var(--mono);font-size:.66rem;color:var(--text-3);display:block;margin-top:3px}
-.stkrow .nm2{font-size:.87rem}
-.stkrow .act{margin-left:auto;display:flex;align-items:center;gap:10px}
-.mini{font-family:var(--mono);font-size:.68rem;color:var(--text-3)}
-.linkbtn{font-family:var(--mono);font-size:.68rem;color:var(--rose);background:none;border:1px solid var(--line);border-radius:999px;padding:5px 11px;cursor:pointer}
-.linkbtn:hover{border-color:var(--rose)}
-.linkbtn:disabled{color:var(--text-3);border-color:var(--line-soft);cursor:default}
+.taxrow{display:grid;grid-template-columns:1fr 1.4fr 110px 110px;gap:10px;padding:10px 0;font-size:13.5px;border-bottom:1px solid rgba(59,42,36,.08);align-items:baseline}
+.note{margin:14px 0 0;font-size:12.5px;color:var(--ink-4)}
+svg.ic{flex:0 0 auto;vertical-align:-.18em}
 
-/* tax envelope */
-.meter{height:10px;border-radius:5px;background:var(--tile);border:1px solid var(--line-soft);overflow:hidden;margin:12px 0 8px}
-.meter i{display:block;height:100%;background:var(--mint);border-radius:5px}
-.taxrow{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.72rem;color:var(--text-2);padding:5px 0}
-.taxrow span:last-child{color:var(--text)}
-.foot{font-family:var(--mono);font-size:.68rem;color:var(--text-3);line-height:1.6;margin-top:14px}
-
-@media(max-width:900px){
-  .grid{grid-template-columns:1fr}
-  .stats{grid-template-columns:repeat(2,1fr)}
+@media(max-width:1000px){
+  .k4{grid-template-columns:repeat(2,1fr)}
+  .two,.add3{grid-template-columns:1fr}
+  .ohead,.phead{display:none}
+  .orow,.prow{grid-template-columns:1fr 1fr;row-gap:4px}
+  .line{grid-template-columns:1fr 1fr}
+  .body,.sheet-head,.tabs{padding-left:18px;padding-right:18px}
 }
-@media(max-width:560px){
-  body{padding:18px 12px 40px}
-  .stats{grid-template-columns:1fr}
-  h1{font-size:1.3rem}
-}
+@media(max-width:560px){ .k4{grid-template-columns:1fr} body{padding:18px 12px 40px} }
 </style>
 </head>
 <body>
 <div class="wrap">
+  <a class="backlink" href="../work-studio.html">← back to the case study</a>
+  <span class="kicker">clickable prototype</span>
+  <h1>StudioKeeper</h1>
+  <p class="lede">The dashboard I check every Monday. Switch time windows, read the insights, work the task list, open an order for its line items, filter products by type, check the restock radar and the tax envelope. The shapes and trends are real; the figures are scaled and the customer and venue names are not.</p>
 
-<a class="backlink" href="../work-studio.html">← back to the case study</a>
-<span class="kicker">clickable prototype</span>
-<h1>StudioKeeper</h1>
-<p class="sub">One screen for a studio that sells the same work five different ways. Switch the window, read the insights, work the task list, open an order for its line items, check the restock radar and the tax envelope.</p>
-<span class="sample">sample data · the real order rows are customers, venues and tax records, so they stay out</span>
-
-<div class="filters" role="group" aria-label="Time window">
-  <span class="lbl">window</span>
-  <button class="chip" type="button" data-win="d30">last 30 days</button>
-  <button class="chip" type="button" data-win="ytd" aria-pressed="true">year to date</button>
-  <button class="chip" type="button" data-win="ly">2025</button>
-  <button class="chip" type="button" data-win="all">all time</button>
-</div>
-
-<div class="stats" id="stats"></div>
-
-<div class="grid">
-  <div class="col-main">
-
-    <div class="card">
-      <div class="chartTop">
-        <div>
-          <h2>revenue booked</h2>
-          <p class="note" id="chartNote"></p>
-        </div>
-        <button class="chip" type="button" id="tvBtn" aria-pressed="false">table view</button>
-      </div>
-      <ul class="legend" id="legend"></ul>
-      <div class="plot" id="plot"><div class="gridlines" id="gridlines"></div></div>
-      <div class="xaxis" id="xaxis"></div>
-      <div id="tableWrap" class="hidden"></div>
+  <div class="sheet">
+    <div class="sheet-head">
+      <div><span class="brand">StudioKeeper</span><span class="brand-sub">studio dashboard</span></div>
+      <span class="badge-illus">illustrative numbers — real trends, invented figures</span>
     </div>
-
-    <div class="card" style="margin-top:14px">
-      <h2>channels</h2>
-      <p class="note">Booked is what the sale was worth. Kept is what reaches the studio after the channel takes its cut — the number that decides what to make next.</p>
-      <div id="channels"></div>
-    </div>
-
-    <div class="card" style="margin-top:14px">
-      <h2>orders</h2>
-      <p class="note">Newest first. Open one for its line items — a market weekend is many pieces on one order.</p>
-      <ul class="rowlist" id="orders"></ul>
-    </div>
-
+    <div class="tabs" id="tabs"></div>
+    <div class="body" id="body"></div>
   </div>
 
-  <div class="col-side">
-
-    <div class="card">
-      <h2>insights</h2>
-      <p class="note">Every one reads as a sentence, with its asterisk attached.</p>
-      <div id="insights"></div>
-    </div>
-
-    <div class="card" style="margin-top:14px">
-      <h2>restock radar</h2>
-      <p class="note" id="restockNote"></p>
-      <div id="restock"></div>
-    </div>
-
-    <div class="card" style="margin-top:14px">
-      <h2>tax envelope</h2>
-      <p class="note">Set aside as the money arrives, not in April.</p>
-      <div id="tax"></div>
-    </div>
-
-    <div class="card" style="margin-top:14px">
-      <h2>this week</h2>
-      <ul class="tasks" id="tasks"></ul>
-      <p class="prog" id="taskProg"></p>
-    </div>
-
-  </div>
-</div>
-
-<p class="foot">
-  StudioKeeper reads a Google Sheet and Notion, builds on GitHub and serves from Vercel. $0 a month.<br>
-  Figures shown here are sample data in the real structure. Nothing on this page is tax advice — set-aside rates and filing dates change, and mine are checked with an accountant.
-</p>
-
-<div class="tip" id="tip" role="status" aria-live="polite"></div>
+  <p class="fine">StudioKeeper reads a Google Sheet and Notion, builds on GitHub and serves from Vercel — $0 a month. This is the real dashboard behind Painting the Southwest, anonymized: products renamed, every figure proportionally scaled. Nothing here is tax advice; set-aside rates and filing dates change, and mine are checked with an accountant.</p>
 </div>
 
 <script>
-// ---------------------------------------------------------------- data
-const CH = [
-  {key:'market',    name:'Market weekends', short:'Market',     keep:1.00, css:'var(--series-1)', pay:'cash, same day',        note:'full margin, costs a weekend'},
-  {key:'gallery',   name:'Gallery',         short:'Gallery',    keep:0.50, css:'var(--series-2)', pay:'consignment, ~6 weeks', note:'takes half, reaches new buyers'},
-  {key:'wholesale', name:'Wholesale',       short:'Wholesale',  keep:1.00, css:'var(--series-3)', pay:'net 30',                note:'booked at half retail, moves volume'},
-  {key:'online',    name:'Online shop',     short:'Online',     keep:0.92, css:'var(--series-4)', pay:'2 days',                note:'8% platform and payment fees'},
-  {key:'civic',     name:'Commission',      short:'Commission', keep:1.00, css:'var(--series-5)', pay:'net 30',                note:'lands once, moves every number'}
-];
-
-// 2026, by month, by channel — the authored spine
-const M26 = {
-  Jan:[900,1200,800,520,0], Feb:[1100,900,1150,480,0], Mar:[1500,1400,900,610,0],
-  Apr:[2400,1600,1100,890,0], May:[1900,1300,850,700,0], Jun:[1900,1200,800,640,6000],
-  Jul:[1700,1300,700,760,0]
+const ICON = {
+  Original:'M3 4h18v16H3z M7 15l4-5 3 3 2-2 2 2',
+  Print:'M7 3h12v14 M5 7h12v14H5z',
+  Card:'M3 6h18v12H3z M3 7l9 6 9-6',
+  Ornament:'M12 6V3 M10 3h4 M12 6a6.5 6.5 0 1 1-.01 0 M7 12h10',
+  hand:'M4 20l4-1L19 8l-3-3L5 16l-1 4z',
+  csv:'M4 5h16v14H4z M4 10h16 M10 5v14',
+  photo:'M4 8h4l2-2h4l2 2h4v10H4z M12 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6'
 };
-// July by week, for the 30-day window
-const W_JUL = {'Jul 1–7':[0,400,200,180,0],'Jul 8–14':[900,300,150,190,0],'Jul 15–21':[800,300,200,200,0],'Jul 22–30':[0,300,150,190,0]};
-// annual channel totals for the years we do not itemise by month
-const Y25 = [9800,9100,7300,3450,2200];
-const Y24 = [4900,4200,3100,1250,1800];
-const SEASON = [.055,.06,.075,.105,.095,.10,.09,.075,.08,.085,.09,.09]; // 12-month shape
-const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const ic=(k,c='var(--ink-4)',s=16)=>`<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${ICON[k]}"/></svg>`;
+const fmt=n=>'$'+n.toLocaleString('en-US');
+const ch=(name,amt,margin)=>({name,amt,margin});
 
-// distribute a total across weights, exact to the dollar (largest remainder)
-function spread(total, weights){
-  const raw = weights.map(w=>total*w), out = raw.map(Math.floor);
-  let rem = total - out.reduce((a,b)=>a+b,0);
-  raw.map((v,i)=>[v-Math.floor(v),i]).sort((a,b)=>b[0]-a[0]).forEach(([,i])=>{ if(rem>0){out[i]++;rem--;} });
-  return out;
-}
-function yearByMonth(totals){
-  const per = totals.map(t=>spread(t,SEASON));
-  return MONTHS.map((m,i)=>[m, per.map(p=>p[i])]);
-}
-
-const WIN = {
-  d30:{label:'last 30 days', note:'Four weeks of July, stacked by channel. No market on the first or last weekend — that is the shape of a month with one booth date.',
-       cols:Object.entries(W_JUL), cmp:null},
-  ytd:{label:'year to date', note:'January through July 2026, stacked by channel. June carries the one civic commission.',
-       cols:Object.entries(M26), cmp:{was:18980, pct:96}},
-  ly :{label:'2025', note:'All twelve months of 2025, stacked by channel. Monthly split is modelled from the annual channel totals.',
-       cols:yearByMonth(Y25), cmp:null},
-  all:{label:'all time', note:'Three years, stacked by channel. 2026 is seven months in.',
-       cols:[['2024',Y24],['2025',Y25],['2026 ytd',CH.map((_,i)=>Object.values(M26).reduce((a,r)=>a+r[i],0))]], cmp:null}
+const WINDOWS={
+ last30:{label:'Last 30 days',rev:6480,orders:12,avg:540,pieces:52,
+  cmp:'up 41% on the same 30 days of 2025',
+  channels:[ch('Online retail',2900,'91%'),ch('In-person market',1900,'96%'),ch('Gallery',1280,'50%'),ch('Wholesale',400,'50%')],
+  mix:[{name:'Original paintings',type:'Original',amt:3400,pieces:1},{name:'Prints',type:'Print',amt:720,pieces:16},{name:'Ornaments',type:'Ornament',amt:480,pieces:20},{name:'Greeting cards',type:'Card',amt:180,pieces:15}],
+  insights:[
+   {t:'Pace',b:'The last 30 days brought in $6,480 across 12 orders, up 41% on the same 30 days of 2025 ($4,600). One gallery original is doing most of the lifting.'},
+   {t:'Order size',b:"The average order is $540. Without the gallery sale it's $280 — comfortably above last summer, mostly because ornaments and prints are leaving in pairs."},
+   {t:'Channel movement',b:'Online retail grew the most, up $900 on last year’s stretch. Wholesale gave back $210. High-margin channels are the ones growing, which is the shape you want.'},
+   {t:'Product mix',b:'One original is 52% of the month. Ornaments lead on volume at 20 pieces — the small anchor product doing its job of drawing people to the table.'},
+   {t:'Concentration',b:'The single largest order (ORD-0143, $3,400, gallery) is 52% of this window’s income. Short windows always look concentrated; judge trends on the year.'}]},
+ ytd:{label:'Year to date',rev:37200,orders:64,avg:581,pieces:276,
+  cmp:'up 96% on the same stretch of 2025',
+  channels:[ch('Online retail',15400,'91%'),ch('Public art & civic',9000,'100%'),ch('In-person market',8300,'96%'),ch('Gallery',3200,'50%'),ch('Wholesale',1300,'50%')],
+  mix:[{name:'Original paintings',type:'Original',amt:28900,pieces:8},{name:'Prints',type:'Print',amt:2800,pieces:63},{name:'Ornaments',type:'Ornament',amt:2000,pieces:84},{name:'Greeting cards',type:'Card',amt:1500,pieces:121}],
+  insights:[
+   {t:'Pace',b:'Year to date brought in $37,200 across 64 orders, up 96% on the same stretch of 2025 ($19,000 across 180 orders).'},
+   {t:'Order size',b:'The average order is $581, up from $106 on the same stretch of 2025. Read this one gently: part of the jump is real (bigger original sales), and part is bookkeeping, since market days are logged as single day totals this year where last year every sale was its own order.'},
+   {t:'Channel movement',b:'Compared with the same stretch of 2025: online retail grew the most, up $6,200. In-person market gave back the most, down $1,100. Channel mix shifting is normal across seasons; what matters is whether the high-margin channels are the ones growing.'},
+   {t:'Product mix',b:'Original paintings lead on revenue at $28,900 (82% of item revenue). Greeting cards lead on volume at 121 pieces. Ornaments account for 30% of all pieces sold — the small anchor product that draws people to the table year-round.'},
+   {t:'Concentration',b:'The single largest order (ORD-0049, $9,000, civic collection purchase) is 24% of this window’s income. Worth celebrating and worth remembering when reading the trend: one big sale can move every number on this page.'}]},
+ lastyear:{label:'Last year',rev:30400,orders:288,avg:106,pieces:610,
+  cmp:'2025 in full — the first full-time year',
+  channels:[ch('In-person market',15200,'96%'),ch('Online retail',9800,'91%'),ch('Wholesale',3200,'50%'),ch('Gallery',2200,'50%')],
+  mix:[{name:'Original paintings',type:'Original',amt:9100,pieces:4},{name:'Greeting cards',type:'Card',amt:8900,pieces:340},{name:'Prints',type:'Print',amt:8200,pieces:180},{name:'Ornaments',type:'Ornament',amt:4200,pieces:86}],
+  insights:[
+   {t:'Pace',b:'2025 closed at $30,400 across 288 orders and 610 pieces — the first full-time year, built almost entirely on market weekends.'},
+   {t:'Order size',b:'The average order was $106. Small-format products carried the year; originals were rare and priced cautiously.'},
+   {t:'Channel movement',b:'In-person market was 50% of the year. That concentration is what the 2026 push toward online and civic sales was designed to fix.'},
+   {t:'Product mix',b:'Greeting cards led on volume at 340 pieces and nearly led on revenue — a volume business with strong margins but a hard ceiling.'},
+   {t:'Concentration',b:'No single order exceeded 8% of the year. Even income, but earned one $6 card at a time.'}]},
+ alltime:{label:'All time',rev:84600,orders:428,avg:198,pieces:1020,
+  cmp:'since the first market table in 2023',
+  channels:[ch('Online retail',30200,'91%'),ch('In-person market',28900,'96%'),ch('Public art & civic',12400,'100%'),ch('Gallery',8100,'50%'),ch('Wholesale',5000,'50%')],
+  mix:[{name:'Original paintings',type:'Original',amt:48200,pieces:19},{name:'Prints',type:'Print',amt:17300,pieces:380},{name:'Greeting cards',type:'Card',amt:12600,pieces:496},{name:'Ornaments',type:'Ornament',amt:6500,pieces:125}],
+  insights:[
+   {t:'Pace',b:'All time: $84,600 across 428 orders and 1,020 pieces since the first market table in 2023.'},
+   {t:'Order size',b:'The lifetime average order is $198 and climbing every year — the studio is steadily selling fewer, bigger things.'},
+   {t:'Channel movement',b:"Online retail has just overtaken in-person market as the largest lifetime channel. Three years ago it didn't exist."},
+   {t:'Product mix',b:'Originals are 57% of lifetime revenue from just 19 pieces. Everything else exists to fund the time to paint them.'},
+   {t:'Concentration',b:'The two largest orders are both civic purchases. Institutions arrived once there was a body of work to point at — that took two years of markets.'}]}
 };
 
-const STOCK = [
-  {sku:'PRT-VERBENA-1114', name:'Desert Verbena, 11×14 print', type:'edition', stock:6,  point:8,  cost:4.20,  reorder:24},
-  {sku:'CRD-SET-06',       name:'Notecard set of six',          type:'edition', stock:3,  point:12, cost:2.10,  reorder:36},
-  {sku:'CRD-HOLIDAY-08',   name:'Holiday cards, set of eight',  type:'edition', stock:0,  point:20, cost:2.65,  reorder:40},
-  {sku:'PRT-CANYON-1620',  name:'Canyon Road, 16×20 print',     type:'edition', stock:14, point:10, cost:7.40,  reorder:0},
-  {sku:'PRT-SAGE-0810',    name:'Sage Light, 8×10 print',       type:'edition', stock:22, point:12, cost:3.10,  reorder:0},
-  {sku:'STK-VINYL-01',     name:'Vinyl sticker, yucca',         type:'edition', stock:41, point:25, cost:0.55,  reorder:0},
-  {sku:'ORG-MESA-2436',    name:'Mesa Light, 24×36 original',   type:'original',stock:1,  point:0,  cost:96.00, reorder:0},
-  {sku:'ORG-RIO-1824',     name:'Rio Grande Bosque, 18×24 original', type:'original', stock:1, point:0, cost:64.00, reorder:0}
+const MONTHS=[['Jan',3200],['Feb',2700],['Mar',4600],['Apr',3900],['May',5600],['Jun',9400],['Jul',6500]];
+
+const PRODUCTS=[
+ {sku:'SK-ORIG-011',name:'Cottonwood Dawn',type:'Original',price:9000,stock:0,sold:1,rev:9000,badge:'Sold'},
+ {sku:'SK-ORIG-016',name:'Arroyo Nocturne',type:'Original',price:4800,stock:0,sold:1,rev:4800,badge:'Sold'},
+ {sku:'SK-ORIG-017',name:'Ridgeline in August',type:'Original',price:3900,stock:0,sold:1,rev:3900,badge:'Sold'},
+ {sku:'SK-ORIG-014',name:'Monsoon over the Mesa',type:'Original',price:3600,stock:1,sold:0,rev:0,badge:'One of one'},
+ {sku:'SK-ORIG-019',name:'High Desert Evening',type:'Original',price:3400,stock:0,sold:1,rev:3400,badge:'Sold'},
+ {sku:'SK-ORIG-018',name:'Cholla Shadow',type:'Original',price:2800,stock:1,sold:0,rev:0,badge:'One of one'},
+ {sku:'SK-ORIG-009',name:'Saguaro Dusk',type:'Original',price:2020,stock:0,sold:1,rev:2020,badge:'Sold'},
+ {sku:'SK-ORNM-001',name:'Saguaro at Dusk · ornament',type:'Ornament',price:24,stock:26,sold:54,rev:1296,badge:'In stock'},
+ {sku:'SK-ORNM-002',name:'Chile Ristra · ornament',type:'Ornament',price:24,stock:14,sold:30,rev:720,badge:'In stock'},
+ {sku:'SK-PRNT-031',name:'Arroyo Bloom · print',type:'Print',price:45,stock:12,sold:24,rev:1080,badge:'Low'},
+ {sku:'SK-PRNT-022',name:'Two Ravens · print',type:'Print',price:45,stock:4,sold:21,rev:945,badge:'Restock'},
+ {sku:'SK-PRNT-017',name:'Mesa Morning · print',type:'Print',price:45,stock:21,sold:18,rev:810,badge:'In stock'},
+ {sku:'SK-CARD-005',name:'Desert Blooms · card set',type:'Card',price:12,stock:58,sold:32,rev:384,badge:'In stock'},
+ {sku:'SK-CARD-002',name:'Roadrunner · card',type:'Card',price:6,stock:9,sold:89,rev:534,badge:'Restock'}
 ];
-
-const ORDERS = [
-  {date:'2026-07-19', ch:'market',    ref:'booth weekend',        lines:[['PRT-VERBENA-1114 × 6','$270'],['CRD-SET-06 × 8','$144'],['PRT-SAGE-0810 × 9','$261'],['STK-VINYL-01 × 25','$125']]},
-  {date:'2026-07-16', ch:'gallery',   ref:'consignment, July',    lines:[['ORG-RIO-1824 × 1','$1,150'],['PRT-CANYON-1620 × 2','$150']]},
-  {date:'2026-07-14', ch:'online',    ref:'shop order',           lines:[['PRT-VERBENA-1114 × 2','$90'],['CRD-SET-06 × 1','$18']]},
-  {date:'2026-07-09', ch:'wholesale', ref:'retail account',        lines:[['PRT-SAGE-0810 × 20','$290'],['CRD-SET-06 × 24','$216'],['STK-VINYL-01 × 60','$150']]},
-  {date:'2026-07-05', ch:'online',    ref:'shop order',           lines:[['PRT-CANYON-1620 × 1','$75'],['STK-VINYL-01 × 4','$20']]},
-  {date:'2026-06-22', ch:'civic',     ref:'public commission',     lines:[['Commissioned panel, 48×60','$6,000']]}
+const it=(sku,name,qty,unit)=>({sku,name,qty,unit,line:qty*unit});
+const ORDERS=[
+ {id:'ORD-0152',date:'Jul 23',channel:'Online retail',status:'Ship it',summary:'1 print, 2 card sets',items:[it('SK-PRNT-031','Arroyo Bloom · print',1,45),it('SK-CARD-005','Desert Blooms · card set',2,12)]},
+ {id:'ORD-0151',date:'Jul 20',channel:'Online retail',status:'Ship it',summary:'2 ornaments',items:[it('SK-ORNM-001','Saguaro at Dusk · ornament',2,24)]},
+ {id:'ORD-0149',date:'Jul 12',channel:'In-person market · Rail Yards',status:'Complete',summary:'market day total',items:[it('SK-ORNM-001','Saguaro at Dusk · ornament',4,24),it('SK-PRNT-022','Two Ravens · print',3,45),it('SK-CARD-002','Roadrunner · card',11,6),it('SK-CARD-005','Desert Blooms · card set',3,12)]},
+ {id:'ORD-0147',date:'Jul 6',channel:'Wholesale · retail account',status:'Net-30',summary:'cards + ornaments at 50%',items:[it('SK-CARD-005','Desert Blooms · card set',12,6),it('SK-ORNM-001','Saguaro at Dusk · ornament',6,12)]},
+ {id:'ORD-0143',date:'Jun 28',channel:'Gallery · consignment',status:'Payout due',summary:'1 original (50% consignment)',items:[it('SK-ORIG-019','High Desert Evening',1,3400)]},
+ {id:'ORD-0139',date:'Jun 21',channel:'Online retail',status:'Complete',summary:'1 print',items:[it('SK-PRNT-017','Mesa Morning · print',1,45)]},
+ {id:'ORD-0049',date:'Jun 9',channel:'Public art & civic',status:'Complete',summary:'civic collection purchase',items:[it('SK-ORIG-011','Cottonwood Dawn',1,9000)]},
+ {id:'ORD-0134',date:'Jun 7',channel:'In-person market · Old Town',status:'Complete',summary:'market day total',items:[it('SK-ORNM-002','Chile Ristra · ornament',5,24),it('SK-PRNT-031','Arroyo Bloom · print',2,45),it('SK-CARD-002','Roadrunner · card',8,6)]},
+ {id:'ORD-0129',date:'May 30',channel:'Online retail',status:'Complete',summary:'1 original',items:[it('SK-ORIG-017','Ridgeline in August',1,3900)]},
+ {id:'ORD-0124',date:'May 17',channel:'Online retail',status:'Complete',summary:'3 ornaments, 1 print',items:[it('SK-ORNM-001','Saguaro at Dusk · ornament',3,24),it('SK-PRNT-022','Two Ravens · print',1,45)]},
+ {id:'ORD-0118',date:'May 4',channel:'Online retail',status:'Complete',summary:'1 original',items:[it('SK-ORIG-016','Arroyo Nocturne',1,4800)]},
+ {id:'ORD-0112',date:'Apr 26',channel:'In-person market · Rail Yards',status:'Complete',summary:'market day total',items:[it('SK-CARD-002','Roadrunner · card',14,6),it('SK-CARD-005','Desert Blooms · card set',4,12),it('SK-PRNT-017','Mesa Morning · print',2,45)]}
 ];
-
-const TASKS = [
-  {t:'Reorder Desert Verbena and the notecard sets before the Aug 8 booth', when:'by Aug 3', done:false},
-  {t:'Photograph Mesa Light for the shop listing', when:'this week', done:false},
-  {t:'Invoice the gallery for the July consignment', when:'Aug 1', done:true},
-  {t:'Move July’s GRT set-aside into the tax account', when:'Aug 25', done:false},
-  {t:'Confirm the booth fee and load-in time for Aug 8', when:'this week', done:true}
+const URGENCY={
+ urgent:['rgba(164,67,46,.55)','var(--hot-bg)','var(--hot)','Urgent'],
+ soon:['rgba(138,106,30,.45)','var(--warn-bg)','var(--warn)','Soon'],
+ watch:['rgba(59,42,36,.18)','var(--neutral-bg)','var(--neutral)','Watch'],
+ scheduled:['rgba(59,42,36,.12)','var(--good-bg)','var(--good)','Scheduled']
+};
+const TASKS=[
+ ['urgent','Ship ORD-0151 · 2 ornaments · online retail','Came in 4 days ago — past the 3-day shipping promise. Label is pre-generated; box size B.','4 days old'],
+ ['urgent','Reorder Two Ravens · print (4 left, restock point 10)','Order 25 from the print shop today to land before the Rail Yards market on Aug 8 (5-day turnaround).','due today'],
+ ['soon','Ship ORD-0152 · 1 print, 2 card sets · online retail','Came in yesterday. Inside the shipping promise until Jul 26.','1 day old'],
+ ['soon','Reorder Roadrunner · card (9 left, restock point 12)','Best-selling card by volume; batches print cheapest at 100.','2 days below point'],
+ ['soon','Invoice the gallery · June consignment payout','ORD-0143 sold Jun 28; the 50% payout ($1,700) is billable now.','26 days since sale'],
+ ['watch','Wholesale payment · ORD-0147','Net-30 clock runs to Aug 5. Nudge lands automatically if unpaid Aug 6.','due Aug 5'],
+ ['scheduled','Q3 gross receipts filing','$466 already set aside against $5,900 self-collected. Reminder email lands Oct 11.','files Oct 25']
 ];
+const ALERTS=[
+ ['Two Ravens · print — 4 left','Below its restock point of 10. Reorder 25 from the print shop before the Rail Yards market on Aug 8 (5-day turnaround).','Restock now','urgent'],
+ ['Roadrunner · card — 9 left','Best-selling card by volume. Below its restock point of 12; batches print cheapest at 100.','Restock now','urgent'],
+ ['Arroyo Bloom · print — 12 left','Approaching its restock point of 10 at the current pace (about 3 per week). Fine through August; order with the next batch.','Running low','soon'],
+ ['Chile Ristra · ornament — 14 left','Sells fastest October–December. Comfortable now; the holiday reorder decision comes in September.','Healthy','scheduled']
+];
+const TAXROWS=[
+ ['Q1 · Jan–Mar','$3,800 self-collected','$300','Filed ✓','good'],
+ ['Q2 · Apr–Jun','$7,900 self-collected','$624','Filed ✓','good'],
+ ['Q3 · Jul–Sep','$5,900 so far','$466 set aside','Due Oct 25','warn']
+];
+const ADDOPTS=[
+ ['hand','Add one by hand','A quick form, same fields as the sheet.','In the real build this opens a short form with the same fields as the sheet — SKU lookups included, so a market sale is four taps.'],
+ ['csv','Import a CSV','Shop exports and market tallies, mapped once.','Upload once, map the columns once — the importer remembers the mapping for every future export from the online shop.'],
+ ['photo','Snap a photo','A handwritten market log becomes draft line items.','Snap the handwritten market journal page. OCR drafts the line items against known SKUs; nothing lands until each line is confirmed.']
+];
+const BADGE={'Sold':['var(--neutral-bg)','var(--ink-4)'],'One of one':['#F3E3D3','#8A5A2E'],'In stock':['var(--good-bg)','var(--good)'],'Low':['var(--warn-bg)','var(--warn)'],'Restock':['var(--hot-bg)','var(--hot)']};
+const STATUS={'Complete':['var(--good-bg)','var(--good)'],'Ship it':['var(--hot-bg)','var(--hot)'],'Net-30':['var(--warn-bg)','var(--warn)'],'Payout due':['var(--warn-bg)','var(--warn)']};
 
-// ---------------------------------------------------------------- helpers
-const $=s=>document.querySelector(s), money=n=>'$'+Math.round(n).toLocaleString('en-US');
-const moneyK=n=>n>=10000?'$'+(n/1000).toFixed(1)+'K':money(n);
-let win='ytd', tableOn=false;
-const chOf=k=>CH.find(c=>c.key===k);
+const TABS=[['overview','Overview'],['tasks','Tasks · 7'],['insights','Insights'],['orders','Orders'],['products','Products'],['inventory','Inventory'],['taxes','Taxes']];
+const S={tab:'overview',win:'ytd',openOrder:null,typeFilter:'All',addOpen:false,addMode:null};
 
-function totalsFor(w){
-  const t=[0,0,0,0,0];
-  WIN[w].cols.forEach(([,v])=>v.forEach((n,i)=>t[i]+=n));
-  return t;
+function windowsRow(){
+  const w=WINDOWS[S.win];
+  return `<div class="winrow">
+      <div class="pills">${Object.entries(WINDOWS).map(([id,ww])=>
+        `<button class="pill${S.win===id?' on':''}" data-win="${id}">${ww.label}</button>`).join('')}</div>
+      <span style="font-size:12px;color:var(--ink-4)">filtered by the window you pick</span>
+    </div>
+    <p class="headline"><span class="h">${w.label}: ${fmt(w.rev)} across ${w.orders} orders · ${fmt(w.avg)} average · ${w.pieces} pieces</span> <span class="c">· ${w.cmp}</span></p>`;
+}
+function overview(){
+  const w=WINDOWS[S.win];
+  const maxCh=Math.max(...w.channels.map(c=>c.amt)), maxMix=Math.max(...w.mix.map(m=>m.amt));
+  const maxMo=Math.max(...MONTHS.map(m=>m[1]));
+  const money=n=>n>=1000?'$'+(n/1000).toFixed(1)+'k':'$'+n;
+  return windowsRow()+`
+  <div class="k4">
+    <div class="box"><div class="lab">Revenue</div><div class="fig">${fmt(w.rev)}</div></div>
+    <div class="box"><div class="lab">Orders</div><div class="fig">${w.orders}</div></div>
+    <div class="box"><div class="lab">Average order</div><div class="fig">${fmt(w.avg)}</div></div>
+    <div class="box"><div class="lab">Pieces</div><div class="fig">${w.pieces}</div></div>
+  </div>
+  <div class="two">
+    <div class="panel"><h3>Where the money came from</h3>
+      ${w.channels.map(c=>`<div class="mrow"><div class="top"><span>${c.name} <span class="dim">· keeps ~${c.margin}</span></span><b>${fmt(c.amt)}</b></div>
+        <div class="meter"><i style="width:${Math.round(c.amt/maxCh*100)}%;background:var(--rust)"></i></div></div>`).join('')}
+    </div>
+    <div class="panel"><h3>What sold</h3>
+      ${w.mix.map(m=>`<div class="mrow"><div class="top"><span>${ic(m.type)}${m.name} <span class="dim">· ${m.pieces} pieces</span></span><b>${fmt(m.amt)}</b></div>
+        <div class="meter"><i style="width:${Math.round(m.amt/maxMix*100)}%;background:var(--olive)"></i></div></div>`).join('')}
+    </div>
+  </div>
+  <div class="panel"><h3>Month by month · 2026</h3>
+    <div class="months">${MONTHS.map(([n,a])=>`<div class="col"><span>${money(a)}</span><i style="height:${Math.round(a/maxMo*100)}%"></i><span>${n}</span></div>`).join('')}</div>
+  </div>`;
+}
+function tasks(){
+  return `<div class="listhead"><h3>Outstanding tasks</h3>
+    <span style="font-size:12px;color:var(--ink-4)">everything that needs a human, oldest and most urgent first · today is Jul 24</span></div>
+  ${TASKS.map(([lvl,t,b,age])=>{const u=URGENCY[lvl];
+    return `<div class="stack" style="border-color:${u[0]};border-left-color:${u[0]}">
+      <div style="flex:1;min-width:260px"><div class="t">${t}</div><div class="b">${b}</div></div>
+      <div class="r"><span class="age">${age}</span><span class="chipst" style="background:${u[1]};color:${u[2]}">${u[3]}</span></div></div>`;}).join('')}
+  <p class="note">Tasks generate themselves: unshipped orders age into urgency, stock crossing a restock point files a reorder, and consignment / net-30 / tax dates come off the calendar.</p>`;
+}
+function insights(){
+  return windowsRow()+WINDOWS[S.win].insights.map(i=>`<div class="insight"><h4>${i.t}</h4><p>${i.b}</p></div>`).join('');
+}
+function addBox(){
+  if(!S.addOpen) return '';
+  const note=S.addMode ? `<div class="addnote">${ADDOPTS.find(o=>o[0]===S.addMode)[3]}</div>` : '';
+  return `<div class="addbox">
+    <div class="lab">New record — three ways in</div>
+    <div class="add3">${ADDOPTS.map(([id,t,d])=>`<div class="addopt${S.addMode===id?' on':''}" data-add="${id}">
+      <div class="t">${ic(id,'var(--rust)',18)}${t}</div><div class="d">${d}</div></div>`).join('')}</div>${note}</div>`;
+}
+function orders(){
+  return `<div class="listhead"><h3>Latest orders</h3>
+    <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap">
+      <span style="font-size:12px;color:var(--ink-4)">showing 12 of 64 this year · click an order for its line items</span>
+      <button class="addbtn" data-toggleadd="1">+ Add new</button></div></div>
+  ${addBox()}
+  <div class="ohead"><span>Order</span><span>Date</span><span>Channel · venue</span><span>Summary</span><span>Pieces</span><span class="right">Total</span><span class="center">Status</span></div>
+  ${ORDERS.map(o=>{
+    const total=o.items.reduce((s,i)=>s+i.line,0), pieces=o.items.reduce((s,i)=>s+i.qty,0);
+    const st=STATUS[o.status], open=S.openOrder===o.id;
+    return `<div class="ocard${open?' open':''}">
+      <div class="orow" data-order="${o.id}">
+        <span style="font-weight:600">${o.id}</span><span style="color:var(--ink-4)">${o.date}</span>
+        <span>${o.channel}</span><span style="color:var(--ink-3)">${o.summary}</span>
+        <span style="color:var(--ink-4)">${pieces}</span><span class="right" style="font-weight:600">${fmt(total)}</span>
+        <span class="chipst center" style="background:${st[0]};color:${st[1]}">${o.status}</span></div>
+      ${open?`<div class="lines">${o.items.map(i=>`<div class="line"><span class="sku">${i.sku}</span><span>${i.name}</span>
+        <span style="color:var(--ink-4)">× ${i.qty}</span><span style="color:var(--ink-4)">${fmt(i.unit)}</span><span class="right">${fmt(i.line)}</span></div>`).join('')}</div>`:''}
+    </div>`;}).join('')}`;
+}
+function products(){
+  const rows=PRODUCTS.filter(p=>S.typeFilter==='All'||p.type===S.typeFilter);
+  return `<div class="listhead"><h3>Products</h3>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:baseline">
+      ${['All','Original','Print','Card','Ornament'].map(t=>`<button class="pill${S.typeFilter===t?' on':''}" data-type="${t}" style="padding:7px 14px;font-size:12.5px">${t}</button>`).join('')}
+      <button class="addbtn" data-toggleadd="1">+ Add new</button></div></div>
+  ${addBox()}
+  <div class="phead"><span>SKU</span><span>Product</span><span>Type</span><span>Price</span><span>Stock</span><span>Sold YTD</span><span>Rev YTD</span><span>Status</span></div>
+  ${rows.map(p=>{const b=BADGE[p.badge];
+    return `<div class="prow"><span class="sku">${p.sku}</span><span class="nm">${p.name}</span>
+      <span class="ty">${ic(p.type)}${p.type}</span><span>${fmt(p.price)}</span><span>${p.stock}</span>
+      <span style="color:var(--ink-4)">${p.sold}</span><span>${fmt(p.rev)}</span>
+      <span class="chipst center" style="background:${b[0]};color:${b[1]}">${p.badge}</span></div>`;}).join('')}`;
+}
+function inventory(){
+  return `<h3 style="font-family:var(--serif);font-size:21px;margin:0 0 14px;font-weight:400">Restock radar</h3>
+  ${ALERTS.map(([t,b,chip,lvl])=>{const u=URGENCY[lvl];
+    return `<div class="stack" style="border-color:${u[0]};border-left-color:${u[0]}">
+      <div><div class="t">${t}</div><div class="b">${b}</div></div>
+      <span class="chipst" style="background:${u[1]};color:${u[2]}">${chip}</span></div>`;}).join('')}
+  <p class="note">Alerts also land by email when stock crosses each product's restock point — set per SKU, checked nightly.</p>`;
+}
+function taxes(){
+  return `<div class="two">
+    <div class="panel"><div class="lab">In the tax envelope right now</div>
+      <div style="font-family:var(--serif);font-size:38px;margin-bottom:6px">$466</div>
+      <p style="margin:0;font-size:13.5px;line-height:1.55;color:var(--ink-3)">7.9% gross receipts on self-collected sales since the last filing. Marketplace channels remit their own — only market, gallery and studio sales land here.</p></div>
+    <div class="panel"><div class="lab">Next filing</div>
+      <div style="font-family:var(--serif);font-size:26px;margin-bottom:6px">October 25, 2026</div>
+      <p style="margin:0;font-size:13.5px;line-height:1.55;color:var(--ink-3)">Quarterly CRS filing for Jul–Sep. A reminder email goes out two weeks ahead, with the amount already computed.</p></div>
+  </div>
+  <div class="panel"><h3>2026 filings</h3>
+    ${TAXROWS.map(([q,base,owed,status,tone])=>{
+      const c=tone==='good'?['var(--good-bg)','var(--good)']:['var(--warn-bg)','var(--warn)'];
+      return `<div class="taxrow"><span style="font-weight:600">${q}</span><span style="color:var(--ink-3)">${base}</span><span>${owed}</span>
+        <span class="chipst center" style="background:${c[0]};color:${c[1]}">${status}</span></div>`;}).join('')}
+  </div>`;
 }
 
-// ---------------------------------------------------------------- stat tiles
-function renderStats(){
-  const t=totalsFor(win), booked=t.reduce((a,b)=>a+b,0);
-  const kept=t.reduce((a,b,i)=>a+b*CH[i].keep,0);
-  const cmp=WIN[win].cmp;
-  const live=t.filter(n=>n>0).length;
-  $('#stats').innerHTML=`
-    <div class="stat accent"><span class="n">${moneyK(booked)}</span><span class="l">booked, ${WIN[win].label}</span><span class="d">${money(booked)} exactly</span></div>
-    <div class="stat"><span class="n">${moneyK(kept)}</span><span class="l">kept by the studio after channel cuts</span><span class="d">${Math.round(kept/booked*100)}% of booked</span></div>
-    ${cmp
-      ? `<div class="stat"><span class="n">+${cmp.pct}%</span><span class="l">against the same point in 2025</span><span class="d">was ${money(cmp.was)}</span></div>`
-      : `<div class="stat"><span class="n">${live}</span><span class="l">channel${live===1?'':'s'} with revenue in this window</span><span class="d">of five set up</span></div>`}
-    <div class="stat"><span class="n">$0</span><span class="l">monthly cost to run this dashboard</span><span class="d">sheets → github → vercel</span></div>`;
+const VIEWS={overview,tasks,insights,orders,products,inventory,taxes};
+function render(){
+  document.getElementById('tabs').innerHTML=TABS.map(([id,l])=>`<button class="${S.tab===id?'on':''}" data-tab="${id}">${l}</button>`).join('');
+  document.getElementById('body').innerHTML=VIEWS[S.tab]();
 }
-
-// ---------------------------------------------------------------- stacked bars
-function renderChart(){
-  const cols=WIN[win].cols;
-  const maxTotal=Math.max(...cols.map(([,v])=>v.reduce((a,b)=>a+b,0)));
-  const step=maxTotal>20000?10000:maxTotal>8000?5000:maxTotal>3000?1000:500;
-
-  $('#chartNote').textContent=WIN[win].note;
-  $('#legend').innerHTML=CH.map(c=>`<li><span class="swatch" style="background:${c.css}"></span>${c.short}</li>`).join('');
-
-  const gl=$('#gridlines'); gl.innerHTML='';
-  for(let v=step; v<=maxTotal; v+=step){
-    const i=document.createElement('i'); i.style.bottom=(v/maxTotal*100)+'%'; gl.appendChild(i);
-    const l=document.createElement('b'); l.style.bottom=(v/maxTotal*100)+'%'; l.textContent=moneyK(v); gl.appendChild(l);
-  }
-
-  const plot=$('#plot');
-  [...plot.querySelectorAll('.col')].forEach(n=>n.remove());
-  const labelAll=cols.length<=7;
-  const peak=cols.reduce((bi,[,v],i,arr)=>v.reduce((a,b)=>a+b,0)>arr[bi][1].reduce((a,b)=>a+b,0)?i:bi,0);
-  cols.forEach(([label,vals],ci)=>{
-    const total=vals.reduce((a,b)=>a+b,0);
-    const col=document.createElement('div'); col.className='col';
-    if(labelAll||ci===peak||ci===cols.length-1){
-      const tot=document.createElement('span'); tot.className='colTotal'; tot.textContent=moneyK(total);
-      tot.style.bottom=(total/maxTotal*100)+'%'; col.appendChild(tot);
-    }
-    // top-down so the first child is the visual top (rounded end)
-    CH.map((c,i)=>({c,v:vals[i]})).filter(o=>o.v>0).reverse().forEach(({c,v})=>{
-      const seg=document.createElement('div');
-      seg.className='seg';
-      seg.style.background=c.css;
-      seg.style.height=`calc(${(v/maxTotal*100)}% - 2px)`;
-      seg.tabIndex=0;
-      seg.setAttribute('aria-label',`${label}, ${c.short}: ${money(v)}`);
-      const body=`<b>${label} · ${c.short}</b><br>${money(v)} booked<br>${money(v*c.keep)} kept · ${c.pay}<br>${Math.round(v/total*100)}% of the month`;
-      seg.addEventListener('mousemove',e=>showTip(e,body));
-      seg.addEventListener('mouseleave',hideTip);
-      seg.addEventListener('focus',e=>showTipAt(seg,body));
-      seg.addEventListener('blur',hideTip);
-      col.appendChild(seg);
-    });
-    plot.appendChild(col);
-  });
-  $('#xaxis').innerHTML=cols.map(([l])=>`<span>${l}</span>`).join('');
-
-  $('#tableWrap').innerHTML=`<table class="tv"><caption class="hidden">Revenue booked by ${WIN[win].label}</caption>
-    <thead><tr><th>Period</th>${CH.map(c=>`<th>${c.short}</th>`).join('')}<th>Total</th></tr></thead>
-    <tbody>${cols.map(([l,v])=>`<tr><td>${l}</td>${v.map(n=>`<td>${n?money(n):'—'}</td>`).join('')}<td>${money(v.reduce((a,b)=>a+b,0))}</td></tr>`).join('')}</tbody></table>`;
-}
-
-const tip=$('#tip');
-function showTip(e,html){ tip.innerHTML=html; tip.classList.add('on'); place(e.clientX,e.clientY); }
-function showTipAt(el,html){ const r=el.getBoundingClientRect(); tip.innerHTML=html; tip.classList.add('on'); place(r.right,r.top+r.height/2); }
-function place(x,y){
-  const r=tip.getBoundingClientRect();
-  tip.style.left=Math.min(x+14, innerWidth-r.width-12)+'px';
-  tip.style.top=Math.max(10, y-r.height-12)+'px';
-}
-function hideTip(){ tip.classList.remove('on'); }
-
-// ---------------------------------------------------------------- channels
-function renderChannels(){
-  const t=totalsFor(win), booked=t.reduce((a,b)=>a+b,0);
-  const max=Math.max(...t);
-  $('#channels').innerHTML=CH.map((c,i)=>{
-    const b=t[i], k=b*c.keep;
-    if(!b) return `<div class="chrow"><div class="top"><span class="nm"><span class="swatch" style="background:${c.css}"></span>${c.name}</span><span class="bh">no revenue in this window</span></div></div>`;
-    return `<div class="chrow">
-      <div class="top"><span class="nm"><span class="swatch" style="background:${c.css}"></span>${c.name}</span>
-        <span class="bh">${money(b)} booked · ${money(k)} kept</span></div>
-      <div class="bar2" style="width:${b/max*100}%;background:${c.css}"></div>
-      <div class="bar2 kept" style="width:${k/max*100}%;background:${c.css}"></div>
-      <div class="meta">${Math.round(b/booked*100)}% of booked · keeps ${Math.round(c.keep*100)}% · ${c.pay} · ${c.note}</div>
-    </div>`;
-  }).join('');
-}
-
-// ---------------------------------------------------------------- insights
-function renderInsights(){
-  const t=totalsFor(win), booked=t.reduce((a,b)=>a+b,0);
-  const kept=t.reduce((a,b,i)=>a+b*CH[i].keep,0);
-  const pctB=i=>Math.round(t[i]/booked*100), pctK=i=>Math.round(t[i]*CH[i].keep/kept*100);
-  const low=STOCK.filter(s=>s.type==='edition'&&s.stock<s.point);
-  const reorderCost=low.reduce((a,s)=>a+s.reorder*s.cost,0);
-  const out=[];
-
-  if(WIN[win].cmp) out.push({t:`Up ${WIN[win].cmp.pct}% on the same point last year — and part of that is bookkeeping.`,
-    c:'2025 predates logging market cash the same day it came in. Call roughly 8 of those points better recording rather than new sales.', gentle:true});
-
-  out.push({t:`Market weekends are ${pctB(0)}% of what you book and ${pctK(0)}% of what you keep, in your hand the same day.`,
-    c:'The cost is a weekend, which this number cannot see. Two booths a month is the ceiling before painting time goes.'});
-
-  out.push({t:`The gallery looks bigger than it is: ${pctB(1)}% of booked, ${pctK(1)}% of kept.`,
-    c:'It takes half and pays on consignment about six weeks out, so it is also the slowest money on this page.'});
-
-  if(t[4]>0) out.push({t:`One commission is ${pctB(4)}% of the year's booked revenue.`,
-    c:'A single sale carrying a fifth of the year is not a repeatable plan. Read the growth number with that in mind.'});
-
-  if(low.length) out.push({t:`${low.length} edition${low.length===1?'':'s'} sit${low.length===1?'s':''} under ${low.length===1?'its':'their'} restock point with a booth on Aug 8.`,
-    c:`Reordering all of them costs ${money(reorderCost)} at current print prices and covers roughly nine weeks of the current sell-through.`});
-
-  $('#insights').innerHTML=out.map(o=>`<div class="ins${o.gentle?' gentle':''}"><p>${o.t}<span class="cav">${o.c}</span></p></div>`).join('');
-}
-
-// ---------------------------------------------------------------- orders
-function renderOrders(){
-  $('#orders').innerHTML=ORDERS.map((o,i)=>{
-    const c=chOf(o.ch);
-    const total=o.lines.reduce((a,[,v])=>a+Number(v.replace(/[$,]/g,'')),0);
-    return `<li>
-      <button class="orow" type="button" aria-expanded="false" data-i="${i}">
-        <span class="dot" style="background:${c.css}"></span>
-        <span><span class="od">${c.short} · ${o.ref}</span><br><span class="oc">${o.date} · ${o.lines.length} line item${o.lines.length===1?'':'s'} · keeps ${money(total*c.keep)}</span></span>
-        <span class="ov">${money(total)}</span><span class="car">+</span>
-      </button>
-      <ul class="lines hidden" id="lines-${i}">${o.lines.map(([n,v])=>`<li><span>${n}</span><span>${v}</span></li>`).join('')}</ul>
-    </li>`;
-  }).join('');
-  $('#orders').querySelectorAll('.orow').forEach(b=>b.addEventListener('click',()=>{
-    const box=document.getElementById('lines-'+b.dataset.i);
-    const open=box.classList.toggle('hidden')===false;
-    b.setAttribute('aria-expanded',String(open));
-    b.querySelector('.car').textContent=open?'−':'+';
-  }));
-}
-
-// ---------------------------------------------------------------- restock
-function renderRestock(){
-  const rows=[...STOCK].sort((a,b)=>{
-    const sa=a.type==='original'?3:a.stock===0?0:a.stock<a.point?1:2;
-    const sb=b.type==='original'?3:b.stock===0?0:b.stock<b.point?1:2;
-    return sa-sb;
-  });
-  const low=STOCK.filter(s=>s.type==='edition'&&s.stock<s.point).length;
-  $('#restockNote').textContent=low
-    ? `${low} under their restock point. Next booth is Aug 8, so a reorder placed by Aug 3 arrives in time.`
-    : 'Everything above its restock point.';
-  $('#restock').innerHTML=rows.map(s=>{
-    let cls='ok', word='in stock';
-    if(s.type==='original'){ cls='ok'; word='one of one'; }
-    else if(s.stock===0){ cls='out'; word='out'; }
-    else if(s.stock<s.point){ cls='low'; word='low'; }
-    const icon=cls==='out'?'✕':cls==='low'?'!':'✓';
-    const act=(s.type==='edition'&&s.stock<s.point)
-      ? `<button class="linkbtn" type="button" data-sku="${s.sku}">reorder ${s.reorder} · ${money(s.reorder*s.cost)}</button>`
-      : `<span class="mini">${s.type==='original'?'not reorderable':`${s.stock} on hand`}</span>`;
-    return `<div class="stkrow">
-      <div><span class="nm2">${s.name}</span><span class="sk">${s.sku} · ${s.type==='edition'?`${s.stock} of ${s.point} restock point`:'original'}</span></div>
-      <div class="act"><span class="status ${cls}"><span aria-hidden="true">${icon}</span>${word}</span>${act}</div>
-    </div>`;
-  }).join('');
-  $('#restock').querySelectorAll('.linkbtn').forEach(b=>b.addEventListener('click',()=>{
-    const s=STOCK.find(x=>x.sku===b.dataset.sku);
-    TASKS.unshift({t:`Order ${s.reorder} × ${s.name} (${money(s.reorder*s.cost)})`, when:'added just now', done:false});
-    b.disabled=true; b.textContent='added to this week';
-    renderTasks();
-  }));
-}
-
-// ---------------------------------------------------------------- tax
-function renderTax(){
-  const t=totalsFor('ytd');
-  const retail=t[0]+t[3]+t[4];              // market, online, commission — taxable at retail
-  const grt=retail*0.0775;
-  const kept=t.reduce((a,b,i)=>a+b*CH[i].keep,0);
-  const income=kept*0.20;
-  const setAside=6900;
-  const owed=grt+income;
-  $('#tax').innerHTML=`
-    <div class="taxrow"><span>Retail-channel sales, year to date</span><span>${money(retail)}</span></div>
-    <div class="taxrow"><span>Gross receipts set-aside at 7.75%</span><span>${money(grt)}</span></div>
-    <div class="taxrow"><span>Income set-aside, 20% of kept</span><span>${money(income)}</span></div>
-    <div class="taxrow"><span><strong>Should be in the envelope</strong></span><span><strong>${money(owed)}</strong></span></div>
-    <div class="meter"><i style="width:${Math.min(100,setAside/owed*100)}%"></i></div>
-    <div class="taxrow"><span>Actually set aside</span><span>${money(setAside)} · ${Math.round(setAside/owed*100)}%</span></div>
-    <div class="taxrow"><span>Short by</span><span>${money(owed-setAside)}</span></div>
-    <p class="foot" style="margin-top:10px">Next estimated payment: Sep 15, 2026. The envelope fills itself from each order as it is logged; this window shows year to date regardless of the filter above.</p>`;
-}
-
-// ---------------------------------------------------------------- tasks
-function renderTasks(){
-  $('#tasks').innerHTML=TASKS.map((k,i)=>`<li class="${k.done?'done':''}">
-    <input type="checkbox" id="tk${i}" ${k.done?'checked':''}>
-    <label for="tk${i}">${k.t}</label><span class="when">${k.when}</span></li>`).join('');
-  $('#tasks').querySelectorAll('input').forEach((c,i)=>c.addEventListener('change',()=>{ TASKS[i].done=c.checked; renderTasks(); }));
-  const done=TASKS.filter(k=>k.done).length;
-  $('#taskProg').textContent=`${done} of ${TASKS.length} done · restock alerts land here automatically when stock crosses a restock point`;
-}
-
-// ---------------------------------------------------------------- wiring
-function renderAll(){ renderStats(); renderChart(); renderChannels(); renderInsights(); }
-document.querySelectorAll('.chip[data-win]').forEach(b=>b.addEventListener('click',()=>{
-  win=b.dataset.win;
-  document.querySelectorAll('.chip[data-win]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
-  renderAll();
-}));
-$('#tvBtn').addEventListener('click',()=>{
-  tableOn=!tableOn;
-  $('#tvBtn').setAttribute('aria-pressed',String(tableOn));
-  $('#tvBtn').textContent=tableOn?'chart view':'table view';
-  $('#tableWrap').classList.toggle('hidden',!tableOn);
-  $('#plot').classList.toggle('hidden',tableOn);
-  $('#xaxis').classList.toggle('hidden',tableOn);
-  $('#legend').classList.toggle('hidden',tableOn);
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-tab],[data-win],[data-order],[data-type],[data-toggleadd],[data-add]');
+  if(!t) return;
+  if(t.dataset.tab){ S.tab=t.dataset.tab; S.addOpen=false; S.addMode=null; }
+  else if(t.dataset.win){ S.win=t.dataset.win; }
+  else if(t.dataset.order){ S.openOrder = S.openOrder===t.dataset.order ? null : t.dataset.order; }
+  else if(t.dataset.type){ S.typeFilter=t.dataset.type; }
+  else if(t.dataset.toggleadd){ S.addOpen=!S.addOpen; S.addMode=null; }
+  else if(t.dataset.add){ S.addMode=t.dataset.add; }
+  render();
 });
-window.addEventListener('scroll',hideTip,{passive:true});
-
-renderAll(); renderOrders(); renderRestock(); renderTax(); renderTasks();
+render();
 </script>
 </body>
 </html>

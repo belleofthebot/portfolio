@@ -3,114 +3,79 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Bookspot — clickable walkthrough</title>
-<meta name="description" content="A clickable walkthrough of Bookspot, built from the hi-fi London screens. Tap through the real flow: map, filter, spot detail, walking directions, the spotted stamp and the shelf.">
+<title>Bookspot — interactive prototype</title>
+<meta name="description" content="Bookspot 2026: the working prototype. Tap through onboarding, explore the map, filter the shelf, get directions and collect your stamps. Fifteen real London literary spots.">
 <style>
 @font-face{font-family:'Space Grotesk';src:url('../fonts/space-grotesk-latin-400-normal.woff2') format('woff2');font-weight:400;font-display:swap}
 @font-face{font-family:'Space Grotesk';src:url('../fonts/space-grotesk-latin-500-normal.woff2') format('woff2');font-weight:500;font-display:swap}
 @font-face{font-family:'IBM Plex Mono';src:url('../fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2');font-weight:400;font-display:swap}
-
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&display=swap">
+<style>
 :root{
   --ground:#17121C; --panel:#241D2B; --tile:#1D1724;
   --line:#423748; --line-soft:#2E2735;
   --text:#F4F2EE; --text-2:#BBB2C0; --text-3:#8B8494;
-  --rose:#DFA192; --on-rose:#2A120B; --rose-tint:#3A2129;
-  --mint:#7FD6BC;
+  --rose:#DFA192; --rose-tint:#3A2129;
   --sans:'Space Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;
   --mono:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace;
+  /* the app's own palette — sage & parchment */
+  --sage:#4E7375; --sage-deep:#334A4C; --sage-pale:#A9BDC1;
+  --parch:#FBF8F1; --parch-2:#F3EDE3; --parch-3:#EFE8DA;
+  --ink:#23282A; --ink-2:#4B4A44; --ink-3:#7A756C; --brass:#A98A5B; --slate:#769197;
+  --serif:'Newsreader',Georgia,serif;
+  --ui:-apple-system,'Helvetica Neue',sans-serif;
 }
 *{box-sizing:border-box}
-html,body{margin:0;padding:0}
-body{
-  background:var(--ground);color:var(--text);font-family:var(--sans);
-  -webkit-font-smoothing:antialiased;min-height:100vh;
-  display:flex;flex-direction:column;align-items:center;
-  padding:26px 18px 40px;
-}
+html,body{margin:0}
+body{background:var(--ground);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;padding:26px 18px 48px}
 a{color:var(--rose)}
-
-/* ---------- header ---------- */
-header{width:100%;max-width:940px;margin:0 auto 22px}
+header.page{max-width:900px;margin:0 auto 20px}
+.backlink{font-family:var(--mono);font-size:.78rem;color:var(--text-3);text-decoration:none;display:inline-block;margin-bottom:16px}
+.backlink:hover{color:var(--rose)}
 .kicker{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);display:block;margin-bottom:8px}
 h1{font-size:1.5rem;font-weight:500;line-height:1.2;margin:0 0 8px}
-.sub{color:var(--text-2);font-size:.93rem;line-height:1.6;margin:0;max-width:60ch}
-.backlink{font-family:var(--mono);font-size:.78rem;color:var(--text-3);text-decoration:none;display:inline-block;margin-bottom:18px}
-.backlink:hover{color:var(--rose)}
+.sub{color:var(--text-2);font-size:.93rem;line-height:1.6;margin:0;max-width:62ch}
+.stage{display:flex;flex-direction:column;align-items:center;gap:16px}
 
-/* ---------- stage ---------- */
-.stage{display:flex;gap:34px;align-items:flex-start;justify-content:center;flex-wrap:wrap;width:100%;max-width:940px}
-
-.deviceCol{display:flex;flex-direction:column;align-items:center;gap:14px}
 .device{
   position:relative;width:390px;height:844px;flex:0 0 auto;
-  background:#0D0A11;border:9px solid #2B2333;border-radius:52px;
-  box-shadow:0 30px 70px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.05) inset;
-  overflow:hidden;
+  background:var(--parch);border:9px solid #2B2333;border-radius:52px;overflow:hidden;
+  box-shadow:0 30px 70px rgba(0,0,0,.55);
+  font-family:var(--ui);color:var(--ink);user-select:none;
 }
-.screens{position:absolute;inset:0;border-radius:43px;overflow:hidden;background:#F5F2ED}
-.screens img{
-  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
-  opacity:0;transition:opacity .22s ease;
-}
-.screens img.on{opacity:1}
+.screen{position:absolute;inset:0;overflow:hidden}
+.noscroll{scrollbar-width:none;-ms-overflow-style:none}
+.noscroll::-webkit-scrollbar{display:none}
+[data-a]{cursor:pointer}
+.statusbar{position:absolute;left:24px;top:18px;font-size:15px;font-weight:600;color:var(--ink);z-index:5}
+.homebar{position:absolute;left:50%;transform:translateX(-50%);bottom:10px;width:130px;height:5px;border-radius:3px;background:rgba(46,59,62,.25);z-index:6}
 
-/* hotspots */
-.hot{
-  position:absolute;margin:0;padding:0;border:0;background:transparent;
-  cursor:pointer;border-radius:10px;-webkit-tap-highlight-color:transparent;
-}
-.hot:focus-visible{outline:2px solid var(--rose);outline-offset:2px}
-body.reveal .hot{
-  background:rgba(223,161,146,.20);
-  box-shadow:0 0 0 1.5px rgba(223,161,146,.85) inset;
-}
-.hot:hover{background:rgba(223,161,146,.16);box-shadow:0 0 0 1.5px rgba(223,161,146,.7) inset}
-.hot.dead:hover{background:rgba(255,255,255,.07);box-shadow:0 0 0 1.5px rgba(255,255,255,.28) inset}
-body.reveal .hot.dead{background:rgba(255,255,255,.06);box-shadow:0 0 0 1.5px rgba(255,255,255,.22) inset}
+.tabbar{position:absolute;left:50%;transform:translateX(-50%);bottom:26px;display:flex;gap:4px;background:var(--sage-deep);border-radius:999px;padding:7px;z-index:8}
+.tabbar span{border-radius:999px;padding:9px 17px;font-size:13px;font-weight:500;cursor:pointer}
 
-/* toast */
-.toast{
-  position:absolute;left:50%;bottom:22px;transform:translate(-50%,14px);
-  background:rgba(13,10,17,.94);color:#F4F2EE;border:1px solid rgba(255,255,255,.16);
-  font-family:var(--mono);font-size:.72rem;line-height:1.45;
-  padding:9px 13px;border-radius:9px;max-width:300px;text-align:center;
-  opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;
-}
-.toast.on{opacity:1;transform:translate(-50%,0)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border-radius:999px;padding:9px 15px;font-size:13.5px;cursor:pointer;border:1px solid rgba(46,59,62,.2);background:var(--parch);color:var(--sage)}
+.chip.on{background:var(--sage);color:var(--parch-2);border-color:transparent}
 
-/* ---------- controls / caption ---------- */
-.bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center}
-.btn{
-  font-family:var(--mono);font-size:.75rem;color:var(--text-2);
-  background:var(--panel);border:1px solid var(--line);border-radius:999px;
-  padding:7px 14px;cursor:pointer;transition:border-color .15s,color .15s;
-}
+.row{display:flex;gap:14px;align-items:center;padding:9px 0;border-bottom:1px solid rgba(46,59,62,.08);cursor:pointer}
+.row .cov{width:40px;height:58px;border-radius:6px;flex:0 0 auto;background-size:cover;background-position:center}
+.row .t{font-family:var(--serif);font-size:16px;color:var(--ink);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .s{font-size:12px;color:var(--ink-3)}
+.row .arr{color:var(--slate)}
+.eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:10px}
+.primary{background:var(--sage);color:var(--parch-2);border-radius:14px;padding:16px;text-align:center;font-size:16px;font-weight:500;cursor:pointer}
+.secondary{border:1px solid rgba(46,59,62,.2);color:var(--sage);border-radius:14px;padding:14px;text-align:center;font-size:15px;cursor:pointer}
+.pillbadge{background:var(--parch-3);color:var(--sage);border-radius:999px;padding:6px 12px;font-size:12px}
+
+/* ---- page chrome around the phone ---- */
+.bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center;max-width:620px}
+.btn{font-family:var(--mono);font-size:.74rem;color:var(--text-2);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:7px 13px;cursor:pointer;transition:border-color .15s,color .15s}
 .btn:hover{border-color:var(--rose);color:var(--text)}
-.btn[aria-pressed="true"]{background:var(--rose-tint);border-color:var(--rose);color:var(--rose)}
-.btn:disabled{opacity:.4;cursor:not-allowed;border-color:var(--line-soft)}
-
-.notes{flex:1 1 300px;max-width:340px;min-width:260px}
-.notes h2{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);font-weight:400;margin:0 0 12px}
-.caption{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:18px}
-.caption .cname{font-size:1.05rem;margin:0 0 6px;font-weight:500}
-.caption .ctext{color:var(--text-2);font-size:.88rem;line-height:1.6;margin:0}
-.trail{list-style:none;margin:0;padding:0}
-.trail li{
-  font-family:var(--mono);font-size:.76rem;color:var(--text-3);
-  padding:7px 0 7px 22px;position:relative;border-bottom:1px solid var(--line-soft);
-}
-.trail li::before{content:'○';position:absolute;left:2px;color:var(--line)}
-.trail li.seen{color:var(--text-2)}
-.trail li.seen::before{content:'●';color:var(--mint)}
-.trail li.here{color:var(--rose)}
-.trail li.here::before{content:'●';color:var(--rose)}
-.hint{font-family:var(--mono);font-size:.72rem;color:var(--text-3);line-height:1.6;margin-top:16px}
-
-@media(max-width:900px){
-  .stage{gap:24px}
-  .notes{max-width:390px;flex:1 1 100%;order:2}
-  .deviceCol{order:1;margin:0 auto}
-}
+.btn.on{background:var(--rose-tint);border-color:var(--rose);color:var(--rose)}
+.hint{font-family:var(--mono);font-size:.72rem;color:var(--text-3);line-height:1.6;text-align:center;max-width:62ch}
 @media(max-width:460px){
   body{padding:18px 10px 30px}
   .device{width:100%;max-width:360px;height:auto;aspect-ratio:390/844;border-width:7px;border-radius:44px}
@@ -120,227 +85,367 @@ body.reveal .hot.dead{background:rgba(255,255,255,.06);box-shadow:0 0 0 1.5px rg
 </head>
 <body>
 
-<header>
+<header class="page">
   <a class="backlink" href="../work-bookspot.html">← back to the case study</a>
-  <span class="kicker">clickable walkthrough</span>
+  <span class="kicker">interactive prototype · tap through the whole flow</span>
   <h1>Bookspot, London edition</h1>
-  <p class="sub">The real hi-fi screens, wired together in the flow they were designed for. Tap the interface — the map pin at King's Cross, the filter, the walking directions, the stamp. Turn on <em>show tap targets</em> if you would rather see where the hotspots are.</p>
+  <p class="sub">The 2026 design, working. Pick a city, take the tour, explore the map, filter the shelf, get directions and collect a stamp. State carries through the session — what you save and where you've been is remembered as you go.</p>
 </header>
 
 <div class="stage">
-  <div class="deviceCol">
-    <div class="device">
-      <div class="screens" id="screens"></div>
-      <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    </div>
-    <div class="bar">
-      <button class="btn" id="back" type="button">← back</button>
-      <button class="btn" id="reveal" type="button" aria-pressed="false">show tap targets</button>
-      <button class="btn" id="restart" type="button">restart</button>
-    </div>
-  </div>
-
-  <div class="notes">
-    <h2>where you are</h2>
-    <div class="caption">
-      <p class="cname" id="cname">Splash</p>
-      <p class="ctext" id="ctext"></p>
-    </div>
-    <h2>the flow</h2>
-    <ul class="trail" id="trail"></ul>
-    <p class="hint">Eight screens, no dead ends. Only the King&rsquo;s Cross spot is built out in full — the other rows tell you so rather than pretending. Arrow keys work; Esc goes back.</p>
-  </div>
+  <div class="device"><div class="screen" id="app"></div></div>
+  <div class="bar" id="jumps"></div>
+  <p class="hint">Tap any screen name to jump · shelf, stamps and filters carry through the whole session</p>
 </div>
 
 <script>
-// ---- screens, in flow order -------------------------------------------------
-const TAB = [ // shared bottom tab bar, same geometry on every screen that has one
-  {x:12,   y:92.4, w:20, h:7.2, go:'home-map', label:'Explore tab'},
-  {x:33.5, y:92.4, w:17, h:7.2, go:'filter',   label:'Filter tab'},
-  {x:51,   y:92.4, w:17, h:7.2, go:'shelf',    label:'Shelf tab'},
-  {x:68.5, y:92.4, w:19, h:7.2, dead:'The More tab was not part of the tested flow, so there is no screen for it.', label:'More tab'}
-];
-const ROWMSG = 'Only the King’s Cross spot is built out in this walkthrough. Tap “…Harry catches his train”.';
-
-const SCREENS = {
-  'splash': {
-    name:'Splash',
-    text:'The one screen that earns its keep by getting out of the way. Tap anywhere.',
-    hots:[{x:0,y:0,w:100,h:100,go:'home-map',label:'Let’s go'}]
-  },
-  'home-map': {
-    name:'Explore — map',
-    text:'Fifteen London spots as book covers, not pins. The ringed cover at King’s Cross is Platform 9¾ — tap it.',
-    hots:[
-      {x:30.5,y:20,w:12,h:6,go:'detail',label:'King’s Cross spot'},
-      {x:69,y:66,w:27,h:6,go:'home-list',label:'Switch to list'},
-      {x:3,y:8.5,w:93,h:7.5,dead:'Search is live in the app; this walkthrough uses the fixed London set.',label:'Search spots'},
-      {x:3,y:16.5,w:85,h:5.5,go:'filter',label:'Genre chips'},
-      {x:2,y:71.5,w:96,h:8.5,dead:ROWMSG,label:'Mrs Dalloway row'},
-      {x:2,y:80.5,w:96,h:8.5,dead:ROWMSG,label:'Sherlock Holmes row'},
-      ...TAB
-    ]
-  },
-  'home-list': {
-    name:'Explore — list',
-    text:'The same fifteen spots, ranked by distance. Readers in testing flipped between map and list constantly, so both are one tap apart.',
-    hots:[
-      {x:69,y:19.5,w:27,h:6,go:'home-map',label:'Back to map'},
-      {x:2,y:42.5,w:96,h:9.5,go:'detail',label:'Harry catches his train'},
-      {x:3,y:8.5,w:93,h:7.5,dead:'Search is live in the app; this walkthrough uses the fixed London set.',label:'Search spots'},
-      {x:3,y:16,w:85,h:5.5,go:'filter',label:'Genre chips'},
-      {x:2,y:23.5,w:96,h:8,dead:ROWMSG,label:'Mrs Dalloway row'},
-      {x:2,y:31.5,w:96,h:10,dead:ROWMSG,label:'Sherlock Holmes row'},
-      {x:2,y:52.5,w:96,h:8,dead:ROWMSG,label:'Dorian Gray row'},
-      {x:2,y:60.5,w:96,h:8.5,dead:ROWMSG,label:'Bridget Jones row'},
-      {x:2,y:69.5,w:96,h:9.5,dead:ROWMSG,label:'Peter Pan row'},
-      {x:2,y:79.5,w:96,h:9,dead:ROWMSG,label:'Hortense row'},
-      ...TAB
-    ]
-  },
-  'filter': {
-    name:'Filter',
-    text:'Genre, author, era, and the one that mattered most in interviews: only spots I can walk to.',
-    hots:[
-      {x:5.5,y:81,w:89,h:9,go:'home-list',label:'Show 15 spots'},
-      {x:81,y:11.5,w:15,h:5,dead:'Reset clears every selection. The walkthrough does not capture filter state.',label:'Reset'},
-      {x:6,y:22,w:88,h:14,dead:'Filter state is not captured in this walkthrough — tap “Show 15 spots”.',label:'Genre options'},
-      {x:6,y:38,w:88,h:8,dead:'Filter state is not captured in this walkthrough — tap “Show 15 spots”.',label:'Written by options'},
-      {x:6,y:49,w:88,h:8,dead:'Filter state is not captured in this walkthrough — tap “Show 15 spots”.',label:'Era options'},
-      {x:6,y:58,w:88,h:7,dead:'Filter state is not captured in this walkthrough — tap “Show 15 spots”.',label:'Walking distance toggle'},
-      ...TAB
-    ]
-  },
-  'detail': {
-    name:'Spot detail',
-    text:'One spot, one scene, and the practical facts a reader standing on the pavement actually needs: how far, how much, and what to look for.',
-    hots:[
-      {x:3,y:7,w:14,h:7,go:'home-map',label:'Back'},
-      {x:5.5,y:79,w:89,h:8.5,go:'directions',label:'Get directions'},
-      {x:5.5,y:87.3,w:89,h:8,go:'shelf',label:'Save for later'},
-      {x:73,y:7.5,w:22,h:6.5,go:'shelf',label:'Add to shelf'},
-      {x:4,y:67.5,w:92,h:10,dead:'The Peter Pan spot is real in the app; this walkthrough only builds out King’s Cross.',label:'Nearby spot'}
-    ]
-  },
-  'directions': {
-    name:'Walking directions',
-    text:'Four steps, distances, no re-routing theatre. Testers wanted to look up from the phone, not at it.',
-    hots:[
-      {x:5,y:11.5,w:14,h:6,go:'detail',label:'Back'},
-      {x:5.5,y:91.5,w:89,h:8,go:'spotted',label:'I made it to the spot'},
-      {x:6,y:19,w:88,h:22,dead:'The map is live in the app. The walkthrough keeps the designed state.',label:'Route map'}
-    ]
-  },
-  'spotted': {
-    name:'Well spotted',
-    text:'The payoff. A stamp, a count, and one obvious next thing to go and find.',
-    hots:[
-      {x:5.5,y:61.5,w:89,h:8.5,go:'shelf',label:'See my shelf'},
-      {x:5.5,y:71,w:89,h:8.5,go:'home-map',label:'Next spot'}
-    ]
-  },
-  'shelf': {
-    name:'My shelf',
-    text:'Stamps collected and spots saved for later — the reason to come back after the first walk.',
-    hots:[
-      {x:4,y:37,w:92,h:10,go:'detail',label:'Saved spot'},
-      {x:19,y:23,w:11,h:8.5,dead:'The King’s Cross stamp opens the spot you collected it at — tap the saved row below.',label:'Stamp'},
-      ...TAB
-    ]
-  }
+const S = {
+  screen:'splash', tut:0, view:'map', spotId:'potter',
+  saved:[], spotted:[], quick:'All',
+  fGenres:[], fBy:[], fEras:[], walking:false, filtersApplied:false, moreNote:false
 };
 
-const ORDER = ['splash','home-map','home-list','filter','detail','directions','spotted','shelf'];
-const LABEL = {'splash':'Splash','home-map':'Explore — map','home-list':'Explore — list','filter':'Filter','detail':'Spot detail','directions':'Walking directions','spotted':'Well spotted','shelf':'My shelf'};
+const A = '../assets/app/';
+const SPOTS = [
+ {id:'dalloway',title:'…Mrs. Dalloway begins her walk',title2:'Where Mrs. Dalloway begins her walk',short:'Mrs. Dalloway begins her walk',book:'Mrs Dalloway',author:'Virginia Woolf',year:1925,era:'1900s',genres:['Literary fiction'],quick:'Classics',by:['Women'],hood:'Westminster',dist:'0.4 mi',walk:true,place:'Bond Street',cover:A+'cover-dalloway.jpg',pin:{l:56,t:40},near:'sherlock',desc:"Clarissa's June morning starts among the shop windows of Bond Street — 'what a lark! what a plunge!' Walk it early, when the street is quiet."},
+ {id:'sherlock',title:'…Sherlock Holmes sets up shop',title2:'Where Sherlock Holmes sets up shop',short:'Sherlock Holmes sets up shop',book:'Sherlock Holmes and Other Stories',author:'Arthur Conan Doyle',year:1892,era:'1800s',genres:['Mystery'],quick:'Mystery',by:[],hood:'Marylebone',dist:'0.8 mi',walk:true,place:'221B Baker Street',cover:A+'cover-sherlock.jpg',pin:{l:22,t:30},near:'dalloway',desc:'The most famous address in detective fiction. The door really says 221B — and the sitting room upstairs is arranged just as Watson described it.'},
+ {id:'potter',title:'…Harry catches his train',title2:'Where Harry catches his train',short:'Harry catches his train',book:"Harry Potter and the Philosopher's Stone",author:'J. K. Rowling',year:1997,era:'1900s',genres:['Fantasy','Younger readers'],quick:'Fantasy',by:['Women'],hood:"King's Cross",dist:'0.6 mi',walk:true,place:"King's Cross Station",cover:A+'cover-potter.jpg',photo:A+'photo-kingscross.jpg',pin:{l:70,t:22},near:'peterpan',desc:'The brick wall between platforms 9 and 10, where students board the Hogwarts Express. Look for the luggage trolley half-through the wall.'},
+ {id:'dorian',title:'…Dorian Gray and his portrait live',title2:'Where Dorian Gray and his portrait live',short:'Dorian Gray meets his portrait',book:'The Picture of Dorian Gray',author:'Oscar Wilde',year:1890,era:'1800s',genres:['Literary fiction'],quick:'Classics',by:[],hood:'Mayfair',dist:'1.1 mi',walk:false,place:'Grosvenor Square',cover:A+'cover-dorian.jpg',pin:{l:38,t:50},near:'dalloway',desc:"Wilde put Dorian's grand house in Mayfair's finest square — the attic where the portrait ages is fiction, but the square's cold elegance is not."},
+ {id:'bridget',title:'…Bridget Jones writes her diary',title2:'Where Bridget Jones writes her diary',short:'Bridget Jones writes her diary',book:"Bridget Jones's Diary",author:'Helen Fielding',year:1996,era:'1900s',genres:['Romance'],quick:'Modern',by:['Women'],hood:'Borough',dist:'1.4 mi',walk:false,place:'Borough Market',cover:A+'cover-bridget.jpg',pin:{l:80,t:46},near:'smallisland',desc:"Bridget's flat sits above the Globe Tavern in Borough Market. Come hungry — the market below is the best part of the pilgrimage."},
+ {id:'peterpan',title:'…Peter Pan lands in the Gardens',title2:'Where Peter Pan lands in the Gardens',short:'Peter Pan lands in Kensington Gardens',book:'Peter Pan in Kensington Gardens',author:'J. M. Barrie',year:1906,era:'1900s',genres:['Fantasy','Younger readers'],quick:'Fantasy',by:[],hood:'Kensington',dist:'1.8 mi',walk:false,place:'Kensington Gardens',cover:A+'cover-peterpan.jpg',pin:{l:12,t:46},near:'potter',desc:"Barrie's statue of Peter stands where Peter first lands — commissioned in secret and installed overnight, so children would think it appeared by magic."},
+ {id:'smallisland',title:'…Hortense arrives at Nevern Street',title2:'Where Hortense arrives at Nevern Street',short:'Hortense arrives at Nevern Street',book:'Small Island',author:'Andrea Levy',year:2004,era:'2000s',genres:['Literary fiction'],quick:'Modern',by:['Women','Writers of color'],hood:'Earls Court',dist:'2.1 mi',walk:false,place:'Nevern Street, Earls Court',cover:A+'cover-smallisland.jpg',pin:{l:44,t:14},near:'bridget',desc:"Where Hortense knocks on Queenie's door in 1948, fresh off the Empire Windrush. Levy's own parents made the same crossing."},
+ {id:'nineteen84',title:'…Winston rewrites the news',title2:'Where Winston rewrites the news',short:'Winston rewrites the news',book:'1984',author:'George Orwell',year:1949,era:'1900s',genres:['Literary fiction'],quick:'Classics',by:[],hood:'Bloomsbury',dist:'1.0 mi',walk:true,place:'Senate House',cover:A+'cover-1984.jpg',pin:{l:30,t:18},near:'oliver',desc:'Orwell modeled the Ministry of Truth on Senate House — the white tower still looms over Bloomsbury exactly as Winston knew it.'},
+ {id:'oliver',title:'…Oliver asks for more',title2:'Where Oliver asks for more',short:'Oliver asks for more',book:'Oliver Twist',author:'Charles Dickens',year:1838,era:'1800s',genres:['Literary fiction'],quick:'Classics',by:[],hood:'Clerkenwell',dist:'1.2 mi',walk:false,place:'Saffron Hill, Clerkenwell',cover:A+'cover-oliver.jpg',pin:{l:64,t:34},near:'sweeney',desc:"Fagin's den hid in the slum alleys of Saffron Hill. The alleys are scrubbed clean now — but the street names survive."},
+ {id:'sweeney',title:'…Sweeney Todd cuts a fine shave',title2:'Where Sweeney Todd cuts a fine shave',short:'Sweeney Todd cuts a fine shave',book:'Sweeney Todd / The String of Pearls',author:'James Malcolm Rymer',year:1846,era:'1800s',genres:['Mystery'],quick:'Mystery',by:[],hood:'Fleet Street',dist:'0.9 mi',walk:true,place:'186 Fleet Street',cover:A+'cover-sweeney.jpg',pin:{l:50,t:47},near:'nineteen84',desc:"The demon barber's shop stood at 186 Fleet Street, beside St Dunstan's church. There are pie shops nearby, if you dare."},
+ {id:'paddington',title:'…Paddington is found at the station',title2:'Where Paddington is found at the station',short:'Paddington is found at the station',book:'A Bear Called Paddington',author:'Michael Bond',year:1958,era:'1900s',genres:['Younger readers'],quick:'Fantasy',by:[],hood:'Paddington',dist:'2.2 mi',walk:false,place:'Paddington Station, Platform 1',cover:A+'cover-paddington.jpg',pin:{l:6,t:26},near:'peterpan',desc:'Platform 1 has a bronze of the bear himself, sitting on his suitcase under the clock. Marmalade not included.'},
+ {id:'whiteteeth',title:'…Archie meets Samad in Willesden',title2:'Where Archie meets Samad in Willesden',short:'Archie meets Samad in Willesden',book:'White Teeth',author:'Zadie Smith',year:2000,era:'2000s',genres:['Literary fiction'],quick:'Modern',by:['Women','Writers of color'],hood:'Willesden',dist:'4.6 mi',walk:false,place:'Willesden Green',cover:A+'cover-whiteteeth.jpg',pin:{l:16,t:10},near:'bricklane',desc:"Smith's north-west London — halal butchers, betting shops, and O'Connell's café — is a character all its own."},
+ {id:'bricklane',title:'…Nazneen arrives on Brick Lane',title2:'Where Nazneen arrives on Brick Lane',short:'Nazneen arrives on Brick Lane',book:'Brick Lane',author:'Monica Ali',year:2003,era:'2000s',genres:['Literary fiction'],quick:'Modern',by:['Women','Writers of color'],hood:'Spitalfields',dist:'2.3 mi',walk:false,place:'Brick Lane, Spitalfields',cover:A+'cover-bricklane.jpg',pin:{l:88,t:30},near:'smallisland',desc:"Nazneen's tower block overlooks the market street that gives the novel its name. Best visited hungry, on a Sunday."},
+ {id:'fearful',title:'…the twins move in beside Highgate',title2:'Where the twins move in beside Highgate',short:'the twins move in beside Highgate',book:'Her Fearful Symmetry',author:'Audrey Niffenegger',year:2009,era:'2000s',genres:['Literary fiction'],quick:'Modern',by:['Women'],hood:'Highgate',dist:'3.8 mi',walk:false,place:'Highgate Cemetery',cover:A+'cover-fearful.jpg',pin:{l:60,t:6},near:'nineteen84',desc:"The twins' flat borders Highgate Cemetery, where the novel's ghosts walk. Book the tour — Niffenegger led them while researching."},
+ {id:'affair',title:'…Bendrix meets Sarah on the Common',title2:'Where Bendrix meets Sarah on the Common',short:'Bendrix meets Sarah on the Common',book:'The End of the Affair',author:'Graham Greene',year:1951,era:'1900s',genres:['Romance'],quick:'Classics',by:[],hood:'Clapham',dist:'3.1 mi',walk:false,place:'Clapham Common, north side',cover:A+'cover-affair.jpg',pin:{l:28,t:54},near:'dalloway',desc:"Greene set the affair on the Common's north side — the same streets he lived on through the Blitz."}
+];
 
-// ---- build ------------------------------------------------------------------
-const screensEl = document.getElementById('screens');
-const toastEl   = document.getElementById('toast');
-const trailEl   = document.getElementById('trail');
-const cname     = document.getElementById('cname');
-const ctext     = document.getElementById('ctext');
-const backBtn   = document.getElementById('back');
-const seen = new Set();
-let current = null, history = [], toastTimer = null;
+const TUT = [
+ {title:'Every spot is real', body:'Each pin is a real, visitable place where a beloved scene is set — curated city by city.'},
+ {title:'Covers are the pins', body:'Tap a book cover on the map to see the spot, the scene, and step-by-step walking directions.'},
+ {title:'Filter the shelf', body:'Genres, eras, women writers, writers of color — the filter reshapes the map and list as you tap.'},
+ {title:'Collect your stamps', body:"Make it to a spot and it's stamped on your shelf. Fifteen await you in London."}
+];
 
-ORDER.forEach(key=>{
-  const s = SCREENS[key];
-  const img = document.createElement('img');
-  img.src = '../assets/screens26/'+key+'.jpg';
-  img.alt = 'Bookspot — '+s.name;
-  img.dataset.key = key;
-  img.decoding = 'async';
-  if(key!=='splash') img.loading = 'eager';
-  screensEl.appendChild(img);
+const byId = id => SPOTS.find(s=>s.id===id);
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const matchFilters = s =>
+  !(S.fGenres.length && !s.genres.some(g=>S.fGenres.includes(g))) &&
+  !(S.fBy.length && !S.fBy.every(b=>s.by.includes(b))) &&
+  !(S.fEras.length && !S.fEras.includes(s.era)) &&
+  !(S.walking && !s.walk);
+const visible = () => SPOTS.filter(s => (S.quick==='All'||s.quick===S.quick) && (!S.filtersApplied || matchFilters(s)));
+const sub = s => `${s.book} · ${s.hood} · ${s.dist}`;
 
-  s.hots.forEach(h=>{
-    const b = document.createElement('button');
-    b.type='button'; b.className='hot'+(h.dead?' dead':'');
-    b.style.cssText = `left:${h.x}%;top:${h.y}%;width:${h.w}%;height:${h.h}%`;
-    b.setAttribute('aria-label', h.label + (h.dead?' (not in this walkthrough)':''));
-    b.dataset.screen = key;
-    b.hidden = true;
-    b.addEventListener('click', ()=> h.dead ? toast(h.dead) : go(h.go));
-    screensEl.appendChild(b);
-  });
-});
-
-ORDER.forEach(key=>{
-  const li=document.createElement('li');
-  li.textContent = LABEL[key];
-  li.dataset.key = key;
-  trailEl.appendChild(li);
-});
-
-function toast(msg){
-  toastEl.textContent = msg;
-  toastEl.classList.add('on');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(()=>toastEl.classList.remove('on'), 3400);
+function rowHTML(s){
+  return `<div class="row" data-a="open" data-id="${s.id}">
+    <div class="cov" style="background-image:url('${s.cover}')"></div>
+    <div style="flex:1;min-width:0"><div class="t">${esc(s.title)}</div><div class="s">${esc(sub(s))}</div></div>
+    <span class="arr">→</span></div>`;
+}
+function chipHTML(label,on,action,val){
+  return `<span class="chip${on?' on':''}" data-a="${action}" data-v="${esc(val)}">${esc(label)}</span>`;
+}
+function tabbar(){
+  const t=[['home','Explore'],['filter','Filter'],['shelf','Shelf'],['more','More']];
+  return `<div class="tabbar">${t.map(([id,l])=>{
+    const on = S.screen===id;
+    return `<span data-a="go" data-v="${id}" style="background:${on?'var(--sage)':'transparent'};color:${on?'var(--parch-2)':'var(--sage-pale)'}">${l}</span>`;
+  }).join('')}</div>`;
 }
 
-function paint(){
-  screensEl.querySelectorAll('img').forEach(i=>i.classList.toggle('on', i.dataset.key===current));
-  screensEl.querySelectorAll('.hot').forEach(b=>{ b.hidden = b.dataset.screen!==current; });
-  cname.textContent = SCREENS[current].name;
-  ctext.textContent = SCREENS[current].text;
-  trailEl.querySelectorAll('li').forEach(li=>{
-    li.classList.toggle('seen', seen.has(li.dataset.key));
-    li.classList.toggle('here', li.dataset.key===current);
-  });
-  backBtn.disabled = history.length===0;
+/* ------------------------------------------------------------ screens */
+function splash(){
+  return `<div class="screen" style="background:var(--sage-deep)">
+    <img src="${A}map-parchment.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.1">
+    <div style="position:relative;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 40px;text-align:center">
+      <img src="${A}logo-white.png" alt="Bookspot logo — an open book with a map pin" style="width:168px;height:auto;margin-bottom:26px">
+      <div style="font-family:var(--serif);font-size:46px;color:var(--parch-2);margin-bottom:12px;letter-spacing:.04em">Bookspot</div>
+      <div style="font-family:var(--serif);font-style:italic;font-size:19px;color:var(--sage-pale);margin-bottom:52px;max-width:24ch;line-height:1.4">Visit real places from fantastic fiction.</div>
+      <div data-a="go" data-v="city" style="background:var(--parch-2);color:var(--sage-deep);border-radius:14px;padding:16px 52px;font-size:16px;font-weight:500">Let's go</div>
+    </div></div>`;
+}
+function city(){
+  const card=(img,name,badge,dim,act)=>`
+    <div ${act?`data-a="${act}"`:''} style="position:relative;height:${dim?120:170}px;border-radius:18px;overflow:hidden;margin-bottom:14px;${dim?'opacity:.55':''}">
+      <img src="${img}" alt="${esc(name)}" style="width:100%;height:100%;object-fit:cover">
+      <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(35,40,42,0) 35%,rgba(35,40,42,.65))"></div>
+      <div style="position:absolute;left:18px;bottom:13px;font-family:var(--serif);font-size:${dim?20:24}px;color:var(--parch-2)">${esc(name)}</div>
+      <div style="position:absolute;right:14px;bottom:15px;background:rgba(243,237,227,.92);color:${dim?'var(--ink-3)':'var(--sage)'};border-radius:999px;padding:6px 12px;font-size:${dim?11:12}px;font-weight:500">${esc(badge)}</div>
+    </div>`;
+  return `<div class="screen" style="background:var(--parch);padding:64px 24px 0">
+    <div class="statusbar">9:41</div>
+    <div style="font-family:var(--serif);font-size:30px;line-height:1.15;margin-bottom:8px">Where are you reading next?</div>
+    <div style="font-size:14px;color:var(--ink-3);margin-bottom:24px">Pick a city — you can change it anytime.</div>
+    ${card(A+'photo-london.jpg','London',SPOTS.length+' spots →',false,'tour')}
+    ${card(A+'photo-tokyo.jpg','Tokyo','coming soon',true,null)}
+    ${card(A+'photo-nyc.jpg','New York City','coming soon',true,null)}
+  </div>`;
+}
+function tutorial(){
+  const t=TUT[S.tut];
+  return `<div class="screen">
+    <img src="${A}map-parchment.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+    <div style="position:absolute;inset:0;background:rgba(35,40,42,.6)"></div>
+    <div style="position:absolute;left:24px;right:24px;top:50%;transform:translateY(-50%);background:var(--parch);border-radius:20px;padding:26px 24px;text-align:center">
+      <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);margin-bottom:10px">tour · ${S.tut+1} of ${TUT.length}</div>
+      <div style="font-family:var(--serif);font-size:26px;margin-bottom:10px">${esc(t.title)}</div>
+      <p style="margin:0 0 20px;font-size:15px;line-height:1.55;color:var(--ink-2)">${esc(t.body)}</p>
+      <div style="display:flex;justify-content:center;gap:7px;margin-bottom:20px">
+        ${TUT.map((_,i)=>`<span style="width:8px;height:8px;border-radius:50%;background:${i===S.tut?'var(--sage)':'rgba(46,59,62,.2)'}"></span>`).join('')}
+      </div>
+      <div class="primary" data-a="tutNext" style="padding:14px;font-size:15px;margin-bottom:12px">${S.tut<TUT.length-1?'Got it — next':"Ready, let's explore"}</div>
+      <div data-a="go" data-v="home" style="font-size:13px;color:var(--ink-3)">Skip tour</div>
+    </div></div>`;
+}
+function home(){
+  const vis=visible();
+  const quick=['All','Classics','Mystery','Fantasy','Modern'];
+  const chipsRow = `<div style="position:absolute;left:20px;right:12px;top:114px;display:flex;gap:6px;overflow:hidden;z-index:4">
+    ${quick.map(q=>`<span class="chip${S.quick===q?' on':''}" data-a="quick" data-v="${q}" style="padding:7px 11px;font-size:12px;white-space:nowrap;flex:0 0 auto">${q}</span>`).join('')}</div>`;
+  const searchRow = `<div style="position:absolute;left:20px;right:20px;top:56px;display:flex;align-items:center;gap:10px;z-index:4">
+    <div style="flex:1;display:flex;align-items:center;gap:8px;background:var(--parch);border-radius:999px;padding:12px 18px;border:1px solid rgba(46,59,62,.12)">
+      <span data-a="go" data-v="city" style="font-family:var(--serif);font-size:18px">London</span>
+      <span style="font-size:12px;color:var(--slate)">⌄</span>
+      <span style="margin-left:auto;font-size:13px;color:var(--ink-3)">Search spots…</span>
+    </div></div>`;
+  const filterFlag = S.filtersApplied ? `<div style="position:absolute;left:20px;top:156px;z-index:4">
+      <span data-a="clearFilters" style="background:var(--brass);color:var(--parch);border-radius:999px;padding:6px 12px;font-size:12px">filters on · clear ✕</span></div>` : '';
+
+  const listRows = vis.length ? vis.map(rowHTML).join('')
+    : `<div style="background:var(--parch-2);border-radius:14px;padding:16px;font-size:13.5px;color:var(--ink-3);margin-top:8px">No spots match those filters. Clear one and the map fills back in.</div>`;
+
+  const body = S.view==='map' ? `
+    <img src="${A}map-parchment.jpg" alt="Map of London" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+    <div style="position:absolute;left:0;top:0;right:0;height:120px;background:linear-gradient(180deg,rgba(243,237,227,.9),rgba(243,237,227,0))"></div>
+    ${vis.map(s=>`<div data-a="open" data-id="${s.id}" style="position:absolute;left:${s.pin.l}%;top:${s.pin.t}%;width:46px;height:46px;border-radius:50%;border:3px solid var(--parch);overflow:hidden;outline:1px solid rgba(46,59,62,.25)">
+        <div style="width:100%;height:100%;background:url('${s.cover}') center/cover no-repeat"></div></div>`).join('')}
+    <div style="position:absolute;left:0;right:0;bottom:0;height:330px;background:var(--parch);border-radius:28px 28px 0 0;padding:10px 20px 0;display:flex;flex-direction:column">
+      <div style="width:40px;height:4px;border-radius:2px;background:rgba(46,59,62,.2);margin:0 auto 12px"></div>
+      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:8px">
+        <span style="font-family:var(--serif);font-style:italic;font-size:21px;color:var(--sage)">Visit the spot where…</span>
+        <span data-a="view" data-v="list" style="font-size:12px;color:var(--brass)">${vis.length} spots · list →</span>
+      </div>
+      <div class="noscroll" style="flex:1;min-height:0;overflow-y:auto;padding-bottom:96px">${listRows}</div>
+    </div>`
+  : `<div style="position:absolute;inset:0;background:var(--parch);padding:${S.filtersApplied?192:148}px 20px 0;display:flex;flex-direction:column">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px">
+        <span style="font-family:var(--serif);font-style:italic;font-size:21px;color:var(--sage)">Visit the spot where…</span>
+        <span data-a="view" data-v="map" style="font-size:12px;color:var(--brass)">map →</span>
+      </div>
+      <div class="noscroll" style="flex:1;min-height:0;overflow-y:auto;padding-bottom:110px">${listRows}</div>
+    </div>`;
+
+  return `<div class="screen" style="background:var(--parch-2)">${body}<div class="statusbar">9:41</div>${searchRow}${chipsRow}${filterFlag}${tabbar()}</div>`;
+}
+function detail(){
+  const s=byId(S.spotId), near=byId(s.near), isSaved=S.saved.includes(s.id);
+  const hero = s.photo
+    ? `<div style="position:relative;height:300px;overflow:hidden"><div style="width:100%;height:100%;background:url('${s.photo}') center/cover no-repeat"></div>
+       <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(35,40,42,.35),rgba(35,40,42,0) 30%,rgba(251,248,241,0) 70%,var(--parch))"></div></div>`
+    : `<div style="position:relative;height:300px;background:#E9E1D2;display:flex;align-items:center;justify-content:center">
+       <div style="width:136px;height:205px;border-radius:8px;border:1px solid rgba(46,59,62,.15);background:url('${s.cover}') center/cover no-repeat"></div></div>`;
+  return `<div class="screen" style="background:var(--parch)">
+    ${hero}
+    <div data-a="go" data-v="home" style="position:absolute;left:20px;top:54px;width:40px;height:40px;border-radius:50%;background:rgba(251,248,241,.92);display:flex;align-items:center;justify-content:center;font-size:17px">←</div>
+    <div data-a="save" style="position:absolute;right:20px;top:54px;height:40px;border-radius:999px;background:${isSaved?'var(--sage)':'rgba(251,248,241,.92)'};color:${isSaved?'var(--parch-2)':'var(--ink)'};display:flex;align-items:center;padding:0 16px;font-size:13px;font-weight:500">${isSaved?'On shelf ✓':'+ Shelf'}</div>
+    <div style="padding:8px 24px 0">
+      <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass);margin-bottom:8px">${esc(s.book+' · '+s.author+' · '+s.year)}</div>
+      <div style="font-family:var(--serif);font-size:29px;line-height:1.15;margin-bottom:12px">${esc(s.title2)}</div>
+      <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+        <span class="pillbadge">${esc(s.place)}</span><span class="pillbadge">${esc(s.dist)} away</span><span class="pillbadge">Free</span>
+      </div>
+      <p style="margin:0 0 14px;font-size:14.5px;line-height:1.5;color:var(--ink-2)">${esc(s.desc)}</p>
+      <div data-a="open" data-id="${near.id}" style="background:var(--parch-2);border-radius:14px;padding:12px 16px;margin-bottom:16px;display:flex;gap:12px;align-items:center">
+        <div style="width:36px;height:52px;border-radius:5px;flex:0 0 auto;background:url('${near.cover}') center/cover no-repeat"></div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--brass);margin-bottom:2px">While you're nearby</div>
+          <div style="font-family:var(--serif);font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(near.title+' · '+near.dist)}</div>
+        </div><span style="color:var(--slate)">→</span>
+      </div>
+      <div class="primary" data-a="go" data-v="directions" style="margin-bottom:10px">Get directions →</div>
+      <div class="secondary" data-a="save">${isSaved?'On your shelf ✓ (tap to remove)':'Save for later'}</div>
+    </div></div>`;
+}
+function directions(){
+  const s=byId(S.spotId);
+  const steps=[
+    {n:1,text:'Head out and follow the high street south',dist:'400 ft'},
+    {n:2,text:'Turn toward '+s.hood+' at the corner',dist:'0.2 mi'},
+    {n:3,text:'Cross at the lights and keep the park on your left',dist:'300 ft'},
+    {n:4,text:'Arrive: '+s.place,dist:s.dist}
+  ];
+  return `<div class="screen" style="background:var(--parch);padding:64px 24px 0">
+    <div class="statusbar">9:41</div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
+      <div data-a="go" data-v="detail" style="width:40px;height:40px;border-radius:50%;background:var(--parch-2);display:flex;align-items:center;justify-content:center;font-size:17px">←</div>
+      <div><div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass)">walking directions</div>
+      <div style="font-family:var(--serif);font-size:21px">${esc(s.place)}</div></div>
+    </div>
+    <div style="position:relative;height:190px;border-radius:18px;overflow:hidden;margin-bottom:18px">
+      <img src="${A}map-parchment.jpg" alt="Route map" style="width:100%;height:100%;object-fit:cover">
+      <div style="position:absolute;right:12px;bottom:12px;background:rgba(251,248,241,.92);color:var(--sage);border-radius:999px;padding:6px 12px;font-size:12px;font-weight:500">${esc(s.dist)} · 14 min</div>
+    </div>
+    ${steps.map(st=>`<div style="display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid rgba(46,59,62,.08)">
+      <span style="width:22px;height:22px;border-radius:50%;background:var(--parch-3);color:var(--sage);font-size:12px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;transform:translateY(4px)">${st.n}</span>
+      <span style="flex:1;font-size:14.5px;line-height:1.45">${esc(st.text)}</span>
+      <span style="font-size:12px;color:var(--ink-3)">${st.dist}</span></div>`).join('')}
+    <div class="primary" data-a="madeIt" style="position:absolute;left:20px;right:20px;bottom:34px">I made it to the spot</div>
+  </div>`;
+}
+function spotted(){
+  const s=byId(S.spotId);
+  const no=Math.max(1,S.spotted.length);
+  const next=SPOTS.find(x=>!S.spotted.includes(x.id) && x.id!==s.id);
+  return `<div class="screen" style="background:var(--parch-2)">
+    <div style="position:absolute;inset:0;opacity:.18"><img src="${A}map-parchment.jpg" alt="" style="width:100%;height:100%;object-fit:cover"></div>
+    <div style="position:relative;padding:108px 32px 0;text-align:center">
+      <div style="width:126px;height:126px;border-radius:50%;border:2px solid var(--sage);margin:0 auto 26px;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(-6deg);background:rgba(251,248,241,.75)">
+        <div style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--sage)">London</div>
+        <div style="font-family:var(--serif);font-size:33px;color:var(--sage);line-height:1.1">№ ${no}</div>
+        <div style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--sage)">Spotted</div>
+      </div>
+      <div style="font-family:var(--serif);font-size:42px;margin-bottom:12px">Well spotted.</div>
+      <p style="margin:0 auto 26px;font-size:15.5px;line-height:1.55;color:var(--ink-2);max-width:30ch">You found the spot where ${esc(s.short)}. That's a stamp for your shelf.</p>
+      <div style="max-width:250px;margin:0 auto 8px;height:6px;border-radius:3px;background:rgba(46,59,62,.15);overflow:hidden"><div style="width:${Math.round(no/SPOTS.length*100)}%;height:100%;background:var(--sage)"></div></div>
+      <div style="font-size:12px;color:var(--ink-3);margin-bottom:40px">${no} of ${SPOTS.length} London spots collected</div>
+      <div class="primary" data-a="go" data-v="shelf" style="margin-bottom:10px">See my shelf</div>
+      <div class="secondary" data-a="${next?'open':'go'}" ${next?`data-id="${next.id}"`:'data-v="home"'} style="border-color:rgba(46,59,62,.25)">${next?`Next spot: ${esc(next.hood)} · ${next.dist} →`:`All ${SPOTS.length} spotted — back to the map →`}</div>
+    </div></div>`;
+}
+function shelf(){
+  const stamps=S.spotted.map((id,i)=>({n:i+1,hood:byId(id).hood}));
+  return `<div class="screen" style="background:var(--parch);padding:64px 24px 104px;overflow:hidden">
+    <div class="statusbar">9:41</div>
+    <div style="font-family:var(--serif);font-size:30px;margin-bottom:20px">My shelf</div>
+    <div class="eyebrow">Stamps · ${S.spotted.length} of ${SPOTS.length}</div>
+    ${stamps.length ? `<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:26px">${stamps.map(st=>`
+        <div style="width:76px;height:76px;border-radius:50%;border:2px solid var(--sage);display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(-6deg);background:var(--parch-2)">
+          <div style="font-family:var(--serif);font-size:20px;color:var(--sage);line-height:1">№ ${st.n}</div>
+          <div style="font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--sage);margin-top:3px">${esc(st.hood)}</div>
+        </div>`).join('')}</div>`
+      : `<div style="background:var(--parch-2);border-radius:14px;padding:16px;font-size:13.5px;color:var(--ink-3);margin-bottom:26px">No stamps yet — get directions to a spot and make it there.</div>`}
+    <div class="eyebrow" style="margin-bottom:8px">Saved for later</div>
+    ${S.saved.length ? S.saved.map(id=>rowHTML(byId(id))).join('')
+      : `<div style="background:var(--parch-2);border-radius:14px;padding:16px;font-size:13.5px;color:var(--ink-3)">Nothing saved yet — tap "+ Shelf" on any spot.</div>`}
+    ${tabbar()}</div>`;
+}
+function filterScreen(){
+  const count=SPOTS.filter(matchFilters).length;
+  const genres=['Literary fiction','Mystery','Fantasy','Romance','Younger readers'];
+  const bys=['Women','Writers of color'];
+  const eras=['1800s','1900s','2000s'];
+  return `<div class="screen" style="background:var(--parch);padding:64px 24px 0;overflow:hidden">
+    <div class="statusbar">9:41</div>
+    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:20px">
+      <span style="font-family:var(--serif);font-size:30px">Filter spots</span>
+      <span data-a="resetFilters" style="font-size:14px;color:var(--brass)">Reset</span>
+    </div>
+    <div class="eyebrow">Genre</div>
+    <div class="chips" style="margin-bottom:22px">${genres.map(g=>chipHTML(g,S.fGenres.includes(g),'fGenre',g)).join('')}</div>
+    <div class="eyebrow">Written by</div>
+    <div class="chips" style="margin-bottom:22px">${bys.map(b=>chipHTML(b,S.fBy.includes(b),'fBy',b)).join('')}</div>
+    <div class="eyebrow">Era</div>
+    <div style="display:flex;background:var(--parch-3);border-radius:12px;padding:4px;margin-bottom:22px">
+      ${eras.map(e=>{const on=S.fEras.includes(e);
+        return `<span data-a="fEra" data-v="${e}" style="flex:1;text-align:center;padding:9px 0;font-size:14px;color:${on?'var(--ink)':'var(--ink-3)'};background:${on?'var(--parch)':'transparent'};border-radius:9px;font-weight:${on?500:400}">${e}</span>`;}).join('')}
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0">
+      <span style="font-size:15px">Only spots within walking distance</span>
+      <span data-a="walking" style="width:50px;height:30px;border-radius:999px;background:${S.walking?'var(--sage)':'rgba(46,59,62,.2)'};position:relative;display:inline-block;transition:background .15s">
+        <span style="position:absolute;left:${S.walking?23:3}px;top:3px;width:24px;height:24px;border-radius:50%;background:var(--parch);transition:left .15s"></span></span>
+    </div>
+    <div class="primary" data-a="applyFilters" style="position:absolute;left:20px;right:20px;bottom:118px">Show ${count} spot${count===1?'':'s'}</div>
+    ${tabbar()}</div>`;
+}
+function more(){
+  return `<div class="screen" style="background:var(--parch);padding:64px 24px 104px">
+    <div class="statusbar">9:41</div>
+    <div style="font-family:var(--serif);font-size:30px;margin-bottom:20px">More</div>
+    <div style="background:var(--sage);border-radius:18px;padding:20px;margin-bottom:10px">
+      <div style="font-family:var(--serif);font-size:20px;color:var(--parch-2);margin-bottom:6px">Keep your shelf everywhere</div>
+      <p style="margin:0 0 14px;font-size:13.5px;line-height:1.5;color:var(--sage-pale)">Your stamps and saved spots live on this phone. An account syncs them — whenever you're ready, no rush.</p>
+      <div data-a="moreTap" style="display:inline-block;background:var(--parch-2);color:var(--sage-deep);border-radius:12px;padding:11px 20px;font-size:14px;font-weight:500">Create an account</div>
+    </div>
+    ${S.moreNote?`<div style="background:var(--parch-2);border-radius:12px;padding:12px 14px;font-size:12.5px;color:var(--ink-3);margin-bottom:10px">The prototype ends here — sign-up stays out of the critical path, just like the 2022 tests taught.</div>`:''}
+    <div style="border-bottom:1px solid rgba(46,59,62,.08);padding:14px 4px;display:flex;justify-content:space-between;font-size:15px"><span>Notifications near spots</span><span style="color:var(--slate)">Off →</span></div>
+    <div style="border-bottom:1px solid rgba(46,59,62,.08);padding:14px 4px;display:flex;justify-content:space-between;font-size:15px"><span>Suggest a spot</span><span style="color:var(--slate)">→</span></div>
+    <div data-a="go" data-v="about" style="border-bottom:1px solid rgba(46,59,62,.08);padding:14px 4px;display:flex;justify-content:space-between;font-size:15px"><span>About Bookspot</span><span style="color:var(--slate)">→</span></div>
+    <div style="padding:18px 4px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--brass)">Bookspot · concept v3 · 2026</div>
+    ${tabbar()}</div>`;
+}
+function about(){
+  return `<div class="screen" style="background:var(--parch);padding:64px 28px 40px;overflow:hidden">
+    <div class="statusbar">9:41</div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:22px">
+      <div data-a="go" data-v="more" style="width:40px;height:40px;border-radius:50%;background:var(--parch-2);display:flex;align-items:center;justify-content:center;font-size:17px">←</div>
+      <div style="font-family:var(--serif);font-size:26px">About Bookspot</div>
+    </div>
+    <div style="width:84px;height:84px;border-radius:20px;background:var(--sage);display:flex;align-items:center;justify-content:center;margin-bottom:18px"><img src="${A}logo-white.png" alt="Bookspot logo" style="width:54px;height:auto"></div>
+    <p style="margin:0 0 14px;font-size:15.5px;line-height:1.65">Bookspot brings literature to life with a map to beloved book settings — for book worms with a travel bug.</p>
+    <p style="margin:0 0 14px;font-size:14.5px;line-height:1.65;color:var(--ink-2)">You can find every bar and museum on a map. But the corner where Mrs. Dalloway bought her flowers, the platform where Harry caught his train, the door where Sherlock hung his hat — those live scattered across blogs and book tours. Bookspot gathers them, city by city, so you can walk in your favorite character's shoes.</p>
+    <p style="margin:0 0 14px;font-size:14.5px;line-height:1.65;color:var(--ink-2)">Every spot is a real, visitable place. Most are free. Make it to one and it's stamped on your shelf — a quiet little passport for readers.</p>
+    <p style="margin:0 0 20px;font-size:14.5px;line-height:1.65;color:var(--ink-2)">Spots are curated by readers who've walked them. Know one we've missed? Suggest it from the More tab.</p>
+    <div style="border-top:1px solid rgba(46,59,62,.1);padding-top:14px;font-size:12px;line-height:1.7;color:var(--ink-3)">Designed by Elizabeth Beier. Prototype for portfolio purposes — book covers and maps belong to their owners.</div>
+  </div>`;
 }
 
-function go(key, push=true){
-  if(!SCREENS[key] || key===current) return;
-  if(push && current) history.push(current);
-  current = key; seen.add(key);
-  toastEl.classList.remove('on');
-  paint();
+const SCREENS = {splash, city, tutorial, home, detail, directions, spotted, shelf, filter:filterScreen, more, about};
+const JUMPS = [['splash','splash'],['city','city'],['tutorial','tour'],['home','home'],['detail','spot'],['directions','directions'],['spotted','well spotted'],['shelf','shelf'],['filter','filter'],['more','more'],['about','about']];
+
+function render(){
+  document.getElementById('app').innerHTML = SCREENS[S.screen]();
+  document.getElementById('jumps').innerHTML =
+    JUMPS.map(([scr,label])=>`<button class="btn${S.screen===scr?' on':''}" data-j="${scr}" type="button">${label}</button>`).join('') +
+    `<button class="btn" data-j="__reset" type="button">restart</button>`;
+}
+function toggleIn(key,val){
+  const i=S[key].indexOf(val);
+  if(i>-1) S[key].splice(i,1); else S[key].push(val);
 }
 
-backBtn.addEventListener('click', ()=>{
-  const prev = history.pop();
-  if(prev){ current = prev; paint(); }
+const ACTIONS = {
+  go:(el)=>{ const v=el.dataset.v; if(v==='tutorial') S.tut=0; S.screen=v; },
+  open:(el)=>{ S.spotId=el.dataset.id; S.screen='detail'; },
+  tour:()=>{ S.screen='tutorial'; S.tut=0; },
+  tutNext:()=>{ if(S.tut<TUT.length-1) S.tut++; else S.screen='home'; },
+  view:(el)=>{ S.view=el.dataset.v; },
+  quick:(el)=>{ S.quick=el.dataset.v; },
+  save:()=>{ toggleIn('saved',S.spotId); },
+  madeIt:()=>{ if(!S.spotted.includes(S.spotId)) S.spotted.push(S.spotId); S.screen='spotted'; },
+  fGenre:(el)=>{ toggleIn('fGenres',el.dataset.v); },
+  fBy:(el)=>{ toggleIn('fBy',el.dataset.v); },
+  fEra:(el)=>{ toggleIn('fEras',el.dataset.v); },
+  walking:()=>{ S.walking=!S.walking; },
+  applyFilters:()=>{ S.filtersApplied=true; S.screen='home'; S.view='list'; S.quick='All'; },
+  resetFilters:()=>{ S.fGenres=[]; S.fBy=[]; S.fEras=[]; S.walking=false; S.filtersApplied=false; },
+  clearFilters:()=>{ S.filtersApplied=false; S.fGenres=[]; S.fBy=[]; S.fEras=[]; S.walking=false; },
+  moreTap:()=>{ S.moreNote=true; }
+};
+
+document.getElementById('app').addEventListener('click', e=>{
+  const el=e.target.closest('[data-a]');
+  if(!el) return;
+  const fn=ACTIONS[el.dataset.a];
+  if(fn){ fn(el); render(); }
 });
-document.getElementById('restart').addEventListener('click', ()=>{
-  history = []; seen.clear(); current=null; go('splash', false);
-});
-const revealBtn = document.getElementById('reveal');
-revealBtn.addEventListener('click', ()=>{
-  const on = document.body.classList.toggle('reveal');
-  revealBtn.setAttribute('aria-pressed', String(on));
-  revealBtn.textContent = on ? 'hide tap targets' : 'show tap targets';
-});
-document.addEventListener('keydown', e=>{
-  if(e.key==='Escape'||e.key==='ArrowLeft'){ backBtn.click(); }
-  else if(e.key==='ArrowRight'){
-    const i = ORDER.indexOf(current);
-    if(i>-1 && i<ORDER.length-1) go(ORDER[i+1]);
+document.getElementById('jumps').addEventListener('click', e=>{
+  const b=e.target.closest('[data-j]');
+  if(!b) return;
+  if(b.dataset.j==='__reset'){
+    Object.assign(S,{screen:'splash',tut:0,view:'map',spotId:'potter',saved:[],spotted:[],quick:'All',fGenres:[],fBy:[],fEras:[],walking:false,filtersApplied:false,moreNote:false});
+  } else {
+    S.screen=b.dataset.j;
+    if(b.dataset.j==='tutorial') S.tut=0;
   }
+  render();
 });
 
-go('splash', false);
+render();
 </script>
 </body>
 </html>

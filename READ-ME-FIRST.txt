@@ -1,82 +1,121 @@
-PORTFOLIO UPDATE — upload these to belleofthebot/portfolio
-=========================================================
+PORTFOLIO IMPORT — everything in one go
+=======================================
 
-Unzip. Eight items:
+Unzip and drag ALL of these into GitHub at once:
+https://github.com/belleofthebot/portfolio → Add file → Upload files
+(GitHub keeps folder structure when you drag a folder.)
 
-  fonts/                     NEW folder, 3 woff2 files
-  drive-the-505/             NEW folder, the app (with the new car matcher)
-  proto/                     NEW folder, the two prototypes
-  drive-the-505-preview.jpg  NEW - index.html referenced this and it did not exist
-  bookspot-preview.jpg       REPLACES the current one (recropped)
-  drive-the-505.zip          REPLACES the current one (regenerated to match the folder)
-  index.html                 REPLACES the current one
-  work-studio.html           REPLACES the current one
+  fonts/                     NEW    3 woff2 files
+  drive-the-505/             NEW    the app
+  proto/                     NEW    both prototypes
+  assets/                    UPDATE one new file inside: app/logo-white.png
+  styles.css                 UPDATE new case-study styles appended at the end
+  index.html                 UPDATE
+  work-studio.html           UPDATE
+  drive-the-505-preview.jpg  NEW
+  bookspot-preview.jpg       UPDATE recropped
+  drive-the-505.zip          UPDATE regenerated to match the folder
 
-To upload:
-  1. https://github.com/belleofthebot/portfolio
-  2. Add file -> Upload files
-  3. Drag all eight items in at once. GitHub keeps folder structure when
-     you drag a folder.
-  4. Commit message: "Fonts, Drive the 505 matcher, previews, prototypes"
-  5. Commit. Vercel redeploys on its own in about a minute.
+Commit message: "Fonts, prototypes, Drive the 505, StudioKeeper"
+Vercel redeploys itself in about a minute. Then check:
 
-Then check these on the live site:
-  /                              the two app cards, recropped previews
-  /drive-the-505/                the app - tap "Choosing a Car"
-  /proto/bookspot-app.html       the walkthrough
-  /proto/studiokeeper.html       the dashboard
+  /                          the two app cards
+  /work-studio.html          the enriched case study
+  /drive-the-505/            tap "Choosing a Car"
+  /proto/bookspot-app.html   the Bookspot prototype
+  /proto/studiokeeper.html   the dashboard
 
+--------------------------------------------------------------------
 WHAT CHANGED
 
-1. fonts/ - styles.css loads three woff2 files from fonts/, but in the repo
-   they sat loose at the root, so every one 404'd in production and the live
-   site rendered in a system fallback font. Most visible fix on the list.
+FIXES
 
-2. drive-the-505/ - work-drive-505.html linked to drive-the-505/index.html,
+1. fonts/ — styles.css loads three woff2 files from fonts/, but in the repo
+   they sat loose at the root, so every one 404'd in production and the live
+   site rendered in a system fallback font. The most visible fix on this list.
+
+2. drive-the-505/ — work-drive-505.html linked to drive-the-505/index.html,
    which did not exist; only the zip was in the repo. The app now runs at
    yoursite.com/drive-the-505/.
 
-3. Choosing a Car is now a matcher, not a list of your criteria. Six
-   questions - budget, the road you dread most, size, where the car parks,
-   which features would settle your nerves, how you feel about buying used
-   - then a ranked shortlist of three from a twelve-car catalogue. Each pick
-   shows a fit score, the specific reasons it matched YOUR answers, the
-   caveats counting against it, and what to watch out for on that model.
-   It is honest where it matters: under $10k it says out loud that you are
-   usually choosing between modern safety tech and low miles; anything that
-   depends on trim or model year says so instead of being claimed; the cars
-   that ranked lower are still listed as good cars. Your original "what to
-   look for" checklist stays, reframed as the reasoning behind the picks.
-   Built on the app's existing quiz styling, so it looks native.
+3. drive-the-505-preview.jpg — index.html pointed at it and it did not exist,
+   so that work card showed a broken image.
 
-4. Card previews recomposed. Both were 980x660 images squeezed into a
+4. Both card previews recomposed. They were 980x660 images squeezed into a
    467x210 well by object-fit:cover, which centred the crop and sliced the
-   phones through the middle of their content. Both are now cropped to the
-   card's aspect ratio with the ivory margin trimmed, so the screens run
-   edge to edge and bleed off the bottom.
+   phones through the middle of their content. Now cropped to the card's own
+   aspect ratio with the ivory margin trimmed, so the screens run edge to edge
+   and bleed off the bottom — a deliberate crop rather than an accidental one.
 
-5. proto/bookspot-app.html - a clickable walkthrough built from the eight
-   hi-fi London screens already in assets/screens26/. The whole designed
-   flow: splash, map, list, filter, spot detail, walking directions, the
-   spotted stamp, the shelf, and the bottom tab bar. "Show tap targets"
-   toggle, back, restart, keyboard support, flow trail. Every hotspot either
-   navigates or tells you why it does not.
+5. assets/app/logo-white.png — the Bookspot logo had a cream ground baked into
+   the JPG, showing as a pale square on the sage splash. Knocked out to
+   transparency.
 
-6. proto/studiokeeper.html - the dashboard rebuilt from the case study's own
-   structure. Four time windows, revenue stacked by channel with hover
-   tooltips and a table view, booked versus kept per channel, insights that
-   carry their own caveats, orders that open for line items, a restock radar
-   whose reorder button files a task, the tax envelope. Sample data,
-   labelled as sample on the page.
+PROTOTYPES — both are ports of YOUR files, not reconstructions
 
-7. index.html + work-studio.html - the last "Desert Palette" references are
-   now StudioKeeper, and the prototype button points at proto/studiokeeper.html.
+6. proto/bookspot-app.html — your 2026 prototype from Claude Design, ported to
+   plain HTML. Fifteen London spots, splash, city picker, the four-step tour,
+   map and list views, quick genre chips, spot detail with save/unsave, walking
+   directions, the stamp screen with running progress, the shelf holding stamps
+   and saved spots, the full filter (genre, author, era, walking distance) with
+   a live count, More and About. Every bit of state carries through the session.
+
+7. proto/studiokeeper.html — your Desert Palette dashboard, ported and renamed
+   StudioKeeper. All seven tabs, four time windows, the three-ways-in add flow,
+   aging tasks, orders that open for line items, per-type product filtering, the
+   restock radar, the quarterly filing table. SKUs renamed DP- to SK-; gallery
+   and wholesale venue names scrubbed to match your red line about client data.
+   This replaces the version I had built from the case study — yours is better.
+
+   Why both had to be ported: the .dc.html format needs support.js plus the
+   _ds/belleofthebot-design-system-... bundle to run. These ports need nothing,
+   so they work on your own domain permanently.
+
+CASE STUDY
+
+8. work-studio.html now matches your newer version. Added: the six-source chaos
+   panel funnelling into "one tired artist, reconciling by hand", the
+   what-the-studio-keeps-from-$100 margin comparison, the five channel tiles,
+   the ten questions grid (solid = answered today, dashed = roadmap), and the
+   products / line items / orders data model. New CSS for these is appended at
+   the end of styles.css — nothing existing was changed.
+
+   work-bookspot.html already matched: it has the 2026 facelift section, the
+   prototype link and the hi-fi screen grid.
+
+DRIVE THE 505
+
+9.  Choosing a Car is a matcher now. Six questions — budget, the road you dread,
+    size, where the car parks, which features would settle your nerves, how you
+    feel about buying used — then a ranked shortlist of three from a twelve-car
+    catalogue, each with a fit score, the reasons it matched your answers, the
+    caveats against it, and what to watch for on that model. It says out loud
+    that under $10k you are usually choosing between modern safety tech and low
+    miles, and anything trim- or year-dependent says so. The "What to look for"
+    criteria table is removed, as you asked.
+
+10. Reordered: Car Knowledge, Driving Theory, NM Road Rules and ABQ Geography
+    come first; Choosing a Car, Buying a Car and First Month follow, so the
+    checklists sit at the end.
+
+11. Every emoji replaced with hand-drawn inline SVG — nav, home cards, module
+    cards, the Study / Flashcards / Quiz tabs, both map switches. They use
+    currentColor so they take the app's gold automatically.
 
 Every href, src and CSS url() in the repo resolves. Nothing 404s.
 
+--------------------------------------------------------------------
+NOT DONE — one piece, on purpose
+
+  "Bookspot 2026 Facelift" (the annotated concept page with the four phone
+  mockups and the what-stays/what-goes panel) is the only Claude Design file I
+  did not port. The case study covers the 2026 design and links to the working
+  prototype, so nothing is broken without it — but if you want that page on the
+  site too, say so and it is a straightforward next job.
+
 OPTIONAL CLEANUP
 
-  Your image folders exist twice: app/ fig/ people/ screens/ screens26/
-  sketches/ at the repo root and again under assets/. Only the assets/
-  copies are used; the root set is about 2 MB of dead weight. Deleting has
-  to be done in GitHub's web UI - uploading cannot delete.
+  Image folders exist twice: app/ fig/ people/ screens/ screens26/ sketches/ at
+  the repo root and again under assets/. Only the assets/ copies are used; the
+  root set is about 2 MB of dead weight. Deleting must be done in GitHub's web
+  UI — uploading cannot delete.
