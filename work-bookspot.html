@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bookspot — Elizabeth Beier</title>
+<meta name="description" content="An app for avid readers who want to visit real places from fantastic fiction — like stepping onto Platform 9¾, but for every book you love.">
+<meta name="author" content="Elizabeth Beier">
+<meta name="theme-color" content="#17121C">
+<meta property="og:title" content="Bookspot — Elizabeth Beier">
+<meta property="og:description" content="An app for avid readers who want to visit real places from fantastic fiction — like stepping onto Platform 9¾, but for every book you love.">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* page-specific layout, layered on the belle design tokens */
+.bs-hero{display:grid;grid-template-columns:1.2fr 0.8fr;gap:var(--space-5);align-items:center}
+.bs-hero .phone{width:100%;height:auto;border-radius:var(--radius-card);border:1px solid var(--line)}
+.bs-rolegrid{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;font-size:0.9rem;margin-top:var(--space-3)}
+.bs-rolegrid .v{color:var(--text-2)}
+.bs-stats{display:flex;flex-wrap:wrap;gap:var(--space-3) var(--space-5)}
+.bs-stat b{font-size:1.9rem;font-weight:500;color:var(--rose);display:block;line-height:1;margin-bottom:4px}
+.bs-stat.pulse b{color:var(--mint)}
+.bs-stat span{font-family:var(--mono);font-size:var(--size-mono);color:var(--text-3);text-transform:lowercase}
+.bs-grid5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--space-2)}
+.bs-grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-2)}
+.bs-grid2{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-2)}
+.bs-avatar{width:72px;height:72px;border-radius:50%;object-fit:cover;border:1px solid var(--line);margin-bottom:12px;display:block}
+.bs-avatar.sm{width:46px;height:46px;margin:0}
+.bs-quote{display:flex;gap:12px;align-items:center;margin-bottom:12px}
+.bs-screens{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px 12px}
+.bs-screens img{width:100%;aspect-ratio:390/844;object-fit:cover;border-radius:18px;border:1px solid var(--line);margin-bottom:8px;display:block}
+.bs-shot{width:100%;height:auto;border-radius:var(--radius-card);border:1px solid var(--line);display:block}
+.idea{border:1px solid var(--rose);animation:ideaflicker 4s ease-in-out infinite}
+.idea.cut{border-style:dashed;color:var(--text-3);border-color:var(--line)}
+@keyframes ideaflicker{50%{opacity:.45}}
+@media(max-width:820px){.bs-hero{grid-template-columns:1fr}.bs-grid5{grid-template-columns:repeat(2,1fr)}.bs-grid3{grid-template-columns:1fr}.bs-grid2{grid-template-columns:1fr}.bs-screens{grid-template-columns:repeat(2,1fr)}}
+@media(prefers-reduced-motion:reduce){.idea{animation:none}}
+</style>
+</head>
+<body class="">
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav"><div class="nav-in">
+<a class="mark" href="index.html">belleofthe<span class="bot">bot</span><span class="cur">_</span></a>
+<a class="link" href="index.html">work</a><a class="link" href="resume.html">résumé</a><a class="link" href="index.html#stack">stack</a><a class="link" href="index.html#about">about</a><a class="link" href="index.html#contact">contact</a></div></header>
+<main id="main">
+
+<div class="wrap">
+<a class="backlink" href="index.html" style="display:inline-block;margin:var(--space-4) 0 0">← back to work</a>
+<div class="bs-hero" style="padding:var(--space-4) 0 var(--space-5)">
+<div>
+<span class="kicker">case study · ux/ui design · 2022</span>
+<h1 style="font-size:var(--size-hero);line-height:1.1;margin:0 0 var(--space-3);max-width:18ch">Bookspot</h1>
+<p style="font-size:1.2rem;line-height:1.55;color:var(--text-2);max-width:42ch;margin:0 0 var(--space-4)">An app for avid readers who want to visit real places from fantastic fiction — like stepping onto Platform 9¾, but for every book you love.</p>
+<div class="tags" style="margin:0 0 var(--space-3)"><span class="tag rose">ux research</span><span class="tag">mobile app</span><span class="tag">prototyping</span><span class="tag">usability testing</span></div>
+<div class="bs-rolegrid">
+<span class="meta">role</span><span class="v">end to end: research, UX, UI, testing</span>
+<span class="meta">tools</span><span class="v">Figma · Mapbox · iOS Human Interface Guidelines</span>
+<span class="meta">context</span><span class="v">UC Berkeley UX/UI bootcamp · solo project</span>
+</div>
+<div style="margin-top:var(--space-4)"><a class="btn" href="#prototype">Jump to the clickable prototype ↓</a></div>
+</div>
+<img class="phone" src="assets/fig/shot-911-dark.jpg" alt="Bookspot splash screen on an iPhone">
+</div>
+</div>
+
+<div style="border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft)">
+<div class="wrap"><div class="bs-stats" style="padding:var(--space-4) 0">
+<span class="bs-stat"><b>8</b><span>user interviews</span></span>
+<span class="bs-stat"><b>5</b><span>design phases</span></span>
+<span class="bs-stat"><b>10</b><span>versions of the user flow</span></span>
+<span class="bs-stat"><b>40+</b><span>screens designed</span></span>
+<span class="bs-stat pulse"><b>3/3</b><span>usability tasks passed in round two</span></span>
+</div></div>
+</div>
+
+<section class="well">
+<div class="wrap" style="padding:var(--space-6) var(--space-4)">
+<span class="kicker">the problem</span>
+<h2 style="font-size:var(--size-h2);margin:0 0 var(--space-3);max-width:30ch">You can map every bar in London. You cannot map a single novel.</h2>
+<div style="max-width:62ch;line-height:1.65;color:var(--text-2)">
+<p style="margin:0 0 12px">Travellers can find almost anything on Google Maps or Yelp — bars, museums, shopping. But readers who get to know places through books have no way to search for fictional landmarks. Where did Mrs. Dalloway start her walk? Where does Sherlock Holmes set up shop? The information exists, scattered across blogs and book tours, but there is no single place to find it. Travelling bookworms miss out on the joy of literature coming to life.</p>
+<p style="margin:0"><strong>How could we create an end to end app for readers visiting a new city to explore its literary spots?</strong></p>
+</div>
+<div class="card" style="margin-top:var(--space-4);max-width:560px">
+<span class="kicker">value proposition</span>
+<p style="margin:0;font-size:1.15rem;line-height:1.5">Bookspot brings literature to life with a map to beloved book settings — for book worms with a travel bug.</p>
+</div>
+</div>
+</section>
+
+<section><div class="wrap">
+<span class="kicker">01 · empathize</span>
+<h2 style="font-size:var(--size-h2);margin:0 0 var(--space-3);max-width:32ch">I started with readers, not screens</h2>
+<p style="max-width:62ch;line-height:1.65;color:var(--text-2);margin:0 0 var(--space-4)">I sketched a proto persona, then interviewed eight dedicated readers who love to travel. My script moved from reading habits to travel habits to the overlap between the two, closing on one abstract question: imagine your favourite book coming to life around you. Five interviews stood out.</p>
+<div class="bs-grid5" style="margin-bottom:var(--space-4)">
+<div class="card"><img class="bs-avatar" src="assets/people/laura.jpg" alt="Laura"><div style="font-weight:500;margin-bottom:4px">Laura, 32</div><div class="meta" style="margin-bottom:8px">engineer · Seattle</div><div style="font-size:0.85rem;color:var(--text-2);line-height:1.45">e-books · literary fiction</div></div>
+<div class="card"><img class="bs-avatar" src="assets/people/natalie.jpg" alt="Natalie"><div style="font-weight:500;margin-bottom:4px">Natalie, 38</div><div class="meta" style="margin-bottom:8px">business owner · LA</div><div style="font-size:0.85rem;color:var(--text-2);line-height:1.45">audiobooks · sci-fi &amp; business</div></div>
+<div class="card"><img class="bs-avatar" src="assets/people/michelle.jpg" alt="Michelle"><div style="font-weight:500;margin-bottom:4px">Michelle, 28</div><div class="meta" style="margin-bottom:8px">teacher · Oakland</div><div style="font-size:0.85rem;color:var(--text-2);line-height:1.45">physical books · non-fiction</div></div>
+<div class="card"><img class="bs-avatar" src="assets/people/nick.jpg" alt="Nick"><div style="font-weight:500;margin-bottom:4px">Nick, 41</div><div class="meta" style="margin-bottom:8px">game technician · Berkeley</div><div style="font-size:0.85rem;color:var(--text-2);line-height:1.45">audiobooks · bios &amp; fiction</div></div>
+<div class="card"><img class="bs-avatar" src="assets/people/brenda.jpg" alt="Brenda"><div style="font-weight:500;margin-bottom:4px">Brenda, 57</div><div class="meta" style="margin-bottom:8px">scholar &amp; author · Newark</div><div style="font-size:0.85rem;color:var(--text-2);line-height:1.45">all formats · comics &amp; sci-fi</div></div>
+</div>
+<span class="kicker">what I heard, again and again</span>
+<div class="bs-grid2">
+<div class="card"><div class="bs-quote"><img class="bs-avatar sm" src="assets/people/laura.jpg" alt=""><span class="meta">Laura, 32 · engineer · literary fiction</span></div><p style="margin:0;font-size:1.05rem;line-height:1.55">"I like that I can inhabit other worlds and realities, and experience the world through other people's visions."</p></div>
+<div class="card"><div class="bs-quote"><img class="bs-avatar sm" src="assets/people/michelle.jpg" alt=""><span class="meta">Michelle, 28 · teacher · non-fiction</span></div><p style="margin:0;font-size:1.05rem;line-height:1.55">"Reading is such a great way to calm the mind and learn something new, a great opportunity to transport your mind somewhere else."</p></div>
+<div class="card"><div class="bs-quote"><img class="bs-avatar sm" src="assets/people/natalie.jpg" alt=""><span class="meta">Natalie, 38 · business owner · sci-fi</span></div><p style="margin:0;font-size:1.05rem;line-height:1.55">"The stories that we tell influence our lives and our social structure and the way we interact with each other in the world."</p></div>
+<div class="card"><div class="bs-quote"><img class="bs-avatar sm" src="assets/people/brenda.jpg" alt=""><span class="meta">Brenda, 57 · scholar &amp; author · everything</span></div><p style="margin:0;font-size:1.05rem;line-height:1.55">"I love reading as the opportunity to experience new things, reading stuff that I could never have imagined on my own."</p></div>
+</div>
+<p style="max-width:62ch;line-height:1.65;color:var(--text-2);margin:var(--space-3) 0 0">Every conversation circled the same word without my prompting it. Affinity mapping and an empathy map confirmed the pattern: dedicated readers read to feel <strong>transported</strong>, and they choose travel destinations the same way.</p>
+</div></section>
+
+<section><div class="wrap">
+<span class="kicker">02 · define</span>
+<h2 style="font-size:var(--size-h2);margin:0 0 var(--space-3)">One sentence to design against</h2>
+<div class="card">
+<p style="margin:0;font-size:clamp(1.2rem,2.2vw,1.6rem);font-weight:500;line-height:1.45;max-width:34ch">Julia, a dedicated reader, wants to visit her favourite book settings while travelling, to feel <span style="color:var(--rose)">transported, curious, and joyful</span>.</p>
+</div>
+<p style="max-width:62ch;line-height:1.65;color:var(--text-2);margin:var(--space-3) 0 0">Everything that made it into the app had to serve that sentence. Everything that did not got cut.</p>
+</div></section>
+
+<section><div class="wrap">
+<span class="kicker">03 · ideate</span>
+<h2 style="font-size:var(--size-h2);margin:0 0 var(--space-3)">Brainstorm wide, then cut without mercy</h2>
+<p style="max-width:62ch;line-height:1.65;color:var(--text-2);margin:0 0 var(--space-4)">Free form brainstorming, a prioritisation matrix, a storyboard and a journey map narrowed dozens of ideas to one core value: seeing fictional places in real life when you travel to a new city.</p>
+<div class="tags" style="max-width:860px;margin-bottom:8px">
+<span class="tag idea">city book lists</span><span class="tag idea">map of book spots</span><span class="tag idea">genre filters</span><span class="tag idea cut">bookstores &amp; libraries</span><span class="tag idea">list mode</span><span class="tag idea cut">author pilgrimage sites</span><span class="tag idea">step by step directions</span><span class="tag idea cut">reviews &amp; photo uploads</span><span class="tag idea">next-spot suggestions</span><span class="tag idea cut">book recommendations</span><span class="tag idea">push notifications near spots</span><span class="tag idea cut">scene illustrations</span><span class="tag idea cut">author readings &amp; events</span><span class="tag idea">collectible spot stamps</span>
+</div>
+<span class="meta" style="display:block;margin-bottom:var(--space-4)">the brainstorm, flickering · solid made it in, dashed got cut</span>
+<div class="bs-grid2" style="margin-bottom:var(--space-4)">
+<div class="card"><span class="kicker">built</span><ul style="margin:0;padding-left:18px;line-height:1.9;color:var(--text-2);font-size:0.95rem"><li>City by city lists of featured books</li><li>Map view of book spots plus a list mode</li><li>Filter by genre, author, and era</li><li>Step by step directions to each spot</li><li>Suggested next spots nearby</li></ul></div>
+<div class="card"><span class="kicker">cut</span><ul style="margin:0;padding-left:18px;line-height:1.9;color:var(--text-3);font-size:0.95rem"><li>Bookstores and libraries, already Yelp-able</li><li>Author pilgrimage sites and events</li><li>Reviews, photo uploads, social feeds</li><li>Illustrations of every book scene</li></ul></div>
+</div>
+<span class="kicker">competitive analysis · onboarding flows</span>
+<div class="bs-grid3">
+<div class="card"><div style="font-weight:500;margin-bottom:6px">Audible</div><p style="margin:0;font-size:0.85rem;line-height:1.5;color:var(--text-2)">Borrowed: a fast journey with skippable steps. Avoided: locking sign up behind one account.</p></div>
+<div class="card"><div style="font-weight:500;margin-bottom:6px">Libby</div><p style="margin:0;font-size:0.85rem;line-height:1.5;color:var(--text-2)">Borrowed: a distinct, friendly voice and a clear map with pins. Avoided: sending users out of the app to finish a task.</p></div>
+<div class="card"><div style="font-weight:500;margin-bottom:6px">Goodreads</div><p style="margin:0;font-size:0.85rem;line-height:1.5;color:var(--text-2)">Borrowed: the nostalgia of real book covers, light genre picking. Avoided: the long onboarding rigmarole.</p></div>
+</div>
+</div></section>
+
+<section class="well" style="margin-top:var(--space-6)">
+<div class="wrap" style="padding:var(--space-6) var(--space-4)">
+<span class="kicker">04 · prototype</span>
+<h2 style="font-size:var(--size-h2);margin:0 0 var(--space-3);max-width:32ch">Sketches, wireframes, and ten versions of one flow</h2>
+<p style="max-width:62ch;line-height:1.65;color:var(--text-2);margin:0 0 var(--space-4)">I will admit it: I fell into visual design early, exploring two polished directions before the wireframes were ready. Pulling back to paper sketches and lo-fi frames was the best decision of the project, the structure got solid before the paint went on. The user flow below went through ten numbered revisions as testing reshaped it.</p>
+<div class="bs-grid3" style="margin-bottom:8px">
+<img class="bs-shot" src="assets/sketches/sk-6-up.jpg" alt="Paper sketches of Bookspot screens on grid paper" loading="lazy">
+<img class="bs-shot" src="assets/sketches/sk-7-up.jpg" alt="Paper sketches with red revision notes" loading="lazy">
+<img class="bs-shot" src="assets/sketches/sk-8-up.jpg" alt="Paper sketches of onboarding and map screens" loading="lazy">
+</div>
+<span class="meta" style="display:block;margin-bottom:var(--space-4)">every screen started on grid paper · red pen marks the rethinks</span>
+<img class="bs-shot" src="assets/sketches/lofi-p39-0.jpg" alt="Lo-fi wireframes: splash, description, and sign up" loading="lazy" style="margin-bottom:8px">
+<span class="meta" style="display:block;margin-bottom:var(--space-4)">lo-fi wireframes · splash, description, sign up — boxes before beauty</span>
+<div class="frame"><img src="assets/fig/user-flow.jpg" alt="Bookspot user flow v10 diagram"><figcaption>user flow v10 · onboarding → home → spot details → directions → well spotted</figcaption></div>
+</div>
+</section>
+
+<section><div class="wrap">
+<span class="kicker">05 · test</span>
+<h2 style="font-size:var(--size-h2);margin:0 0 var(--space-3)">Testing rewrote the front door</h2>
+<p style="max-width:62ch;line-height:1.65;color:var(--text-2);margin:0 0 var(--space-4)">I ran moderated sessions over Zoom with three tasks: find step by step directions to Mrs. Dalloway's walk, save the spot where Harry Potter catches his train, and filter to 21st century literary fiction by women of colour. The feedback changed three big things.</p>
+<div class="bs-grid3">
+<div class="card"><span class="kicker">1 · added a tutorial</span><p style="margin:0;font-size:0.95rem;line-height:1.6;color:var(--text-2)">Testers wanted context before exploring, so a three step tour now opens the app, skippable, per Audible's lesson.</p></div>
+<div class="card"><span class="kicker">2 · added a list view</span><p style="margin:0;font-size:0.95rem;line-height:1.6;color:var(--text-2)">Some testers wanted a longer scan of spots than the map allowed, so home gained a map and list toggle.</p></div>
+<div class="card"><span class="kicker">3 · deferred the asks</span><p style="margin:0;font-size:0.95rem;line-height:1.6;color:var(--text-2)">Location and account requests moved deeper into the flow, users explore first, commit later.</p></div>
+</div>
+</div></section>
+
+<section id="prototype"><div class="wrap">
+<span class="kicker">the design · 2026</span>
+<h2 style="font-size:var(--size-h2);margin:0 0 var(--space-3);max-width:32ch">Sage &amp; parchment, four years wiser</h2>
+<p style="max-width:62ch;line-height:1.65;color:var(--text-2);margin:0 0 var(--space-4)">The bootcamp prototype earned its stamp, and the design kept evolving. This is Bookspot as I would ship it today: the same sage and parchment soul with a full bleed map, book covers as pins, chip filters, and collectible stamps. It is fully clickable — tap through onboarding, find a spot, get directions, collect your stamp.</p>
+<div class="protolink">
+<div><span class="kicker">clickable prototype</span><p class="pl-t">Bookspot, 2026</p><p class="pl-n">Tap through onboarding, find a spot, get directions, collect a stamp.</p></div>
+<a class="btn" href="proto/bookspot-app.html" target="_blank" rel="noopener">Open it →</a>
+</div>
+<span class="kicker" style="margin-top:var(--space-5);display:block">the final hi-fi screens</span>
+<div class="bs-screens" style="margin-top:var(--space-2)">
+<div><img src="assets/screens26/splash.jpg" alt="Splash screen with the Bookspot book-and-pin logo"><span class="meta">splash · the original logo, kept</span></div>
+<div><img src="assets/screens26/home-map.jpg" alt="Home map of London with book covers as pins"><span class="meta">home · full-bleed map, covers as pins</span></div>
+<div><img src="assets/screens26/home-list.jpg" alt="Home list view: visit the spot where"><span class="meta">home · list view</span></div>
+<div><img src="assets/screens26/detail.jpg" alt="Spot detail for Harry Potter with a photo of King's Cross"><span class="meta">spot details · Platform 9¾</span></div>
+<div><img src="assets/screens26/filter.jpg" alt="Filter screen with genre chips and a live result count"><span class="meta">filter · chips &amp; live count</span></div>
+<div><img src="assets/screens26/directions.jpg" alt="Step by step walking directions to King's Cross"><span class="meta">directions · walking steps</span></div>
+<div><img src="assets/screens26/spotted.jpg" alt="Well spotted celebration screen with a passport stamp"><span class="meta">well spotted · stamp collected</span></div>
+<div><img src="assets/screens26/shelf.jpg" alt="My shelf with a stamp and a saved spot"><span class="meta">shelf · stamps + saved spots</span></div>
+</div>
+</div></section>
+
+<section class="well" style="margin-top:var(--space-6)">
+<div class="wrap" style="padding:var(--space-6) var(--space-4)">
+<span class="kicker">what I took with me</span>
+<h2 style="font-size:var(--size-h2);margin:0 0 var(--space-3)">Three lessons</h2>
+<div class="bs-grid3">
+<div class="card"><span class="kicker">structure before beauty</span><p style="margin:0;font-size:0.95rem;line-height:1.6;color:var(--text-2)">I love making things beautiful, and the polish lands better when it is informed by lo-fi mockups and testing first.</p></div>
+<div class="card"><span class="kicker">never design in a vacuum</span><p style="margin:0;font-size:0.95rem;line-height:1.6;color:var(--text-2)">Critique from classmates and instructors reshaped the flow more than any solo iteration. Feedback loops stay in my process.</p></div>
+<div class="card"><span class="kicker">tools compound</span><p style="margin:0;font-size:0.95rem;line-height:1.6;color:var(--text-2)">This project made Figma a home base, components, variants and clickable prototypes carried every phase after paper.</p></div>
+</div>
+<p style="max-width:62ch;line-height:1.65;color:var(--text-2);margin:var(--space-4) 0 0">Bookspot is where my UX habit started: research first, polish second. No dashboards on this one, just listening. It is also the reason the analytics work later came out the way it did, because writing a tracking plan around business questions is the same discipline as writing a design around an interview.</p>
+</div>
+</section>
+
+<div class="wrap">
+<div class="tags"><span class="tag rose">ux research</span><span class="tag">user interviews</span><span class="tag">affinity mapping</span><span class="tag">figma</span><span class="tag">clickable prototype</span><span class="tag">usability testing</span><span class="tag">information architecture</span></div>
+<div class="nextprev"><a href="work-drive-505.html">← drive the 505</a><a href="index.html">back to work →</a></div>
+</div>
+
+<div class="contact" id="contact"><div class="wrap">
+<p class="avail"><span class="pulse-dot"></span> open to marketing operations, analytics and martech roles</p>
+<h2>Let's talk.</h2>
+<p>Remote, or Albuquerque and hybrid. If you want the architecture behind any of the work here, ask me and I will walk you through it.</p>
+<div class="contact-links">
+<a class="clink primary" href="mailto:elizabethbportfolio@gmail.com">elizabethbportfolio@gmail.com</a>
+<a class="clink" href="resume.html">résumé</a>
+<a class="clink" href="https://github.com/belleofthebot" target="_blank" rel="noopener">github</a>
+<a class="clink" href="https://www.instagram.com/paintingthesouthwest/" target="_blank" rel="noopener">instagram</a>
+</div></div></div>
+<footer><div class="wrap"><span>elizabeth beier · albuquerque, new mexico</span><span>designed, built, and measured by me</span></div></footer>
+</main>
+</body>
+</html>
