@@ -1,37 +1,66 @@
-THE TWO ITEMS THAT DID NOT LAND
-===============================
+PASSAGE FIXES + THE FONT PROBLEM, SOLVED WITHOUT THE FOLDER
+==========================================================
+5 files. Drag all four top-level items in at once.
 
-Everything else from the big import is live and correct. These two are missing:
+  styles.css               ← this is the one that fixes your typography
+  work-bookspot.html
+  work-passage.html
+  proto/                   passage-app.html
+  assets/passage26/        06-lucia.jpg
 
-  fonts/               3 woff2 files — /fonts/... still returns 404, so the site
-                       is STILL rendering in a system fallback font
-  work-bookspot.html   the version with the live prototype in the hero
+WHAT EACH ONE DOES
 
-Upload just these two:
-  1. https://github.com/belleofthebot/portfolio → Add file → Upload files
-  2. Drag in the "fonts" folder AND work-bookspot.html
-  3. Commit
+1. styles.css — THE FONTS FIX, no folder required.
+   The fonts/ folder has now failed to upload three times, while the three
+   woff2 files have been sitting at the REPO ROOT the whole time, serving
+   fine. So each @font-face now lists two sources:
 
-Likely cause: GitHub's web uploader takes about 100 files per commit, and the
-import was exactly 100. The tail got dropped. Two items is well inside the limit.
+     src: url('fonts/space-grotesk-...woff2') format('woff2'),
+          url('space-grotesk-...woff2') format('woff2');
 
-Then confirm both:
-  https://portfolio-nine-opal-18.vercel.app/fonts/space-grotesk-latin-400-normal.woff2
-     should download a file, not show "The page could not be found"
-  https://portfolio-nine-opal-18.vercel.app/work-bookspot.html
-     the phone in the hero should be tappable
+   The browser tries the first, and falls through to the second when it
+   404s. So the type starts working the moment you upload this one file,
+   and it keeps working if the fonts/ folder ever does land. Nothing to
+   delete, nothing to remember.
 
-IF THE FONTS FOLDER FAILS AGAIN — a fix that needs no file upload
+2. proto/passage-app.html — two fixes.
 
-The three woff2 files are ALREADY live at the repo root (that is where they have
-always been). So you can just point the CSS at them:
+   The order bug you spotted. ORDER was built with Object.keys(), and
+   JavaScript quietly hoists integer-like keys: '10' through '15' sorted
+   ahead of '01', so the prototype opened on the meditation player and the
+   jump chips started at ten. It is an explicit list now. It opens on
+   Welcome and runs 01 to 15.
 
-  1. Open styles.css on GitHub, click the pencil to edit
-  2. On lines 8, 9 and 10, delete "fonts/" from each url() — so
-       url('fonts/space-grotesk-latin-400-normal.woff2')
-     becomes
-       url('space-grotesk-latin-400-normal.woff2')
-  3. Commit
+   The daily-needs rings, at the top of the Lucia tab. Five rings —
+   medicines, meals, hygiene, movement, rest — reading 9 of 12 done,
+   which is exactly what the line underneath already claimed. This is the
+   one thing the 2022 home screen did better than the redesign: completion
+   across categories, answered by looking instead of reading. The arcs are
+   ink-toned and finished rings take the pale meadow of your existing
+   done-check chip, so forest green still only ever means "you can press
+   this."
 
-Three deletions, and the typography works. Note if you do this: the woff2 files
-at the repo root are then load-bearing — do not delete them in any cleanup.
+3. work-bookspot.html — still has never landed. The version whose hero is
+   the running Bookspot prototype.
+
+4. work-passage.html — caption for screen 06 updated to match the rings.
+
+5. assets/passage26/06-lucia.jpg — the gallery thumbnail, recaptured.
+
+ABOUT THE WELCOME SCREEN
+
+You are not missing one. Screen 01 is the aurora painting, full bleed,
+with "Caretakers need care too." over it and BEGIN below. You could not
+find it because the bug meant the prototype opened on the meditation
+player — which uses the forest painting, so it read as an interior page.
+
+I did mock up your willow idea for comparison and sent it in the chat. The
+willow is quieter, and I did not swap it in, because the aurora is what you
+designed and it is a real decision, not a default. One line to change if you
+want it.
+
+AFTER UPLOADING, CHECK
+
+  /                        the whole site should change typeface
+  /proto/passage-app.html  should open on Welcome
+  /work-bookspot.html      the phone in the hero should be tappable
