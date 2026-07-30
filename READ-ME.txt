@@ -1,66 +1,61 @@
-PASSAGE FIXES + THE FONT PROBLEM, SOLVED WITHOUT THE FOLDER
-==========================================================
-5 files. Drag all four top-level items in at once.
+PASSAGE — TAP TARGETS, THE NUDGE, CLEAN THUMBNAILS
+==================================================
+Replaces the previous fixes zip. Drag all five top-level items in at once.
 
-  styles.css               ← this is the one that fixes your typography
+  styles.css               ← still the one that fixes your typography
   work-bookspot.html
   work-passage.html
+  passage-preview.jpg
   proto/                   passage-app.html
-  assets/passage26/        06-lucia.jpg
+  assets/passage26/        all 15 thumbnails, recaptured
 
-WHAT EACH ONE DOES
+1. THE TAB BAR NOW WORKS FROM THE ICON
 
-1. styles.css — THE FONTS FIX, no folder required.
-   The fonts/ folder has now failed to upload three times, while the three
-   woff2 files have been sitting at the REPO ROOT the whole time, serving
-   fine. So each @font-face now lists two sources:
+   You were right, and the reason is unglamorous: the wiring had landed on
+   the 9px label span instead of the tab item, so only the word HOME was
+   live, not the little house above it. A 31x10 target. Nobody aims at that.
 
-     src: url('fonts/space-grotesk-...woff2') format('woff2'),
-          url('space-grotesk-...woff2') format('woff2');
+   Rather than patch each one by hand, the prototype now measures its own
+   targets after every screen change. Anything rendering smaller than a
+   finger gets promoted to the first ancestor big enough to hit, bounded so
+   nothing ends up swallowing half the screen. Thin text links like
+   "Everything for Lucia" get a transparent vertical hit extender that
+   leaves the layout untouched. Checked every tab on every screen that has
+   one: all four navigate from the icon now.
 
-   The browser tries the first, and falls through to the second when it
-   404s. So the type starts working the moment you upload this one file,
-   and it keeps working if the fonts/ folder ever does land. Nothing to
-   delete, nothing to remember.
+2. THE NUDGE
 
-2. proto/passage-app.html — two fixes.
+   Until the first tap, a slow ring breathes around the tab bar and a small
+   TAP THE TABS TO MOVE AROUND chip sits just above it. Both disappear the
+   moment you interact and never come back in that session, and the
+   animation holds still for anyone with reduced motion turned on. The line
+   under the phone on the case study now says the same thing in words.
 
-   The order bug you spotted. ORDER was built with Object.keys(), and
-   JavaScript quietly hoists integer-like keys: '10' through '15' sorted
-   ahead of '01', so the prototype opened on the meditation player and the
-   jump chips started at ten. It is an explicit list now. It opens on
-   Welcome and runs 01 to 15.
+3. THE THUMBNAILS
 
-   The daily-needs rings, at the top of the Lucia tab. Five rings —
-   medicines, meals, hygiene, movement, rest — reading 9 of 12 done,
-   which is exactly what the line underneath already claimed. This is the
-   one thing the 2022 home screen did better than the redesign: completion
-   across categories, answered by looking instead of reading. The arcs are
-   ink-toned and finished rings take the pale meadow of your existing
-   done-check chip, so forest green still only ever means "you can press
-   this."
+   Diagnosed: I had been capturing each screen through the phone frame, so
+   its 52px corner radius clipped the dark page background into all four
+   corners of every image. That dark corner then sat inside the gallery's
+   own 16px rounding, which is exactly the sliver you were seeing.
 
-3. work-bookspot.html — still has never landed. The version whose hero is
-   the running Bookspot prototype.
+   Recaptured with the frame chrome stripped, so every screen is square
+   edged and full bleed. The Passage card preview is rebuilt too: three
+   panels butted edge to edge with no gaps, the same construction as the
+   Bookspot card.
 
-4. work-passage.html — caption for screen 06 updated to match the rings.
+4. STILL CARRYING THE TWO STRAYS
 
-5. assets/passage26/06-lucia.jpg — the gallery thumbnail, recaptured.
+   styles.css — each @font-face lists fonts/<file>.woff2 first and
+   <file>.woff2 second, so the browser falls through to the copies already
+   at your repo root. Upload this one file and the typography starts
+   working, no folder needed.
 
-ABOUT THE WELCOME SCREEN
+   work-bookspot.html — has never landed. The hero is the running Bookspot
+   prototype.
 
-You are not missing one. Screen 01 is the aurora painting, full bleed,
-with "Caretakers need care too." over it and BEGIN below. You could not
-find it because the bug meant the prototype opened on the meditation
-player — which uses the forest painting, so it read as an interior page.
+CHECK AFTER DEPLOY
 
-I did mock up your willow idea for comparison and sent it in the chat. The
-willow is quieter, and I did not swap it in, because the aurora is what you
-designed and it is a real decision, not a default. One line to change if you
-want it.
-
-AFTER UPLOADING, CHECK
-
-  /                        the whole site should change typeface
-  /proto/passage-app.html  should open on Welcome
-  /work-bookspot.html      the phone in the hero should be tappable
+  /                        the whole site changes typeface
+  /work-passage.html       tap a tab icon in the hero phone; gallery is clean
+  /proto/passage-app.html  opens on Welcome, ring breathes around the tabs
+  /work-bookspot.html      the phone in the hero is tappable
