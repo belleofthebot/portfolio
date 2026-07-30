@@ -1,46 +1,57 @@
 PORTFOLIO FIXES — upload these to belleofthebot/portfolio
 =========================================================
 
-Unzip this folder. It contains exactly four things:
+Unzip this folder. It contains six things:
 
-  fonts/            <- NEW folder, 3 woff2 files
-  drive-the-505/    <- NEW folder, the app unpacked from drive-the-505.zip
-  index.html        <- REPLACES the current one
-  work-studio.html  <- REPLACES the current one
+  fonts/                     NEW folder, 3 woff2 files
+  drive-the-505/             NEW folder, the app unpacked from drive-the-505.zip
+  drive-the-505-preview.jpg  NEW - index.html referenced this and it did not exist
+  bookspot-preview.jpg       REPLACES the current one (recropped)
+  index.html                 REPLACES the current one
+  work-studio.html           REPLACES the current one
 
 To upload:
   1. Go to https://github.com/belleofthebot/portfolio
   2. Add file -> Upload files
-  3. Drag all four items in at once (folders included - GitHub keeps the
+  3. Drag all six items in at once (folders included - GitHub keeps the
      folder structure when you drag a folder).
-  4. Commit message: "Fix fonts, Drive the 505 link, StudioKeeper rename"
+  4. Commit message: "Fix fonts, Drive the 505, StudioKeeper, card previews"
   5. Commit. Vercel redeploys on its own in about a minute.
 
 WHAT CHANGED
 
-1. fonts/ — styles.css loads the three woff2 files from fonts/, but in the
+1. fonts/ - styles.css loads the three woff2 files from fonts/, but in the
    repo they sit loose at the root. Every one was 404ing in production, so
    the live site has been rendering in a system fallback font, not Space
    Grotesk / IBM Plex Mono. This is the fix that will visibly change the
    site the most.
 
-2. drive-the-505/ — work-drive-505.html links to drive-the-505/index.html,
+2. drive-the-505/ - work-drive-505.html links to drive-the-505/index.html,
    which did not exist; only the zip was in the repo. Unpacked it, so the
    app now runs at yoursite.com/drive-the-505/.
 
-3. index.html — the work card still read "Desert Palette." Now StudioKeeper.
+3. The two card previews, recomposed. Both were 980x660 images being
+   squeezed into a 467x210 well by object-fit:cover, which centred the crop
+   and sliced the phones through the middle of their content. Both are now
+   cropped to the card's own aspect ratio with the ivory margin trimmed, so
+   the screens run edge to edge and bleed off the bottom - a deliberate
+   crop rather than an accidental one. object-position:top holds the bleed
+   at the bottom at any card width.
 
-4. work-studio.html — "Desert Palette" replaced in the page title, the OG
+4. index.html - the work card said "Desert Palette." Now StudioKeeper.
+
+5. work-studio.html - "Desert Palette" replaced in the page title, the OG
    tag, the h1, and the prototype label; the demo button now points at
    proto/studiokeeper.html.
 
-STILL BROKEN (I need files from you)
+STILL OPEN
 
-  drive-the-505-preview.jpg   index.html's Drive the 505 card points here.
-                              A copy is in the Belle project as
-                              drivethe505preview.jpg — attach it in chat.
-  proto/bookspot-app.html     The Bookspot "Open it" button.
-  proto/studiokeeper.html     The StudioKeeper demo button.
+  proto/bookspot-app.html     The Bookspot "Open it" button 404s.
+  proto/studiokeeper.html     The StudioKeeper demo button 404s.
+
+  Both files were built in an earlier Claude session's sandbox, which is
+  gone - they were never in the repo. Nothing to find on your machine
+  unless you downloaded them at the time. See the chat for options.
 
 OPTIONAL CLEANUP
 
