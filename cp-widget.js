@@ -16,7 +16,8 @@
       resgrid = $('cp-resgrid'), checksBox = $('cp-checks'), chklist = $('cp-chklist'),
       out = $('cp-out'), outname = $('cp-outname'), frame = $('cp-frame');
 
-  var current = null, built = null, blobUrl = null, previewUrl = null, slide = 0;
+  var current = null, edited = null, built = null;
+  var blobUrl = null, previewUrl = null, slide = 0;
   var SLIDE_W = 1280, SLIDE_H = 720, TOTAL = 9;
 
   /* Paging talks to the preview over postMessage rather than reaching into
@@ -40,22 +41,31 @@
                   '<span class="chip-name">' + esc(f.name) + '</span>';
     b.addEventListener('click', function () {
       input.value = f.url;
-      preview();
-      input.focus();
+      go.disabled = false;
+      extract();
     });
     chips.appendChild(b);
   });
 
-  /* -------------------------------------------------- resolve and preview */
-  function row(label, value, cls) {
-    return '<div class="res-row' + (cls ? ' ' + cls : '') + '"><span>' + esc(label) +
-      '</span><b>' + value + '</b></div>';
+  /* ---------------------------------------------- step one: extraction */
+  /* The employer tool put an editable field review between the URL and the
+     download, because extraction is never perfect and a salesperson needs to
+     fix a line without opening the file. Same shape here. */
+  function fieldRow(label, name, value, kind) {
+    var input = kind === 'area'
+      ? '<textarea data-f="' + name + '" rows="3">' + esc(value) + '</textarea>'
+      : '<input data-f="' + name + '" type="text" value="' + esc(value) + '">';
+    return '<div class="res-row"><label>' + esc(label) + '</label>' + input + '</div>';
   }
 
-  function preview() {
+  function readOnlyRow(label, value, cls) {
+    return '<div class="res-row' + (cls ? ' ' + cls : '') + '"><label>' +
+      esc(label) + '</label><div class="res-fixed">' + value + '</div></div>';
+  }
+
+  function extract() {
     var fam = window.CPDeck.resolve(input.value, data);
     current = fam;
-    go.disabled = !fam;
     checksBox.hidden = true;
     out.hidden = true;
 
@@ -67,7 +77,16 @@
       status.className = 'try-status' + (input.value.trim() ? ' is-bad' : '');
       return;
     }
+    edited = JSON.parse(JSON.stringify(fam));
+    renderFields();
+    resolved.hidden = false;
+    status.textContent = 'Extracted ' + fam.prefix + '. Check the fields, then build.';
+    status.className = 'try-status is-good';
+    resolved.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
 
+  function renderFields() {
+    var fam = edited;
     var claimable = fam.badges_claimable;
     var onlySome = fam.badges_held_somewhere.filter(function (b) {
       return claimable.indexOf(b) === -1;
@@ -75,45 +94,61 @@
     var pages = ['spec', 'comparison', 'features', 'assembly'].reduce(function (a, k) {
       return a + fam.documents[k].pages;
     }, 0);
-    var pcts = fam.skus.map(function (s) { return s.recycled_pct; });
-    var pctLabel = Math.min.apply(null, pcts) === Math.max.apply(null, pcts)
-      ? pcts[0] + '%'
-      : Math.min.apply(null, pcts) + '–' + Math.max.apply(null, pcts) + '%';
 
     reskey.textContent = fam.prefix;
-    resgrid.innerHTML =
-      row('Product', esc(fam.name)) +
-      row('Codes in the family', fam.skus.map(function (s) {
-        return '<span class="res-sku">' + esc(s.code) + '</span>';
-      }).join('')) +
-      row('Internal dimensions', fam.skus.map(function (s) {
-        return esc(s.internal_dimensions);
-      }).join('<br>')) +
-      row('Badge row, family level', claimable.map(function (b) {
+    var html = fieldRow('Product name', 'name', fam.name) +
+      fieldRow('Tagline', 'tagline', fam.tagline) +
+      fieldRow('Description', 'description', fam.description, 'area');
+
+    fam.skus.forEach(function (sk, i) {
+      html += '<div class="res-sku-block"><p class="res-sku-head">' + esc(sk.code) + '</p>' +
+        fieldRow('Code', 'sku.' + i + '.code', sk.code) +
+        fieldRow('Internal, L x W x D', 'sku.' + i + '.internal_dimensions',
+                 sk.internal_dimensions) +
+        fieldRow('Recycled, % by weight', 'sku.' + i + '.recycled_pct', sk.recycled_pct) +
+        fieldRow('Minimum order', 'sku.' + i + '.minimum_order', sk.minimum_order) +
+        fieldRow('Lead time', 'sku.' + i + '.lead_time', sk.lead_time) +
+        '</div>';
+    });
+
+    html += readOnlyRow('Badge row, computed',
+      claimable.map(function (b) {
         return '<span class="res-badge">' + esc(b) + '</span>';
       }).join('') + (onlySome.length
         ? '<span class="res-excl">' + esc(onlySome.join(', ')) +
-          ' held by some sizes only, so not a family claim</span>'
-        : ''), onlySome.length ? 'is-note' : '') +
-      row('Recycled content', '<span class="res-moss">' + pctLabel +
-        '</span> by weight, band ' + esc(fam.recycled.band)) +
-      row('Documents', '4 sheets, ' + pages + ' pages') +
-      row('Step drawings', fam.stepCount
-        ? fam.stepCount + ' available, first ' + fam.steps.length + ' used'
-        : '<span class="res-missing">none built for this family yet</span>',
-        fam.stepCount ? '' : 'is-note');
+          ' held by some sizes only, so not a family claim</span>' : ''),
+      onlySome.length ? 'is-note' : '');
+    html += readOnlyRow('Documents', '4 sheets, ' + pages + ' pages, all linked on slide 9');
+    html += readOnlyRow('Step drawings', fam.stepCount
+      ? fam.stepCount + ' available, first ' + fam.steps.length + ' used'
+      : '<span class="res-missing">none drawn yet, a written sequence is used</span>',
+      fam.stepCount ? '' : 'is-note');
 
-    resolved.hidden = false;
-    status.textContent = 'Matched ' + fam.prefix + '. Press create.';
-    status.className = 'try-status is-good';
+    resgrid.innerHTML = html;
+  }
+
+  function readFields() {
+    var fam = JSON.parse(JSON.stringify(current));
+    resgrid.querySelectorAll('[data-f]').forEach(function (el) {
+      var path = el.getAttribute('data-f').split('.');
+      var v = el.value;
+      if (path[0] === 'sku') {
+        var sk = fam.skus[+path[1]], key = path[2];
+        sk[key] = key === 'recycled_pct' ? parseFloat(v) : v;
+      } else {
+        fam[path[0]] = v;
+      }
+    });
+    return fam;
   }
 
   /* ---------------------------------------------------------- build it */
   function create() {
     if (!current) return;
+    edited = readFields();
     var t0 = (window.performance && performance.now) ? performance.now() : 0;
     try {
-      built = window.CPDeck.build(current, data);
+      built = window.CPDeck.build(edited, data);
     } catch (e) {
       status.textContent = 'The build stopped: ' + e.message;
       status.className = 'try-status is-bad';
@@ -209,9 +244,22 @@
     frame.contentWindow.print();
   });
 
-  input.addEventListener('input', preview);
-  input.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter' && current) { e.preventDefault(); create(); }
+  input.addEventListener('input', function () {
+    go.disabled = !window.CPDeck.resolve(input.value, data);
+    if (!input.value.trim()) {
+      status.textContent = 'Paste a URL, or pick one below.';
+      status.className = 'try-status';
+    }
   });
-  go.addEventListener('click', create);
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && !go.disabled) { e.preventDefault(); extract(); }
+  });
+  go.addEventListener('click', extract);
+  $('cp-build').addEventListener('click', create);
+  $('cp-reset').addEventListener('click', function () {
+    edited = JSON.parse(JSON.stringify(current));
+    renderFields();
+    status.textContent = 'Fields reset to what was extracted.';
+    status.className = 'try-status';
+  });
 })();
