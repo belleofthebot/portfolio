@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The product deck generator — Elizabeth Beier</title>
-<meta name="description" content="42 measured minutes of manual assembly per product, across a 27-product queue, replaced by a four-field web form.">
+<meta name="description" content="A URL and an approval. 42 measured minutes of manual assembly per product, across a 27-product queue.">
 <meta name="author" content="Elizabeth Beier">
 <meta name="theme-color" content="#17121C">
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 <meta property="og:title" content="The product deck generator — Elizabeth Beier">
-<meta property="og:description" content="42 measured minutes of manual assembly per product, across a 27-product queue, replaced by a four-field web form.">
+<meta property="og:description" content="A URL and an approval. 42 measured minutes of manual assembly per product, across a 27-product queue.">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="cp-widget.css">
 <meta property="og:type" content="website">
@@ -37,7 +37,7 @@
 <span class="kicker">case study · internal tooling</span>
 <h1>The product deck generator</h1>
 <p class="meta">2026 · no development background, no developer, no budget beyond a subscription</p>
-<p class="oneline">42 measured minutes per product, across a 27-product queue, replaced by a four-field web form.</p>
+<p class="oneline">42 measured minutes per product, across a 27-product queue, replaced by pasting a URL and approving what comes back.</p>
 </div>
 <div class="wrap narrow">
 <div class="statrow"><div><span class="n">42 min</span><span class="l">measured manual build, per product</span></div><div><span class="n">27</span><span class="l">products in the queue</span></div><div><span class="n">19 hrs</span><span class="l">of designer time per cycle</span></div><div><span class="n">411</span><span class="l">badge assets resolved automatically</span></div></div>
@@ -132,7 +132,7 @@
       <button type="button" class="nav-btn" id="cp-next">next &rarr;</button>
     </div>
     <p class="out-note">Nine slides, 1280 &times; 720. Print to PDF gives nine
-    16:9 pages, because the page declares its own size. Nothing on a slide was
+    16:9 pages, because the page declares its own size. Nothing on a slide has to be
     typed by hand.</p>
   </div>
 
@@ -150,7 +150,7 @@
 <div class="block"><p class="h">overview</p>
 <p>Sales needed a slide deck per product, for launches and for distributor presentations. What existed was a fifty-three slide quarterly training deck covering a whole release &mdash; so anyone who needed one product presented all fifty-three or rebuilt it by hand: pulling the spec sheet, retyping technical values, hunting photography across a shared drive, placing certification badges, applying brand typography, generating a QR code, proofreading.</p>
 <p>I timed that build rather than estimating it. <strong>42 minutes a product, across a 27-product queue.</strong></p>
-<p>What replaced it is a four-field web form. It fetches the product page, finds and reads the spec sheet, resolves badge artwork from a library of 411 assets, and writes a brand-compliant presentation file. Nothing on a slide is typed by hand, and anything the sheet doesn't state comes back empty rather than invented.</p></div>
+<p>What replaced it is one field. Paste the product page URL and the tool fetches the page, finds and reads the spec sheet, resolves badge artwork from a library of 411 assets, and hands the extraction back as a filled-in form. Check it, correct anything wrong, build. Nothing on a slide has to be typed by hand, and anything the sheet doesn't state comes back empty rather than invented.</p></div>
 </div>
 </div>
 
@@ -159,7 +159,7 @@
 <div class="outcome"><p class="h">outcome</p>
 <ul>
 <li>The nine-layout template shipped first and roughly halved the manual build on its own &mdash; from an estimated one to two hours down to a measured 42 minutes.</li>
-<li>The generator replaces those 42 minutes with four fields. Usage went under instrumentation this month, so the saving is being measured rather than claimed.</li>
+<li>The generator replaces those 42 minutes with a URL and a review. Usage went under instrumentation this month, so the saving is being measured rather than claimed.</li>
 <li>411 badge assets resolve automatically, in spec-sheet order, so any slide can be checked against its source.</li>
 <li>Anything the sheet doesn't state comes back empty. The generator has no path to inventing a figure.</li>
 </ul></div>
@@ -169,7 +169,7 @@
 
 <div class="folds">
 
-<details class="fold"><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><path d="M8 13h44" stroke="#8B8494" stroke-width="4" stroke-linecap="round"/><path d="M8 25h20" stroke="#DFA192" stroke-width="4" stroke-linecap="round"/><path d="M8 37h9" stroke="#423748" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 5"/><path d="M8 6v36" stroke="#423748" stroke-width="1.5" stroke-linecap="round"/></svg></span>what it cost, measured<span class="n">42 min</span></summary>
+<details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><path d="M8 13h44" stroke="#8B8494" stroke-width="4" stroke-linecap="round"/><path d="M8 25h20" stroke="#DFA192" stroke-width="4" stroke-linecap="round"/><path d="M8 37h9" stroke="#423748" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 5"/><path d="M8 6v36" stroke="#423748" stroke-width="1.5" stroke-linecap="round"/></svg></span>what it cost, measured<span class="n">42 min</span></summary>
 <div class="fold-b">
 <p>I timed it rather than estimating it.</p>
 <div class="qa">
@@ -181,14 +181,14 @@
 <p style="margin-top:14px">42 minutes across 27 products is <strong>roughly 19 hours per cycle</strong> &mdash; and that's the improved figure, after the template. The generator is measured against that rather than against the flattering original.</p>
 </div></details>
 
-<details class="fold"><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><rect x="6" y="8" width="16" height="12" rx="2" stroke="#DFA192" stroke-width="1.5"/><rect x="24" y="8" width="16" height="12" rx="2" stroke="#423748" stroke-width="1.5"/><rect x="42" y="8" width="16" height="12" rx="2" stroke="#423748" stroke-width="1.5"/><rect x="6" y="24" width="16" height="12" rx="2" stroke="#423748" stroke-width="1.5"/><rect x="24" y="24" width="16" height="12" rx="2" stroke="#423748" stroke-width="1.5"/><rect x="42" y="24" width="16" height="12" rx="2" stroke="#423748" stroke-width="1.5"/><path d="M9 12h6M9 16h10" stroke="#DFA192" stroke-width="1.5" stroke-linecap="round"/></svg></span>the first decision was not to build the generator<span class="n">template first</span></summary>
+<details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><rect x="6" y="8" width="16" height="12" rx="2" stroke="#DFA192" stroke-width="1.5"/><rect x="24" y="8" width="16" height="12" rx="2" stroke="#423748" stroke-width="1.5"/><rect x="42" y="8" width="16" height="12" rx="2" stroke="#423748" stroke-width="1.5"/><rect x="6" y="24" width="16" height="12" rx="2" stroke="#423748" stroke-width="1.5"/><rect x="24" y="24" width="16" height="12" rx="2" stroke="#423748" stroke-width="1.5"/><rect x="42" y="24" width="16" height="12" rx="2" stroke="#423748" stroke-width="1.5"/><path d="M9 12h6M9 16h10" stroke="#DFA192" stroke-width="1.5" stroke-linecap="round"/></svg></span>the first decision was not to build the generator<span class="n">template first</span></summary>
 <div class="fold-b">
 <p>The template shipped first &mdash; a nine-layout slide master with correct brand typography, plus a mapping document showing which slide element draws from which spec sheet field. Usable immediately, and it validated the data model before any application code existed. The generator came after, once the template had been tested against real products.</p>
 </div></details>
 
-<details class="fold"><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><path d="M6 13h13M6 20h13M6 27h13M6 34h8" stroke="#8B8494" stroke-width="2" stroke-linecap="round"/><path d="M24 24h8" stroke="#DFA192" stroke-width="1.5" stroke-linecap="round"/><path d="M29 21l3.5 3-3.5 3" stroke="#DFA192" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 9h13l8 8v22H37z" stroke="#DFA192" stroke-width="1.5" stroke-linejoin="round"/><path d="M50 9v8h8" stroke="#DFA192" stroke-width="1.5" stroke-linejoin="round"/><path d="M41 24h12M41 30h12M41 35h7" stroke="#423748" stroke-width="1.5" stroke-linecap="round"/></svg></span>inside the generator<span class="n">5 parts</span></summary>
+<details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><path d="M6 13h13M6 20h13M6 27h13M6 34h8" stroke="#8B8494" stroke-width="2" stroke-linecap="round"/><path d="M24 24h8" stroke="#DFA192" stroke-width="1.5" stroke-linecap="round"/><path d="M29 21l3.5 3-3.5 3" stroke="#DFA192" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 9h13l8 8v22H37z" stroke="#DFA192" stroke-width="1.5" stroke-linejoin="round"/><path d="M50 9v8h8" stroke="#DFA192" stroke-width="1.5" stroke-linejoin="round"/><path d="M41 24h12M41 30h12M41 35h7" stroke="#423748" stroke-width="1.5" stroke-linecap="round"/></svg></span>inside the generator<span class="n">5 parts</span></summary>
 <div class="fold-b">
-<p>Four fields: product name, category, product page URL, images. Collapsed from a much larger first draft. The output is a downloadable, correctly named, brand-compliant presentation file.</p>
+<p>One field in: the product page URL. Everything else is extracted and handed back as a form to check, which is where a first draft with a much larger input form ended up. The output is a downloadable, correctly named, brand-compliant presentation file.</p>
 <ul>
 <li><strong>Data extraction.</strong> A serverless endpoint fetches the product page, finds the spec sheet PDF link in the markup, downloads it, size-checks it, and passes it to an LLM API for structured extraction. Manual upload as fallback.</li>
 <li><strong>Extraction contract.</strong> A tightly specified JSON schema: short name, category, description, five named features, six accessory slots, six performance figures, rated life, and an ordered certification list.</li>
@@ -197,13 +197,13 @@
 <li><strong>Document generation.</strong> A tokenised donor template manipulated at the XML level inside the Office Open XML package.</li>
 </ul></div></details>
 
-<details class="fold"><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><path d="M17 9c-4 0-4 4-4 7s-3 8-5 8c2 0 5 2 5 8s0 7 4 7" stroke="#8B8494" stroke-width="1.5" stroke-linecap="round"/><path d="M47 9c4 0 4 4 4 7s3 8 5 8c-2 0-5 2-5 8s0 7-4 7" stroke="#8B8494" stroke-width="1.5" stroke-linecap="round"/><path d="M21 16h10M35 16h8" stroke="#423748" stroke-width="2" stroke-linecap="round"/><path d="M21 24h10M35 24h6" stroke="#423748" stroke-width="2" stroke-linecap="round"/><path d="M21 32h10" stroke="#DFA192" stroke-width="2" stroke-linecap="round"/><rect x="35" y="29.5" width="9" height="5" rx="2.5" stroke="#DFA192" stroke-width="1.5" stroke-dasharray="2 2"/></svg></span>the prompt is the artifact<span class="n">the contract</span></summary>
+<details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><path d="M17 9c-4 0-4 4-4 7s-3 8-5 8c2 0 5 2 5 8s0 7 4 7" stroke="#8B8494" stroke-width="1.5" stroke-linecap="round"/><path d="M47 9c4 0 4 4 4 7s3 8 5 8c-2 0-5 2-5 8s0 7-4 7" stroke="#8B8494" stroke-width="1.5" stroke-linecap="round"/><path d="M21 16h10M35 16h8" stroke="#423748" stroke-width="2" stroke-linecap="round"/><path d="M21 24h10M35 24h6" stroke="#423748" stroke-width="2" stroke-linecap="round"/><path d="M21 32h10" stroke="#DFA192" stroke-width="2" stroke-linecap="round"/><rect x="35" y="29.5" width="9" height="5" rx="2.5" stroke="#DFA192" stroke-width="1.5" stroke-dasharray="2 2"/></svg></span>the prompt is the artifact<span class="n">the contract</span></summary>
 <div class="fold-b">
 <p>The extraction prompt isn't "summarise this PDF." It encodes domain rules: metric values compacted for small display cards with ranges compressed rather than enumerated; certification tags limited to those with matching badge artwork, excluding test report standards that look like certifications but aren't; ordering matched to the spec sheet so output is checkable against source; available badge filenames passed in as context so extracted names resolve to real assets.</p>
 <p>And the rule that matters most: <strong>anything not stated on the sheet returns an empty string, never an invented value.</strong> A generator that invents a performance figure onto a sales deck is worse than no generator.</p>
 </div></details>
 
-<details class="fold"><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><rect x="12" y="8" width="40" height="8" rx="2" stroke="#423748" stroke-width="1.5"/><rect x="6" y="20" width="40" height="8" rx="2" stroke="#DFA192" stroke-width="1.5"/><rect x="12" y="32" width="40" height="8" rx="2" stroke="#423748" stroke-width="1.5"/><path d="M49 20l6 8M55 20l-6 8" stroke="#DFA192" stroke-width="1.5" stroke-linecap="round"/></svg></span>the parts that were hard<span class="n">5 bugs</span></summary>
+<details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><rect x="12" y="8" width="40" height="8" rx="2" stroke="#423748" stroke-width="1.5"/><rect x="6" y="20" width="40" height="8" rx="2" stroke="#DFA192" stroke-width="1.5"/><rect x="12" y="32" width="40" height="8" rx="2" stroke="#423748" stroke-width="1.5"/><path d="M49 20l6 8M55 20l-6 8" stroke="#DFA192" stroke-width="1.5" stroke-linecap="round"/></svg></span>the parts that were hard<span class="n">5 bugs</span></summary>
 <div class="fold-b">
 <ul>
 <li><strong>A grey box behind every product image.</strong> Several hypotheses eliminated. Root cause was alpha channel handling in canvas compositing.</li>
@@ -213,7 +213,7 @@
 <li><strong>Squashed badge strips.</strong> Fixed by passing true computed dimensions so the frame adapts to the content.</li>
 </ul></div></details>
 
-<details class="fold"><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><path d="M32 5v38" stroke="#423748" stroke-width="1.5" stroke-dasharray="3 3"/><path d="M6 13h20M38 13h20M6 24h20M38 24h14" stroke="#9FE0CE" stroke-width="2" stroke-linecap="round"/><path d="M6 35h20" stroke="#DFA192" stroke-width="2" stroke-linecap="round"/><path d="M29 32l6 6M35 32l-6 6" stroke="#DFA192" stroke-width="1.5" stroke-linecap="round"/></svg></span>the rules, and why<span class="n">4 rules</span></summary>
+<details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><path d="M32 5v38" stroke="#423748" stroke-width="1.5" stroke-dasharray="3 3"/><path d="M6 13h20M38 13h20M6 24h20M38 24h14" stroke="#9FE0CE" stroke-width="2" stroke-linecap="round"/><path d="M6 35h20" stroke="#DFA192" stroke-width="2" stroke-linecap="round"/><path d="M29 32l6 6M35 32l-6 6" stroke="#DFA192" stroke-width="1.5" stroke-linecap="round"/></svg></span>the rules, and why<span class="n">4 rules</span></summary>
 <div class="fold-b">
 <ul>
 <li><strong>Absent equals gone.</strong> Missing assets are removed, never replaced with placeholder or donor content. A visible gap beats a wrong image on a customer-facing deck.</li>
@@ -226,7 +226,7 @@
 
 <div class="tags"><span class="tag rose">prompt engineering</span><span class="tag ">serverless functions</span><span class="tag ">edge middleware auth</span><span class="tag ">llm integration</span><span class="tag ">anti hallucination constraints</span><span class="tag ">office open xml</span><span class="tag ">canvas image pipeline</span><span class="tag ">design systems</span><span class="tag ">scope discipline</span></div>
 
-<div class="nextprev"><span></span><a href="work-analytics.html">a measurement capability from zero →</a></div>
+<div class="nextprev"><a href="work-website.html">&larr; a website reimagining</a><a href="work-email-generator.html">the email campaign generator &rarr;</a></div>
 </div>
 <div class="contact" id="contact"><div class="wrap">
 <p class="avail"><span class="pulse-dot"></span> open to marketing operations, analytics and martech roles</p>

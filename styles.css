@@ -119,6 +119,15 @@ section{padding:var(--space-6) 0 0}
 
 /* ---------- work cards ---------- */
 .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-3)}
+/* An odd number of cards used to leave a half-width orphan on the last row.
+   A lone trailing card spans instead, so parking a case study cannot punch a
+   hole in the grid. */
+.cards>:last-child:nth-child(odd),.cprow>:last-child:nth-child(odd){grid-column:1/-1}
+.cards>:only-child,.cprow>:only-child{max-width:none}
+/* A spanning card is far wider than the fixed thumb height, so cover would
+   crop the screenshot to a letterbox. Let it keep its own ratio instead. */
+.cards>:last-child:nth-child(odd) .thumb,.cprow>:last-child:nth-child(odd) .thumb,
+.cards>:only-child .thumb,.cprow>:only-child .thumb{height:auto;aspect-ratio:1000/372}
 @media(max-width:860px){.cards{grid-template-columns:1fr}}
 .wcard{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-card);padding:var(--space-3);display:flex;flex-direction:column;text-decoration:none;color:inherit;transition:filter .15s,border-color .15s}
 .wcard:hover{border-color:var(--rose);filter:brightness(1.06)}
@@ -204,9 +213,11 @@ body.tryit-locked{overflow:hidden}
   border-radius:2px}
 .fold>summary .n{margin-left:auto;color:var(--text-3);font-size:.66rem;
   padding-left:var(--space-2);white-space:nowrap}
-/* The drawn tile on each row. Closed is the default state, so the row has to
-   say something on its own — the glyph is what a reader scans instead of
-   opening all seven. Drawn, like every other thumbnail on this site. */
+/* The drawn tile on each row. The folds ship open, because once the prose was
+   cut to length the whole page reads in a scroll and hiding the evidence
+   costs more than it saves. The glyph is what makes an open stack scannable:
+   it gives each section a shape to find it by. Drawn, like every other
+   thumbnail on this site. */
 .fold-th{flex:0 0 auto;width:64px;height:48px;display:block;overflow:hidden;
   background:var(--screen);border:1px solid var(--line);
   border-radius:var(--radius-tile);transition:border-color .15s}

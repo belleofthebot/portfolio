@@ -73,6 +73,7 @@
 .cpcard .thumb{border-radius:var(--radius);overflow:hidden;height:186px;flex:0 0 auto;padding:0;display:block}
 .cpcard .na{height:100%;border-radius:0;border:0}
 .cpcard .cpshot{width:100%;height:100%;object-fit:cover;display:block;border-radius:0}
+.wcard .cpshot{width:100%;height:100%;object-fit:cover;display:block;border-radius:0}
 .cpcard .ptag{font-family:var(--mono);font-size:var(--size-mono);text-transform:lowercase;
   background:var(--rose-tint);color:var(--on-rose-tint);border-radius:999px;padding:4px 13px;
   align-self:flex-start;margin:var(--space-3) 0 var(--space-2)}
@@ -205,7 +206,6 @@
       <div><span class="a">Make these website changes</span><span class="arw">&rarr;</span><span class="b">A versioned CSS system, documented, with an adoption guide</span></div>
       <div><span class="a">Build a slide deck for this product</span><span class="arw">&rarr;</span><span class="b">A generator that builds one for any product, from a URL</span></div>
       <div><span class="a">Send this campaign email</span><span class="arw">&rarr;</span><span class="b">A generator with the opt-out and UTM tagging enforced in code</span></div>
-      <div><span class="a">Lay out this catalogue</span><span class="arw">&rarr;</span><span class="b">Design rules that produce the document, in an hour instead of a month</span></div>
       <div><span class="a">Pull the numbers for this meeting</span><span class="arw">&rarr;</span><span class="b">A dashboard the team opens themselves</span></div>
     </div>
   </div>
@@ -222,7 +222,7 @@
 
   <div class="cprow">
   <a class="cpcard" href="work-website.html">
-    <div class="thumb"><div class="na"><div class="b"><svg viewBox="0 0 100 100"><g class="mark-sm"><path d="M50 82 A18 18 0 0 1 50 46"/><path d="M50 98 A34 34 0 0 1 50 30"/><path d="M50 54 A18 18 0 0 0 50 18"/><path d="M50 70 A34 34 0 0 0 50 2"/></g></svg><b>CambiumPak</b><i>site</i></div><div class="c" style="padding:8px"><div class="site"><div class="bb"><i></i><i></i><i></i></div><div class="hh"><span>Ship in paper.<br>Ship in style.</span></div><div class="tt"><i></i><i></i><i></i></div></div></div></div></div>
+    <div class="thumb"><img class="cpshot" src="thumb-website.jpg" width="1000" height="372" loading="lazy" decoding="async" alt="The CambiumPak hero as reworked: full-bleed photography, headline bottom-left over a gradient"></div>
     <span class="ptag">the live site</span>
     <h3>A website reimagining, without voiding the contract</h3>
     <p>A CEO's vision, an agency-built site still under warranty, and a deadline. The first move was reading the agreement.</p>
@@ -232,24 +232,17 @@
     <div class="thumb"><img class="cpshot" src="thumb-deck-generator.jpg" width="1000" height="372" loading="lazy" decoding="async" alt="Three slides from a generated CambiumPak product deck, cover in front"></div>
     <span class="ptag">generated slide</span>
     <h3>The product deck generator</h3>
-    <p>42 minutes a product by hand, across a 27-product queue. Now a four-field form that builds the deck from a URL.</p>
+    <p>42 minutes a product by hand, across a 27-product queue. Now a URL, an extraction you approve, and a deck.</p>
     <span class="foot">serverless &middot; llm extraction &middot; office open xml &middot; <span class="read">read &rarr;</span></span>
   </a>
   <a class="cpcard" href="work-email-generator.html">
-    <div class="thumb"><div class="na"><div class="b"><svg viewBox="0 0 100 100"><g class="mark-sm"><path d="M50 82 A18 18 0 0 1 50 46"/><path d="M50 98 A34 34 0 0 1 50 30"/><path d="M50 54 A18 18 0 0 0 50 18"/><path d="M50 70 A34 34 0 0 0 50 2"/></g></svg><b>CambiumPak</b><i>campaign</i></div><div class="c"><div class="t">One strip of tape. Whole carton recycles.</div><div class="kr"></div><span class="ln"></span><span class="ln" style="width:72%"></span><span class="ln" style="width:58%"></span><div class="cta">View the tape range &rarr;</div></div></div></div>
+    <div class="thumb"><img class="cpshot" src="thumb-email.jpg" width="1000" height="372" loading="lazy" decoding="async" alt="A generated campaign email beside the link audit that checked it"></div>
     <span class="ptag">generated email</span>
     <h3>The email campaign generator</h3>
     <p>75 minutes a campaign, and a UTM convention nobody could follow consistently. The opt-out is now a constant, the audit is code.</p>
     <span class="foot">utm taxonomy &middot; outlook html &middot; compliance &middot; <span class="read">read &rarr;</span></span>
   </a>
-  <a class="cpcard" href="work-claude-design.html">
-    <div class="thumb"><div class="na"><div class="b"><svg viewBox="0 0 100 100"><g class="mark-sm"><path d="M50 82 A18 18 0 0 1 50 46"/><path d="M50 98 A34 34 0 0 1 50 30"/><path d="M50 54 A18 18 0 0 0 50 18"/><path d="M50 70 A34 34 0 0 0 50 2"/></g></svg><b>CambiumPak</b><i>catalogue</i></div><div class="c" style="padding:8px"><div class="doc"><span class="h"></span><span></span><span style="width:84%"></span><span></span><span style="width:66%"></span><span style="width:90%"></span><span style="width:74%"></span></div></div></div></div>
-    <span class="ptag">generated document</span>
-    <h3>The Claude Design setup</h3>
-    <p>A product catalogue quoted at a month in InDesign. The first draft was finished inside the one-hour meeting that assigned it.</p>
-    <span class="foot">design systems &middot; prompting as specification &middot; <span class="read">read &rarr;</span></span>
-  </a>
-  </div>
+    </div>
 
   <a class="brandrow" href="work-cambiumpak.html">
     <div class="pal"><i style="background:#1E4D3B"></i><i style="background:#143529"></i><i style="background:#A87D52"></i><i style="background:#8A6138"></i><i style="background:#7D9161"></i><i style="background:#232A26"></i><i style="background:#F7F4ED"></i></div>
@@ -264,42 +257,12 @@
 </div>
 
 <div class="group"><div class="group-h"><p class="gtitle">For clients and my studio</p><p class="group-p">Brand, growth and content operations.</p></div>
-<div class="cards"><a class="wcard" href="work-rebrand.html">
-<div class="thumb well">
-<div class="ba-mini">
-  <div><span class="th-t">BEFORE</span><div class="mini scatter"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
-  <div><span class="th-t">AFTER</span><div class="mini system"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
-</div>
-</div>
-<span class="ptag">brand &amp; growth</span>
-<h3>A rebrand in March, the biggest growth month in April</h3>
-<p>One ground, one typeface, six repeating templates — then a campaign to point at it.</p>
-<span class="foot">brand identity · content system · campaign · <span class="read">read →</span></span>
-</a><a class="wcard" href="work-studio.html">
-<div class="thumb well">
-<div class="th-row" style="margin-bottom:4px"><span class="th-title">StudioKeeper</span><span class="th-t">STUDIO DASHBOARD</span></div>
-<div class="bars">
-<i style="height:30%"></i><i style="height:26%"></i><i style="height:46%"></i><i style="height:36%"></i><i style="height:58%"></i><i style="height:86%"></i><i style="height:62%"></i>
-</div>
-<div class="th-row"><span class="th-fig">$37.2k</span><span class="th-t">YTD</span><span class="th-fig up">+96%</span><span class="th-t">VS 2025</span></div>
-</div>
+<div class="cards"><a class="wcard" href="work-studio.html">
+<div class="thumb"><img class="cpshot" src="thumb-studio.jpg" width="1000" height="372" loading="lazy" decoding="async" alt="The StudioKeeper dashboard: time-window controls above revenue, orders, average order and pieces"></div>
 <span class="ptag">data &amp; tooling</span>
 <h3>A studio dashboard for my art business</h3>
 <p>Five revenue channels on one screen — sales, restock alerts, and the tax envelope. $0 a month. Clickable.</p>
 <span class="foot">data model · build · automation · <span class="read">read →</span></span>
-</a><a class="wcard" href="work-ipl.html">
-<div class="thumb well">
-<div class="th-row" style="margin-bottom:10px"><span class="th-title">Editorial calendar</span><span class="th-t">BUFFER · WEBFLOW</span></div>
-<div class="cal">
-<span class="cal-h">mon</span><span class="cal-h">tue</span><span class="cal-h">wed</span><span class="cal-h">thu</span><span class="cal-h">fri</span>
-<i class="on"></i><i></i><i class="on"></i><i></i><i class="on"></i>
-<i></i><i class="on"></i><i></i><i class="on"></i><i></i>
-<i class="on"></i><i></i><i class="on"></i><i></i><i class="on"></i>
-</div></div>
-<span class="ptag">content operations</span>
-<h3>Content operations for a nonprofit</h3>
-<p>A publishing cadence that survives volunteer capacity and a news cycle nobody controls. Buffer and Webflow.</p>
-<span class="foot">buffer · webflow · editorial calendar · <span class="read">read →</span></span>
 </a></div></div>
 
 <div class="group"><div class="group-h"><p class="gtitle">For learning and for fun</p><p class="group-p">Two projects you can open and use right now.</p></div>
