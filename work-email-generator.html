@@ -15,6 +15,7 @@
 <meta property="og:title" content="The email campaign generator — Elizabeth Beier">
 <meta property="og:description" content="75 minutes a campaign by hand, and a UTM convention nobody could follow consistently. Both fixed in code.">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="email-demo.css">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://elizabethbportfolio.com/work-email-generator.html">
 <meta property="og:site_name" content="Elizabeth Beier">
@@ -40,6 +41,72 @@
 </div>
 <div class="wrap narrow">
 <div class="statrow"><div><span class="n">75 min</span><span class="l">measured manual build, per campaign</span></div><div><span class="n">9</span><span class="l">link types in the UTM taxonomy</span></div><div><span class="n">100%</span><span class="l">of links audited by code, every run</span></div><div><span class="n">0</span><span class="l">ways to omit the opt-out</span></div></div>
+</div>
+
+<!-- ========================================== the email generator, live ==
+     email-demo.js builds real table-based email HTML from the bundled
+     CambiumPak record and audits its own output. cp-data.js is the same
+     product record the deck generator uses.
+     ==================================================================== -->
+<div class="wrap narrow">
+<div id="eml" data-tryit>
+  <div class="try-bar"><span class="ea-kick">try it</span><button type="button" class="fsbtn" data-fs aria-pressed="false"><svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path class="e" d="M1.5 5V1.5H5M9 1.5h3.5V5M12.5 9v3.5H9M5 12.5H1.5V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path class="x" d="M5 1.5V5H1.5M12.5 5H9V1.5M9 12.5V9h3.5M1.5 9H5v3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="fsl">full screen</span></button></div>
+  <h3>Build a campaign email. Watch every link get tagged.</h3>
+  <p class="ea-lede">Give it any CambiumPak product and it writes the email:
+  600px tables, inline CSS, an Outlook-safe button, a hidden preheader. Then it
+  audits what it just wrote. Turn <b>UTM tagging</b> off and the email still
+  looks perfect, which is the whole problem with tagging by hand.</p>
+
+  <div class="ea-in">
+    <label for="ea-url">Product URL or code</label>
+    <input id="ea-url" type="text" spellcheck="false" autocomplete="off"
+           value="https://cambiumpak.com/products/cp-mlr.html">
+    <button type="button" class="ea-go" data-build>Build the email</button>
+  </div>
+  <div class="ea-pickers"></div>
+  <p class="ea-err" role="status"></p>
+
+  <div class="ea-ctl">
+    <span class="lab">UTM tagging</span>
+    <div class="ea-sw">
+      <button type="button" class="on" data-tagging="on">Enforced</button>
+      <button type="button" data-tagging="off">Off</button>
+    </div>
+    <div class="ea-lock">
+      <button type="button" class="ea-lockbtn" data-lock aria-expanded="false">
+        <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><rect x="2.5" y="6" width="9" height="6.5" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M4.75 6V4.25a2.25 2.25 0 0 1 4.5 0V6" stroke="currentColor" stroke-width="1.4"/></svg>
+        Opt-out: always on
+      </button>
+    </div>
+    <p class="ea-locknote" hidden>There is deliberately no switch here. The
+    compliance block is assembled from a server-side constant, so "forgot the
+    unsubscribe link" is not a state this system can produce. That is the
+    difference between training people to remember something and removing the
+    chance to forget it.</p>
+  </div>
+
+  <div class="ea-out" hidden>
+    <div class="ea-tabs">
+      <button type="button" class="ea-tab on" data-view="email">The email</button>
+      <button type="button" class="ea-tab" data-view="audit">The audit</button>
+      <button type="button" class="ea-tab" data-view="src">The HTML</button>
+    </div>
+    <div class="ea-pane ea-pane-email"><iframe id="ea-frame" title="Generated campaign email"></iframe></div>
+    <div class="ea-pane ea-pane-audit ea-audit" hidden></div>
+    <div class="ea-pane ea-pane-src" hidden><pre class="ea-src"></pre></div>
+  </div>
+
+  <p class="ea-note"><b>CambiumPak is invented,</b> and so is every product in
+  it. The employer tool this stands in for fetches the product page server-side
+  and passes the copy to a model against a system prompt that encodes the brand
+  and the email spec. A browser cannot fetch cambiumpak.com, so this resolves
+  the URL against a bundled copy of the product record instead. Everything after
+  the lookup is the real thing, including the audit, which is plain JavaScript
+  reading the emitted HTML rather than a model marking its own work.</p>
+</div>
+</div>
+
+<div class="wrap narrow">
 <div class="reading well">
 
 <div class="block"><p class="h">the problem</p>
@@ -89,5 +156,8 @@
 </div></div></div>
 <footer><div class="wrap"><span>elizabeth beier · albuquerque, new mexico</span><span>designed, built, and measured by me</span></div></footer>
 </main>
+<script src="cp-data.js"></script>
+<script src="email-demo.js"></script>
+<script src="tryit.js" defer></script>
 </body>
 </html>

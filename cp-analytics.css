@@ -120,3 +120,10 @@
   .chip{position:static;display:inline-block;margin-top:8px}
   .tl{padding-right:0}
 }
+
+/* full screen. #cpa wins on specificity over the shared [data-tryit] rules,
+   so the maxed geometry has to be restated here rather than inherited. */
+#cpa.is-max,#cpa:fullscreen,#cpa:-webkit-full-screen{
+  margin:0;border-radius:0;border-top-width:3px;max-width:none;
+  padding:var(--space-4);overflow:auto}
+#cpa.is-max{position:fixed;inset:0;z-index:200}

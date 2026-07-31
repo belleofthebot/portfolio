@@ -42,31 +42,21 @@
 <div class="wrap narrow">
 
 <div class="statrow">
-<div><span class="n">6</span><span class="l">custom event families, built by hand</span></div>
+<div><span class="n">6</span><span class="l">event families, built by hand</span></div>
 <div><span class="n">3</span><span class="l">properties instrumented before launch</span></div>
 <div><span class="n">12</span><span class="l">report queries in the dashboard</span></div>
 <div><span class="n">$0</span><span class="l">recurring cost</span></div>
 </div>
-
-<div class="protolink">
-<div>
-<span class="kicker">the full process, step by step</span>
-<p class="pl-t">How this got built</p>
-<p class="pl-n">Nine steps in order — the first conversation, the measurement plan, the tags, the QA, and the report that changed a decision. Rebuilt on an invented company so the screens can be shown.</p>
-</div>
-<a class="btn" href="process-analytics.html">walk through it →</a>
-</div>
-
 
 <!-- ================================================== the dashboard ==
      Interactive, in the browser, on invented data. cp-analytics.js holds
      the generator, the charts and the wiring. Sits inside the existing
      .wrap narrow, so it does not open a wrapper of its own.
      ================================================================= -->
-<div id="cpa">
+<div id="cpa" data-tryit>
+  <div class="try-bar"><span class="cpa-kick">try it</span><button type="button" class="fsbtn" data-fs aria-pressed="false"><svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path class="e" d="M1.5 5V1.5H5M9 1.5h3.5V5M12.5 9v3.5H9M5 12.5H1.5V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path class="x" d="M5 1.5V5H1.5M12.5 5H9V1.5M9 12.5V9h3.5M1.5 9H5v3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="fsl">full screen</span></button></div>
   <div class="cpa-head">
     <div class="cpa-headl">
-      <span class="cpa-kick">try it</span>
       <h3>The dashboard, on invented numbers</h3>
       <p class="cpa-lede">This is the shape of the thing I built, rebuilt on
       CambiumPak so it can be published. Change the date range and every figure
@@ -109,87 +99,112 @@
 </div>
 
 <div class="reading well">
-<div class="block"><p class="h">the problem</p>
-<p><strong>The relaunch shipped five interactive tools with no way to tell whether anyone used them.</strong> A product configurator, a comparison tool, a lighting layout tool, a rebate finder, and a redesigned distributor portal. Some carry subscription costs. None emitted a measurable signal.</p>
-<p>Around that: no view of which documents drove demand, no way to compare the new site against the old, no visibility into who was logging into the portal. A relaunch also destroys the historical baseline unless the migration is planned first, and that window closes on launch day.</p></div>
-
-<div class="block"><p class="h">every event answered a live question</p>
-<div class="qa">
-<div class="qh"><span>event</span><span>the question it answers</span></div>
-<div><span>Configurator used</span><span>Does the tool get used, and do configurations succeed or fail?</span></div>
-<div><span>Comparison tool used</span><span>Is this subscription worth renewing?</span></div>
-<div><span>Lighting layout launched</span><span>Is anyone reaching the third-party tool we pay for?</span></div>
-<div><span>Form submissions by type</span><span>Which forms convert, and which collect abandonments?</span></div>
-<div><span>Portal login by customer type</span><span>Who uses the portal — staff, agents, or customers?</span></div>
-<div><span>Downloads by type and product</span><span>Which spec sheets actually drive demand?</span></div>
+<div class="block"><p class="h">overview</p>
+<p>A relaunch was about to ship five interactive tools &mdash; a product configurator, a comparison tool, a third-party layout planner, a rebate lookup and a redesigned distributor portal. None of them emitted a measurable signal and some carried subscription costs. There was also no view of which documents drove demand, and no way to compare the new site against the old, which a relaunch destroys on launch day unless the migration is planned first.</p>
+<p>I audited what existed, moved the tag container to an account Marketing controlled, specified and built six event families by hand with registered custom dimensions, and instrumented three properties on staging before go-live. Then I built the reporting layer on top: a dashboard querying the Analytics Data API directly, so the marketing team opens it themselves rather than waiting on a report.</p>
+<p>Four months. No developer, no software budget, no recurring cost.</p></div>
 </div>
-<p style="margin-top:14px">The fifth row is the one worth pausing on. Login volume tells you the portal is busy. Login volume by user type tells you whether it's reaching distributors or just being used internally.</p></div>
-
-<div class="block"><p class="h">the audit, and what it found</p>
-<ul>
-<li><strong>The container was under the wrong account.</strong> Provisioned under IT's account rather than Marketing's. I created a replacement under the right account, coordinated access with IT, briefed the agency to swap the snippet, and confirmed the old one was removed rather than left firing in parallel.</li>
-<li><strong>The legacy containers were empty.</strong> Both held no tags, so the live site ran on hard-coded on-page tracking — which explained why nothing had ever been changeable without a developer.</li>
-<li><strong>Advertising tags were about to be orphaned.</strong> Ad platform and social tags hadn't been carried across to the new build. Flagged pre-launch with a remediation path.</li>
-</ul></div>
-
-<div class="block"><p class="h">relaunch readiness</p>
-<ul>
-<li>Three properties configured in parallel — new site, legacy site, distributor portal — so post-launch performance had a baseline to compare against.</li>
-<li>Tracking built and verified on staging before go-live. Tags confirmed firing via preview mode and hit-level inspection, screenshotted and confirmed back to the agency.</li>
-<li>Live on day one, including a cross-property migration comparison.</li>
-</ul></div>
-
-<div class="block"><p class="h">the tags, built by hand</p>
-<p>No auto-events, no plugins. Each one specified, built, tested in preview, verified in hit detail, published, and paired with a registered custom dimension — a parameter that isn't registered never appears in a report.</p>
-<ul>
-<li><strong>File downloads.</strong> Document type resolved through a RegEx table mapping seven categories, product code extracted via custom JavaScript, so downloads report by what and by which product.</li>
-<li><strong>Product configurator.</strong> Event on the request button, element variables reading the generated SKU and a validity attribute — capturing failed configurations too, because failure is a UX signal.</li>
-<li><strong>Comparison tool.</strong> Element visibility trigger on the results container, custom JavaScript extracting every compared product plus a count. This feeds the renewal decision directly.</li>
-<li><strong>Interactive tools.</strong> Click tags scoped by destination URL, with one form tag scoped to the form's unique identifier rather than the page, so it doesn't misfire where the form is embedded in several places.</li>
-<li><strong>Portal logins.</strong> Custom JavaScript variable reading user role from a body class, firing a login event with a user-type parameter. An untracked authenticated area became a segmentable audience with no backend work.</li>
-</ul></div>
-
-<div class="block"><p class="h">two judgment calls</p>
-<ul>
-<li><strong>The tracking I chose not to build.</strong> A third-party rebate widget turned out to be a component library embed generating non-deterministic element IDs on every render. DOM-based tracking against it would have appeared to work and broken silently on the vendor's next release. I used the vendor's own reporting and shipped a page-view metric as an honest interim measure.</li>
-<li><strong>The discovery that avoided a backend project.</strong> Portal login tracking was scoped as API work with an external development partner. Inspecting the post-login page showed the user role was already in the markup, which collapsed it into one variable.</li>
-</ul></div>
-
-<div class="block"><p class="h">the dashboard</p>
-<p>An access-controlled web dashboard querying the Analytics Data API directly. Eleven named report queries — totals, daily active users, top events, top pages, traffic by source and medium, downloads by filename, product page performance, portal logins by user type and daily, portal section usage, and form starts versus submissions. A twelfth produces the migration comparison. Date range selector and PDF export.</p>
-<ul>
-<li><strong>Service account authentication hand-rolled,</strong> not lifted from an SDK: constructing and RSA-signing a JWT assertion, exchanging it for an access token, caching that token just under its expiry.</li>
-<li><strong>Two-tier caching</strong> — a token cache and a per-date-range payload cache — to stay inside API quota.</li>
-<li><strong>Queries batched</strong> in groups of five per request rather than fired individually.</li>
-<li><strong>Least privilege.</strong> The service account holds read-only viewer access and nothing else, documented at the top of the file.</li>
-<li><strong>Graceful degradation.</strong> Missing configuration returns a clear disabled state with the reason, not an error.</li>
-</ul>
-<p><strong>Why custom.</strong> Commercial reporting tools were used first. They hit real limits: filters silently dropping between report views, and interface changes that removed controls the team relied on.</p></div>
-
-<div class="block"><p class="h">architecture</p>
-<div class="flow">
-<div class="flow-node"><span class="t">site, portal &amp; tools</span><span class="d">DOM events, data attributes, body classes</span></div>
-<div class="flow-arrow">→</div>
-<div class="flow-node"><span class="t">tag manager</span><span class="d">Custom JS, RegEx table, element visibility triggers</span></div>
-<div class="flow-arrow">→</div>
-<div class="flow-node"><span class="t">ga4</span><span class="d">Three properties, registered custom dimensions</span></div>
-<div class="flow-arrow">→</div>
-<div class="flow-node"><span class="t">data api</span><span class="d">Hand-rolled JWT, token cache, batched queries</span></div>
-<div class="flow-arrow">→</div>
-<div class="flow-node"><span class="t">dashboard</span><span class="d">Twelve queries, PDF export, access controlled</span></div>
-</div>
-<p class="flow-cap">no vendor past the analytics platform · nothing in it needs a developer to change</p></div>
 
 <div class="outcome"><p class="h">outcome</p>
 <ul>
-<li>Measurement verified on staging and live on day one of the relaunch, with a migration comparison available from launch.</li>
-<li>The five interactive tools went from no measurable signal to individually reportable — including the subscription-carrying ones, whose renewal case now rests on usage rather than assumption.</li>
-<li>In daily use by the marketing team at zero recurring cost, replacing hours of manual reporting each week.</li>
+<li>Live and verified on day one of the relaunch, with a migration comparison available from launch.</li>
+<li>The five tools went from no measurable signal to individually reportable &mdash; including the subscription-carrying ones, whose renewal case now rests on usage rather than assumption.</li>
+<li>In daily use by the marketing team, replacing hours of manual reporting each week at zero recurring cost.</li>
 <li>Measurement infrastructure owned and administered by Marketing rather than borrowed from IT.</li>
 </ul></div>
 
 <div class="diff"><p class="h">honest limitation</p>
 <p>A majority of early portal login events recorded a blank user type. I found it, documented it as a post-launch fix and flagged it to stakeholders rather than presenting the data as clean. Until it's fixed that segment is directional, not authoritative.</p></div>
+
+<!-- The detail, folded. Argument stays on the page; evidence opens on click. -->
+<div class="folds">
+
+<details class="fold"><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><rect x="10" y="9" width="44" height="9" rx="2" stroke="#DFA192" stroke-width="1.5"/><path d="M14 13.5h6M46 11l4 5M50 11l-4 5" stroke="#DFA192" stroke-width="1.5" stroke-linecap="round"/><rect x="10" y="21.5" width="44" height="9" rx="2" stroke="#423748" stroke-width="1.5" stroke-dasharray="3 3"/><rect x="10" y="34" width="44" height="9" rx="2" stroke="#423748" stroke-width="1.5" stroke-dasharray="3 3"/></svg></span>the audit, and what it found<span class="n">3 findings</span></summary>
+<div class="fold-b">
+<ul>
+<li><strong>The container was under the wrong account.</strong> Provisioned under IT's account rather than Marketing's. I created a replacement under the right account, coordinated access with IT, briefed the agency to swap the snippet, and confirmed the old one was removed rather than left firing in parallel.</li>
+<li><strong>The legacy containers were empty.</strong> Both held no tags, so the live site ran on hard-coded on-page tracking &mdash; which explained why nothing had ever been changeable without a developer.</li>
+<li><strong>Advertising tags were about to be orphaned.</strong> Ad platform and social tags hadn't been carried across to the new build. Flagged pre-launch with a remediation path.</li>
+</ul></div></details>
+
+<details class="fold"><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><rect x="6" y="11" width="13" height="26" rx="2" stroke="#8B8494" stroke-width="1.5"/><rect x="22" y="11" width="13" height="26" rx="2" stroke="#8B8494" stroke-width="1.5"/><rect x="38" y="11" width="13" height="26" rx="2" stroke="#8B8494" stroke-width="1.5"/><path d="M9.5 23.5l2.5 2.5 4-5M25.5 23.5l2.5 2.5 4-5M41.5 23.5l2.5 2.5 4-5" stroke="#9FE0CE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M58 6v36" stroke="#DFA192" stroke-width="1.5" stroke-dasharray="3 3" stroke-linecap="round"/></svg></span>relaunch readiness<span class="n">3 properties</span></summary>
+<div class="fold-b">
+<ul>
+<li>Three properties configured in parallel &mdash; new site, legacy site, distributor portal &mdash; so post-launch performance had a baseline to compare against.</li>
+<li>Tracking built and verified on staging before go-live. Tags confirmed firing via preview mode and hit-level inspection, screenshotted and confirmed back to the agency.</li>
+<li>Live on day one, including a cross-property migration comparison.</li>
+</ul></div></details>
+
+<details class="fold"><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><path d="M8 10h16M8 17h16M8 24h16M8 31h16M8 38h16" stroke="#DFA192" stroke-width="2" stroke-linecap="round"/><path d="M32 10h24M32 17h20M32 24h24M32 31h18M32 38h22" stroke="#423748" stroke-width="2" stroke-linecap="round"/></svg></span>every event answered a live question<span class="n">6 events</span></summary>
+<div class="fold-b">
+<div class="qa">
+<div class="qh"><span>event</span><span>the question it answers</span></div>
+<div><span>Configurator used</span><span>Does the tool get used, and do configurations succeed or fail?</span></div>
+<div><span>Comparison tool used</span><span>Is this subscription worth renewing?</span></div>
+<div><span>Layout planner launched</span><span>Is anyone reaching the third-party tool we pay for?</span></div>
+<div><span>Form submissions by type</span><span>Which forms convert, and which collect abandonments?</span></div>
+<div><span>Portal login by customer type</span><span>Who uses the portal &mdash; staff, agents, or customers?</span></div>
+<div><span>Downloads by type and product</span><span>Which spec sheets actually drive demand?</span></div>
+</div>
+<p style="margin-top:14px">The fifth row is the one worth pausing on. Login volume tells you the portal is busy. Login volume by user type tells you whether it's reaching distributors or just being used internally.</p>
+</div></details>
+
+<details class="fold"><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><path d="M22 24H14M26 20l-8-8M26 28l-8 8M40 24h10M40 24l8-9M40 24l8 9" stroke="#423748" stroke-width="1.5"/><rect x="22" y="17" width="18" height="14" rx="3" stroke="#DFA192" stroke-width="1.5"/><circle cx="11" cy="24" r="2.5" fill="#8B8494"/><circle cx="15" cy="9" r="2.5" fill="#8B8494"/><circle cx="15" cy="39" r="2.5" fill="#8B8494"/><circle cx="52" cy="24" r="2.5" fill="#9FE0CE"/><circle cx="50" cy="13" r="2.5" fill="#9FE0CE"/><circle cx="50" cy="35" r="2.5" fill="#9FE0CE"/></svg></span>the tags, built by hand<span class="n">5 families</span></summary>
+<div class="fold-b">
+<p>No auto-events, no plugins. Each one specified, built, tested in preview, verified in hit detail, published, and paired with a registered custom dimension &mdash; a parameter that isn't registered never appears in a report.</p>
+<ul>
+<li><strong>File downloads.</strong> Document type resolved through a RegEx table mapping seven categories, product code extracted via custom JavaScript, so downloads report by what and by which product.</li>
+<li><strong>Product configurator.</strong> Event on the request button, element variables reading the generated SKU and a validity attribute &mdash; capturing failed configurations too, because failure is a UX signal.</li>
+<li><strong>Comparison tool.</strong> Element visibility trigger on the results container, custom JavaScript extracting every compared product plus a count. This feeds the renewal decision directly.</li>
+<li><strong>Interactive tools.</strong> Click tags scoped by destination URL, with one form tag scoped to the form's unique identifier rather than the page, so it doesn't misfire where the form is embedded in several places.</li>
+<li><strong>Portal logins.</strong> Custom JavaScript variable reading user role from a body class, firing a login event with a user-type parameter. An untracked authenticated area became a segmentable audience with no backend work.</li>
+</ul></div></details>
+
+<details class="fold"><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><path d="M6 24h14" stroke="#8B8494" stroke-width="1.5"/><path d="M20 24c8 0 6-11 14-11h18" stroke="#9FE0CE" stroke-width="1.5"/><path d="M20 24c8 0 6 11 14 11h14" stroke="#DFA192" stroke-width="1.5" stroke-dasharray="3 3"/><path d="M52 9.5l4 3.5-4 3.5" stroke="#9FE0CE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M50 31l6 8M56 31l-6 8" stroke="#DFA192" stroke-width="1.5" stroke-linecap="round"/></svg></span>two judgment calls<span class="n">2 decisions</span></summary>
+<div class="fold-b">
+<ul>
+<li><strong>The tracking I chose not to build.</strong> A third-party rebate widget turned out to be a component library embed generating non-deterministic element IDs on every render. DOM-based tracking against it would have appeared to work and broken silently on the vendor's next release. I used the vendor's own reporting and shipped a page-view metric as an honest interim measure.</li>
+<li><strong>The discovery that avoided a backend project.</strong> Portal login tracking was scoped as API work with an external development partner. Inspecting the post-login page showed the user role was already in the markup, which collapsed it into one variable.</li>
+</ul></div></details>
+
+<details class="fold"><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><rect x="7" y="8" width="11" height="10" rx="2" stroke="#423748" stroke-width="1.5"/><rect x="21" y="8" width="11" height="10" rx="2" stroke="#423748" stroke-width="1.5"/><rect x="35" y="8" width="11" height="10" rx="2" stroke="#423748" stroke-width="1.5"/><rect x="49" y="8" width="8" height="10" rx="2" stroke="#423748" stroke-width="1.5"/><path d="M10 11.5h5M24 11.5h5M38 11.5h5M52 11.5h3" stroke="#8B8494" stroke-width="1.5" stroke-linecap="round"/><rect x="7" y="22" width="50" height="19" rx="2" stroke="#423748" stroke-width="1.5"/><path d="M11 36l7-6 6 4 7-8 6 5 8-7" stroke="#DFA192" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>the dashboard, under the hood<span class="n">12 queries</span></summary>
+<div class="fold-b">
+<p>An access-controlled web dashboard querying the Analytics Data API directly. Eleven named report queries &mdash; totals, daily active users, top events, top pages, traffic by source and medium, downloads by filename, product page performance, portal logins by user type and daily, portal section usage, and form starts versus submissions. A twelfth produces the migration comparison. Date range selector and PDF export.</p>
+<ul>
+<li><strong>Service account authentication hand-rolled,</strong> not lifted from an SDK: constructing and RSA-signing a JWT assertion, exchanging it for an access token, caching that token just under its expiry.</li>
+<li><strong>Two-tier caching</strong> &mdash; a token cache and a per-date-range payload cache &mdash; to stay inside API quota.</li>
+<li><strong>Queries batched</strong> in groups of five per request rather than fired individually.</li>
+<li><strong>Least privilege.</strong> The service account holds read-only viewer access and nothing else, documented at the top of the file.</li>
+<li><strong>Graceful degradation.</strong> Missing configuration returns a clear disabled state with the reason, not an error.</li>
+</ul>
+<p><strong>Why custom.</strong> Commercial reporting tools were used first. They hit real limits: filters silently dropping between report views, and interface changes that removed controls the team relied on.</p>
+</div></details>
+
+<details class="fold"><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><rect x="4" y="18" width="9" height="12" rx="2" stroke="#8B8494" stroke-width="1.5"/><rect x="17" y="18" width="9" height="12" rx="2" stroke="#8B8494" stroke-width="1.5"/><rect x="30" y="18" width="9" height="12" rx="2" stroke="#8B8494" stroke-width="1.5"/><rect x="43" y="18" width="9" height="12" rx="2" stroke="#8B8494" stroke-width="1.5"/><rect x="55" y="18" width="6" height="12" rx="2" stroke="#DFA192" stroke-width="1.5"/><path d="M13.5 24h3M26.5 24h3M39.5 24h3M52.5 24h2" stroke="#DFA192" stroke-width="1.5" stroke-linecap="round"/></svg></span>architecture<span class="n">end to end</span></summary>
+<div class="fold-b">
+<div class="flow">
+<div class="flow-node"><span class="t">site, portal &amp; tools</span><span class="d">DOM events, data attributes, body classes</span></div>
+<div class="flow-arrow">&rarr;</div>
+<div class="flow-node"><span class="t">tag manager</span><span class="d">Custom JS, RegEx table, element visibility triggers</span></div>
+<div class="flow-arrow">&rarr;</div>
+<div class="flow-node"><span class="t">ga4</span><span class="d">Three properties, registered custom dimensions</span></div>
+<div class="flow-arrow">&rarr;</div>
+<div class="flow-node"><span class="t">data api</span><span class="d">Hand-rolled JWT, token cache, batched queries</span></div>
+<div class="flow-arrow">&rarr;</div>
+<div class="flow-node"><span class="t">dashboard</span><span class="d">Twelve queries, PDF export, access controlled</span></div>
+</div>
+<p class="flow-cap">no vendor past the analytics platform &middot; nothing in it needs a developer to change</p>
+</div></details>
+
+</div>
+
+<div class="protolink">
+<div>
+<span class="kicker">the full process, step by step</span>
+<p class="pl-t">How this got built</p>
+<p class="pl-n">Nine steps in order &mdash; the first conversation, the measurement plan, the tags, the QA, and the report that changed a decision. Rebuilt on an invented company so the screens can be shown.</p>
+</div>
+<a class="btn" href="process-analytics.html">walk through it &rarr;</a>
 </div>
 
 <div class="tags"><span class="tag rose">ga4</span><span class="tag ">google tag manager</span><span class="tag ">custom javascript variables</span><span class="tag ">regex table variables</span><span class="tag ">element visibility triggers</span><span class="tag ">custom dimensions</span><span class="tag ">analytics data api</span><span class="tag ">jwt &amp; oauth</span><span class="tag ">caching &amp; batching</span><span class="tag ">least privilege</span><span class="tag ">migration planning</span><span class="tag ">access governance</span></div>
@@ -209,5 +224,6 @@
 <footer><div class="wrap"><span>elizabeth beier · albuquerque, new mexico</span><span>designed, built, and measured by me</span></div></footer>
 </main>
 <script src="cp-analytics.js"></script>
+<script src="tryit.js" defer></script>
 </body>
 </html>

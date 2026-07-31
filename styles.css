@@ -128,6 +128,106 @@ section{padding:var(--space-6) 0 0}
 .wcard .foot{margin-top:auto;font-family:var(--mono);font-size:var(--size-mono);color:var(--text-3);text-transform:lowercase}
 .wcard .foot .read{color:var(--rose)}
 
+/* ---------- try it: the demo bar and full screen ----------
+   Every case study carries something you can operate. The bar sits at the top
+   of the demo so the way in is visible without scrolling, and the button is
+   the same shape and in the same place on every page. */
+.try-bar{display:flex;align-items:center;gap:var(--space-3);flex-wrap:wrap;
+  margin-bottom:var(--space-2)}
+.fsbtn{margin-left:auto;display:inline-flex;align-items:center;gap:7px;
+  font-family:var(--mono);font-size:var(--size-mono);text-transform:lowercase;
+  background:transparent;border:1px solid currentColor;border-radius:5px;
+  padding:6px 11px;cursor:pointer;opacity:.72;
+  transition:opacity .15s,background .15s}
+.fsbtn:hover{opacity:1}
+.fsbtn:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.fsbtn svg{width:12px;height:12px;display:block;flex:0 0 auto}
+.fsbtn .x{display:none}
+[data-tryit].fs-on .fsbtn .x{display:block}
+[data-tryit].fs-on .fsbtn .e{display:none}
+
+/* the fallback overlay, for Safari on a phone and anywhere the API is refused */
+[data-tryit].is-max{position:fixed;inset:0;z-index:200;margin:0;max-width:none;
+  border-radius:0;overflow:auto;-webkit-overflow-scrolling:touch}
+body.tryit-locked{overflow:hidden}
+
+/* the native path. A fullscreen element has no page behind it, so it has to
+   carry its own background or it lands on black. */
+[data-tryit]:fullscreen{overflow:auto;border-radius:0;margin:0;max-width:none;
+  padding:var(--space-4)}
+[data-tryit]:-webkit-full-screen{overflow:auto;border-radius:0;margin:0;
+  padding:var(--space-4)}
+
+/* a demo that is a live app in a frame */
+.demoframe{width:100%;border:0;display:block;background:var(--screen);
+  border-radius:var(--radius);aspect-ratio:16/10;min-height:420px}
+[data-tryit].is-max .demoframe,[data-tryit]:fullscreen .demoframe{
+  aspect-ratio:auto;height:calc(100vh - 132px);min-height:0;border-radius:0}
+.try-fine{font-size:var(--size-small);line-height:1.6;color:var(--text-3);
+  margin:var(--space-3) 0 0;max-width:76ch}
+
+/* what a maxed demo looks like, whichever path opened it. #cpa carries its
+   own Paper background and an id, so it wins over this. */
+[data-tryit].is-max,[data-tryit]:fullscreen{background:var(--ground);
+  padding:var(--space-3)}
+[data-tryit]:-webkit-full-screen{background:var(--ground)}
+.demo-lite{position:relative}
+
+/* phone-shaped prototypes stand up to the full height of the display */
+[data-tryit].is-max .bs-proto,[data-tryit]:fullscreen .bs-proto,
+[data-tryit].is-max .pg-proto,[data-tryit]:fullscreen .pg-proto{
+  max-width:none;width:auto;height:calc(100vh - 104px);border-radius:var(--radius)}
+[data-tryit].is-max .demo-frame iframe,[data-tryit]:fullscreen .demo-frame iframe{
+  height:calc(100vh - 118px)}
+[data-tryit].is-max .out-frame,[data-tryit]:fullscreen .out-frame{
+  height:calc(100vh - 190px)}
+.demo-cap{display:block;text-align:center;margin-top:10px}
+/* the caption under a maxed demo is noise, and it pushes the frame off-screen */
+[data-tryit].is-max .demo-cap,[data-tryit]:fullscreen .demo-cap{display:none}
+
+/* ---------- foldable detail ----------
+   A case study should read in under a minute and still hold its evidence.
+   Argument stays on the page; evidence goes behind one of these. Native
+   details/summary, so it works with no JavaScript, opens on Ctrl+F in
+   Chrome, and prints expanded. */
+.folds{border-top:1px solid var(--line-soft);margin:var(--space-4) 0 0}
+.fold{border-bottom:1px solid var(--line-soft)}
+.fold>summary{cursor:pointer;list-style:none;display:flex;gap:var(--space-2);
+  align-items:center;padding:11px 2px;font-family:var(--mono);
+  font-size:var(--size-mono);color:var(--text-2);text-transform:lowercase;
+  transition:color .15s}
+.fold>summary::-webkit-details-marker{display:none}
+.fold>summary::before{content:"+";color:var(--rose);flex:0 0 1ch;width:1ch}
+.fold[open]>summary::before{content:"\2013"}
+.fold>summary:hover{color:var(--text)}
+.fold>summary:focus-visible{outline:2px solid var(--rose);outline-offset:3px;
+  border-radius:2px}
+.fold>summary .n{margin-left:auto;color:var(--text-3);font-size:.66rem;
+  padding-left:var(--space-2);white-space:nowrap}
+/* The drawn tile on each row. Closed is the default state, so the row has to
+   say something on its own — the glyph is what a reader scans instead of
+   opening all seven. Drawn, like every other thumbnail on this site. */
+.fold-th{flex:0 0 auto;width:64px;height:48px;display:block;overflow:hidden;
+  background:var(--screen);border:1px solid var(--line);
+  border-radius:var(--radius-tile);transition:border-color .15s}
+.fold-th svg{width:100%;height:100%;display:block}
+.fold>summary:hover .fold-th{border-color:var(--rose)}
+/* body indents to the label, not to the marker */
+.fold-b{padding:2px 0 var(--space-3) calc(1ch + 64px + var(--space-2) * 2)}
+@media(max-width:640px){
+  .fold-th{width:48px;height:36px}
+  .fold-b{padding-left:calc(1ch + var(--space-2))}
+  .fold>summary .n{display:none}
+}
+.fold-b p{margin:0 0 10px;line-height:1.7;max-width:62ch}
+.fold-b p:last-child{margin-bottom:0}
+.fold-b ul{margin:8px 0 0;padding-left:20px;max-width:62ch}
+.fold-b li{margin:0 0 9px;line-height:1.65}
+.fold-b li:last-child{margin-bottom:0}
+.fold-b li strong,.fold-b p strong{font-weight:500}
+.fold-b .qa{margin-top:0}
+@media print{.fold-b{display:block !important}}
+
 /* ---------- thumbnails: recreations, never screenshots ---------- */
 .thumb{border-radius:var(--radius);overflow:hidden;padding:var(--space-3);height:210px;display:flex;flex-direction:column;justify-content:center;position:relative}
 .thumb img{border-radius:var(--radius-tile)}

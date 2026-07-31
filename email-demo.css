@@ -1,0 +1,127 @@
+/* ============================ the campaign email generator, in the browser ==
+   CambiumPak inside the panel, belle outside it, same reversed terminal
+   treatment the deck generator uses. Tokens scoped to #eml, never :root.
+   ========================================================================= */
+#eml{
+  --pine:#1E4D3B; --pine-deep:#143529; --kraft:#A87D52; --kraft-deep:#8A6138;
+  --cpink:#232A26; --paper:#F7F4ED; --hair:#DDD5C6; --cpmute:#6E7A70;
+  --well:#FFFDF8; --bad:#9A4B36;
+
+  position:relative;
+  background:var(--paper);color:var(--cpink);
+  border:1px solid var(--hair);border-top:3px solid var(--pine);
+  border-radius:var(--radius-card);
+  padding:var(--space-4);margin:var(--space-4) 0;
+  font-family:'Inter',Arial,Helvetica,sans-serif}
+
+#eml .try-bar{margin-bottom:var(--space-2)}
+#eml .ea-kick{font-size:.72rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--kraft-deep)}
+#eml .fsbtn{color:var(--pine)}
+#eml h3{font-family:inherit;font-size:clamp(1.35rem,2.6vw,1.75rem);font-weight:600;
+  line-height:1.16;letter-spacing:-.5px;color:var(--pine);margin:0 0 10px;max-width:26ch}
+.ea-lede{font-size:.96rem;line-height:1.6;color:#3C443E;margin:0 0 var(--space-3);
+  max-width:70ch}
+
+/* the input row */
+.ea-in{display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+  padding:14px 0;border-top:1px solid var(--hair)}
+.ea-in label{font-size:.7rem;font-weight:600;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--cpmute);flex:0 0 auto}
+#ea-url{flex:1 1 320px;min-width:0;background:var(--well);border:1px solid var(--hair);
+  border-radius:5px;padding:10px 12px;font-family:'IBM Plex Mono',ui-monospace,monospace;
+  font-size:.82rem;color:#3C443E}
+#ea-url:focus{outline:2px solid var(--pine);outline-offset:1px}
+.ea-go{background:var(--pine);border:1px solid var(--pine);color:var(--paper);
+  border-radius:5px;padding:10px 18px;font-family:inherit;font-size:.85rem;
+  font-weight:600;cursor:pointer}
+.ea-go:hover{background:var(--pine-deep)}
+.ea-pickers{display:flex;gap:6px;flex-wrap:wrap;padding:0 0 14px}
+.ea-p{background:transparent;border:1px solid var(--hair);color:var(--kraft-deep);
+  border-radius:4px;padding:5px 9px;font-family:'IBM Plex Mono',ui-monospace,monospace;
+  font-size:.72rem;cursor:pointer}
+.ea-p:hover{border-color:var(--pine);color:var(--pine)}
+.ea-err{color:var(--bad);font-size:.82rem;margin:0 0 10px;min-height:1em}
+
+/* the two switches */
+.ea-ctl{display:flex;gap:var(--space-4);align-items:center;flex-wrap:wrap;
+  border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);
+  padding:13px 0;margin-bottom:var(--space-3)}
+.ea-ctl .lab{font-size:.7rem;font-weight:600;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--cpmute)}
+.ea-sw{display:flex;gap:6px}
+.ea-sw button,.ea-tab{background:var(--well);border:1px solid var(--hair);color:#3C443E;
+  border-radius:5px;padding:8px 14px;font-family:inherit;font-size:.83rem;cursor:pointer;
+  transition:background .15s,border-color .15s,color .15s}
+.ea-sw button:hover,.ea-tab:hover{border-color:var(--pine)}
+.ea-sw button.on,.ea-tab.on{background:var(--pine);border-color:var(--pine);
+  color:var(--paper);font-weight:600}
+
+/* the control that refuses */
+.ea-lock{margin-left:auto;display:flex;align-items:center;gap:8px}
+.ea-lockbtn{display:inline-flex;align-items:center;gap:7px;background:#EDEAE0;
+  border:1px solid var(--hair);border-radius:5px;padding:8px 12px;color:var(--cpmute);
+  font-family:inherit;font-size:.8rem;cursor:help}
+.ea-lockbtn svg{width:12px;height:12px}
+.ea-locknote{flex-basis:100%;margin:10px 0 0;font-size:.84rem;line-height:1.6;
+  color:#3C443E;background:#EDEAE0;border-left:3px solid var(--kraft);
+  border-radius:0 5px 5px 0;padding:11px 14px}
+
+/* output */
+.ea-tabs{display:flex;gap:6px;margin-bottom:12px}
+.ea-pane{border:1px solid var(--hair);border-radius:6px;background:var(--well);
+  overflow:hidden}
+#ea-frame{width:100%;height:660px;border:0;display:block;background:#E8E3D7}
+[data-tryit].is-max #ea-frame,[data-tryit]:fullscreen #ea-frame{
+  height:calc(100vh - 300px);min-height:340px}
+.ea-pane-audit,.ea-pane-src{padding:var(--space-3)}
+.ea-pass,.ea-fail{margin:0 0 14px;font-size:.9rem;line-height:1.6;max-width:74ch}
+.ea-pass b{color:var(--pine)}
+.ea-fail b{color:var(--bad)}
+
+.ea-tbl{border:1px solid var(--hair);border-radius:5px;overflow:hidden;
+  font-size:.8rem}
+.ea-th,.ea-tr{display:grid;grid-template-columns:150px 1.1fr 2fr 78px;gap:12px;
+  padding:9px 12px;align-items:baseline}
+.ea-th{background:#EDEAE0;font-weight:600;font-size:.7rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--cpmute)}
+.ea-tr{border-top:1px solid var(--hair)}
+.ea-el{font-family:'IBM Plex Mono',ui-monospace,monospace;color:var(--kraft-deep);
+  font-size:.74rem}
+.ea-href{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:.72rem;
+  color:var(--cpmute);word-break:break-all;line-height:1.5}
+.ea-v{justify-self:start;font-size:.66rem;font-weight:600;letter-spacing:.07em;
+  text-transform:uppercase;border-radius:3px;padding:3px 7px;white-space:nowrap}
+.ea-tagged{background:#E9EFE9;color:var(--pine)}
+.ea-exempt{background:#EDEAE0;color:var(--cpmute)}
+.ea-untagged{background:#F4E3DE;color:var(--bad)}
+
+.ea-src{margin:0;font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:.72rem;
+  line-height:1.6;color:#3C443E;white-space:pre-wrap;word-break:break-word;
+  max-height:640px;overflow:auto}
+[data-tryit].is-max .ea-src,[data-tryit]:fullscreen .ea-src{
+  max-height:calc(100vh - 320px)}
+
+.ea-note{font-size:.78rem;line-height:1.6;color:var(--cpmute);
+  border-top:1px solid var(--hair);margin-top:var(--space-3);
+  padding-top:var(--space-3);max-width:80ch}
+.ea-note b{color:var(--bad);font-weight:600}
+
+@media(max-width:820px){
+  .ea-th,.ea-tr{grid-template-columns:1fr;gap:3px}
+  .ea-th{display:none}
+  .ea-tr{padding:11px 12px}
+  #ea-frame{height:520px}
+}
+@media(max-width:640px){
+  #eml{padding:var(--space-3)}
+  .ea-ctl{flex-direction:column;align-items:flex-start;gap:var(--space-2)}
+  .ea-lock{margin-left:0}
+}
+
+/* full screen. #eml is an id, so it outranks the shared [data-tryit] rules and
+   the maxed geometry has to be restated here rather than inherited. */
+#eml.is-max,#eml:fullscreen,#eml:-webkit-full-screen{
+  margin:0;border-radius:0;border-top-width:3px;max-width:none;
+  padding:var(--space-4);overflow:auto}
+#eml.is-max{position:fixed;inset:0;z-index:200}

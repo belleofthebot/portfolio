@@ -15,6 +15,7 @@
 <meta property="og:title" content="Building a brand system in two days — Elizabeth Beier">
 <meta property="og:description" content="An invented packaging company needed a mark, a palette, five certification marks and a rulebook — built in two days.">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="dsx.css">
 <style>
 /* ---------------------------------------------------------------- disclosure */
 .fict{border:1px solid var(--rose); border-left-width:3px; background:var(--rose-tint);
@@ -121,6 +122,134 @@ table.rej .ok{color:var(--mint)}
 <div><span class="n">0</span><span class="l">real trademarks used</span></div>
 </div>
 
+</div>
+
+<!-- ================================== the design system, live and pushable ==
+     dsx.js holds the token model, the CIEDE2000 and CVD maths, and the
+     verdicts. Every surface in .dsx-arts reads the same custom properties the
+     real system ships, so one control moves all of them.
+     ======================================================================= -->
+<div class="wrap narrow">
+<div id="dsx" data-tryit>
+  <div class="try-bar"><span class="dsx-kick">try it</span><button type="button" class="fsbtn" data-fs aria-pressed="false"><svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path class="e" d="M1.5 5V1.5H5M9 1.5h3.5V5M12.5 9v3.5H9M5 12.5H1.5V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path class="x" d="M5 1.5V5H1.5M12.5 5H9V1.5M9 12.5V9h3.5M1.5 9H5v3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="fsl">full screen</span></button></div>
+  <h3>The design system, and the four I didn&rsquo;t choose</h3>
+  <p class="dsx-lede">CambiumPak&rsquo;s look was built with Claude across two
+  days, with me editing rather than accepting. Push it around: change the green
+  to sky blue or burnt orange, change the typeface, drop the photography to
+  black and white. Every surface below moves at once, because they all read the
+  same tokens. <b>The panel argues back.</b> Two of the four alternatives are
+  eliminated by measurement. The other two are not, and that is the more
+  interesting half.</p>
+
+  <div class="dsx-ctl">
+    <div class="dsx-grp"><span class="lab">Accent</span>
+      <div class="dsx-set dsx-accents"></div></div>
+    <div class="dsx-grp"><span class="lab">Typeface</span>
+      <div class="dsx-set dsx-fonts"></div></div>
+    <div class="dsx-grp"><span class="lab">Photography</span>
+      <div class="dsx-set dsx-photos"></div></div>
+    <button type="button" class="dsx-reset" hidden>&larr; back to what shipped</button>
+  </div>
+
+  <div class="dsx-verdict"></div>
+
+  <div class="dsx-arts">
+    <figure class="dsx-art" style="margin:0">
+      <div class="dsx-mast">
+        <span class="dsx-lock">
+          <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
+            <g stroke="currentColor" stroke-width="10" stroke-linecap="butt">
+              <path d="M50 82 A18 18 0 0 1 50 46"/><path d="M50 98 A34 34 0 0 1 50 30"/>
+              <path d="M50 54 A18 18 0 0 0 50 18"/><path d="M50 70 A34 34 0 0 0 50 2"/>
+            </g>
+          </svg>CambiumPak</span>
+        <span class="dsx-nav"><span>Products</span><span>Documents</span><span>Samples</span></span>
+      </div>
+      <div class="dsx-hero">
+        <img class="dsx-ph" src="cp-scene-board.jpg" alt="Corrugated board, close" loading="lazy">
+        <div class="dsx-heroT"><b>Ship in paper. Ship in style.</b>
+          <span>Eleven families, seventeen SKUs, forty-four documents</span></div>
+      </div>
+      <div class="dsx-btns">
+        <span class="dsx-b1">Request a sample</span>
+        <span class="dsx-b2">Download the spec sheet</span>
+        <span class="dsx-b3">Out of stock</span>
+      </div>
+      <figcaption>site masthead, hero band, button states</figcaption>
+    </figure>
+
+    <figure class="dsx-art" style="margin:0">
+      <div class="dsx-card">
+        <span class="dsx-sku">CP-MLR-1209</span>
+        <h4>Corrugated mailer</h4>
+        <p class="sub">Roll-end tuck-front, one-piece</p>
+        <div class="dsx-cardimg">
+          <img class="dsx-ph" src="cp-scene-rings.jpg" alt="Growth rings" loading="lazy">
+        </div>
+        <div class="dsx-badges">
+          <span class="dsx-bd">ChainMark</span>
+          <span class="dsx-bd">PaperCycle</span>
+          <span class="dsx-bd moss">CircleFibre 90</span>
+        </div>
+        <div class="dsx-fig"><b>90%</b><span>post-consumer recycled content,<br>band 70&ndash;100</span></div>
+      </div>
+      <figcaption>product card &middot; kraft carries the SKU, moss carries the figure</figcaption>
+    </figure>
+
+    <figure class="dsx-art" style="margin:0">
+      <div class="dsx-spec">
+        <span class="eyebrow">Specification</span>
+        <table>
+          <tr><td>Board grade, 0806 / 1209</td><td>32 ECT B-flute kraft</td></tr>
+          <tr><td>Board grade, 1814</td><td>44 ECT BC-flute kraft</td></tr>
+          <tr><td>Burst strength</td><td>1,400 kPa</td></tr>
+          <tr><td>Internal, L &times; W &times; D</td><td>305 &times; 229 &times; 76 mm</td></tr>
+        </table>
+      </div>
+      <figcaption>spec sheet fragment &middot; the table is where the typeface earns its place</figcaption>
+    </figure>
+
+    <figure class="dsx-art" style="margin:0">
+      <div class="dsx-slide">
+        <img class="dsx-ph" src="cp-scene-board.jpg" alt="" loading="lazy">
+        <div class="dsx-slideT">
+          <em>CambiumPak &middot; product deck</em>
+          <b>Corrugated mailer</b>
+          <i>Roll-end tuck-front, one-piece</i>
+        </div>
+      </div>
+      <figcaption>deck cover &middot; generated, not designed per product</figcaption>
+    </figure>
+  </div>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <filter id="dsxDuotone" color-interpolation-filters="sRGB">
+      <feColorMatrix type="matrix" values="0.2126 0.7152 0.0722 0 0
+                                           0.2126 0.7152 0.0722 0 0
+                                           0.2126 0.7152 0.0722 0 0
+                                           0 0 0 1 0"/>
+      <feComponentTransfer>
+        <feFuncR id="dsxDuoR" type="table" tableValues="0.08 0.97"/>
+        <feFuncG id="dsxDuoG" type="table" tableValues="0.24 0.96"/>
+        <feFuncB id="dsxDuoB" type="table" tableValues="0.18 0.93"/>
+      </feComponentTransfer>
+    </filter>
+  </svg>
+
+  <p class="dsx-note"><b>CambiumPak is invented</b> and so is everything in it.
+  The numbers above are computed live, not looked up: WCAG relative luminance
+  for contrast, CIEDE2000 for colour separation, and the Vi&eacute;not, Brettel
+  and Mollon 1999 transform to simulate protanopia and deuteranopia. Photography
+  is from Unsplash under its own license. <b>Moss stays green whatever you
+  pick</b>, because Moss carries recycled-content figures and nothing else. It
+  is not the accent&rsquo;s to change, and watching the 90% hold while every
+  other surface moves is brand rule two made visible. The duotone is an SVG filter built
+  from whichever accent is currently selected, which is why the pictures move
+  when the colour does.</p>
+</div>
+</div>
+
+<div class="wrap narrow">
 <div class="reading well">
 
 <div class="block"><p class="h">why it exists</p>
@@ -136,7 +265,7 @@ table.rej .ok{color:var(--mint)}
 <tr><th>name</th><th>why it was rejected</th></tr>
 <tr><td>Terrapak</td><td>Real twice — two live packaging companies. Also one letter from Tetra Pak.</td></tr>
 <tr><td>Gaiapak</td><td>Three existing packaging companies using Gaia.</td></tr>
-<tr><td>Mycelia Packaging</td><td>Mycelium packaging is a material category, not a brand — like naming a lighting firm "LED Lighting Co."</td></tr>
+<tr><td>Mycelia Packaging</td><td>Mycelium packaging is a material category, not a brand — like naming a box maker "Corrugated Box Co."</td></tr>
 <tr><td>Terracrate</td><td>Sits next to TerraCycle and Terravive, both real sustainable packaging.</td></tr>
 <tr><td>Mossbank</td><td>"Moss Packaging" exists.</td></tr>
 <tr><td>Coppice</td><td>Coppice Alupack, and coppice.net. Both packaging.</td></tr>
@@ -310,5 +439,7 @@ table.rej .ok{color:var(--mint)}
 </div></div></div>
 <footer><div class="wrap"><span>elizabeth beier · albuquerque, new mexico</span><span>designed, built, and measured by me</span></div></footer>
 </main>
+<script src="dsx.js"></script>
+<script src="tryit.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,180 @@
+/* ================================= the design system, live and pushable ==
+   Tokens scoped to #dsx, never :root, so nothing here can leak into the
+   portfolio chrome around it. The artifact surfaces below read only these
+   custom properties, which is why changing one control changes all of them.
+   ====================================================================== */
+#dsx{
+  --pine:#1E4D3B; --pine-deep:#143529; --pine-mid:#2C6B52; --pine-tint:#E8EFE9;
+  --kraft:#A87D52; --kraft-deep:#8A6138; --kraft-light:#E4D3BE;
+  --moss:#7D9161; --cpink:#232A26; --slate:#6B7168;
+  --paper:#F7F4ED; --white:#fff; --wash:#EFEBE1; --rule:#D8D3C7;
+  --badge-bd:#CFDFD4;
+  --dsx-font:'Inter','Source Sans 3','Helvetica Neue',Arial,sans-serif;
+  --bad:#9A4B36;
+
+  position:relative;background:var(--paper);color:var(--cpink);
+  border:1px solid var(--rule);border-top:3px solid var(--pine);
+  border-radius:var(--radius-card);padding:var(--space-4);margin:var(--space-4) 0;
+  font-family:var(--dsx-font);
+  transition:border-top-color .25s}
+
+#dsx .try-bar{margin-bottom:var(--space-2)}
+#dsx .fsbtn{color:var(--pine)}
+.dsx-kick{font-size:.72rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--kraft-deep)}
+#dsx h3{font-family:inherit;font-size:clamp(1.35rem,2.6vw,1.8rem);font-weight:600;
+  line-height:1.15;letter-spacing:-.5px;color:var(--pine);margin:0 0 10px;max-width:28ch;
+  transition:color .25s}
+.dsx-lede{font-size:.96rem;line-height:1.62;color:#3C443E;margin:0 0 var(--space-3);
+  max-width:72ch}
+
+/* ------------------------------------------------------------- the controls */
+.dsx-ctl{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  padding:6px 0 14px;margin-bottom:var(--space-3)}
+.dsx-grp{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;padding-top:12px}
+.dsx-grp>.lab{flex:0 0 108px;font-size:.7rem;font-weight:600;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--slate)}
+.dsx-set{display:flex;gap:6px;flex-wrap:wrap;flex:1 1 auto}
+.dsx-c{display:inline-flex;align-items:center;gap:7px;background:var(--white);
+  border:1px solid var(--rule);color:#3C443E;border-radius:5px;padding:7px 11px;
+  font-family:inherit;font-size:.82rem;cursor:pointer;
+  transition:border-color .15s,background .15s,color .15s}
+.dsx-c:hover{border-color:var(--pine)}
+.dsx-c i{width:13px;height:13px;border-radius:3px;display:block;flex:0 0 auto;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.14)}
+.dsx-c b{font-size:.6rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--kraft-deep);background:#F2E9DE;border-radius:3px;padding:2px 5px}
+.dsx-c.on{background:var(--pine);border-color:var(--pine);color:var(--paper);font-weight:600}
+.dsx-c.on b{background:rgba(255,255,255,.18);color:var(--paper)}
+.dsx-reset{margin-top:12px;background:transparent;border:1px solid var(--kraft);
+  color:var(--kraft-deep);border-radius:5px;padding:6px 12px;font-family:inherit;
+  font-size:.78rem;cursor:pointer}
+.dsx-reset:hover{background:#F2E9DE}
+
+/* ------------------------------------------------------------- the verdict */
+.dsx-verdict{margin-bottom:var(--space-4)}
+.dsx-vh{border-left:3px solid var(--pine);border-radius:0 6px 6px 0;
+  background:var(--wash);padding:14px 16px;margin-bottom:14px}
+.dsx-vh.dsx-no{border-left-color:var(--bad);background:#F6E7E2}
+.dsx-vh.dsx-hmm{border-left-color:var(--kraft);background:#F2E9DE}
+.dsx-vk{display:block;font-size:.7rem;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--kraft-deep);margin-bottom:6px}
+.dsx-no .dsx-vk{color:var(--bad)}
+.dsx-vh p,.dsx-vsm p{margin:0;font-size:.92rem;line-height:1.62;color:#3C443E;max-width:74ch}
+
+.dsx-nums{border:1px solid var(--rule);border-radius:6px;overflow:hidden;
+  background:var(--white);margin-bottom:14px}
+.dsx-m{display:grid;grid-template-columns:1fr 86px 74px 48px;gap:10px;
+  padding:9px 14px;align-items:baseline;border-top:1px solid var(--rule);font-size:.82rem}
+.dsx-m:first-child{border-top:0}
+.dsx-ml{color:#3C443E}
+.dsx-mv{font-family:'IBM Plex Mono',ui-monospace,monospace;font-weight:600;
+  color:var(--pine);text-align:right;font-size:.86rem}
+.dsx-mf,.dsx-mn{color:#9AA49C;font-size:.72rem}
+.dsx-mp{font-size:.66rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--pine);text-align:right}
+.dsx-m.bad .dsx-mv,.dsx-m.bad .dsx-mp{color:var(--bad)}
+.dsx-mn{grid-column:1/-1;margin-top:-4px}
+.dsx-two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.dsx-vsm{background:var(--wash);border-left:3px solid var(--kraft);
+  border-radius:0 6px 6px 0;padding:12px 14px}
+
+/* ------------------------------------------------------- the artifacts */
+.dsx-arts{display:grid;grid-template-columns:1.25fr 1fr;gap:16px;align-items:start}
+.dsx-art{background:var(--white);border:1px solid var(--rule);border-radius:8px;
+  overflow:hidden}
+.dsx-art>figcaption{font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+  color:#9AA49C;padding:9px 14px;border-top:1px solid var(--rule);background:var(--paper)}
+.dsx-wide{grid-column:1/-1}
+
+/* photography treatments, all three driven off one attribute */
+.dsx-ph{display:block;width:100%;height:100%;object-fit:cover;
+  transition:filter .25s}
+[data-photo="bw"] .dsx-ph{filter:grayscale(1) contrast(1.04)}
+[data-photo="duo"] .dsx-ph{filter:url(#dsxDuotone)}
+
+/* masthead + hero band */
+.dsx-mast{display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:12px 16px;border-bottom:1px solid var(--rule);flex-wrap:wrap}
+.dsx-lock{display:flex;align-items:center;gap:8px;font-weight:700;font-size:1.02rem;
+  letter-spacing:-.3px;color:var(--pine);transition:color .25s}
+.dsx-lock svg{width:22px;height:22px;display:block}
+.dsx-nav{display:flex;gap:14px;font-size:.74rem;color:var(--slate)}
+.dsx-hero{position:relative;height:190px;background:var(--wash)}
+.dsx-hero .dsx-ph{position:absolute;inset:0}
+.dsx-heroT{position:absolute;left:0;right:0;bottom:0;padding:16px;
+  background:linear-gradient(to top,rgba(20,30,24,.82),rgba(20,30,24,0));
+  color:#fff}
+.dsx-heroT b{display:block;font-size:1.3rem;font-weight:700;letter-spacing:-.4px}
+.dsx-heroT span{font-size:.78rem;opacity:.85}
+.dsx-btns{display:flex;gap:8px;padding:14px 16px;flex-wrap:wrap}
+.dsx-b1{background:var(--pine);color:#fff;border:1px solid var(--pine);border-radius:5px;
+  padding:8px 15px;font-size:.82rem;font-weight:600;transition:background .25s,border-color .25s}
+.dsx-b2{background:transparent;color:var(--pine);border:1px solid var(--pine);
+  border-radius:5px;padding:8px 15px;font-size:.82rem;font-weight:600;
+  transition:color .25s,border-color .25s}
+.dsx-b3{background:var(--wash);color:#9AA49C;border:1px solid var(--rule);
+  border-radius:5px;padding:8px 15px;font-size:.82rem}
+
+/* product card */
+.dsx-card{padding:14px 16px}
+.dsx-sku{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:.72rem;
+  font-weight:600;letter-spacing:.06em;color:var(--kraft-deep)}
+.dsx-card h4{font-family:inherit;font-size:1.06rem;font-weight:600;color:var(--pine);
+  margin:5px 0 3px;transition:color .25s}
+.dsx-card .sub{font-size:.8rem;color:var(--slate);margin:0 0 12px}
+.dsx-cardimg{height:120px;border-radius:6px;overflow:hidden;background:var(--wash);
+  margin-bottom:12px;position:relative}
+.dsx-badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.dsx-bd{font-size:.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  border-radius:3px;padding:3px 7px;background:var(--pine-tint);color:var(--pine);
+  border:1px solid var(--badge-bd);transition:background .25s,color .25s,border-color .25s}
+.dsx-bd.moss{background:#EDF1E7;color:#5C6E45;border-color:#D3DCC6}
+.dsx-fig{display:flex;align-items:baseline;gap:8px;border-top:1px solid var(--rule);
+  padding-top:11px}
+.dsx-fig b{font-size:1.9rem;font-weight:700;color:var(--moss);letter-spacing:-1px;
+  line-height:1}
+.dsx-fig span{font-size:.74rem;color:var(--slate)}
+
+/* spec fragment */
+.dsx-spec{padding:14px 16px}
+.dsx-spec .eyebrow{font-size:.66rem;font-weight:600;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--slate);display:block;margin-bottom:9px}
+.dsx-spec table{width:100%;border-collapse:collapse;font-size:.8rem}
+.dsx-spec td{padding:7px 0;border-bottom:1px solid var(--rule)}
+.dsx-spec td:last-child{text-align:right;font-weight:600;color:var(--cpink)}
+.dsx-spec td:first-child{color:var(--slate)}
+
+/* deck cover */
+.dsx-slide{aspect-ratio:16/9;background:var(--pine);position:relative;overflow:hidden;
+  transition:background .25s}
+.dsx-slide .dsx-ph{position:absolute;right:0;top:0;width:46%;height:100%;opacity:.9}
+.dsx-slideT{position:absolute;left:0;top:0;bottom:0;width:56%;padding:18px 20px;
+  display:flex;flex-direction:column;justify-content:center;color:#fff}
+.dsx-slideT em{font-style:normal;font-size:.62rem;letter-spacing:.14em;
+  text-transform:uppercase;opacity:.72;margin-bottom:7px}
+.dsx-slideT b{font-size:1.35rem;font-weight:700;letter-spacing:-.4px;line-height:1.12}
+.dsx-slideT i{font-style:normal;font-size:.76rem;opacity:.82;margin-top:6px}
+
+.dsx-note{font-size:.78rem;line-height:1.6;color:var(--slate);
+  border-top:1px solid var(--rule);margin-top:var(--space-4);padding-top:var(--space-3);
+  max-width:80ch}
+.dsx-note b{color:var(--bad);font-weight:600}
+
+/* full screen. #dsx is an id and outranks the shared [data-tryit] rules. */
+#dsx.is-max,#dsx:fullscreen,#dsx:-webkit-full-screen{
+  margin:0;border-radius:0;border-top-width:3px;max-width:none;
+  padding:var(--space-4);overflow:auto}
+#dsx.is-max{position:fixed;inset:0;z-index:200}
+
+@media(max-width:900px){
+  .dsx-arts,.dsx-two{grid-template-columns:1fr}
+  .dsx-m{grid-template-columns:1fr 76px 60px 44px;gap:6px}
+}
+@media(max-width:640px){
+  #dsx{padding:var(--space-3)}
+  .dsx-grp{flex-direction:column;gap:7px}
+  .dsx-grp>.lab{flex:0 0 auto}
+  .dsx-m{grid-template-columns:1fr auto;row-gap:2px}
+  .dsx-mf{display:none}
+}
