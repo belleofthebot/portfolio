@@ -16,7 +16,7 @@
 (function (global) {
   'use strict';
 
-  var PINE = '#1E4D3B', KRAFT = '#A87D52', INK = '#232A26',
+  var PINE = '#1E4D3B', KRAFT = '#A87D52', KRAFT_DEEP = '#8A6138', INK = '#232A26',
       PAPER = '#F7F4ED', HAIR = '#DDD5C6', MUTE = '#6E7A70';
 
   /* The taxonomy. utm_medium carries the element type, which is the whole
@@ -100,96 +100,177 @@
     return '<tr><td style="padding:' + (pad || '0 32px') + ';">' + inner + '</td></tr>';
   }
 
+  /* Right-for lines. A campaign email is not a spec sheet: the buyer wants to
+     know whether this is for them before they want to know its burst strength.
+     Invented, like the rest of CambiumPak. */
+  var USES = {
+    MLR:  ['Direct-to-consumer apparel and books', 'Anything that ships flat and makes up at the bench', 'Returns, because it closes twice'],
+    CTN:  ['Case packing and pallet shipping', 'Mixed-SKU order consolidation', 'Anything over 10kg'],
+    BWM:  ['Books, prints and framed work', 'Variable-depth items on one SKU', 'Subscription boxes'],
+    PPE:  ['Small parts, cosmetics, jewellery', 'Replacing bubble mailers outright', 'Letterbox-friendly despatch'],
+    DIV:  ['Glassware and bottled goods', 'Kitting multiple items in one carton', 'Anything that must not touch'],
+    T06:  ['Bottles, jars and cans, six-up', 'Retail-ready presentation', 'Cold chain and produce'],
+    T12:  ['High-volume bottling and canning', 'Twelve-up case packing', 'Retail-ready presentation'],
+    CNR:  ['Furniture, panels and framed goods', 'Edge protection on palletised loads', 'Anything with a corner to lose'],
+    HC24: ['Wrapping irregular shapes', 'Replacing bubble wrap on the line', 'Fragile goods with no fixed size'],
+    CR18: ['Void fill in mixed-SKU cartons', 'Gift and subscription presentation', 'Anything that rattles'],
+    TP70: ['Tamper-evident carton closure', 'High-volume despatch benches', 'Anywhere plastic tape is being designed out']
+  };
+
+  function tags(fam) {
+    return (fam.tags || []).slice(0, 4).map(function (t) {
+      return '<span style="display:inline-block;border:1px solid ' + HAIR + ';border-radius:3px;' +
+        'padding:4px 9px;margin:0 6px 6px 0;font-family:Arial,Helvetica,sans-serif;' +
+        'font-size:12px;color:' + KRAFT_DEEP + ';">' + esc(t) + '</span>';
+    }).join('');
+  }
+
   function buildEmail(fam) {
     LINKS = [];
     var camp = 'cp-' + fam.key.toLowerCase() + '-launch';
     var site = (DATA.site || 'https://cambiumpak.com').replace(/\/$/, '');
     var docs = fam.documents || {};
-    var spec = docs.spec, feat = docs.features;
-    var first = (fam.description || '').split(/(?<=\.)\s+/)[0] || fam.description || '';
-    var second = (fam.description || '').split(/(?<=\.)\s+/).slice(1, 3).join(' ');
+    var spec = docs.spec;
+    var first = (fam.description || '').split(/(?<=\.)\s+/)[0] || '';
+    var rec = fam.recycled || {};
+    var pct = rec.low_pct === rec.high_pct
+      ? rec.low_pct + '%'
+      : rec.low_pct + '–' + rec.high_pct + '%';
+    var uses = USES[fam.key] || ['Everyday despatch', 'Mixed-SKU orders', 'Anything fragile'];
+
+    /* two other families, so the mail reads as a campaign rather than a
+       one-product announcement */
+    var others = families().filter(function (f) { return f.key !== fam.key; }).slice(0, 2);
+
+    var A = 'font-family:Arial,Helvetica,sans-serif;';
+    var pad = '0 34px';
+
+    function cell(inner, p) {
+      return '<tr><td style="padding:' + (p || pad) + ';">' + inner + '</td></tr>';
+    }
 
     var head =
-      '<tr><td style="padding:26px 32px 18px;border-bottom:1px solid ' + HAIR + ';">' +
+      '<tr><td style="padding:22px 34px 16px;border-bottom:1px solid ' + HAIR + ';">' +
       '<a href="' + esc(link(site + '/', ELEMENTS.headerLogo, 'Header logo', camp)) + '" ' +
-      'style="font-family:Arial,Helvetica,sans-serif;font-size:19px;font-weight:bold;' +
-      'color:' + PINE + ';text-decoration:none;letter-spacing:-0.3px;">Cambium' +
+      'style="' + A + 'font-size:19px;font-weight:bold;color:' + PINE +
+      ';text-decoration:none;letter-spacing:-0.3px;">Cambium' +
       '<span style="color:' + KRAFT + ';">Pak</span></a></td></tr>';
 
-    /* The product shots are square-ish. At the full 600px one of them fills a
-       phone screen on its own and the copy never gets seen, so the hero sits
-       at 320 in a padded cell, centred, the way a real product email runs. */
+    /* hero photograph, full bleed */
     var hero =
-      '<tr><td align="center" style="padding:22px 32px 4px;">' +
+      '<tr><td style="padding:0;">' +
       '<a href="' + esc(link(fam.url, ELEMENTS.heroImage, 'Hero image', camp)) + '">' +
-      '<img src="' + esc(fam.cover || '') + '" width="320" alt="' + esc(fam.name) + '" ' +
-      'style="display:block;width:320px;max-width:100%;height:auto;border:0;"></a></td></tr>';
+      '<img src="cp-scene-board.jpg" width="600" alt="Corrugated board" ' +
+      'style="display:block;width:100%;max-width:600px;height:auto;border:0;"></a></td></tr>';
 
-    var body =
-      row('<h1 style="margin:0 0 6px;font-family:Arial,Helvetica,sans-serif;' +
-          'font-size:26px;line-height:1.2;color:' + PINE + ';">' + esc(fam.name) + '</h1>' +
-          '<p style="margin:0 0 16px;font-family:Arial,Helvetica,sans-serif;font-size:14px;' +
-          'color:' + KRAFT + ';text-transform:uppercase;letter-spacing:1px;">' +
-          esc(fam.tagline || '') + '</p>' +
-          '<p style="margin:0 0 14px;font-family:Arial,Helvetica,sans-serif;font-size:16px;' +
-          'line-height:1.6;color:' + INK + ';">' + esc(first) + '</p>' +
-          '<p style="margin:0 0 22px;font-family:Arial,Helvetica,sans-serif;font-size:16px;' +
-          'line-height:1.6;color:' + INK + ';">' + esc(second) + '</p>',
-          '26px 32px 0');
+    var intro = cell(
+      '<p style="margin:0 0 8px;' + A + 'font-size:12px;font-weight:bold;' +
+      'letter-spacing:1.4px;text-transform:uppercase;color:' + KRAFT_DEEP + ';">New this quarter</p>' +
+      '<h1 style="margin:0 0 4px;' + A + 'font-size:28px;line-height:1.15;color:' + PINE + ';">' +
+      esc(fam.name) + '</h1>' +
+      '<p style="margin:0 0 14px;' + A + 'font-size:15px;color:' + MUTE + ';">' +
+      esc(fam.tagline || '') + '</p>' +
+      '<p style="margin:0 0 16px;' + A + 'font-size:16px;line-height:1.62;color:' + INK + ';">' +
+      esc(first) + '</p>' + tags(fam), '26px 34px 0');
 
-    var cta = row('<div style="padding-bottom:26px;">' +
+    /* the product itself, beside what it is for */
+    var feature = cell(
+      '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" ' +
+      'style="border-collapse:collapse;margin:22px 0 0;"><tr>' +
+      '<td width="228" valign="top" style="padding:0 18px 0 0;">' +
+      '<a href="' + esc(link(fam.url, ELEMENTS.sectionImg, 'Product image', camp)) + '">' +
+      '<img src="' + esc(fam.cover || '') + '" width="228" alt="' + esc(fam.name) + '" ' +
+      'style="display:block;width:228px;max-width:100%;height:auto;border:1px solid ' +
+      HAIR + ';border-radius:4px;"></a></td>' +
+      '<td valign="top">' +
+      '<p style="margin:0 0 10px;' + A + 'font-size:12px;font-weight:bold;letter-spacing:1.2px;' +
+      'text-transform:uppercase;color:' + MUTE + ';">Right for</p>' +
+      uses.map(function (u) {
+        return '<p style="margin:0 0 8px;' + A + 'font-size:14px;line-height:1.5;color:' +
+          INK + ';">&bull;&nbsp; ' + esc(u) + '</p>';
+      }).join('') +
+      '</td></tr></table>');
+
+    var cta = cell('<div style="padding:22px 0 4px;">' +
       button(link(fam.url, ELEMENTS.cta, 'Primary call to action', camp),
              'See the range') + '</div>');
 
-    var specs = (fam.specification || []).slice(0, 3).map(function (x) {
-      return '<tr><td style="padding:7px 0;border-bottom:1px solid ' + HAIR + ';' +
-        'font-family:Arial,Helvetica,sans-serif;font-size:14px;color:' + MUTE + ';">' +
-        esc(x.label) + '</td><td style="padding:7px 0;border-bottom:1px solid ' + HAIR +
-        ';font-family:Arial,Helvetica,sans-serif;font-size:14px;color:' + INK +
-        ';text-align:right;font-weight:bold;">' + esc(x.value) + '</td></tr>';
+    /* the values half, which is why a packaging buyer opened this at all */
+    var green =
+      '<tr><td style="padding:26px 0 0;">' +
+      '<a href="' + esc(link(site + '/sustainability.html', ELEMENTS.sectionImg,
+                             'Sustainability image', camp)) + '">' +
+      '<img src="cp-scene-forest.jpg" width="600" alt="" ' +
+      'style="display:block;width:100%;max-width:600px;height:auto;border:0;"></a></td></tr>' +
+      '<tr><td style="padding:20px 34px;background:#EDF1E7;">' +
+      '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>' +
+      '<td width="140" valign="top" style="padding-right:14px;">' +
+      '<p style="margin:0;' + A + 'font-size:30px;font-weight:bold;' +
+      'color:#5C6E45;line-height:1;white-space:nowrap;">' + pct + '</p>' +
+      '<p style="margin:5px 0 0;' + A + 'font-size:11px;color:#5C6E45;">band ' +
+      esc(rec.band || '') + '</p></td>' +
+      '<td valign="top"><p style="margin:0 0 8px;' + A + 'font-size:14px;line-height:1.6;color:' +
+      INK + ';">Post-consumer recycled content, verified by mill declaration and lot ' +
+      'sampling rather than asserted on a label.</p>' +
+      '<p style="margin:0;' + A + 'font-size:13px;line-height:1.6;color:' + MUTE + ';">' +
+      'Plastic-free, kerbside recyclable, and printed water-based on uncoated kraft.</p>' +
+      '</td></tr></table></td></tr>';
+
+    /* one document, not four. A campaign asks for one thing. */
+    var docBlock = cell(
+      '<p style="margin:24px 0 10px;' + A + 'font-size:15px;line-height:1.6;color:' + INK + ';">' +
+      'Want the numbers? The spec sheet has the board grades, the burst strength and ' +
+      'the full size table.</p>' +
+      '<p style="margin:0 0 6px;' + A + 'font-size:15px;">' +
+      '<a href="' + esc(link(site + '/documents/' + (spec ? spec.file : 'spec.pdf'),
+                             ELEMENTS.doc, 'Spec sheet download', camp)) +
+      '" style="color:' + PINE + ';font-weight:bold;">Download the spec sheet</a>' +
+      '<span style="color:' + MUTE + ';">&nbsp; ' + (spec ? spec.pages : 4) + ' pages, PDF</span></p>' +
+      '<p style="margin:0;' + A + 'font-size:15px;">' +
+      '<a href="' + esc(link(site + '/samples.html', ELEMENTS.sectionLink,
+                             'Sample request link', camp)) +
+      '" style="color:' + PINE + ';">Or ask us for a sample pack</a>' +
+      '<span style="color:' + MUTE + ';">&nbsp; two working days, no charge</span></p>');
+
+    var alsoCells = others.map(function (o) {
+      return '<td width="50%" valign="top" style="padding:0 8px;">' +
+        '<a href="' + esc(link(o.url, ELEMENTS.sectionImg, 'Also new, ' + o.name, camp)) + '">' +
+        '<img src="' + esc(o.cover || '') + '" width="256" alt="' + esc(o.name) + '" ' +
+        'style="display:block;width:100%;height:auto;border:1px solid ' + HAIR +
+        ';border-radius:4px;"></a>' +
+        '<p style="margin:9px 0 0;' + A + 'font-size:14px;font-weight:bold;">' +
+        '<a href="' + esc(link(o.url, ELEMENTS.sectionLink, 'Also new link, ' + o.name, camp)) +
+        '" style="color:' + PINE + ';text-decoration:none;">' + esc(o.name) + '</a></p>' +
+        '<p style="margin:3px 0 0;' + A + 'font-size:12px;color:' + MUTE + ';">' +
+        esc(o.tagline || '') + '</p></td>';
     }).join('');
 
-    var specBlock = row(
+    var also = cell(
+      '<p style="margin:26px 0 12px;' + A + 'font-size:12px;font-weight:bold;letter-spacing:1.2px;' +
+      'text-transform:uppercase;color:' + MUTE + ';border-top:1px solid ' + HAIR +
+      ';padding-top:20px;">Also new</p>' +
       '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" ' +
-      'style="border-collapse:collapse;margin-bottom:24px;">' + specs + '</table>');
+      'style="border-collapse:collapse;"><tr>' + alsoCells + '</tr></table>' +
+      '<div style="height:26px;"></div>', '0 26px');
 
-    var docRows = [];
-    if (spec) docRows.push(['spec', spec, ELEMENTS.doc, 'Spec sheet download']);
-    if (feat) docRows.push(['features', feat, ELEMENTS.doc, 'Features sheet download']);
-    var docBlock = row(
-      '<p style="margin:0 0 10px;font-family:Arial,Helvetica,sans-serif;font-size:13px;' +
-      'text-transform:uppercase;letter-spacing:1px;color:' + MUTE + ';">The documents</p>' +
-      docRows.map(function (d) {
-        var href = site + '/documents/' + d[1].file;
-        return '<p style="margin:0 0 8px;font-family:Arial,Helvetica,sans-serif;font-size:15px;">' +
-          '<a href="' + esc(link(href, d[2], d[3], camp)) + '" style="color:' + PINE +
-          ';text-decoration:underline;">' + esc(d[1].title) + '</a>' +
-          '<span style="color:' + MUTE + ';"> &nbsp;' + d[1].pages + ' pages</span></p>';
-      }).join('') +
-      '<p style="margin:14px 0 26px;font-family:Arial,Helvetica,sans-serif;font-size:15px;">' +
-      '<a href="' + esc(link(site + '/samples.html', ELEMENTS.sectionLink,
-                             'Section text link', camp)) +
-      '" style="color:' + PINE + ';text-decoration:underline;">Request a sample</a></p>');
-
-    /* The compliance block. It is assembled here, from a constant, and there
-       is no argument, setting or model output that can remove it. */
+    /* The compliance block. Assembled from a constant, with no argument,
+       setting or model output that can remove it. */
     var footer =
-      '<tr><td style="padding:22px 32px 30px;background:#F0ECE2;' +
+      '<tr><td style="padding:22px 34px 30px;background:#F0ECE2;' +
       'border-top:1px solid ' + HAIR + ';">' +
       '<a href="' + esc(link(site + '/', ELEMENTS.footerLogo, 'Footer logo', camp)) + '" ' +
-      'style="font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:bold;' +
-      'color:' + PINE + ';text-decoration:none;">CambiumPak</a>' +
-      '<p style="margin:8px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;' +
-      'line-height:1.6;color:' + MUTE + ';">' +
+      'style="' + A + 'font-size:14px;font-weight:bold;color:' + PINE +
+      ';text-decoration:none;">CambiumPak</a>' +
+      '<p style="margin:8px 0 0;' + A + 'font-size:12px;line-height:1.6;color:' + MUTE + ';">' +
       '<a href="' + esc(link('https://www.linkedin.com/company/cambiumpak',
                              ELEMENTS.social + '-linkedin', 'Social, LinkedIn', camp)) +
       '" style="color:' + MUTE + ';">LinkedIn</a> &nbsp;&middot;&nbsp; ' +
       '<a href="' + esc(link(site + '/contact.html', ELEMENTS.footerLink,
                              'Footer link', camp)) +
       '" style="color:' + MUTE + ';">Contact</a></p>' +
-      '<p style="margin:12px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;' +
-      'line-height:1.6;color:' + MUTE + ';">You are receiving this because you ' +
-      'requested packaging information from CambiumPak.<br>' +
+      '<p style="margin:12px 0 0;' + A + 'font-size:12px;line-height:1.6;color:' + MUTE + ';">' +
+      'You are receiving this because you requested packaging information from ' +
+      'CambiumPak.<br>' +
       '<a href="' + esc(link('{{unsubscribe_url}}', 'compliance', 'Opt-out', camp)) +
       '" style="color:' + MUTE + ';text-decoration:underline;">Unsubscribe</a> &nbsp;&middot;&nbsp; ' +
       '<a href="' + esc(link('mailto:hello@cambiumpak.com', 'compliance',
@@ -199,8 +280,8 @@
 
     var preheader =
       '<div style="display:none;max-height:0;overflow:hidden;mso-hide:all;">' +
-      esc(fam.tagline || fam.name) + ' &mdash; spec sheet, comparison and samples inside.' +
-      '&#8203;'.repeat(60) + '</div>';
+      esc(fam.name) + ' is here, plus ' + pct + ' recycled fibre and a sample pack ' +
+      'on request.' + '&#8203;'.repeat(60) + '</div>';
 
     return '<!DOCTYPE html><html><head><meta charset="utf-8">' +
       '<meta name="viewport" content="width=device-width,initial-scale=1">' +
@@ -212,7 +293,7 @@
       'style="background:#E8E3D7;"><tr><td align="center" style="padding:22px 12px;">' +
       '<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" ' +
       'style="width:600px;max-width:600px;background:' + PAPER + ';border-collapse:collapse;">' +
-      head + hero + body + cta + specBlock + docBlock + footer +
+      head + hero + intro + feature + cta + green + docBlock + also + footer +
       '</table></td></tr></table></body></html>';
   }
 
