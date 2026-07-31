@@ -50,12 +50,13 @@
 .asked .cap{font-size:var(--size-small);color:var(--text-3);margin:0 0 var(--space-2);max-width:70ch}
 
 /* ---------- the wide analytics card ---------- */
-.wide{display:grid;grid-template-columns:210px 1fr;gap:var(--space-3);align-items:center;
+.wide{display:grid;grid-template-columns:340px 1fr;gap:var(--space-4);align-items:center;
   border:1px solid var(--rose);background:var(--rose-tint);border-radius:var(--radius-card);
   padding:var(--space-3);text-decoration:none;color:inherit;margin:var(--space-4) 0 var(--space-3);
   transition:filter .15s}
 .wide:hover{filter:brightness(1.07)}
-.wide .thumb{border-radius:var(--radius);overflow:hidden;height:100px;padding:0;display:block}
+.wide .thumb{border-radius:var(--radius);overflow:hidden;height:160px;padding:0;display:block}
+.wide .cpshot{width:100%;height:100%;object-fit:cover;display:block;border-radius:0}
 .wide .na{height:100%;border-radius:0;border:0}
 .wide .kick{font-family:var(--mono);font-size:.66rem;color:var(--rose);text-transform:lowercase;margin:0 0 5px}
 .wide h3{font-size:1.15rem;font-weight:500;margin:0 0 5px;line-height:1.3}
@@ -96,6 +97,9 @@
 @media(max-width:860px){
   .cprow{grid-template-columns:1fr}
   .wide{grid-template-columns:1fr}
+  /* stacked, the thumb keeps the screenshot's own ratio instead of being
+     cropped to a 160px band */
+  .wide .thumb{height:auto;aspect-ratio:1000/372}
   .brandrow{grid-template-columns:1fr;gap:var(--space-2)}
   .cphead .lock{max-width:80%}
   .cpvisit{margin-left:0}
@@ -171,7 +175,7 @@
 <div class="sec-head"><h2>Selected work</h2>
 <p>Employer projects are described rather than linked — no client data, no credentials, no proprietary figures.</p></div>
 
-<div class="group"><div class="group-h"><p class="gtitle">Work for my employer, demonstrated on a stand-in brand</p><p class="group-p">Marketing technology and analytics at a commercial LED lighting manufacturer, built in my first four months there.</p></div>
+<div class="group"><div class="group-h"><p class="gtitle">Work for my employer, demonstrated on a stand-in brand</p><p class="group-p">Marketing technology and analytics for my employer, built in my first four months there.</p></div>
 <div class="cpblock">
 
   <div class="cphead">
@@ -184,7 +188,7 @@
       <a class="cpvisit" href="https://cambiumpak.com/" target="_blank" rel="noopener">Visit the site &rarr;<small>cambiumpak.com &middot; opens in a new tab</small></a>
     </div>
     <h4>What is CambiumPak?</h4>
-    <p><strong>It isn't a real company.</strong> I'm proud of the work I did at a commercial LED lighting manufacturer and I can't show you any of it &mdash; it's confidential. So I built a stand-in: an imaginary company with a similar structure and similar needs, and then built the same systems and tools there that I built for my employer. Everything below is real work, shown on invented products.</p>
+    <p><strong>It isn't a real company.</strong> I'm proud of the work I did for my employer and I can't show you any of it &mdash; it's confidential. So I built a stand-in: an imaginary company with a similar structure and similar needs, and then built the same systems and tools there that I built for my employer. Everything below is real work, shown on invented products.</p>
     <div class="krule"></div>
     <div class="factbar">
       <b>11 product families</b><span>&middot;</span><b>17 SKUs</b><span>&middot;</span><b>44 documents</b><span>&middot;</span>
@@ -207,7 +211,7 @@
   </div>
 
   <a class="wide" href="work-analytics.html">
-    <div class="thumb"><div class="na"><div class="b"><svg viewBox="0 0 100 100"><g class="mark-sm"><path d="M50 82 A18 18 0 0 1 50 46"/><path d="M50 98 A34 34 0 0 1 50 30"/><path d="M50 54 A18 18 0 0 0 50 18"/><path d="M50 70 A34 34 0 0 0 50 2"/></g></svg><b>CambiumPak</b><i>ga4 &middot; tag manager</i></div><div class="c"><div class="bars"><i style="height:28%"></i><i style="height:42%"></i><i class="lo" style="height:34%"></i><i style="height:58%"></i><i style="height:48%"></i><i style="height:70%"></i><i style="height:62%"></i><i style="height:88%"></i></div></div></div></div>
+    <div class="thumb"><img class="cpshot" src="thumb-analytics.jpg" width="1000" height="372" loading="lazy" decoding="async" alt="The CambiumPak analytics dashboard: date range and tracking controls above four figures"></div>
     <div>
       <p class="kick">built first &middot; underpins everything</p>
       <h3>A measurement capability from zero</h3>

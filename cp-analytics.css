@@ -1,0 +1,122 @@
+/* ======================================== the analytics demonstrator ==
+   CambiumPak on the inside, belle on the outside, same terminal swap the
+   deck generator uses. Tokens scoped to #cpa rather than :root, because a
+   page-level :root is a thing you can forget to ship.
+   ==================================================================== */
+#cpa{
+  --pine:#1E4D3B; --pine-deep:#143529; --pine-soft:#8FAC9D;
+  --kraft:#A87D52; --kraft-deep:#8A6138;
+  --cpink:#232A26; --paper:#F7F4ED; --hair:#DDD5C6; --cpmute:#6E7A70;
+  --well:#FFFDF8;
+
+  position:relative;
+  background:var(--paper);color:var(--cpink);
+  border:1px solid var(--hair);border-top:3px solid var(--pine);
+  border-radius:var(--radius-card);
+  padding:var(--space-4);margin:var(--space-5) 0;
+  font-family:'Inter',Arial,Helvetica,sans-serif}
+
+.cpa-head{display:flex;gap:var(--space-4);align-items:flex-start;
+  justify-content:space-between;flex-wrap:wrap;margin-bottom:var(--space-3)}
+.cpa-headl{flex:1 1 380px;max-width:70ch}
+.cpa-kick{display:block;font-size:.72rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--kraft-deep);margin-bottom:10px}
+#cpa h3{font-family:inherit;font-size:clamp(1.4rem,2.8vw,1.85rem);font-weight:600;
+  line-height:1.14;letter-spacing:-.5px;color:var(--pine);margin:0 0 10px}
+.cpa-lede{font-size:.96rem;line-height:1.6;color:#3C443E;margin:0}
+.cpa-mark{flex:0 0 auto;width:180px;max-width:38%}
+.cpa-mark svg{width:100%;height:auto;display:block}
+
+/* controls, one row above the charts */
+.cpa-ctl{display:flex;gap:var(--space-4);align-items:center;flex-wrap:wrap;
+  border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);
+  padding:14px 0;margin-bottom:var(--space-4)}
+.cpa-ctl .lab{font-size:.7rem;font-weight:600;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--cpmute);margin-right:2px}
+.cpa-ranges,.cpa-modes{display:flex;gap:6px}
+.rb,.mb{background:var(--well);border:1px solid var(--hair);color:#3C443E;
+  border-radius:5px;padding:8px 14px;font-family:inherit;font-size:.83rem;
+  cursor:pointer;transition:background .15s,border-color .15s,color .15s}
+.rb:hover,.mb:hover{border-color:var(--pine)}
+.rb.on,.mb.on{background:var(--pine);border-color:var(--pine);color:var(--paper);
+  font-weight:600}
+
+/* tiles */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
+  margin-bottom:var(--space-4)}
+@media(max-width:900px){.tiles{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.tiles{grid-template-columns:1fr}}
+.tile{position:relative;display:flex;flex-direction:column;
+  background:var(--well);border:1px solid var(--hair);
+  border-radius:6px;padding:16px 18px 18px}
+.tile.isbuilt{border-left:3px solid var(--kraft)}
+/* two lines reserved so the four numbers sit on one baseline even when the
+   labels wrap differently; the note is pushed to the floor for the same reason */
+.tl{display:block;font-size:.72rem;font-weight:600;letter-spacing:.05em;
+  line-height:1.35;min-height:4.05em;
+  text-transform:uppercase;color:var(--cpmute);margin-bottom:10px;padding-right:60px}
+.tv{display:block;font-size:2.1rem;font-weight:600;color:var(--pine);
+  letter-spacing:-1px;line-height:1}
+.tv.na{font-size:1rem;font-weight:500;color:#9AA49C;letter-spacing:0;
+  font-style:italic}
+.td{display:block;font-size:.75rem;margin-top:8px;color:var(--cpmute)}
+.td.up{color:var(--pine)}
+.td.down{color:#9A4B36}
+.tn{display:block;font-size:.72rem;margin-top:auto;padding-top:10px;
+  color:#9AA49C;line-height:1.5}
+
+/* the provenance chip, on every tile and panel */
+.chip{position:absolute;top:14px;right:14px;font-size:.58rem;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;border-radius:3px;padding:3px 6px}
+.chip.g{background:#EDEAE0;color:var(--cpmute)}
+.chip.b{background:#E9EFE9;color:var(--pine)}
+
+/* panels */
+.panel{position:relative;background:var(--well);border:1px solid var(--hair);
+  border-radius:6px;padding:18px 20px 14px;margin-bottom:14px}
+.panel.isbuilt{border-left:3px solid var(--kraft)}
+.ph{display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:12px;padding-right:70px}
+.panel h4{font-family:inherit;font-size:1rem;font-weight:600;color:var(--pine);
+  margin:0}
+.panel .chip{top:16px}
+.empty{border:1px dashed var(--hair);border-radius:5px;padding:22px 20px;
+  font-size:.88rem;line-height:1.6;color:var(--cpmute);background:var(--paper)}
+.empty b{color:#9A4B36;font-weight:600}
+
+/* charts */
+.chart{width:100%;height:auto;display:block;overflow:visible}
+.chart .axl{font-family:'Inter',Arial,sans-serif;font-size:11px;fill:#8A928B}
+.chart .bl{font-family:'Inter',Arial,sans-serif;font-size:13px;fill:#3C443E}
+.chart .bv{font-family:'Inter',Arial,sans-serif;font-size:13px;font-weight:600;
+  fill:#1E4D3B}
+.chart .fv{font-family:'Inter',Arial,sans-serif;font-size:17px;font-weight:600;
+  fill:#1E4D3B}
+.chart .fl{font-family:'Inter',Arial,sans-serif;font-size:12px;fill:#3C443E}
+.chart .fd{font-family:'Inter',Arial,sans-serif;font-size:11px;fill:#8A928B}
+.chart .hit{cursor:crosshair}
+.chart .bar{transition:opacity .12s}
+.chart .bar:hover{opacity:.82}
+
+/* tooltip */
+.cpa-tip{position:absolute;display:none;pointer-events:none;z-index:5;
+  background:var(--pine-deep);color:var(--paper);border-radius:5px;
+  padding:8px 11px;font-size:.78rem;line-height:1.4;
+  box-shadow:0 6px 20px rgba(20,53,41,.28)}
+.cpa-tip b{display:block;font-weight:600;margin-bottom:2px}
+.cpa-tip span{color:#B9CFC2}
+
+.cpa-fine{font-size:.78rem;line-height:1.6;color:var(--cpmute);
+  border-top:1px solid var(--hair);margin-top:var(--space-3);
+  padding-top:var(--space-3);max-width:80ch}
+.cpa-fine b{color:#9A4B36;font-weight:600}
+
+@media (max-width:640px){
+  #cpa{padding:var(--space-3)}
+  .cpa-mark{width:140px}
+  .cpa-ctl{gap:var(--space-2);align-items:flex-start;flex-direction:column}
+  .ph{padding-right:0;flex-direction:column;align-items:flex-start;gap:6px}
+  .panel .chip{position:static;align-self:flex-start}
+  .chip{position:static;display:inline-block;margin-top:8px}
+  .tl{padding-right:0}
+}

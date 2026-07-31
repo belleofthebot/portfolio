@@ -15,6 +15,7 @@
 <meta property="og:title" content="Analytics infrastructure and the executive dashboard — Elizabeth Beier">
 <meta property="og:description" content="Built a company's web measurement from zero before a relaunch: governance, tracking architecture, and a dashboard the marketing team opens themselves.">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="cp-analytics.css">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://elizabethbportfolio.com/work-analytics.html">
 <meta property="og:site_name" content="Elizabeth Beier">
@@ -54,6 +55,57 @@
 <p class="pl-n">Nine steps in order — the first conversation, the measurement plan, the tags, the QA, and the report that changed a decision. Rebuilt on an invented company so the screens can be shown.</p>
 </div>
 <a class="btn" href="process-analytics.html">walk through it →</a>
+</div>
+
+
+<!-- ================================================== the dashboard ==
+     Interactive, in the browser, on invented data. cp-analytics.js holds
+     the generator, the charts and the wiring. Sits inside the existing
+     .wrap narrow, so it does not open a wrapper of its own.
+     ================================================================= -->
+<div id="cpa">
+  <div class="cpa-head">
+    <div class="cpa-headl">
+      <span class="cpa-kick">try it</span>
+      <h3>The dashboard, on invented numbers</h3>
+      <p class="cpa-lede">This is the shape of the thing I built, rebuilt on
+      CambiumPak so it can be published. Change the date range and every figure
+      moves. Then switch to <b>default install</b> and watch most of it go dark,
+      which is the honest picture of what analytics gives a manufacturer before
+      anybody does the work.</p>
+    </div>
+    <div class="cpa-mark" aria-hidden="true">
+      <svg viewBox="0 0 364 100" role="img" aria-label="CambiumPak">
+        <g transform="translate(0 6) scale(0.88)" fill="none" stroke="#1E4D3B"
+           stroke-width="10" stroke-linecap="butt">
+          <path d="M50 82 A18 18 0 0 1 50 46"/><path d="M50 98 A34 34 0 0 1 50 30"/>
+          <path d="M50 54 A18 18 0 0 0 50 18"/><path d="M50 70 A34 34 0 0 0 50 2"/>
+        </g>
+        <text x="106" y="64" font-family="Inter,Arial,sans-serif" font-weight="700"
+              font-size="40" letter-spacing="-0.6"><tspan fill="#1E4D3B">Cambium</tspan><tspan
+              fill="#A87D52">Pak</tspan></text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="cpa-ctl">
+    <span class="lab">Date range</span>
+    <div class="cpa-ranges"></div>
+    <span class="lab" style="margin-left:auto">Tracking</span>
+    <div class="cpa-modes">
+      <button type="button" class="mb on" data-mode="built">What I built</button>
+      <button type="button" class="mb" data-mode="ga4">Default install</button>
+    </div>
+  </div>
+
+  <div class="cpa-body"></div>
+  <div class="cpa-tip"></div>
+
+  <p class="cpa-fine"><b>Every number on this page is invented.</b> It comes from
+  a seeded generator, not from any real site, so the tiles agree with the charts
+  and the parts sum to the whole. CambiumPak is an invented company and this is a
+  portfolio demonstration. The dashboard it stands in for was built for an
+  employer, holds their data, and is not published anywhere.</p>
 </div>
 
 <div class="reading well">
@@ -141,7 +193,7 @@
 </div>
 
 <div class="tags"><span class="tag rose">ga4</span><span class="tag ">google tag manager</span><span class="tag ">custom javascript variables</span><span class="tag ">regex table variables</span><span class="tag ">element visibility triggers</span><span class="tag ">custom dimensions</span><span class="tag ">analytics data api</span><span class="tag ">jwt &amp; oauth</span><span class="tag ">caching &amp; batching</span><span class="tag ">least privilege</span><span class="tag ">migration planning</span><span class="tag ">access governance</span></div>
-<p class="note">This dashboard is employer owned and touches company data, so it's described here rather than linked. I can walk through the architecture, the event schema and the QA process in a conversation.</p>
+<p class="note">The real dashboard is employer owned and holds company data, so what is playable above is a rebuild of it on an invented company. I can walk through the architecture, the event schema and the QA process in a conversation.</p>
 <div class="nextprev"><a href="work-deck-generator.html">← the product deck generator</a><a href="work-email-generator.html">the email campaign generator →</a></div>
 </div>
 <div class="contact" id="contact"><div class="wrap">
@@ -156,5 +208,6 @@
 </div></div></div>
 <footer><div class="wrap"><span>elizabeth beier · albuquerque, new mexico</span><span>designed, built, and measured by me</span></div></footer>
 </main>
+<script src="cp-analytics.js"></script>
 </body>
 </html>
