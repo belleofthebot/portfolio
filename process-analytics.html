@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How the measurement got built, step by step — Elizabeth Beier</title>
+<meta name="description" content="The full process behind an analytics build: the conversation that started it, the measurement plan, the tags, the verification, and the report that changed a decision. Rebuilt on an invented company.">
+<meta name="author" content="Elizabeth Beier">
+<meta name="theme-color" content="#17121C">
+<meta property="og:title" content="How the measurement got built, step by step — Elizabeth Beier">
+<meta property="og:description" content="Nine steps from 'sessions are up and I can't do anything with that' to a report that killed a subscription. Rebuilt on an invented company so the process can be shown in full.">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ================================================================
+   process-analytics.html — page-local components
+
+   Three visual registers, on purpose:
+     1. belle chrome        — the dark page around everything
+     2. tool reconstructions — neutral light SaaS UI (--t-*)
+     3. CambiumPak artifacts — Pine on Paper (--cp-*)
+   Keeping them separate is what makes it legible whose thing
+   you are looking at at any moment.
+   ================================================================ */
+
+/* ---------------------------------------------------------- disclosure */
+.fict{border:1px solid var(--rose); border-left-width:3px; background:var(--rose-tint);
+  border-radius:var(--radius); padding:var(--space-3) var(--space-4); margin:0 0 var(--space-5)}
+.fict b{color:var(--rose); font-weight:500}
+.fict p{margin:0; font-size:var(--size-small); line-height:1.6; color:var(--text-2)}
+.fict p+p{margin-top:6px}
+.fict a{color:var(--rose)}
+
+/* ---------------------------------------------------------- steps */
+.step{border-top:1px solid var(--line); padding-top:var(--space-4); margin-top:var(--space-5)}
+.step:first-of-type{border-top:0; padding-top:0; margin-top:var(--space-4)}
+.step-h{display:flex; gap:var(--space-3); align-items:baseline; margin-bottom:var(--space-2)}
+.step-n{font-family:var(--mono); font-size:.78rem; color:var(--rose); flex:0 0 auto;
+  border:1px solid var(--rose); border-radius:999px; padding:2px 10px; line-height:1.5}
+.step-h h2{font-size:1.45rem; line-height:1.3; margin:0}
+.step > p{max-width:66ch; line-height:1.75; color:var(--text-2); margin:0 0 var(--space-2)}
+.step > p strong{color:var(--text); font-weight:500}
+.step-why{font-family:var(--mono); font-size:.76rem; line-height:1.6; color:var(--text-3);
+  text-transform:lowercase; margin:0 0 var(--space-3)}
+
+/* ---------------------------------------------------------- dialogue */
+.dlg{background:var(--panel); border:1px solid var(--line); border-left:2px solid var(--rose);
+  border-radius:var(--radius); padding:var(--space-3) var(--space-4); margin:var(--space-3) 0}
+.dlg .turn{margin:0 0 var(--space-3); max-width:64ch}
+.dlg .turn:last-child{margin-bottom:0}
+.dlg .who{display:block; font-family:var(--mono); font-size:.7rem; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--rose); margin-bottom:4px}
+.dlg .turn.me .who{color:var(--text-3)}
+.dlg .turn p{margin:0; line-height:1.7; font-size:.95rem; color:var(--text)}
+.dlg .turn.me p{color:var(--text-2)}
+
+/* ---------------------------------------------------------- screen frame */
+.ui{background:var(--tile); border:1px solid var(--line); border-radius:var(--radius-card);
+  padding:var(--space-2); margin:var(--space-3) 0 var(--space-4)}
+.ui-cap{font-family:var(--mono); font-size:.72rem; line-height:1.55; color:var(--text-3);
+  padding:10px 4px 2px; margin:0}
+.ui-cap b{color:var(--rose); font-weight:400}
+
+/* neutral tool UI — deliberately not any brand's palette */
+.t{--t-bg:#FFFFFF; --t-chrome:#F4F5F7; --t-chrome-2:#EAECEF; --t-line:#D8DBDF;
+  --t-ink:#1E2126; --t-mute:#5E656E; --t-faint:#8B929B;
+  --t-accent:#2F5D7C; --t-accent-soft:#E4EDF3;
+  --t-ok:#1C6B45; --t-ok-soft:#E1F0E8; --t-warn:#8A5A0B; --t-warn-soft:#F7EEDC;
+  background:var(--t-bg); color:var(--t-ink); border-radius:var(--radius-tile);
+  overflow:hidden; font-family:var(--sans); font-size:.82rem; line-height:1.5;
+  border:1px solid var(--t-line)}
+.t-bar{background:var(--t-chrome); border-bottom:1px solid var(--t-line);
+  padding:9px 14px; display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+.t-bar .dot{width:8px; height:8px; border-radius:999px; background:var(--t-line); flex:0 0 auto}
+.t-bar .ttl{font-size:.78rem; font-weight:500; color:var(--t-ink)}
+.t-bar .crumb{font-size:.72rem; color:var(--t-faint)}
+.t-bar .spacer{margin-left:auto}
+.t-body{padding:14px}
+.t-h{font-size:.95rem; font-weight:500; margin:0 0 3px; color:var(--t-ink)}
+.t-sub{font-size:.72rem; color:var(--t-faint); margin:0 0 12px}
+.t-sec{font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; color:var(--t-faint);
+  font-family:var(--mono); margin:16px 0 7px; padding-bottom:5px; border-bottom:1px solid var(--t-line)}
+.t-sec:first-child{margin-top:0}
+
+/* tool tables */
+table.t-tab{width:100%; border-collapse:collapse; font-size:.78rem}
+table.t-tab th,table.t-tab td{text-align:left; padding:7px 10px; border-bottom:1px solid var(--t-line);
+  vertical-align:top}
+table.t-tab th{font-size:.66rem; letter-spacing:.06em; text-transform:uppercase; color:var(--t-faint);
+  font-weight:500; background:var(--t-chrome); white-space:nowrap}
+table.t-tab td.num,table.t-tab th.num{text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap}
+table.t-tab tr:last-child td{border-bottom:0}
+table.t-tab tr.tot td{background:var(--t-chrome); font-weight:500; border-top:1px solid var(--t-line)}
+table.t-tab tr.hl td{background:var(--t-accent-soft)}
+.mono{font-family:var(--mono); font-size:.74rem}
+.t-mute{color:var(--t-mute)}
+.t-faint{color:var(--t-faint)}
+
+/* tool form fields */
+.t-field{margin-bottom:11px}
+.t-field label{display:block; font-size:.68rem; letter-spacing:.05em; text-transform:uppercase;
+  color:var(--t-faint); font-family:var(--mono); margin-bottom:4px}
+.t-input{border:1px solid var(--t-line); border-radius:4px; background:var(--t-bg);
+  padding:7px 10px; font-family:var(--mono); font-size:.76rem; color:var(--t-ink);
+  overflow-wrap:anywhere}
+.t-input.sel::after{content:'▾'; float:right; color:var(--t-faint)}
+.t-input.dim{color:var(--t-mute)}
+.t-grid2{display:grid; grid-template-columns:1fr 1fr; gap:11px}
+.t-grid3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:11px}
+
+/* pills */
+.pill{display:inline-block; font-family:var(--mono); font-size:.62rem; letter-spacing:.05em;
+  text-transform:uppercase; padding:2px 8px; border-radius:999px; white-space:nowrap}
+.pill.ok{background:var(--t-ok-soft); color:var(--t-ok)}
+.pill.warn{background:var(--t-warn-soft); color:var(--t-warn)}
+.pill.acc{background:var(--t-accent-soft); color:var(--t-accent)}
+.pill.off{background:var(--t-chrome-2); color:var(--t-faint)}
+
+/* split panes (preview mode, explore) */
+.t-split{display:grid; grid-template-columns:200px 1fr; min-height:0}
+.t-split.wide{grid-template-columns:168px 178px 1fr}
+.t-pane{border-right:1px solid var(--t-line); padding:12px; background:var(--t-chrome); min-width:0}
+.t-pane:last-child{border-right:0; background:var(--t-bg); overflow-x:auto}
+table.t-tab.tight th,table.t-tab.tight td{padding:6px 7px; font-size:.73rem}
+table.t-tab.tight th{font-size:.62rem; letter-spacing:.03em}
+.t-pane .ph{font-size:.66rem; letter-spacing:.07em; text-transform:uppercase; color:var(--t-faint);
+  font-family:var(--mono); margin:0 0 8px}
+.t-ev{font-family:var(--mono); font-size:.71rem; padding:5px 8px; border-radius:4px;
+  color:var(--t-mute); margin-bottom:3px; overflow-wrap:anywhere}
+.t-ev.on{background:var(--t-accent); color:#fff}
+.t-chip{display:block; font-family:var(--mono); font-size:.7rem; padding:4px 8px; margin-bottom:4px;
+  background:var(--t-bg); border:1px solid var(--t-line); border-radius:4px; color:var(--t-mute);
+  overflow-wrap:anywhere}
+.t-chip.on{border-color:var(--t-accent); color:var(--t-accent); background:var(--t-accent-soft)}
+.t-tabs{display:flex; gap:0; border-bottom:1px solid var(--t-line); margin:-14px -14px 12px}
+.t-tabs span{padding:9px 13px; font-size:.72rem; color:var(--t-faint); border-bottom:2px solid transparent}
+.t-tabs span.on{color:var(--t-accent); border-bottom-color:var(--t-accent); font-weight:500}
+
+/* code */
+pre.code{background:#1A1E24; color:#DDE3EA; border-radius:var(--radius-tile); padding:14px 16px;
+  overflow-x:auto; font-family:var(--mono); font-size:.74rem; line-height:1.7; margin:0}
+pre.code .k{color:#93C5E8}
+pre.code .s{color:#B7D9A8}
+pre.code .c{color:#7C8794; font-style:italic}
+
+/* ---------------------------------------------------------- misc */
+.two{display:grid; grid-template-columns:1fr 1fr; gap:var(--space-3); margin:var(--space-3) 0}
+.two > div{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:var(--space-3)}
+.two h4{font-family:var(--mono); font-size:var(--size-mono); text-transform:lowercase; font-weight:400;
+  margin:0 0 8px; color:var(--rose)}
+.two.vs > div:first-child h4{color:var(--text-3)}
+.two ul{margin:0; padding-left:18px}
+.two li{font-size:var(--size-small); line-height:1.6; color:var(--text-2); margin:0 0 7px}
+.two li:last-child{margin-bottom:0}
+.toc{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius-card);
+  padding:var(--space-3) var(--space-4); margin:0 0 var(--space-4)}
+.toc p.h{font-family:var(--mono); font-size:var(--size-mono); color:var(--rose); text-transform:lowercase; margin:0 0 10px}
+.toc ol{margin:0; padding-left:20px; columns:2; column-gap:var(--space-4)}
+.toc li{font-size:var(--size-small); line-height:1.7; color:var(--text-2); margin:0 0 3px;
+  break-inside:avoid}
+.toc a{color:var(--text-2); text-decoration:none}
+.toc a:hover{color:var(--rose)}
+
+@media(max-width:860px){
+  .t-split,.t-split.wide{grid-template-columns:1fr}
+  .t-pane{border-right:0; border-bottom:1px solid var(--t-line)}
+  .t-grid2,.t-grid3{grid-template-columns:1fr}
+  .two{grid-template-columns:1fr}
+  .toc ol{columns:1}
+}
+@media(max-width:640px){
+  .step-h{flex-direction:column; gap:8px}
+  .ui{padding:8px}
+  .t-body{padding:11px}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav"><div class="nav-in">
+<a class="mark" href="index.html">elizabeth<span class="bot">beier</span><span class="cur">_</span></a>
+<a class="link" href="index.html">work</a><a class="link" href="resume.html">résumé</a><a class="link" href="index.html#stack">stack</a><a class="link" href="index.html#about">about</a><a class="link" href="index.html#contact">contact</a></div></header>
+
+<main id="main">
+
+<div class="wrap narrow case-hero">
+  <a class="backlink" href="work-analytics.html">← back to the analytics case study</a>
+  <span class="kicker">process · analytics · rebuilt on an invented company</span>
+  <h1>How the measurement actually got built</h1>
+  <p class="meta">nine steps · one conversation, one plan, eleven tags, one report that changed a decision</p>
+  <p class="oneline">The case study says what I built. This says how, in order, with the screens — because "I built an analytics practice" is a claim, and a measurement plan with a tag behind it is evidence.</p>
+</div>
+
+<div class="wrap narrow">
+
+  <div class="fict">
+    <p><b>CambiumPak is not a real company.</b> It is an invented maker of recycled and compostable B2B packaging supplies, built so I can show this process end to end. Every product, figure, document, certification mark, stakeholder and screen on this page is fabricated. No mark named here belongs to a real standards body, and no number here is any employer's number.</p>
+    <p>The real version of this work was done under NDA for a lighting manufacturer, so I cannot publish its data, its screens or its code. <b>What is real is the sequence</b> — the order of the steps, the reasoning at each one, and the artifacts each step produces. That is the transferable part, and it is the same shape I would build on any site.</p>
+    <p>Every reconstructed interface below is a hand-built HTML recreation of the <em>layout</em> of a working analytics tool, not a screenshot of one. It carries invented data.</p>
+    <p><b>The company has a real site.</b> CambiumPak is published at <a href="https://cambiumpak.com/" target="_blank" rel="noopener">cambiumpak.com</a> — eleven product families, seventeen SKUs and forty-four downloadable documents, every one of them written for this. That site is the thing the measurement below was built against, so the events, the SKU codes and the four document types on this page all resolve to something you can go and click.</p>
+  </div>
+
+  <div class="toc">
+    <p class="h">the nine steps</p>
+    <ol>
+      <li><a href="#s1">The conversation</a></li>
+      <li><a href="#s2">What the default install could and could not answer</a></li>
+      <li><a href="#s3">The measurement plan</a></li>
+      <li><a href="#s4">The dataLayer contract</a></li>
+      <li><a href="#s5">Building the tags</a></li>
+      <li><a href="#s6">Verifying before publish</a></li>
+      <li><a href="#s7">Registering the dimensions</a></li>
+      <li><a href="#s8">The Explore that answered the question</a></li>
+      <li><a href="#s9">Handing it over as a dashboard</a></li>
+    </ol>
+  </div>
+
+<!-- ============================================================ 1 -->
+<div class="step" id="s1">
+  <div class="step-h"><span class="step-n">step 01</span><h2>The conversation, which is where measurement plans actually start</h2></div>
+  <p class="step-why">before any tool is opened · the output is a list of questions, not a list of events</p>
+
+  <p>CambiumPak was six weeks from relaunching its site. Eleven product families, seventeen SKUs, forty-four downloadable documents, a distributor portal, and <strong>five interactive tools that had never existed before</strong> — a box configurator, a material comparison tool, a right-size calculator licensed from a third party, a recycled-content credit finder, and the portal itself. The comparison tool was billed monthly.</p>
+
+  <p>I did not start by opening a tag manager. I started by sitting down with Dana Whitfield, the marketing director, and asking her what she wished she knew and currently did not. <strong>Everything downstream is an answer to something she said in that hour.</strong></p>
+
+  <div class="dlg">
+    <div class="turn"><span class="who">Dana · marketing director</span>
+      <p>I can see sessions are up. I can see the top pages. I genuinely cannot tell you what to do with either of those.</p></div>
+    <div class="turn me"><span class="who">me</span>
+      <p>Give me the question you get asked that you can't answer.</p></div>
+    <div class="turn"><span class="who">Dana</span>
+      <p>Which documents matter. We publish four sheets per product — spec, comparison, features and benefits, and the instructions. That's forty-four PDFs. Right now downloads come through as one number, so "downloads are up" is the entire insight. Up on what? For which product? Nobody can tell me.</p></div>
+    <div class="turn"><span class="who">Dana</span>
+      <p>And the portal. It looks busy. I don't know whether that's distributors, our own reps checking stock, or the fulfilment house. Those are three completely different businesses and I'm reporting them as one line.</p></div>
+    <div class="turn"><span class="who">Dana</span>
+      <p>Then the real one: <em>where do people stop?</em> Somebody lands on a family page and somebody else requests a sample, and I have no idea what happens in between or where we lose them.</p></div>
+    <div class="turn me"><span class="who">me</span>
+      <p>And the five new tools?</p></div>
+    <div class="turn"><span class="who">Dana</span>
+      <p>Eight months of work between them, and on launch day I will have no way of knowing whether a single person used any of them. One of them we pay for every month and I'd have to renew it on a feeling.</p></div>
+  </div>
+
+  <p>Four frustrations. I wrote them down as questions rather than as features, because a question survives a tooling change and a feature request does not:</p>
+
+  <div class="qa">
+    <div class="qh"><span>what she said</span><span>the question underneath it</span></div>
+    <div><span>Downloads are one number</span><span>Which documents, for which products, drive demand — and does that differ by document type?</span></div>
+    <div><span>The portal looks busy</span><span>Who is actually logging in, and is it the audience the portal was designed for?</span></div>
+    <div><span>Where do people stop?</span><span>Between landing on a product and requesting a sample, which step loses the most people?</span></div>
+    <div><span>Five new tools, no signal</span><span>Is each tool used, by whom, and does the paid one earn its renewal?</span></div>
+  </div>
+
+  <div class="diff">
+    <p class="h">the thing I would say to a hiring manager about this step</p>
+    <p>Nobody asks for an event. They describe a frustration. The skill is not tagging — the skill is hearing "the portal looks busy" and recognising it as a segmentation problem with a one-line fix, before anyone has scoped a project around it.</p>
+  </div>
+</div>
+
+<!-- ============================================================ 2 -->
+<div class="step" id="s2">
+  <div class="step-h"><span class="step-n">step 02</span><h2>What the default install could and could not answer</h2></div>
+  <p class="step-why">an honest audit before proposing work · half of what people want is already there and free</p>
+
+  <p>Before proposing anything I checked what a standard analytics install gives you for nothing, because <strong>proposing work that the platform already does is the fastest way to lose credibility in the room.</strong> Enhanced measurement was already collecting page views, scrolls, outbound clicks, site search and file downloads. That last one is the interesting case, and it is the one that shows exactly where a default install stops being useful.</p>
+
+  <p>Here is the file-download report as it actually arrived, before I built anything. It is not empty. It is worse than empty — it is <em>plausible</em>.</p>
+
+  <div class="ui">
+    <div class="t">
+      <div class="t-bar"><span class="dot"></span><span class="ttl">Analytics</span>
+        <span class="crumb">Reports › Engagement › Events › file_download</span>
+        <span class="spacer"></span><span class="pill off">default install · no configuration</span></div>
+      <div class="t-body">
+        <p class="t-h">file_download</p>
+        <p class="t-sub">Last 28 days · 4,610 events · dimension: File name</p>
+        <table class="t-tab">
+          <thead><tr><th>File name</th><th class="num">Event count</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">CambiumPak-CP-MLR-spec-sheet.pdf</td><td class="num">412</td></tr>
+            <tr><td class="mono">CambiumPak-CP-CTN-spec-sheet.pdf</td><td class="num">338</td></tr>
+            <tr><td class="mono">CambiumPak-CP-MLR-assembly-instructions.pdf</td><td class="num">264</td></tr>
+            <tr><td class="mono">CambiumPak-CP-TP-sealing-instructions.pdf</td><td class="num">209</td></tr>
+            <tr><td class="mono">CambiumPak-CP-PPE-spec-sheet.pdf</td><td class="num">205</td></tr>
+            <tr><td class="mono">CambiumPak-CP-CTN-assembly-instructions.pdf</td><td class="num">190</td></tr>
+            <tr><td class="mono t-faint">…38 more rows</td><td class="num t-faint">2,992</td></tr>
+          </tbody>
+        </table>
+        <p class="t-sub" style="margin:12px 0 0">Showing 6 of 44 rows.</p>
+      </div>
+    </div>
+    <p class="ui-cap"><b>reconstruction</b> · the default file-download report · invented company, fabricated figures. forty-four rows of filenames. technically itemised, analytically useless.</p>
+  </div>
+
+  <p>Everything you would want to ask of that table, it cannot answer. You cannot total spec sheets against instructions, because document type only exists inside a filename. You cannot roll up to a product family, because family only exists as three letters in the middle of a string. And the whole thing breaks silently the day someone renames a file — the row simply stops appearing and no error is ever raised.</p>
+
+  <div class="two vs">
+    <div>
+      <h4>free, already working, leave it alone</h4>
+      <ul>
+        <li>Page views, sessions, users, channels</li>
+        <li>Scroll depth and outbound clicks</li>
+        <li>Site search terms</li>
+        <li><em>That</em> a PDF was downloaded</li>
+      </ul>
+    </div>
+    <div>
+      <h4>needs building, and only ever by hand</h4>
+      <ul>
+        <li><strong>Which</strong> document, as a type rather than a filename</li>
+        <li>Which product and family it belonged to</li>
+        <li>Who logged into the portal, by customer type</li>
+        <li>Whether each of the five tools was used, and whether use succeeded</li>
+        <li>Every step between landing and a sample request</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>That right-hand column is the project. It is also, precisely, Dana's four questions — which is how I knew the scope was right rather than invented.</p>
+</div>
+
+<!-- ============================================================ 3 -->
+<div class="step" id="s3">
+  <div class="step-h"><span class="step-n">step 03</span><h2>The measurement plan, written before a single tag existed</h2></div>
+  <p class="step-why">one document · signed off by marketing and IT before build · it is an intake form, not documentation</p>
+
+  <p>This is the artifact I care most about and the one most analytics work skips. It is a single document with one row per event, and <strong>the leftmost column is the business question.</strong> If a row cannot name the decision it informs, it does not get built — which is how you end up with a property that answers questions instead of one that collects everything and answers nothing.</p>
+
+  <p>It also names the parameters up front, and that matters more than it looks: a parameter you did not think of on day one is not recoverable on day ninety. You cannot backfill it.</p>
+
+  <div class="ui">
+    <div class="t">
+      <div class="t-bar"><span class="dot"></span><span class="ttl">CambiumPak — web measurement plan</span>
+        <span class="crumb">v1.0 · pre-relaunch · owner: marketing</span>
+        <span class="spacer"></span><span class="pill acc">approved · marketing + IT</span></div>
+      <div class="t-body">
+        <table class="t-tab">
+          <thead><tr>
+            <th style="width:27%">Business question</th><th style="width:17%">Event</th>
+            <th>Key parameters</th><th style="width:12%">Registered as</th><th style="width:8%">Pri</th>
+          </tr></thead>
+          <tbody>
+            <tr class="hl"><td>Which documents, for which products, drive demand?</td>
+              <td class="mono">document_download</td>
+              <td class="mono t-mute">doc_type · product_sku · product_family · source_page</td>
+              <td class="t-mute">4 dimensions</td><td><span class="pill ok">P1</span></td></tr>
+            <tr class="hl"><td>Who is actually logging into the portal?</td>
+              <td class="mono">portal_login</td>
+              <td class="mono t-mute">customer_type · account_tier · first_login</td>
+              <td class="t-mute">3 dimensions</td><td><span class="pill ok">P1</span></td></tr>
+            <tr><td>Does the configurator get used, and does it succeed?</td>
+              <td class="mono">configurator_start<br>configurator_complete</td>
+              <td class="mono t-mute">box_style · material · recycled_pct (banded) · outcome</td>
+              <td class="t-mute">4 dimensions</td><td><span class="pill ok">P1</span></td></tr>
+            <tr><td>Is the paid comparison tool worth renewing?</td>
+              <td class="mono">material_compare</td>
+              <td class="mono t-mute">materials_compared · compare_count</td>
+              <td class="t-mute">2 dimensions</td><td><span class="pill ok">P1</span></td></tr>
+            <tr><td>The conversion everything else predicts.</td>
+              <td class="mono">sample_request</td>
+              <td class="mono t-mute">product_context · form_type</td>
+              <td class="t-mute">2 dimensions</td><td><span class="pill ok">P1</span></td></tr>
+            <tr><td>Do buyers care about recycled-content credits, or do we only think so?</td>
+              <td class="mono">credit_finder_search</td>
+              <td class="mono t-mute">credit_scheme · region</td>
+              <td class="t-mute">2 dimensions</td><td><span class="pill acc">P2</span></td></tr>
+            <tr><td>Is anyone reaching the calculator we license?</td>
+              <td class="mono">rightsize_launch</td>
+              <td class="mono t-mute">source_page</td>
+              <td class="t-mute">1 dimension</td><td><span class="pill warn">P2 · limited</span></td></tr>
+          </tbody>
+        </table>
+        <p class="t-sub" style="margin:14px 0 0"><strong>P2 · limited</strong> — the right-size calculator is a third-party embed. Launches are measurable from our side; what happens inside it is not. Recorded as a known boundary rather than a gap to be closed later.</p>
+      </div>
+    </div>
+    <p class="ui-cap"><b>reconstruction</b> · the measurement plan · the leftmost column is the entry requirement. an event with an empty question column does not get built.</p>
+  </div>
+
+  <div class="diff">
+    <p class="h">the judgment call in this table</p>
+    <p>That last row is a decision not to build something. The calculator is a vendor component that regenerates its element IDs on every render — DOM-based tracking against it would appear to work perfectly and then break silently on the vendor's next release, at which point the report keeps showing a number and the number is wrong. Silent wrong data is worse than no data. I shipped a launch count, wrote the boundary into the plan, and said so out loud. <strong>Declining to build fragile tracking is a harder call than building it, and nobody thanks you for it until eighteen months later.</strong></p>
+  </div>
+</div>
+
+<!-- ============================================================ 4 -->
+<div class="step" id="s4">
+  <div class="step-h"><span class="step-n">step 04</span><h2>The dataLayer contract, agreed with the web vendor</h2></div>
+  <p class="step-why">the step people skip · if the push is ad hoc, every later step inherits the mess</p>
+
+  <p>Some of this could have been scraped off the DOM. Most of it should not be. Anything read out of markup is a promise the front end never made, and the front end will break it the first time someone reorders a template. So before the vendor wrote a line, I gave them the exact shape of what to push, and it went into the build as a requirement rather than a favour.</p>
+
+  <pre class="code"><span class="c">// Fired when a document is downloaded, from anywhere on the site.</span>
+<span class="c">// Values come from the product record, never from the filename.</span>
+window.dataLayer.push({
+  <span class="k">event</span>: <span class="s">'document_download'</span>,
+  <span class="k">doc_type</span>: <span class="s">'spec'</span>,              <span class="c">// spec | comparison | features | instructions</span>
+  <span class="k">product_sku</span>: <span class="s">'CP-MLR-1208'</span>,
+  <span class="k">product_family</span>: <span class="s">'mailer'</span>,     <span class="c">// so roll-ups need no lookup table</span>
+  <span class="k">source_page</span>: <span class="s">'family'</span>          <span class="c">// family | compare | portal | search</span>
+});
+
+<span class="c">// Fired once, after authentication resolves. Never on page load.</span>
+window.dataLayer.push({
+  <span class="k">event</span>: <span class="s">'portal_login'</span>,
+  <span class="k">customer_type</span>: <span class="s">'distributor_rep'</span>,  <span class="c">// internal | distributor_rep | fulfilment | brand</span>
+  <span class="k">account_tier</span>: <span class="s">'tier_2'</span>,
+  <span class="k">first_login</span>: <span class="s">false</span>                <span class="c">// true once, ever — activation, not traffic</span>
+});</pre>
+
+  <div class="two">
+    <div>
+      <h4>why product_family is in there</h4>
+      <ul>
+        <li>Without it, every roll-up needs a join against a SKU list somebody has to maintain.</li>
+        <li>Nobody maintains it.</li>
+        <li>Within a year the reporting quietly stops matching the catalogue and no one notices which one is wrong.</li>
+        <li>One extra key at push time costs nothing and removes that failure mode permanently.</li>
+      </ul>
+    </div>
+    <div>
+      <h4>why recycled_pct is banded before it is sent</h4>
+      <ul>
+        <li>The brand system states recycled content as a band — <span class="mono">0–39 / 40–69 / 70–100</span> — never as an implied precision.</li>
+        <li>Sending the raw figure would let a report make a claim the certification does not support.</li>
+        <li>Banding at the push is the only place it can be enforced for everyone downstream.</li>
+        <li>Governance you have to remember is governance that fails. Put it in the contract.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ 5 -->
+<div class="step" id="s5">
+  <div class="step-h"><span class="step-n">step 05</span><h2>Building the tags, by hand, one at a time</h2></div>
+  <p class="step-why">no auto-events, no plugins · every tag specified, built, then tested before the next one starts</p>
+
+  <p>Eleven tags, nine variables, seven triggers. Three are worth showing because each solves a different class of problem: mapping a messy input to a clean one, passing structured parameters through, and reading something the page already knows but never told anyone.</p>
+
+  <p><strong>First, the one that fixes Dana's forty-four rows.</strong> A lookup table maps a filename pattern to a document type. This is the fallback path — the dataLayer contract from step 04 is the primary source — but legacy links, emailed PDFs and links inside the portal do not always go through it, and a fallback that produces a clean value beats a fallback that produces a filename.</p>
+
+  <div class="ui">
+    <div class="t">
+      <div class="t-bar"><span class="dot"></span><span class="ttl">Tag manager</span>
+        <span class="crumb">Variables › User-defined › RegEx table</span>
+        <span class="spacer"></span><span class="pill acc">workspace: measurement-v1</span></div>
+      <div class="t-body">
+        <div class="t-grid2">
+          <div class="t-field"><label>Variable name</label><div class="t-input">var — doc type from filename</div></div>
+          <div class="t-field"><label>Variable type</label><div class="t-input sel">RegEx table</div></div>
+        </div>
+        <div class="t-field"><label>Input variable</label><div class="t-input">{{Click URL}}</div></div>
+        <p class="t-sec">Pattern → output</p>
+        <table class="t-tab">
+          <thead><tr><th style="width:52%">Pattern</th><th>Output</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">-spec-sheet\.pdf$</td><td class="mono">spec</td></tr>
+            <tr><td class="mono">-comparison-sheet\.pdf$</td><td class="mono">comparison</td></tr>
+            <tr><td class="mono">-features-and-benefits\.pdf$</td><td class="mono">features</td></tr>
+            <tr><td class="mono">-(assembly|use|handling|fitting|wrapping|filling|sealing)-instructions\.pdf$</td><td class="mono">instructions</td></tr>
+            <tr><td class="mono">-document-map\.pdf$</td><td class="mono">internal</td></tr>
+          </tbody>
+        </table>
+        <div class="t-field" style="margin-top:12px"><label>Default value</label>
+          <div class="t-input dim">unclassified</div></div>
+        <p class="t-sub" style="margin:10px 0 0">Ignore case: off · Full matches only: off</p>
+      </div>
+    </div>
+    <p class="ui-cap"><b>reconstruction</b> · the lookup that collapses 44 filename rows into 4 reportable types.</p>
+  </div>
+
+  <p>Two details in that table are the whole difference between a variable that works and one that rots. The fourth row alternates seven verbs, because <strong>the fourth document in each product pack is not always called the same thing</strong> — four families assemble, the rest use, handle, fit, wrap, fill or seal, because that is what the product actually asks of the packer. A pattern matching only "assembly" would have silently dropped seven families out of the report.</p>
+
+  <p>And the default is <span class="mono">unclassified</span>, not empty. An unclassified row is visible in a report and someone investigates it. An empty value looks like nothing happened, and nobody investigates nothing.</p>
+
+  <p><strong>Second, the tag itself,</strong> passing the parameters through as named fields rather than jamming them into the event name:</p>
+
+  <div class="ui">
+    <div class="t">
+      <div class="t-bar"><span class="dot"></span><span class="ttl">Tag manager</span>
+        <span class="crumb">Tags › GA4 event › document_download</span>
+        <span class="spacer"></span><span class="pill ok">tested in preview</span></div>
+      <div class="t-body">
+        <div class="t-grid2">
+          <div class="t-field"><label>Tag name</label><div class="t-input">GA4 — document_download</div></div>
+          <div class="t-field"><label>Measurement ID</label><div class="t-input">{{const — GA4 measurement ID}}</div></div>
+        </div>
+        <div class="t-field"><label>Event name</label><div class="t-input">document_download</div></div>
+        <p class="t-sec">Event parameters</p>
+        <table class="t-tab">
+          <thead><tr><th style="width:34%">Parameter</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">doc_type</td><td class="mono">{{dlv — doc_type}} <span class="t-faint">|| {{var — doc type from filename}}</span></td></tr>
+            <tr><td class="mono">product_sku</td><td class="mono">{{dlv — product_sku}}</td></tr>
+            <tr><td class="mono">product_family</td><td class="mono">{{dlv — product_family}}</td></tr>
+            <tr><td class="mono">source_page</td><td class="mono">{{dlv — source_page}}</td></tr>
+          </tbody>
+        </table>
+        <p class="t-sec">Triggering</p>
+        <div class="t-field"><div class="t-input">Custom event · <span class="t-mute">event equals</span> document_download</div></div>
+        <div class="t-field"><div class="t-input">Click — link · <span class="t-mute">Click URL ends with</span> .pdf <span class="pill off" style="margin-left:6px">fallback</span></div></div>
+        <p class="t-sub" style="margin:10px 0 0">Blocking trigger: none. Deduplication handled by the fallback trigger excluding pages where the dataLayer push is present.</p>
+      </div>
+    </div>
+    <p class="ui-cap"><b>reconstruction</b> · the event tag · one event name, four parameters. never <span class="mono">download_spec_sheet_pdf</span>.</p>
+  </div>
+
+  <p>The naming rule underneath this is worth stating because it is the single most common way an analytics property becomes unusable: <strong>events are things a person did, parameters are the details.</strong> The moment you write <span class="mono">download_spec_sheet_pdf</span> you have put a parameter into the event name, and you will never be able to total downloads again without a regular expression and an apology.</p>
+
+  <p><strong>Third, the one that turned a cross-vendor project into six lines.</strong> Portal login segmentation was scoped as backend work with an external development partner — expose the user role through an API, wire it in, timeline in months. Before agreeing to that, I opened the post-login page and read the markup. The role was already there, on the body element, put there by the theme so it could style the navigation.</p>
+
+  <div class="ui">
+    <div class="t">
+      <div class="t-bar"><span class="dot"></span><span class="ttl">Tag manager</span>
+        <span class="crumb">Variables › User-defined › Custom JavaScript</span>
+        <span class="spacer"></span><span class="pill acc">var — customer type</span></div>
+      <div class="t-body">
+<pre class="code">function() {
+  <span class="c">// The portal theme already writes the role onto &lt;body&gt; to style the nav.</span>
+  <span class="c">// Read it rather than commissioning an API to tell us what the page knows.</span>
+  var m = document.body.className.match(/\brole-([a-z_]+)\b/);
+  <span class="k">if</span> (!m) <span class="k">return</span> <span class="s">'unresolved'</span>;   <span class="c">// never '' — an empty value hides itself</span>
+
+  <span class="k">var</span> map = {
+    staff: <span class="s">'internal'</span>, rep: <span class="s">'distributor_rep'</span>,
+    threepl: <span class="s">'fulfilment'</span>, brand: <span class="s">'brand'</span>
+  };
+  <span class="k">return</span> map[m[1]] || <span class="s">'unmapped_'</span> + m[1];  <span class="c">// a new role shows up named, not as noise</span>
+}</pre>
+      </div>
+    </div>
+    <p class="ui-cap"><b>reconstruction</b> · six lines, no backend ticket, no vendor dependency.</p>
+  </div>
+
+  <p>The <span class="mono">unmapped_</span> prefix is deliberate. When someone adds a role in eighteen months — and they will, without telling marketing — it appears in the report as <span class="mono">unmapped_auditor</span> rather than being quietly folded into a bucket where it corrupts a segment nobody thinks to re-check.</p>
+
+  <div class="diff">
+    <p class="h">the pattern behind all three</p>
+    <p>Every one of these fails loudly rather than quietly. <span class="mono">unclassified</span>, <span class="mono">unresolved</span>, <span class="mono">unmapped_*</span>. Analytics does not usually break with an error — it breaks by continuing to produce a number that has stopped being true. Designing the failure states is most of the engineering.</p>
+  </div>
+</div>
+
+<!-- ============================================================ 6 -->
+<div class="step" id="s6">
+  <div class="step-h"><span class="step-n">step 06</span><h2>Verifying before publish, and keeping the receipt</h2></div>
+  <p class="step-why">nothing is published on the strength of "the tag went green" · fired ≠ arrived ≠ correct</p>
+
+  <p>A tag firing tells you a tag fired. It does not tell you the parameters resolved, and it certainly does not tell you the platform accepted them. Those are three separate claims and I check them separately. Preview mode first — trigger the interaction on staging, then read the resolved values, not the tag list.</p>
+
+  <div class="ui">
+    <div class="t">
+      <div class="t-bar"><span class="dot"></span><span class="ttl">Tag Assistant — preview</span>
+        <span class="crumb">connected to staging.cambiumpak.example</span>
+        <span class="spacer"></span><span class="pill ok">● connected</span></div>
+      <div class="t-split">
+        <div class="t-pane">
+          <p class="ph">Event stream</p>
+          <div class="t-ev">Container Loaded</div>
+          <div class="t-ev">DOM Ready</div>
+          <div class="t-ev">Window Loaded</div>
+          <div class="t-ev on">document_download</div>
+          <div class="t-ev">Click</div>
+        </div>
+        <div class="t-pane">
+          <div class="t-tabs"><span>Tags</span><span class="on">Variables</span><span>Data Layer</span><span>Errors</span></div>
+          <p class="t-sub" style="margin:0 0 10px">Variables set on <span class="mono">document_download</span> — the values as the tag will actually send them.</p>
+          <table class="t-tab">
+            <thead><tr><th style="width:38%">Variable</th><th>Resolved value</th></tr></thead>
+            <tbody>
+              <tr class="hl"><td class="mono">dlv — doc_type</td><td class="mono">spec</td></tr>
+              <tr class="hl"><td class="mono">dlv — product_sku</td><td class="mono">CP-MLR-1208</td></tr>
+              <tr class="hl"><td class="mono">dlv — product_family</td><td class="mono">mailer</td></tr>
+              <tr><td class="mono">dlv — source_page</td><td class="mono">family</td></tr>
+              <tr><td class="mono">var — doc type from filename</td><td class="mono t-faint">spec <span class="pill off">fallback, unused</span></td></tr>
+              <tr><td class="mono">Click URL</td><td class="mono t-mute">/assets/docs/CambiumPak-CP-MLR-spec-sheet.pdf</td></tr>
+            </tbody>
+          </table>
+          <p class="t-sec">Tags fired on this event</p>
+          <table class="t-tab">
+            <tbody>
+              <tr><td>GA4 — document_download</td><td class="num"><span class="pill ok">succeeded</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <p class="ui-cap"><b>reconstruction</b> · preview mode, variables tab. i read this tab, not the tags tab — a tag can fire perfectly and send an empty string.</p>
+  </div>
+
+  <p>Note what the fallback row proves: the lookup table resolved to the same value the dataLayer supplied. Agreement between the primary path and the fallback is a much stronger signal than either one working alone, and it takes no extra effort to check while you are already looking at the pane.</p>
+
+  <p><strong>Then Realtime,</strong> because preview proves the browser sent something and Realtime proves the platform received and parsed it. Between those two claims sits every consent tool, ad blocker, and dropped parameter I have ever had to debug.</p>
+
+  <div class="ui">
+    <div class="t">
+      <div class="t-bar"><span class="dot"></span><span class="ttl">Analytics</span>
+        <span class="crumb">Reports › Realtime</span>
+        <span class="spacer"></span><span class="pill ok">● 1 user in last 30 min</span></div>
+      <div class="t-body">
+        <div class="t-grid3">
+          <div>
+            <p class="t-sec">Event count by event name</p>
+            <table class="t-tab"><tbody>
+              <tr><td class="mono">document_download</td><td class="num">1</td></tr>
+              <tr><td class="mono">page_view</td><td class="num">3</td></tr>
+              <tr><td class="mono">session_start</td><td class="num">1</td></tr>
+            </tbody></table>
+          </div>
+          <div>
+            <p class="t-sec">Parameter: doc_type</p>
+            <table class="t-tab"><tbody>
+              <tr class="hl"><td class="mono">spec</td><td class="num">1</td></tr>
+            </tbody></table>
+            <p class="t-sec">Parameter: product_family</p>
+            <table class="t-tab"><tbody>
+              <tr class="hl"><td class="mono">mailer</td><td class="num">1</td></tr>
+            </tbody></table>
+          </div>
+          <div>
+            <p class="t-sec">QA pass — 30 July</p>
+            <table class="t-tab"><tbody>
+              <tr><td>Tag fires</td><td class="num"><span class="pill ok">pass</span></td></tr>
+              <tr><td>Params resolve</td><td class="num"><span class="pill ok">pass</span></td></tr>
+              <tr><td>Event received</td><td class="num"><span class="pill ok">pass</span></td></tr>
+              <tr><td>Params received</td><td class="num"><span class="pill ok">pass</span></td></tr>
+              <tr><td>No duplicate fire</td><td class="num"><span class="pill ok">pass</span></td></tr>
+              <tr><td>Fires on all 11 families</td><td class="num"><span class="pill ok">pass</span></td></tr>
+              <tr><td>Screenshot filed</td><td class="num"><span class="pill ok">done</span></td></tr>
+            </tbody></table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="ui-cap"><b>reconstruction</b> · realtime confirming the parameters arrived, alongside the pass list run against every tag before the container version was published.</p>
+  </div>
+
+  <div class="diff">
+    <p class="h">why the screenshot row exists</p>
+    <p>Every verified tag was screenshotted and filed before publish. Not for me — for the conversation eleven weeks later that starts "was this tracking live at launch?" On a relaunch you are one party among several, and the difference between "I'm fairly sure we tested that" and a dated screenshot sent to the web vendor at the time is the difference between a discussion and an argument. It costs four seconds per tag.</p>
+  </div>
+</div>
+
+<!-- ============================================================ 7 -->
+<div class="step" id="s7">
+  <div class="step-h"><span class="step-n">step 07</span><h2>Registering the dimensions, which is not optional and is not retroactive</h2></div>
+  <p class="step-why">the quiet step that decides whether any of the previous six were worth doing</p>
+
+  <p>A parameter that is collected but not registered as a custom dimension is <strong>invisible in reporting.</strong> The data is arriving, it is in the payload, and it does not appear in a single report or exploration. People discover this months later, register the dimension, and find it populates from that day forward and not one day earlier. <strong>Registration is not retroactive.</strong> There is no backfill, no support ticket, no recovery.</p>
+
+  <p>So this happened on the same day the tags were built, not after the first month of data.</p>
+
+  <div class="ui">
+    <div class="t">
+      <div class="t-bar"><span class="dot"></span><span class="ttl">Analytics</span>
+        <span class="crumb">Admin › Data display › Custom definitions</span>
+        <span class="spacer"></span><span class="pill acc">12 event-scoped · 2 user-scoped</span></div>
+      <div class="t-body">
+        <table class="t-tab">
+          <thead><tr><th>Dimension name</th><th>Scope</th><th>Parameter</th><th>Created</th><th class="num">Status</th></tr></thead>
+          <tbody>
+            <tr><td>Document type</td><td>Event</td><td class="mono">doc_type</td><td class="t-faint">30 Jul</td><td class="num"><span class="pill ok">collecting</span></td></tr>
+            <tr><td>Product SKU</td><td>Event</td><td class="mono">product_sku</td><td class="t-faint">30 Jul</td><td class="num"><span class="pill ok">collecting</span></td></tr>
+            <tr><td>Product family</td><td>Event</td><td class="mono">product_family</td><td class="t-faint">30 Jul</td><td class="num"><span class="pill ok">collecting</span></td></tr>
+            <tr><td>Source page</td><td>Event</td><td class="mono">source_page</td><td class="t-faint">30 Jul</td><td class="num"><span class="pill ok">collecting</span></td></tr>
+            <tr class="hl"><td>Customer type</td><td>User</td><td class="mono">customer_type</td><td class="t-faint">30 Jul</td><td class="num"><span class="pill ok">collecting</span></td></tr>
+            <tr><td>Account tier</td><td>User</td><td class="mono">account_tier</td><td class="t-faint">30 Jul</td><td class="num"><span class="pill ok">collecting</span></td></tr>
+            <tr><td>Configurator outcome</td><td>Event</td><td class="mono">outcome</td><td class="t-faint">30 Jul</td><td class="num"><span class="pill ok">collecting</span></td></tr>
+            <tr><td>Box style</td><td>Event</td><td class="mono">box_style</td><td class="t-faint">30 Jul</td><td class="num"><span class="pill ok">collecting</span></td></tr>
+            <tr><td class="t-faint">…6 more</td><td class="t-faint">Event</td><td class="t-faint">—</td><td class="t-faint">30 Jul</td><td class="num"><span class="pill ok">collecting</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p class="ui-cap"><b>reconstruction</b> · custom definitions, registered the same day the tags were built. <span class="mono">customer_type</span> is user-scoped, not event-scoped — see below.</p>
+  </div>
+
+  <p><strong>The highlighted row is a real decision, not a checkbox.</strong> <span class="mono">customer_type</span> is registered at user scope rather than event scope. Event scope would tell you the customer type of the login event; user scope attaches it to everything that person subsequently does in the session. That is the difference between "1,240 logins, 58% distributor reps" and being able to ask <em>which documents distributor reps download</em> — which is the question Dana was actually circling when she said the portal looked busy. One radio button, and it determines whether half the interesting questions are answerable at all.</p>
+</div>
+
+<!-- ============================================================ 8 -->
+<div class="step" id="s8">
+  <div class="step-h"><span class="step-n">step 08</span><h2>The Explore that answered her question, and one it answered by accident</h2></div>
+  <p class="step-why">free-form exploration · rows, columns, one metric, and reading the totals carefully</p>
+
+  <p>Once the dimensions were populating I built the report Dana actually asked for: which documents, for which products. A free-form exploration — product family down the side, document type across the top, sessions as the metric. Deliberately sessions rather than event count, for a reason that turns out to matter enormously.</p>
+
+  <div class="ui">
+    <div class="t">
+      <div class="t-bar"><span class="dot"></span><span class="ttl">Analytics — Explore</span>
+        <span class="crumb">Free-form · Documents by family and type</span>
+        <span class="spacer"></span><span class="pill acc">last 90 days</span></div>
+      <div class="t-split wide">
+        <div class="t-pane">
+          <p class="ph">Variables</p>
+          <span class="t-chip on">Product family</span>
+          <span class="t-chip on">Document type</span>
+          <span class="t-chip">Product SKU</span>
+          <span class="t-chip">Source page</span>
+          <span class="t-chip">Customer type</span>
+          <p class="ph" style="margin-top:14px">Metrics</p>
+          <span class="t-chip on">Sessions</span>
+          <span class="t-chip">Event count</span>
+          <span class="t-chip">Total users</span>
+        </div>
+        <div class="t-pane">
+          <p class="ph">Tab settings</p>
+          <p class="t-sub" style="margin:0 0 4px">Technique</p>
+          <span class="t-chip on">Free form</span>
+          <p class="t-sub" style="margin:10px 0 4px">Rows</p>
+          <span class="t-chip on">Product family</span>
+          <p class="t-sub" style="margin:10px 0 4px">Columns</p>
+          <span class="t-chip on">Document type</span>
+          <p class="t-sub" style="margin:10px 0 4px">Values</p>
+          <span class="t-chip on">Sessions</span>
+          <p class="t-sub" style="margin:10px 0 4px">Filters</p>
+          <span class="t-chip">event = document_download</span>
+        </div>
+        <div class="t-pane">
+          <table class="t-tab tight">
+            <thead><tr>
+              <th>Product family</th><th class="num">Spec</th><th class="num">Comp.</th>
+              <th class="num">Feat.</th><th class="num">Instr.</th><th class="num">Sessions</th>
+            </tr></thead>
+            <tbody>
+              <tr><td>Corrugated mailer</td><td class="num">412</td><td class="num">96</td><td class="num">118</td><td class="num">264</td><td class="num">561</td></tr>
+              <tr><td>Shipping carton, RSC</td><td class="num">338</td><td class="num">71</td><td class="num">84</td><td class="num">190</td><td class="num">447</td></tr>
+              <tr><td>Water-activated tape</td><td class="num">174</td><td class="num">38</td><td class="num">47</td><td class="num">209</td><td class="num">341</td></tr>
+              <tr><td>Paper-padded envelope</td><td class="num">205</td><td class="num">44</td><td class="num">61</td><td class="num">152</td><td class="num">318</td></tr>
+              <tr><td>Moulded pulp tray, 6 cav.</td><td class="num">121</td><td class="num">52</td><td class="num">39</td><td class="num">88</td><td class="num">214</td></tr>
+              <tr><td class="t-faint">…6 more families</td><td class="num t-faint">402</td><td class="num t-faint">119</td><td class="num t-faint">137</td><td class="num t-faint">278</td><td class="num t-faint">—</td></tr>
+              <tr class="tot"><td>Totals</td><td class="num">1,652</td><td class="num">420</td><td class="num">486</td><td class="num">1,181</td><td class="num">1,742</td></tr>
+            </tbody>
+          </table>
+          <p class="t-sub" style="margin:12px 0 0">Sessions is de-duplicated. A session appearing in two columns is counted once in the Totals column.</p>
+        </div>
+      </div>
+    </div>
+    <p class="ui-cap"><b>reconstruction</b> · the free-form exploration · invented figures. the answer to her question is the body of the table. the more interesting finding is in the last column.</p>
+  </div>
+
+  <p><strong>Her question, answered.</strong> Spec sheets and instructions dominate. The comparison sheet is the least-downloaded document in every single family, without exception — and the comparison sheet is the one whose entire job is to help somebody decide whether this is the right format. The document built to win the specification decision was the one nobody was finding. That is a navigation problem wearing a content problem's clothes, and it went straight onto the website roadmap.</p>
+
+  <p><strong>Then the last column.</strong> Because the metric is sessions and sessions de-duplicate, the row cells and the row total say two different things — and the gap between them is a finding nobody asked for.</p>
+
+  <div class="statrow">
+    <div><span class="n">3,739</span><span class="l">document-type downloads across all families</span></div>
+    <div><span class="n">1,742</span><span class="l">distinct sessions that downloaded anything</span></div>
+    <div><span class="n">2.15</span><span class="l">sheets per downloading session, on average</span></div>
+    <div><span class="n">4</span><span class="l">separate PDFs to answer one specification</span></div>
+  </div>
+
+  <p>The cells sum to 3,739. The de-duplicated session total is 1,742. So <strong>the average session that downloaded anything took 2.15 of the four sheets</strong> — and since no session can take more than four, at least 38% of them provably took more than one. The true figure is certainly higher; 38% is only the floor the arithmetic guarantees, and I quoted the floor rather than the estimate because the floor is the part I can defend.</p>
+
+  <p>That is not a documentation preference. It is the four-sheet structure working exactly as designed and being, for the buyer, exactly as painful as it looks: the board grade is on the spec sheet, the warranty term is on the features sheet, the make-up time is on the instructions, and the recycled band is on the comparison sheet. Nobody set out to make a buyer open four PDFs. It is what happens when four documents each have one owner and nobody measures the seam between them.</p>
+
+  <div class="diff">
+    <p class="h">honest limitation, and it belongs on the page</p>
+    <p>I also used free-form to answer "where do people stop?" — event names down the rows in buying order, sessions as the metric, and read the drop between steps. <strong>That is a step comparison, not a funnel.</strong> It tells you how many sessions reached each step; it does not prove the same sessions moved between them in that order, and it will not show you someone who arrived at step three from a search result without ever seeing step one. It was enough to point at the largest gap, which was the question being asked. It would not be enough to claim a conversion rate, and I did not claim one.</p>
+  </div>
+</div>
+
+<!-- ============================================================ 9 -->
+<div class="step" id="s9">
+  <div class="step-h"><span class="step-n">step 09</span><h2>Handing it over as something she opens herself</h2></div>
+  <p class="step-why">the last five percent · a report nobody opens has not changed a decision</p>
+
+  <p>An exploration is a thing an analyst opens. Dana is not an analyst, and a report that requires me to run it is a report that stops existing the week I am busy. So the last step is the handover: the same queries, standing, behind a login, with a date range and an export — a dashboard she opens on a Monday without asking anyone.</p>
+
+  <p>That build is its own story — the API auth, the caching, the query batching — and it is written up separately, with a working version you can click through.</p>
+
+  <div class="protolink">
+    <div>
+      <span class="kicker">demonstrator · working</span>
+      <p class="pl-t">The CambiumPak executive dashboard</p>
+      <p class="pl-n">The dashboard these events feed, built on the same invented company. Period filters, stat tiles, the tool sparklines, and the finding that killed a subscription.</p>
+    </div>
+    <a class="btn" href="demo/cambiumpak-dashboard.html">open the dashboard →</a>
+  </div>
+
+  <div class="protolink">
+    <div>
+      <span class="kicker">demonstrator · the model</span>
+      <p class="pl-t">The measurement model underneath it</p>
+      <p class="pl-n">The full event-to-question table, the parameter schemas, and the five governance rules written before the first tag.</p>
+    </div>
+    <a class="btn ghost" href="demo/cambiumpak-model.html">open the model →</a>
+  </div>
+
+  <div class="outcome">
+    <p class="h">what the nine steps produced</p>
+    <ul>
+      <li><strong>Four questions in, four questions answerable out.</strong> Every event traces to a line Dana said in step 01, and nothing was built that could not name the decision it informed.</li>
+      <li><strong>Forty-four filename rows became four document types</strong> that roll up by family without a lookup table anyone has to maintain.</li>
+      <li><strong>A portal login became a segment</strong> — six lines of JavaScript instead of a cross-vendor backend project, registered at user scope so it colours everything else that person does.</li>
+      <li><strong>Five new tools went from no measurable signal to individually reportable</strong> on day one of the relaunch, including the one billed monthly, whose renewal now rests on usage rather than on a feeling.</li>
+      <li><strong>One finding nobody asked for</strong> — the average downloading session needed 2.15 of the four sheets — which is now the business case for a website change, and came out of choosing sessions over event count.</li>
+    </ul>
+  </div>
+
+  <div class="diff">
+    <p class="h">the part I would want asked about in an interview</p>
+    <p>Step 01 and step 07. The conversation, because that is where the scope is set and everything downstream is either an answer to it or waste. And the dimension registration, because it is a five-minute admin screen that silently determines whether the previous six steps produced anything usable at all — and it is the mistake I have most often been called in to find, months after it stopped being fixable.</p>
+  </div>
+</div>
+
+  <div class="tags">
+    <span class="tag rose">ga4</span><span class="tag">google tag manager</span><span class="tag">measurement planning</span>
+    <span class="tag">datalayer contracts</span><span class="tag">regex table variables</span><span class="tag">custom javascript variables</span>
+    <span class="tag">custom dimensions</span><span class="tag">event &amp; user scope</span><span class="tag">preview &amp; realtime qa</span>
+    <span class="tag">free-form explorations</span><span class="tag">stakeholder interviewing</span><span class="tag">analytics governance</span>
+  </div>
+
+  <p class="note">The real version of this work was done for my employer, under NDA, on a lighting manufacturer's site. Its data, screens and code stay private — so this page rebuilds the process on an invented company instead, with fabricated figures throughout. I am glad to walk through the real event schema, the QA process and the architecture in a conversation.</p>
+
+  <div class="nextprev">
+    <a href="work-analytics.html">← the analytics case study</a>
+    <a href="work-deck-generator.html">the deck generator →</a>
+  </div>
+</div>
+
+<div class="contact" id="contact"><div class="wrap">
+  <p class="avail"><span class="pulse-dot"></span> open to marketing operations, analytics and martech roles</p>
+  <h2>Let's talk.</h2>
+  <p>Remote, or Albuquerque and hybrid. If you want the architecture behind any of the work here, ask me and I will walk you through it.</p>
+  <div class="contact-links">
+    <a class="clink primary" href="mailto:elizabethbportfolio@gmail.com">elizabethbportfolio@gmail.com</a>
+    <a class="clink" href="resume.html">résumé</a>
+    <a class="clink" href="https://github.com/belleofthebot" target="_blank" rel="noopener">github</a>
+    <a class="clink" href="https://www.instagram.com/paintingthesouthwest/" target="_blank" rel="noopener">instagram</a>
+  </div>
+</div></div>
+
+<footer><div class="wrap">
+  <span>elizabeth beier · albuquerque, new mexico</span>
+  <span>cambiumpak is invented · every figure on this page is fabricated</span>
+</div></footer>
+
+</main>
+</body>
+</html>

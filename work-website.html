@@ -3,73 +3,80 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>A website reimagining, delivered in weeks, without voiding the contract — Elizabeth Beier</title>
-<meta name="description" content="Given a CEO's vision and a site that could not be touched without contractual risk, I read the agreement first and then delivered inside it.">
+<title>A website reimagining, without voiding the contract — Elizabeth Beier</title>
+<meta name="description" content="A CEO's vision, an agency-built site still under warranty, and a deadline. The first move was reading the agreement.">
 <meta name="author" content="Elizabeth Beier">
 <meta name="theme-color" content="#17121C">
-<meta property="og:title" content="A website reimagining, delivered in weeks, without voiding the contract — Elizabeth Beier">
-<meta property="og:description" content="Given a CEO's vision and a site that could not be touched without contractual risk, I read the agreement first and then delivered inside it.">
+<meta property="og:title" content="A website reimagining, without voiding the contract — Elizabeth Beier">
+<meta property="og:description" content="A CEO's vision, an agency-built site still under warranty, and a deadline. The first move was reading the agreement.">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body class="">
 <a class="skip" href="#main">Skip to content</a>
 <header class="nav"><div class="nav-in">
-<a class="mark" href="index.html">belleofthe<span class="bot">bot</span><span class="cur">_</span></a>
+<a class="mark" href="index.html">elizabeth<span class="bot">beier</span><span class="cur">_</span></a>
 <a class="link" href="index.html">work</a><a class="link" href="resume.html">résumé</a><a class="link" href="index.html#stack">stack</a><a class="link" href="index.html#about">about</a><a class="link" href="index.html#contact">contact</a></div></header>
 <main id="main">
 <div class="wrap narrow case-hero">
 <a class="backlink" href="index.html">← back to work</a>
 <span class="kicker">case study · web</span>
-<h1>A website reimagining, delivered in weeks, without voiding the contract</h1>
-<p class="meta">a commercial led lighting manufacturer · 2026 · agency built site under active contract</p>
-<p class="oneline">Given a CEO's vision and a site that could not be touched without contractual risk, I read the agreement first and then delivered inside it.</p>
+<h1>A website reimagining, without voiding the contract</h1>
+<p class="meta">a commercial led lighting manufacturer · 2026 · agency-built site under active contract</p>
+<p class="oneline">A CEO's vision, a site that couldn't be touched without contractual risk, and a deadline.</p>
 </div>
 <div class="wrap narrow">
 
+<div class="statrow">
+<div><span class="n">v2.20</span><span class="l">production CSS, versioned and changelogged</span></div>
+<div><span class="n">9</span><span class="l">documented sections in the stylesheet</span></div>
+<div><span class="n">~200 → few</span><span class="l">force-override declarations, cut by using specificity</span></div>
+<div><span class="n">0</span><span class="l">child theme files touched</span></div>
+</div>
+
 <div class="reading well">
 <div class="block"><p class="h">the problem</p>
-<p>Leadership wanted to fundamentally change the look and feel of the newly relaunched website, built by an external agency under contract. Both obvious paths were bad: commission the agency, which is slow and expensive, or start editing theme files, which is fast and potentially a contract and warranty breach.</p></div>
+<p>Leadership wanted to change the look and feel of the newly relaunched website, built by an external agency under contract. Both obvious paths were bad: commission the agency, which is slow and expensive, or start editing theme files, which is fast and a possible contract and warranty breach.</p></div>
 
-<div class="block"><p class="h">the first move was not design, it was reading the contract</p>
-<p>Before touching anything I reviewed the agency agreement to establish exactly which layers could be modified in house without voiding the warranty or breaching scope. That set a working boundary: presentation layer changes internally, anything requiring child theme modification routed to the agency. Every subsequent decision sat inside it.</p></div>
+<div class="block"><p class="h">the first move was reading the contract</p>
+<p>Before touching anything I reviewed the agency agreement to establish which layers could be modified in house without voiding the warranty. That set the boundary: presentation-layer changes internally, anything needing child theme modification routed to the agency.</p></div>
 
 <div class="block"><p class="h">what I delivered</p>
 <ul>
-<li>Home and About pages fundamentally reworked, using AI as a design and development accelerant. These are the pages every customer and distributor lands on first.</li>
-<li>Full bleed banner imagery sourced and produced, plus all new icons.</li>
-<li>A production CSS system versioned to v2.20, covering hero treatment, trust bar and icon columns, footer, solutions tiles and spotlights, industry tiles with floating SVG icons, responsive breakpoints, typography, and a scoped sustainability banner.</li>
+<li>Home and About pages reworked — the pages every customer and distributor lands on first.</li>
+<li>Full-bleed banner imagery sourced and produced, plus all new icons.</li>
+<li>A production CSS system versioned to v2.20 covering hero treatment, trust bar and icon columns, footer, solutions tiles and spotlights, industry tiles with floating SVG icons, responsive breakpoints, typography, and a scoped sustainability banner.</li>
 </ul></div>
 
-<div class="block"><p class="h">the engineering discipline inside the css</p>
+<div class="block"><p class="h">the discipline inside the css</p>
 <ul>
-<li><strong>Specificity over force.</strong> Force override declarations cut from roughly two hundred to a handful by using doubled and tripled class selectors instead. Every remaining exception is individually commented with its justification.</li>
-<li><strong>Structured and changelogged.</strong> Nine documented sections with version history in the file header, so it is maintainable by someone who is not me. That is the actual test.</li>
-<li><strong>Fragility flagged, not hidden.</strong> One selector depends on homepage section order and will break if that order changes. Identified, documented in the handoff, escalated to the agency with a request for a dedicated class.</li>
+<li><strong>Specificity over force.</strong> Force-override declarations cut from roughly two hundred to a handful by using doubled and tripled class selectors instead. Every remaining exception is commented with its justification.</li>
+<li><strong>Structured and changelogged.</strong> Nine documented sections with version history in the file header, so it's maintainable by someone who isn't me.</li>
+<li><strong>Fragility flagged, not hidden.</strong> One selector depends on homepage section order and will break if that order changes. Documented in the handoff and escalated to the agency with a request for a dedicated class.</li>
 <li><strong>Scope boundary held.</strong> Child theme files never touched. A running list of required changes compiled and quoted to the agency instead.</li>
 </ul></div>
 
 <div class="block"><p class="h">then enablement, then measurement</p>
-<p>A step by step adoption guide so the team could actually use the new site, because the work does not stop at handoff. And the dashboard from the analytics build closed the loop, so the company can evaluate objectively whether the redesign performed rather than arguing about taste.</p></div>
+<p>A step-by-step adoption guide so the team could use the new site. And the dashboard from the analytics build closed the loop, so the company can evaluate whether the redesign performed rather than arguing about taste.</p></div>
 
 <div class="outcome"><p class="h">outcome</p>
 <ul>
-<li>Delivered on deadline by one person, working across design, front end, and agency coordination.</li>
+<li>Delivered on deadline by one person, across design, front end, and agency coordination.</li>
 <li>The agency investment and its warranty stayed intact.</li>
-<li>One of two company wide recognition awards I received in my first four months.</li>
+<li>One of two company-wide recognition awards I received in my first four months.</li>
 </ul></div>
 
-<div class="diff"><p class="h">what I would do differently</p>
-<p>I would have asked the agency for dedicated hook classes at the start of the engagement rather than after I found the order dependent selector. Ten minutes of scoping at kickoff would have removed the one fragile thing in an otherwise durable system.</p></div>
+<div class="diff"><p class="h">what I'd do differently</p>
+<p>I'd have asked the agency for dedicated hook classes at the start rather than after I found the order-dependent selector. Ten minutes of scoping at kickoff would have removed the one fragile thing in an otherwise durable system.</p></div>
 </div>
 
-<div class="tags"><span class="tag rose">production css architecture</span><span class="tag ">contractual literacy</span><span class="tag ">vendor management</span><span class="tag ">ai accelerated delivery</span><span class="tag ">art direction</span><span class="tag ">documentation &amp; enablement</span></div>
+<div class="tags"><span class="tag rose">production css</span><span class="tag ">specificity architecture</span><span class="tag ">vendor management</span><span class="tag ">contract scope</span><span class="tag ">wordpress theme boundaries</span><span class="tag ">enablement &amp; documentation</span><span class="tag ">art direction</span></div>
 
-<div class="nextprev"><a href="work-email-generator.html">← the email campaign generator</a><a href="work-rebrand.html">a rebrand in march, the biggest growth month in april →</a></div>
+<div class="nextprev"><a href="work-email-generator.html">← the email campaign generator</a><a href="index.html">back to work →</a></div>
 </div>
 <div class="contact" id="contact"><div class="wrap">
 <p class="avail"><span class="pulse-dot"></span> open to marketing operations, analytics and martech roles</p>
 <h2>Let's talk.</h2>
-<p>Remote, or Albuquerque and hybrid. If you want the architecture behind any of the work here, ask me and I will walk you through it.</p>
+<p>Remote, or Albuquerque and hybrid. Happy to walk through the architecture behind any of this.</p>
 <div class="contact-links">
 <a class="clink primary" href="mailto:elizabethbportfolio@gmail.com">elizabethbportfolio@gmail.com</a>
 <a class="clink" href="resume.html">résumé</a>

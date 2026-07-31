@@ -1,107 +1,79 @@
-# Wardrobe
+# belleofthebot — Elizabeth Beier's portfolio
 
-A jewel-toned professional capsule wardrobe, and every outfit it makes.
+Marketing technology, analytics and marketing operations. Hand-built, static, no
+build step, no framework, no recurring cost.
 
-118 pieces. 269 outfits, 158 of which use only things already owned. Tap any single
-piece to see every outfit it appears in.
-
-Ported from Netlify to Vercel so it can be improved incrementally.
+**Live:** https://elizabethbportfolio.com
 
 ---
 
-## Deploying it
+## What's here
 
-**1. Make the repo.** On GitHub, new repository — `wardrobe` is a good name. Upload
-everything in this folder: `index.html`, `api/`, `images/`, `package.json`,
-`vercel.json`, `.gitignore`.
+A static site. Every page is hand-written HTML against one stylesheet
+(`styles.css`, the *terminal rose, plum night* brand system) with two self-hosted
+web fonts. There is no bundler, no generator and no dependency to install — open
+`index.html` from the filesystem and it works.
 
-**2. Import it to Vercel.** Add New → Project → pick the repo. Framework preset
-**Other**, no build command, output directory left alone. Deploy. The look book
-works immediately. The stylist will politely refuse until step 3 and 4.
+### The case studies
 
-**3. Give the stylist somewhere to keep her receipts.** In the Vercel project:
-Storage → add a **Redis** store (Upstash) → connect it to this project. That injects
-`KV_REST_API_URL` and `KV_REST_API_TOKEN` automatically. `UPSTASH_REDIS_REST_URL`
-and `UPSTASH_REDIS_REST_TOKEN` work too, whichever names appear.
-
-This is what the spending limit is counted in. Without it the function refuses to
-call the API at all, on purpose — see below.
-
-**4. Add your key.** Settings → Environment Variables:
-
-| Name | Value |
+| Page | Work |
 |---|---|
-| `ANTHROPIC_API_KEY` | your key |
-| `STYLIST_BUDGET_USD` | `50` (optional, this is the default) |
+| `work-analytics.html` | Analytics infrastructure and an executive dashboard, built from zero before a relaunch |
+| `work-deck-generator.html` | A product deck generator — a manual build collapsed into a four-field form |
+| `work-email-generator.html` | An email campaign generator with compliance enforced in code |
+| `work-website.html` | A website reimagining inside an existing agency contract |
+| `work-bookspot.html` | Bookspot — UX/UI for visiting real places from fiction |
+| `work-drive-505.html` | Drive the 505 — a shipped PWA for nervous drivers |
+| `work-studio.html` | StudioKeeper — a studio dashboard across five revenue channels |
+| `work-rebrand.html` | A rebrand in March; the strongest growth month came in April |
+| `work-ipl.html` | Content operations for a mission-driven nonprofit |
+| `work-passage.html` | Passage — care-companion app concept |
 
-Redeploy after adding variables so the function picks them up.
+### Process write-ups
 
----
+Four of the case studies were built for an employer under NDA, so their data,
+screens and code cannot be published. Each one instead gets a **process page**
+that rebuilds the work step by step on an invented company, **CambiumPak**, with
+fabricated figures throughout:
 
-## How the $50 limit works
+- `process-analytics.html` — nine steps from the first stakeholder conversation
+  to the report that changed a decision, with every tool screen rebuilt in HTML.
 
-Every reply reports how many tokens it used. The function converts that to dollars,
-adds it to a running total in Redis, and returns the remaining balance, which shows
-up as a quiet line at the top of the chat panel. When the total reaches the budget,
-the stylist stops answering and says she has spent her allowance and is lying down.
+### Demonstrators
 
-**Rates.** Priced at $3 per million input tokens and $15 per million output tokens
-by default. Check those against current pricing and override with
-`PRICE_IN_PER_MTOK` and `PRICE_OUT_PER_MTOK` if they have moved. The total is an
-estimate, not an invoice — treat it as a ceiling with a safety margin, not accounting.
+- `demo/cambiumpak-dashboard.html` — a working executive dashboard on invented data
+- `demo/cambiumpak-model.html` — the measurement model underneath it
 
-**Topping it up.** Open the Redis store's data browser and set `wardrobe:spend`
-back to `0`, or to whatever you have already spent. Raising `STYLIST_BUDGET_USD`
-works too.
+### Runnable prototypes
 
-**Why it fails closed.** If the Redis variables are missing, the function returns an
-error instead of calling the API. An endpoint that spends money with no counter
-attached is how you find out later that someone else enjoyed your key.
-
----
-
-## Other guards
-
-- **The system prompt lives here, not in the browser.** The old version sent the
-  persona and personal profile from page source with every request, which meant two
-  things: anyone could read it, and anyone could POST a *different* system prompt to
-  the endpoint and use it as a free Claude proxy. The function now supplies its own
-  and ignores whatever a caller sends.
-- **Rate limits.** 8 requests per minute and 40 per day per IP, so one person cannot
-  drain the budget in an afternoon.
-- **Input caps.** Last 8 messages, 1200 characters each, 600 max output tokens.
+- `proto/bookspot-app.html`
+- `proto/studiokeeper.html`
+- `drive-the-505/` — a self-contained PWA
 
 ---
 
-## What changed in the port
+## CambiumPak is invented
 
-| | Before | Now |
-|---|---|---|
-| Host | Netlify | Vercel |
-| Function | `netlify/functions/stylist.js` | `api/stylist.js` |
-| Endpoint | `/.netlify/functions/stylist` | `/api/stylist` |
-| System prompt | sent from the browser | server side |
-| Spending | unlimited | capped, tracked, reported |
-| Images | 130 PNG, 20.1 MB | 130 JPEG, 2.9 MB |
-| Filename case | 7 references wrong | fixed |
+CambiumPak is a fictional maker of recycled and compostable B2B packaging
+supplies. It exists so that work done under NDA can be demonstrated without
+publishing anyone's data. Every product, figure, document, certification mark and
+test result attributed to it is fabricated, and no certification mark named
+anywhere in this repository belongs to a real standards body.
 
-Those seven filenames matter more than they look. macOS does not care about
-capitalisation; Linux does. `lip_Diva.png` on disk as `lip_diva.png` loads fine
-locally and 404s the moment it is deployed. One filename also had a space in it,
-now hyphenated.
+Each page that uses it says so, above the fold.
 
 ---
 
-## Files
+## Running it
 
-```
-index.html          the whole app: data, styles, logic
-api/stylist.js      the serverless function, the persona, the spending limit
-images/             130 pieces, hair, lips, nails
-package.json        one dependency, the Anthropic SDK
-vercel.json         a year of cache on the images
-```
+Clone and open `index.html`. That is the whole procedure.
 
-Everything is in `index.html` — the wardrobe object, the outfits, the styles and the
-logic. That is fine at this size and will stop being fine. When it does, the split
-worth making first is the data: `wardrobe.js`, `outfits-owned.js`, `outfits-full.js`.
+Deployed from `main` by Vercel — push to `main` and the site rebuilds. There is no
+build step to run and no framework to install. `vercel.json` sets a cache header
+and nothing else.
+
+---
+
+## Contact
+
+elizabethbportfolio@gmail.com · Albuquerque, New Mexico

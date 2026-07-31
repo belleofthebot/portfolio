@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The measurement model behind the dashboard — Elizabeth Beier</title>
+<meta name="description" content="The event design, parameter schema, and governance rules behind an executive dashboard, drawn on an invented company.">
+<meta name="theme-color" content="#17121C">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../styles.css">
+<style>
+.fict{border:1px solid var(--rose); border-left-width:3px; background:var(--rose-tint);
+  border-radius:var(--radius); padding:var(--space-3) var(--space-4); margin:0 0 var(--space-5)}
+.fict b{color:var(--rose); font-weight:500}
+.fict p{margin:0; font-size:var(--size-small); line-height:1.6; color:var(--text-2)}
+.fict p+p{margin-top:6px}
+
+/* ---------------------------------------------------------------- well */
+.well{background:#F5F1EC; color:#2A2430; border-radius:var(--radius-card);
+  padding:var(--space-5) var(--space-4); margin:var(--space-4) 0}
+.well h2{font-size:1.35rem; font-weight:500; margin:0 0 6px; color:#2A2430}
+.well .sub{font-family:var(--mono); font-size:.74rem; color:#8B8092; margin:0 0 var(--space-4)}
+.well h3{font-size:1rem; font-weight:500; margin:var(--space-4) 0 var(--space-2); color:#2A2430}
+.well p{font-size:.92rem; line-height:1.7; color:#3A343E; max-width:66ch}
+
+/* ---------------------------------------------------------------- pipeline */
+.pipe{display:grid; grid-template-columns:repeat(5,1fr); gap:0; align-items:stretch; margin:var(--space-3) 0 var(--space-2)}
+.pstep{position:relative; min-width:0; overflow-wrap:anywhere;
+  padding:var(--space-3) 14px var(--space-3) 20px;
+  background:#FBF8F4; border:1px solid #DCD2C6; border-right:0}
+.pstep:first-child{border-radius:8px 0 0 8px; padding-left:14px}
+.pstep:last-child{border-right:1px solid #DCD2C6; border-radius:0 8px 8px 0}
+.pstep::after{content:''; position:absolute; right:-9px; top:50%; width:16px; height:16px;
+  transform:translateY(-50%) rotate(45deg); background:#FBF8F4;
+  border-top:1px solid #DCD2C6; border-right:1px solid #DCD2C6; z-index:2}
+.pstep:last-child::after{display:none}
+.pstep .num{font-family:var(--mono); font-size:.64rem; letter-spacing:.12em; color:#AE5A47; display:block; margin-bottom:6px}
+.pstep .ttl{font-size:.86rem; font-weight:500; color:#2A2430; display:block; line-height:1.35}
+.pstep .dsc{font-family:var(--mono); font-size:.66rem; color:#8B8092; display:block; margin-top:6px; line-height:1.5}
+
+/* ---------------------------------------------------------------- tables */
+table.m{width:100%; border-collapse:collapse; font-size:.87rem; margin-top:var(--space-2)}
+table.m th,table.m td{text-align:left; padding:10px 12px; border-bottom:1px solid #DCD2C6; vertical-align:top}
+table.m th{font-family:var(--mono); font-size:.66rem; letter-spacing:.09em; text-transform:uppercase;
+  color:#8B8092; font-weight:400}
+table.m td:first-child{font-family:var(--mono); font-size:.78rem; color:#AE5A47; white-space:nowrap}
+table.m tr:last-child td{border-bottom:0}
+.paid{display:inline-block; font-family:var(--mono); font-size:.6rem; letter-spacing:.07em;
+  text-transform:uppercase; background:#F3E6C8; color:#7A5A12; padding:2px 6px; border-radius:999px; margin-left:7px}
+
+/* ---------------------------------------------------------------- schema */
+.schema{background:#FBF8F4; border:1px solid #DCD2C6; border-radius:8px; padding:var(--space-3); margin-top:var(--space-2)}
+.schema .ev{font-family:var(--mono); font-size:.8rem; color:#AE5A47; margin:0 0 var(--space-2)}
+.schema dl{display:grid; grid-template-columns:auto 1fr; gap:6px var(--space-3); margin:0; font-size:.83rem}
+.schema dt{font-family:var(--mono); font-size:.76rem; color:#2A2430}
+.schema dd{margin:0; color:#5F5566}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:var(--space-2)}
+
+/* ---------------------------------------------------------------- rules */
+.rules{counter-reset:r; display:grid; gap:var(--space-2); margin-top:var(--space-2)}
+.rule{position:relative; padding-left:38px; font-size:.9rem; line-height:1.65; color:#3A343E}
+.rule::before{counter-increment:r; content:counter(r); position:absolute; left:0; top:0;
+  width:24px; height:24px; border-radius:50%; background:#AE5A47; color:#F5F1EC;
+  font-family:var(--mono); font-size:.7rem; display:grid; place-items:center}
+.rule b{color:#2A2430; font-weight:500}
+
+@media (max-width:860px){
+  .pipe{grid-template-columns:1fr}
+  .pstep{border-right:1px solid #DCD2C6; border-bottom:0; border-radius:0}
+  .pstep:first-child{border-radius:8px 8px 0 0}
+  .pstep:last-child{border-radius:0 0 8px 8px}
+  .pstep::after{right:auto; left:50%; top:auto; bottom:-9px; transform:translateX(-50%) rotate(135deg)}
+  .grid2{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav"><div class="nav-in">
+<a class="mark" href="../index.html">elizabeth<span class="bot">beier</span><span class="cur">_</span></a>
+<a class="link" href="../index.html">work</a><a class="link" href="../resume.html">résumé</a><a class="link" href="../index.html#stack">stack</a><a class="link" href="../index.html#about">about</a><a class="link" href="../index.html#contact">contact</a></div></header>
+
+<main id="main">
+<div class="wrap narrow case-hero">
+  <a class="backlink" href="cambiumpak-dashboard.html">← back to the dashboard</a>
+  <span class="kicker">demonstrator · measurement model</span>
+  <h1>What the dashboard is standing on</h1>
+  <p class="lede">A dashboard is the last five percent of the work. This is the other ninety five: what gets measured, what each measurement carries with it, and the rule that decides whether it gets built at all.</p>
+</div>
+
+<div class="wrap narrow">
+  <div class="fict">
+    <p><b>Same invented company.</b> CambiumPak makes recycled and compostable B2B packaging. Every event name, parameter and number here was written for this demonstration.</p>
+    <p>The architecture is the real deliverable and it is portable — this is the shape I would build on any site. Only the products are made up.</p>
+    <p>Those products are published at <a href="https://cambiumpak.com/" target="_blank" rel="noopener" style="color:var(--rose)">cambiumpak.com</a>, which is what every event below is designed to measure.</p>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="well">
+    <h2>How a click becomes a number someone can act on</h2>
+    <p class="sub">five steps · nothing here is a plugin</p>
+    <div class="pipe">
+      <div class="pstep"><span class="num">01</span><span class="ttl">Interaction</span>
+        <span class="dsc">someone finishes a box configuration</span></div>
+      <div class="pstep"><span class="num">02</span><span class="ttl">dataLayer push</span>
+        <span class="dsc">event name plus its parameters, written to a documented contract</span></div>
+      <div class="pstep"><span class="num">03</span><span class="ttl">Tag manager</span>
+        <span class="dsc">trigger and variables, versioned, with a staging container</span></div>
+      <div class="pstep"><span class="num">04</span><span class="ttl">Analytics property</span>
+        <span class="dsc">registered dimensions, retention set deliberately</span></div>
+      <div class="pstep"><span class="num">05</span><span class="ttl">Dashboard panel</span>
+        <span class="dsc">the question it was built to answer</span></div>
+    </div>
+    <p>Step 02 is the one people skip. If the push is ad hoc, every later step inherits the mess, and you find out eighteen months later when someone asks a question the data cannot answer.</p>
+  </div>
+
+  <div class="well">
+    <h2>Every event is tied to a live business question</h2>
+    <p class="sub">if an event cannot name the decision it informs, it does not ship</p>
+    <table class="m">
+      <thead><tr><th style="width:230px">Event</th><th>The question it answers</th></tr></thead>
+      <tbody>
+        <tr><td>configurator_start</td><td>Does the box configurator get used at all, and by whom?</td></tr>
+        <tr><td>configurator_complete</td><td>Do configurations succeed or fail, and at which step do people stop?</td></tr>
+        <tr><td>material_compare<span class="paid">paid tool</span></td><td>Is this subscription worth renewing?</td></tr>
+        <tr><td>rightsize_calculate</td><td>Is anyone reaching the calculator we license from a third party?</td></tr>
+        <tr><td>credit_finder_search</td><td>Do buyers actually care about recycled-content credits, or do we only think they do?</td></tr>
+        <tr><td>document_download</td><td>Which spec sheets and test reports actually drive demand?</td></tr>
+        <tr><td>portal_login</td><td>Who uses the distributor portal: internal staff, reps, fulfilment, or brand buyers?</td></tr>
+        <tr><td>form_submit</td><td>Which forms convert, and which ones only collect abandonments?</td></tr>
+        <tr><td>sample_request</td><td>The conversion that matters. Everything above is a leading indicator of this.</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:var(--space-3)">The segmentation on <code>portal_login</code> is the row worth pausing on. A single login count tells you nothing you can act on. Split by customer type, it tells you the portal is being used mostly by distributor reps, not the brand sustainability leads it was designed for — which is either a repositioning or a redesign, but you cannot know that from a total.</p>
+  </div>
+
+  <div class="well">
+    <h2>What each event carries</h2>
+    <p class="sub">the parameters are where the answers actually live</p>
+    <div class="grid2">
+      <div class="schema">
+        <p class="ev">configurator_complete</p>
+        <dl>
+          <dt>box_style</dt><dd>mailer · rsc · die-cut · tray</dd>
+          <dt>internal_dims</dt><dd>bucketed, never raw</dd>
+          <dt>material</dt><dd>corrugated · molded pulp · compostable film</dd>
+          <dt>recycled_pct</dt><dd>banded: 0–39 / 40–69 / 70–100</dd>
+          <dt>outcome</dt><dd>saved · sent_to_rep · abandoned</dd>
+        </dl>
+      </div>
+      <div class="schema">
+        <p class="ev">document_download</p>
+        <dl>
+          <dt>doc_type</dt><dd>spec · droptest · compostability · recycled_content</dd>
+          <dt>product_sku</dt><dd>the specific item</dd>
+          <dt>product_family</dt><dd>so it rolls up without a lookup table</dd>
+          <dt>source_page</dt><dd>where the download was triggered from</dd>
+        </dl>
+      </div>
+      <div class="schema">
+        <p class="ev">portal_login</p>
+        <dl>
+          <dt>customer_type</dt><dd>internal · distributor_rep · fulfilment · brand</dd>
+          <dt>account_tier</dt><dd>the commercial segment</dd>
+          <dt>first_login</dt><dd>true once, ever — activation, not traffic</dd>
+        </dl>
+      </div>
+      <div class="schema">
+        <p class="ev">form_submit</p>
+        <dl>
+          <dt>form_type</dt><dd>sample · quote · contact · spec_help</dd>
+          <dt>product_context</dt><dd>what they were looking at when they asked</dd>
+          <dt>completion_ms</dt><dd>bucketed — long fills mean a confusing form</dd>
+        </dl>
+      </div>
+    </div>
+    <p style="margin-top:var(--space-3)"><code>product_family</code> is there on purpose. Without it, every roll-up needs a join against a SKU list that nobody maintains, and within a year the reporting quietly stops matching the catalogue.</p>
+  </div>
+
+  <div class="well">
+    <h2>The governance rules</h2>
+    <p class="sub">written down before the first tag, because retrofitting a naming convention is not possible</p>
+    <div class="rules">
+      <p class="rule"><b>Events are things a person did. Parameters are the details.</b> If you find yourself writing <code>download_spec_sheet_pdf</code>, you have put a parameter in the event name and you will never be able to total downloads again.</p>
+      <p class="rule"><b>snake_case, verb last or verb first, but pick one.</b> The convention matters less than the fact that there is one.</p>
+      <p class="rule"><b>No personal data, ever, including in parameters.</b> Dimensions get bucketed or banded before they are sent. A raw dimension is a liability with no analytical upside.</p>
+      <p class="rule"><b>Every event names the decision it informs.</b> The table above is not documentation written afterwards. It is the intake form. An event with an empty right-hand column does not get built.</p>
+      <p class="rule"><b>Plan the migration before the relaunch, not after.</b> A relaunch destroys the historical baseline unless the mapping is deliberate. That window closes on launch day and does not reopen.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="wrap narrow" style="margin-top:var(--space-5)">
+  <p style="color:var(--text-2);font-size:var(--size-small);line-height:1.7">
+    The dashboard this feeds is <a href="cambiumpak-dashboard.html">here</a>, the step-by-step build is in
+    <a href="../process-analytics.html">the process write-up</a>, and the real project it is modelled on is in
+    <a href="../work-analytics.html">the analytics case study</a>.
+  </p>
+</div>
+</main>
+</body>
+</html>
