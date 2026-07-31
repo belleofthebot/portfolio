@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design rules that turn a month into an hour — Elizabeth Beier</title>
+<meta name="description" content="A product catalogue was quoted at a month in InDesign. Because the design system was already written down as machine-readable rules, the first draft was finished before the kickoff meeting ended.">
+<meta name="author" content="Elizabeth Beier">
+<meta name="theme-color" content="#17121C">
+<meta property="og:title" content="Design rules that turn a month into an hour — Elizabeth Beier">
+<meta property="og:description" content="A product catalogue quoted at a month. First draft done inside the one-hour meeting where it was assigned.">
+<link rel="stylesheet" href="styles.css">
+<style>
+.fict{border:1px solid var(--rose);border-left-width:3px;background:var(--rose-tint);
+  border-radius:var(--radius);padding:var(--space-3) var(--space-4);margin:0 0 var(--space-4)}
+.fict b{color:var(--rose);font-weight:500}
+.fict p{margin:0;font-size:var(--size-small);line-height:1.6;color:var(--text-2)}
+.fict p+p{margin-top:6px}
+.fict a{color:var(--rose)}
+
+/* the rules, shown as rules */
+.cp{--pine:#1E4D3B;--kraft:#A87D52;--kraft-deep:#8A6138;--moss:#7D9161;--cpink:#232A26;
+  --paper:#F7F4ED;--hair:#DDD5C6;
+  background:var(--paper);color:var(--cpink);border:1px solid var(--hair);
+  border-radius:var(--radius-card);padding:var(--space-4);margin:var(--space-3) 0;
+  font-family:'Inter',Arial,Helvetica,sans-serif}
+.cp h3{font-family:inherit;font-size:1rem;font-weight:600;color:var(--pine);margin:0 0 3px}
+.cp .cpsub{font-size:.72rem;color:#6E7A70;margin:0 0 var(--space-3)}
+.cp .kr{height:2px;background:var(--kraft);width:46px;margin:0 0 var(--space-3)}
+table.rules{width:100%;border-collapse:collapse;font-size:.82rem}
+table.rules th,table.rules td{text-align:left;padding:9px 10px;border-bottom:1px solid #E7E1D4;vertical-align:top}
+table.rules th{font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:#6E7A70;font-weight:600}
+table.rules td:first-child{font-family:var(--mono);font-size:.74rem;color:var(--kraft-deep);white-space:nowrap;width:34%}
+table.rules tr:last-child td{border-bottom:0}
+.beat{display:grid;grid-template-columns:96px 1fr;gap:var(--space-3);padding:12px 0;
+  border-bottom:1px solid var(--line-soft)}
+.beat:last-child{border-bottom:0}
+.beat .tm{font-family:var(--mono);font-size:var(--size-mono);color:var(--rose);text-transform:lowercase;padding-top:2px}
+.beat p{margin:0;line-height:1.65;font-size:.95rem;max-width:62ch}
+.beat p strong{font-weight:500}
+@media(max-width:640px){
+  .beat{grid-template-columns:1fr;gap:2px}
+  .cp{padding:var(--space-3)}
+  table.rules,table.rules tbody,table.rules tr,table.rules td,table.rules th{display:block;width:auto}
+  table.rules tr{padding:9px 0;border-bottom:1px solid #E7E1D4}
+  table.rules tr:last-child{border-bottom:0}
+  table.rules th{display:none}
+  table.rules td{border-bottom:0;padding:0}
+  table.rules td:first-child{white-space:normal;width:auto;overflow-wrap:anywhere;margin-bottom:3px}
+}
+</style>
+</head>
+<body class="">
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav"><div class="nav-in">
+<a class="mark" href="index.html">elizabeth<span class="bot">beier</span><span class="cur">_</span></a>
+<a class="link" href="index.html">work</a><a class="link" href="resume.html">résumé</a><a class="link" href="index.html#stack">stack</a><a class="link" href="index.html#about">about</a><a class="link" href="index.html#contact">contact</a></div></header>
+<main id="main">
+
+<div class="wrap narrow case-hero">
+<a class="backlink" href="index.html">← back to work</a>
+<span class="kicker">case study · design systems</span>
+<h1>Design rules that turn a month into an hour</h1>
+<p class="meta">a commercial led lighting manufacturer · 2026 · the design system was already written down</p>
+<p class="oneline">A product catalogue was quoted at a month of InDesign work. The first draft was finished before the meeting that assigned it ended.</p>
+</div>
+
+<div class="wrap narrow">
+
+<div class="statrow">
+<div><span class="n">1 month</span><span class="l">the estimate, in InDesign</span></div>
+<div><span class="n">1 hour</span><span class="l">the meeting it was assigned in</span></div>
+<div><span class="n">0</span><span class="l">layout decisions made by hand</span></div>
+<div><span class="n">1</span><span class="l">source the rules came from</span></div>
+</div>
+
+<div class="reading well">
+
+<div class="block"><p class="h">what happened</p>
+<div class="beat"><span class="tm">the ask</span><p>A new product catalogue. The room's working assumption was <strong>about a month</strong> — that being roughly what it takes to lay out a document like that in InDesign, page by page, with every spec table and product image placed by hand.</p></div>
+<div class="beat"><span class="tm">what I had</span><p>A design system already written down as rules a machine could follow, not as a PDF style guide nobody opens. Type scale, colour roles, table treatments, image rules, the lot — set up in Claude Design as constraints rather than descriptions.</p></div>
+<div class="beat"><span class="tm">during the hour</span><p>I built the first draft while the meeting was still going. Not an outline — a real draft of the document, laid out against the actual rules.</p></div>
+<div class="beat"><span class="tm">after</span><p>It still needed review, correction and production work. A first draft is a first draft. But the starting line had moved by about four weeks.</p></div>
+</div>
+
+<div class="block"><p class="h">why it worked, and it isn't the AI</p>
+<p>The speed didn't come from the model. It came from the rules already existing in a form something else could apply.</p>
+<p>Most design systems are documents <em>about</em> a design system — a PDF describing what the type scale is, which somebody has to read, remember and then execute by hand every time. That system produces consistency only as a side effect of somebody being careful. Written as constraints instead, the same system produces consistency as a property of the output.</p>
+<p><strong>The prompting is a real skill and I'd rather not pretend otherwise.</strong> Knowing how to specify a document so the result is usable rather than plausible-looking is the difference between an hour and a week of corrections. But the leverage was in the preparation. If the rules hadn't been written down first, the hour would have produced something that needed throwing away.</p></div>
+
+<div class="block"><p class="h">the same rules, on CambiumPak</p>
+<p>I can't publish my employer's system, so here is the same idea on the invented company — the constraints that let any new CambiumPak document come out correct without a layout decision being made by hand.</p>
+
+<div class="cp">
+<h3>Document rules</h3>
+<p class="cpsub">written as constraints, not descriptions</p>
+<div class="kr"></div>
+<table class="rules">
+<tr><th>rule</th><th>what it decides</th></tr>
+<tr><td>type: one grotesque, two weights</td><td>Headings 600, body 400. No display face — a mid-market manufacturer doesn't have one, and pretending otherwise breaks the character.</td></tr>
+<tr><td>dimensions: internal, mm, L × W × D</td><td>Every dimension in every document, in that order. No conversions, no helpful inches.</td></tr>
+<tr><td>moss = recycled figures only</td><td>One accent, one meaning. A moss-coloured number that isn't a recycled percentage is a defect.</td></tr>
+<tr><td>recycled content is banded</td><td>0–39 / 40–69 / 70–100. Never implied, never a bare number where a band is the claim.</td></tr>
+<tr><td>badges resolve from the record</td><td>Certification marks are looked up per SKU, never placed by hand — and a family row shows only what every member holds.</td></tr>
+<tr><td>absent means absent</td><td>A missing asset is removed, never substituted. A visible gap beats a wrong image.</td></tr>
+</table>
+</div>
+
+<p>Six rules, and five of them settle a question that would otherwise be re-decided on every page of every document. That's where the month goes: not into the layout, into the deciding.</p></div>
+
+<div class="outcome"><p class="h">what this says about how I work</p>
+<ul>
+<li><strong>I learn tools as they arrive</strong> rather than waiting to see whether they stick. The catalogue was fast because I'd already put the work into a tool most of the room hadn't tried yet.</li>
+<li><strong>I'm not attached to the old way of doing it.</strong> I've spent years in InDesign. That's not a reason to spend a month in it.</li>
+<li><strong>The thing I gave back was time</strong> — the most expensive and least recoverable resource a small team has. Four weeks of a designer's month, returned to the schedule.</li>
+</ul></div>
+
+<div class="diff"><p class="h">the honest version</p>
+<p>A first draft is not a finished document, and I'd be overselling this if I let "an hour" stand without that. It needed review, factual checking against the source data, and production work before it went anywhere. What collapsed was the blank-page phase and the layout phase — which happened to be most of the month.</p></div>
+</div>
+
+<div class="tags"><span class="tag rose">design systems</span><span class="tag ">claude design</span><span class="tag ">prompting as specification</span><span class="tag ">document automation</span><span class="tag ">long-document typography</span><span class="tag ">indesign</span><span class="tag ">tool adoption</span></div>
+
+<p class="note">The employer document and its contents are confidential, so this describes the approach and shows the rules rebuilt on CambiumPak instead. Happy to walk through the actual rule set in a conversation.</p>
+
+<div class="nextprev"><a href="work-website.html">← a website reimagining</a><a href="work-analytics.html">a measurement capability from zero →</a></div>
+</div>
+
+<div class="contact" id="contact"><div class="wrap">
+<p class="avail"><span class="pulse-dot"></span> open to marketing operations, analytics and martech roles</p>
+<h2>Let's talk.</h2>
+<p>Remote, or Albuquerque and hybrid. Happy to walk through the architecture behind any of this.</p>
+<div class="contact-links">
+<a class="clink primary" href="mailto:elizabethbportfolio@gmail.com">elizabethbportfolio@gmail.com</a>
+<a class="clink" href="resume.html">résumé</a>
+<a class="clink" href="https://github.com/belleofthebot" target="_blank" rel="noopener">github</a>
+<a class="clink" href="https://www.instagram.com/paintingthesouthwest/" target="_blank" rel="noopener">instagram</a>
+</div></div></div>
+<footer><div class="wrap"><span>elizabeth beier · albuquerque, new mexico</span><span>designed, built, and measured by me</span></div></footer>
+</main>
+</body>
+</html>

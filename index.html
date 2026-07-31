@@ -10,6 +10,123 @@
 <meta property="og:title" content="Elizabeth Beier — marketing technology &amp; analytics">
 <meta property="og:description" content="GA4 and Tag Manager architecture, custom dashboards, and internal tools that cut recurring work. Albuquerque and remote.">
 <link rel="stylesheet" href="styles.css">
+<style>
+/* invented-company disclosure on the employer group */
+.cpnote{border:1px solid var(--rose);border-left-width:3px;background:var(--rose-tint);
+  border-radius:var(--radius);padding:12px var(--space-3);margin:var(--space-3) 0 0}
+.cpnote p{margin:0;font-size:var(--size-small);line-height:1.6;color:var(--text-2);max-width:78ch}
+.cpnote strong{color:var(--rose);font-weight:500}
+.cpnote a{color:var(--rose)}
+
+/* artifact tile */
+.na{background:var(--paper);border-radius:7px;overflow:hidden;display:flex;flex-direction:column;
+  font-family:'Inter',Arial,sans-serif;border:1px solid var(--hair);transition:border-color .15s,filter .15s}
+.na .b{background:var(--pine);border-bottom:2px solid var(--kraft);padding:5px 8px;
+  display:flex;align-items:center;gap:5px;flex:0 0 auto}
+.na .b svg{width:10px;height:10px;flex:0 0 auto}
+.na .b b{font-size:.5rem;color:var(--paper);font-weight:700;letter-spacing:-.1px}
+.na .b i{margin-left:auto;font-style:normal;font-family:var(--mono);font-size:.4rem;
+  letter-spacing:.07em;text-transform:uppercase;color:#9FB3A6}
+.na .c{flex:1;padding:7px 8px;display:flex;flex-direction:column;min-height:0;justify-content:center}
+.na .t{font-size:.55rem;font-weight:600;color:var(--cpink);line-height:1.2}
+.na .k{font-family:var(--mono);font-size:.42rem;color:var(--kraft-deep);margin-top:1px}
+.na .kr{height:1px;background:var(--kraft);opacity:.45;margin:4px 0}
+.na .bars{display:flex;align-items:flex-end;gap:3px;flex:1;min-height:0}
+.na .bars i{flex:1;background:var(--pine);border-radius:1px;display:block}
+.na .bars i.lo{background:#A9BDAF}
+.na .cta{background:var(--pine);color:var(--paper);font-size:.42rem;text-align:center;
+  border-radius:2px;padding:3px 0;font-weight:600}
+.na .ln{height:2px;background:#E7E1D4;border-radius:1px;display:block;margin-bottom:3px}
+.na .prod{flex:1;display:grid;place-items:center;min-height:0}
+.na .prod svg{height:100%;width:auto;max-height:100%}
+.na .pal{display:flex;height:11px;border-radius:2px;overflow:hidden}
+.na .pal i{flex:1;display:block}
+.na .doc{border:1px solid var(--hair);background:#FFFDF8;flex:1;border-radius:2px;padding:5px;min-height:0}
+.na .doc span{display:block;height:1.8px;background:#E7E1D4;border-radius:1px;margin-bottom:3px}
+.na .doc span.h{background:var(--kraft);opacity:.6;width:50%;height:2.6px}
+.na .site{flex:1;display:flex;flex-direction:column;min-height:0;border:1px solid var(--hair);border-radius:2px;overflow:hidden}
+.na .site .bb{background:#EFE9DC;height:9px;display:flex;align-items:center;gap:2px;padding:0 4px}
+.na .site .bb i{width:2.5px;height:2.5px;border-radius:999px;background:#C6BCA8;display:block}
+.na .site .hh{background:var(--pine);flex:1;display:grid;place-items:center;min-height:0}
+.na .site .hh span{font-size:.44rem;color:var(--paper);font-weight:600;text-align:center;line-height:1.2}
+.na .site .tt{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding:3px}
+.na .site .tt i{height:6px;background:#EFE9DC;border-radius:1px;display:block}
+.mark-sm{fill:none;stroke:var(--paper);stroke-width:11;stroke-linecap:butt}
+
+/* ---------------- the wheel ---------------- */
+.wheel{position:relative;height:566px}
+.wheel svg.wire{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:0}
+.wheel .pos{position:absolute;z-index:1}
+.spoke{text-decoration:none;color:inherit;display:block}
+.spoke .na{height:92px}
+.spoke:hover .na{border-color:var(--rose);filter:brightness(1.03)}
+.spoke .lab{font-family:var(--mono);font-size:.66rem;color:var(--text-2);text-transform:lowercase;
+  text-align:center;margin-top:9px;line-height:1.35;display:block;min-height:42px}
+.spoke:hover .lab{color:var(--rose)}
+.spoke .lab u{display:block;text-decoration:none;color:var(--text-3);font-size:.6rem;margin-top:2px}
+
+/* the hub — deliberately not a link */
+.hub{background:var(--tile);border:1px solid var(--kraft);border-radius:var(--radius-card);
+  padding:var(--space-3);text-align:center}
+.hub .hn{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:9px}
+.hub .hn svg{width:26px;height:26px}
+.hub .hn b{font-family:'Inter',Arial,sans-serif;font-size:1.02rem;font-weight:700;color:var(--text)}
+.hub .hn b em{font-style:normal;color:var(--kraft)}
+.hub .rec{background:var(--paper);border:1px solid var(--hair);border-radius:6px;
+  padding:8px 10px;font-family:var(--mono);font-size:.56rem;color:var(--cpink);text-align:left;line-height:1.7}
+.hub .rec span{color:var(--kraft-deep)}
+.hub .hs{font-family:var(--mono);font-size:.62rem;color:var(--text-3);text-transform:lowercase;
+  margin:9px 0 0;line-height:1.5}
+
+/* the highlighted spoke below */
+.below{border:1px solid var(--rose);border-radius:var(--radius-card);background:var(--rose-tint);
+  padding:var(--space-3);display:grid;grid-template-columns:150px 1fr;gap:var(--space-3);
+  align-items:center;text-decoration:none;color:inherit}
+.below:hover{filter:brightness(1.06)}
+.below .na{height:78px}
+.below .bt{font-size:1.05rem;font-weight:500;color:var(--text);line-height:1.3;margin:0 0 4px}
+.below .bd{font-size:var(--size-small);color:var(--text-2);margin:0;line-height:1.55;max-width:60ch}
+.below .bm{font-family:var(--mono);font-size:.66rem;color:var(--rose);text-transform:lowercase;margin:6px 0 0}
+
+/* brand aside, tucked underneath */
+.aside{border-top:1px solid var(--line);margin-top:var(--space-4);padding-top:var(--space-3);
+  display:grid;grid-template-columns:104px 1fr auto;gap:var(--space-3);align-items:center}
+.aside .na{height:62px}
+.aside .at{font-size:.95rem;font-weight:500;margin:0 0 3px}
+.aside .ad{font-size:var(--size-small);color:var(--text-3);margin:0;line-height:1.55;max-width:68ch}
+.aside a.go{font-family:var(--mono);font-size:var(--size-mono);color:var(--rose);
+  text-decoration:none;white-space:nowrap}
+
+/* ---- under 900px the wheel becomes stacked cards, hub first ---- */
+@media(max-width:900px){
+  .wheel{height:auto;display:flex;flex-direction:column;gap:var(--space-3)}
+  .wheel .pos{position:static!important;width:auto!important;left:auto!important;top:auto!important}
+  .wheel svg.wire{display:none}
+  .hubwrap{order:-1}
+
+  /* each spoke becomes a real card: artifact left, label right */
+  .spoke{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-card);
+    padding:var(--space-2);display:grid;grid-template-columns:118px 1fr;gap:var(--space-3);
+    align-items:center}
+  .spoke .na{height:74px}
+  .spoke .lab{min-height:0;margin-top:0;text-align:left;font-size:.78rem;color:var(--text)}
+  .spoke .lab u{margin-top:4px;font-size:.68rem}
+  .spoke::after{content:'→';font-family:var(--mono);color:var(--rose);
+    grid-column:1/-1;text-align:right;font-size:.8rem}
+
+  /* the measured-by relationship, stated in words since the lines are gone */
+  .wheel::after{content:'every one of these is measured by the analytics layer below';
+    font-family:var(--mono);font-size:.66rem;color:var(--text-3);text-transform:lowercase;
+    text-align:center;line-height:1.5;order:1;padding:0 var(--space-2)}
+  .below{grid-template-columns:1fr;order:2}
+  .aside{grid-template-columns:1fr}
+  .aside a.go{justify-self:start}
+}
+@media(max-width:420px){
+  .spoke{grid-template-columns:1fr}
+  .spoke .na{height:88px}
+}
+</style>
 </head>
 <body class="">
 <a class="skip" href="#main">Skip to content</a>
@@ -47,58 +164,99 @@
 <h2>Selected work</h2>
 <p>Employer projects are described rather than linked — no client data, no credentials, no proprietary figures.</p></div>
 
-<div class="group"><div class="group-h"><span class="kicker">for my employer</span>
-<p class="group-p">Marketing technology and analytics at a commercial LED lighting manufacturer, built in my first four months there.</p></div>
-<div class="cards"><a class="wcard" href="work-deck-generator.html">
-<div class="thumb well"><div class="slidebox">
-<div class="th-row"><span class="th-title">Product deck</span></div>
-<div class="sl-line w60"></div>
-<div class="sl-img"></div>
-<div class="sl-line w75"></div><div class="sl-line w40"></div>
-<div class="badges"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-</div></div>
-<span class="ptag">internal tooling</span>
-<h3>The product deck generator</h3>
-<p>42 minutes a product by hand, across a 27-product queue. Now a four-field form. Built solo, no developer.</p>
-<span class="foot">serverless · llm extraction · office open xml · <span class="read">read →</span></span>
-</a><a class="wcard" href="work-analytics.html">
-<div class="thumb well">
-<div class="th-row" style="margin-bottom:10px"><span class="th-title">Executive dashboard</span><span class="th-t">GA4 DATA API</span></div>
-<div class="kpis">
-<div class="kpi"><b>12</b><span>report queries</span></div>
-<div class="kpi"><b>3</b><span>properties</span></div>
-<div class="kpi"><b>$0</b><span>per month</span></div>
+<div class="group"><div class="group-h"><span class="kicker">for my employer · one project, five parts</span>
+<div class="cpnote"><p><strong>I'm proud of this work and I can't show you any of it — it's confidential.</strong> So I designed <a href="work-cambiumpak.html">CambiumPak</a>, an imaginary company with a similar structure and similar needs, and built the same systems and tools there that I built for my employer.</p></div></div>
+<div class="frame">
+<div class="wheel">
+<svg class="wire" viewBox="0 0 1024 566" preserveAspectRatio="none">
+ <defs>
+  <marker id="aw" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7z" fill="#A87D52"/></marker>
+  <marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7z" fill="#DFA192"/></marker>
+  <marker id="af" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0 0L6 3L0 6z" fill="#8B8494" fill-opacity=".5"/></marker>
+ </defs>
+ <g stroke="#A87D52" fill="none" stroke-width="1.6" marker-end="url(#aw)">
+  <path d="M452 214 C452 176 200 176 107 132"/>
+  <path d="M486 210 C486 172 400 176 361 132"/>
+  <path d="M538 210 C538 172 624 176 663 132"/>
+  <path d="M572 214 C572 176 824 176 917 132"/>
+ </g>
+ <path d="M512 386 L512 424" stroke="#DFA192" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+ <!-- every spoke's engagement is measured by the layer below -->
+ <g stroke="#8B8494" stroke-width="1" stroke-dasharray="3 4" fill="none"
+    stroke-opacity=".42" marker-end="url(#af)">
+  <path d="M107 150 C58 282 58 382 172 420"/>
+  <path d="M361 150 C300 252 238 352 234 420"/>
+  <path d="M663 150 C724 252 786 352 790 420"/>
+  <path d="M917 150 C966 282 966 382 852 420"/>
+ </g>
+</svg>
+
+<!-- four spokes above -->
+<a class="pos spoke" href="work-deck-generator.html" style="left:0;top:0;width:214px">
+  <div class="na"><div class="b"><svg viewBox="0 0 100 100"><g class="mark-sm"><path d="M50 82 A18 18 0 0 1 50 46"/><path d="M50 98 A34 34 0 0 1 50 30"/><path d="M50 54 A18 18 0 0 0 50 18"/><path d="M50 70 A34 34 0 0 0 50 2"/></g></svg><b>CambiumPak</b><i>deck</i></div>
+  <div class="c" style="justify-content:flex-start"><div class="t">Corrugated mailer</div><div class="k">CP-MLR-1208</div><div class="kr"></div><div class="prod"><svg viewBox="0 0 84 62" fill="none" stroke="#1E4D3B" stroke-width="3" stroke-linejoin="round"><path d="M8 22l26-13 42 8-26 14z"/><path d="M8 22v26l42 8V36z"/><path d="M50 36l26-14v26L50 62z"/><path d="M34 9v14l42 8" stroke="#A87D52" stroke-dasharray="3 3"/></svg></div></div></div>
+  <span class="lab">the product deck generator<u>42 min → a four-field form</u></span>
+</a>
+
+<a class="pos spoke" href="work-email-generator.html" style="left:254px;top:0;width:214px">
+  <div class="na"><div class="b"><svg viewBox="0 0 100 100"><g class="mark-sm"><path d="M50 82 A18 18 0 0 1 50 46"/><path d="M50 98 A34 34 0 0 1 50 30"/><path d="M50 54 A18 18 0 0 0 50 18"/><path d="M50 70 A34 34 0 0 0 50 2"/></g></svg><b>CambiumPak</b><i>campaign</i></div>
+  <div class="c"><div class="t" style="font-size:.5rem">One strip of tape. Whole carton recycles.</div><div class="kr"></div><span class="ln"></span><span class="ln" style="width:68%"></span><div class="cta">View the tape range →</div></div></div>
+  <span class="lab">the email campaign generator<u>75 min · utm audited in code</u></span>
+</a>
+
+<a class="pos spoke" href="work-website.html" style="left:556px;top:0;width:214px">
+  <div class="na"><div class="b"><svg viewBox="0 0 100 100"><g class="mark-sm"><path d="M50 82 A18 18 0 0 1 50 46"/><path d="M50 98 A34 34 0 0 1 50 30"/><path d="M50 54 A18 18 0 0 0 50 18"/><path d="M50 70 A34 34 0 0 0 50 2"/></g></svg><b>CambiumPak</b><i>site</i></div>
+  <div class="c" style="padding:5px"><div class="site"><div class="bb"><i></i><i></i><i></i></div><div class="hh"><span>Ship in paper.<br>Ship in style.</span></div><div class="tt"><i></i><i></i><i></i></div></div></div></div>
+  <span class="lab">a website reimagining<u>without voiding the contract</u></span>
+</a>
+
+<a class="pos spoke" href="work-claude-design.html" style="left:810px;top:0;width:214px">
+  <div class="na"><div class="b"><svg viewBox="0 0 100 100"><g class="mark-sm"><path d="M50 82 A18 18 0 0 1 50 46"/><path d="M50 98 A34 34 0 0 1 50 30"/><path d="M50 54 A18 18 0 0 0 50 18"/><path d="M50 70 A34 34 0 0 0 50 2"/></g></svg><b>CambiumPak</b><i>catalogue</i></div>
+  <div class="c" style="padding:5px"><div class="doc"><span class="h"></span><span></span><span style="width:82%"></span><span></span><span style="width:64%"></span><span style="width:88%"></span></div></div></div>
+  <span class="lab">the claude design setup<u>a month in indesign → one hour</u></span>
+</a>
+
+<!-- the hub — does not open -->
+<div class="pos hubwrap" style="left:312px;top:212px;width:400px">
+  <div class="hub">
+    <div class="hn">
+      <svg viewBox="0 0 100 100"><g fill="none" stroke="#DFA192" stroke-width="10" stroke-linecap="butt"><path d="M50 82 A18 18 0 0 1 50 46"/><path d="M50 98 A34 34 0 0 1 50 30"/><path d="M50 54 A18 18 0 0 0 50 18"/><path d="M50 70 A34 34 0 0 0 50 2"/></g></svg>
+      <b>Cambium<em>Pak</em></b>
+    </div>
+    <div class="rec">
+      <div>11 families · 17 skus · 44 documents</div>
+      <div><span>CP-MLR-1208</span> · 305 × 229 × 76 mm · 88–92%</div>
+      <div><span>CP-TP-70</span> · 70 mm × 200 m · 100%</div>
+    </div>
+    <p class="hs">one product database · the source of truth<br>every spoke reads from it</p>
+  </div>
 </div>
-<div class="bars" style="height:62px">
-<i style="height:38%"></i><i style="height:52%"></i><i style="height:44%"></i><i style="height:70%"></i><i style="height:58%"></i><i style="height:88%"></i><i style="height:74%"></i>
-</div></div>
-<span class="ptag">analytics</span>
-<h3>A measurement capability from zero</h3>
-<p>Five new tools shipped with no way to tell whether anyone used them. Tracking architecture, governance, and a dashboard the team opens themselves.</p>
-<span class="foot">ga4 · tag manager · data api · <span class="read">read →</span></span>
-</a><a class="wcard" href="work-email-generator.html">
-<div class="thumb well"><div class="mailbox">
-<div class="sl-line w40"></div>
-<div class="sl-img" style="min-height:34px"></div>
-<div class="sl-line w75"></div>
-<div class="mail-cta">view the product →</div>
-<div class="mail-audit">utm audit · 9 links · 9 tagged · opt-out exempt</div>
-</div></div>
-<span class="ptag">marketing ops</span>
-<h3>The email campaign generator</h3>
-<p>75 minutes a campaign, and a UTM convention nobody could follow consistently. The opt-out is now a constant and the UTM audit is code.</p>
-<span class="foot">utm taxonomy · outlook html · compliance · <span class="read">read →</span></span>
-</a><a class="wcard" href="work-website.html">
-<div class="thumb well"><div class="browser">
-<div class="br-bar"><i></i><i></i><i></i></div>
-<div class="br-hero"></div>
-<div class="br-tiles"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-</div></div>
-<span class="ptag">web</span>
-<h3>A website reimagining, without voiding the contract</h3>
-<p>A CEO's vision, an agency-built site still under warranty, and a deadline. The first move was reading the agreement.</p>
-<span class="foot">production css · vendor management · enablement · <span class="read">read →</span></span>
-</a></div></div>
+
+<!-- highlighted spoke below -->
+<a class="pos below" href="work-analytics.html" style="left:172px;top:428px;width:680px">
+  <div>
+    <div class="na"><div class="b"><svg viewBox="0 0 100 100"><g class="mark-sm"><path d="M50 82 A18 18 0 0 1 50 46"/><path d="M50 98 A34 34 0 0 1 50 30"/><path d="M50 54 A18 18 0 0 0 50 18"/><path d="M50 70 A34 34 0 0 0 50 2"/></g></svg><b>CambiumPak</b><i>ga4</i></div>
+    <div class="c"><div class="bars"><i style="height:30%"></i><i style="height:46%"></i><i class="lo" style="height:36%"></i><i style="height:62%"></i><i style="height:52%"></i><i style="height:88%"></i></div></div></div>
+  </div>
+  <div>
+    <p class="bt">A measurement capability from zero</p>
+    <p class="bd">The layer underneath all of it. Tracking architecture and governance, built before a relaunch — and the dashboard leadership opens themselves.</p>
+    <p class="bm">ga4 · tag manager · data api · the dashboard →</p>
+  </div>
+</a>
+</div>
+
+<!-- brand aside -->
+<div class="aside">
+  <div class="na" style="height:62px"><div class="b"><svg viewBox="0 0 100 100"><g class="mark-sm"><path d="M50 82 A18 18 0 0 1 50 46"/><path d="M50 98 A34 34 0 0 1 50 30"/><path d="M50 54 A18 18 0 0 0 50 18"/><path d="M50 70 A34 34 0 0 0 50 2"/></g></svg><b>CambiumPak</b></div>
+  <div class="c"><div class="pal"><i style="background:#1E4D3B"></i><i style="background:#143529"></i><i style="background:#A87D52"></i><i style="background:#7D9161"></i><i style="background:#232A26"></i><i style="background:#F7F4ED;box-shadow:inset 0 0 0 1px #DDD5C6"></i></div></div></div>
+  <div>
+    <p class="at">And an aside — I built the brand too</p>
+    <p class="ad">The mark, the palette, five invented certification marks and a rulebook, in two days. This one isn't a retelling of anything I did at my employer; I didn't build their brand. It exists because the tools above claim to enforce brand compliance, and that claim is invisible without a brand to enforce.</p>
+  </div>
+  <a class="go" href="work-cambiumpak.html">read →</a>
+</div>
+</div>
 
 <div class="group"><div class="group-h"><span class="kicker">for clients and my own studio</span>
 <p class="group-p">Brand, growth and content operations.</p></div>
