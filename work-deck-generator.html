@@ -10,6 +10,7 @@
 <meta property="og:title" content="The product deck generator — Elizabeth Beier">
 <meta property="og:description" content="42 measured minutes of manual assembly per product, across a 27-product queue, replaced by a four-field web form.">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="cp-widget.css">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://elizabethbportfolio.com/work-deck-generator.html">
 <meta property="og:site_name" content="Elizabeth Beier">
@@ -35,6 +36,90 @@
 </div>
 <div class="wrap narrow">
 <div class="statrow"><div><span class="n">42 min</span><span class="l">measured manual build, per product</span></div><div><span class="n">27</span><span class="l">products in the queue</span></div><div><span class="n">19 hrs</span><span class="l">of designer time per cycle</span></div><div><span class="n">411</span><span class="l">badge assets resolved automatically</span></div></div>
+</div>
+
+<!-- ============================================================= try it ==
+     The live generator. Everything below runs in the browser: cp-data.js is
+     the product record, cp-deck.js is the generator ported from the Python in
+     the cambiumpak repo, and cp-deck-css.js is the deck's own stylesheet,
+     lifted verbatim so the two builds cannot drift.
+     ===================================================================== -->
+<div class="wrap narrow">
+<div class="tryit" id="try">
+  <div class="try-head">
+    <span class="try-kick">try it</span>
+    <h2>Paste a product URL. Get the deck.</h2>
+    <p class="try-lede">This is the generator, not a video of it. Give it any
+    CambiumPak product page or SKU and it will resolve the record, show you what
+    it found, and build the nine slides in front of you.</p>
+  </div>
+
+  <div class="try-form">
+    <label class="try-label" for="cp-input">Product page URL, or a SKU code</label>
+    <div class="try-row">
+      <input id="cp-input" type="text" spellcheck="false" autocomplete="off"
+             placeholder="https://cambiumpak.com/products/cp-ctn.html">
+      <button id="cp-go" type="button" class="try-btn" disabled>Create the deck</button>
+    </div>
+    <p class="try-status" id="cp-status" role="status" aria-live="polite">
+      Paste a URL, or pick one below.</p>
+  </div>
+
+  <div class="try-picks">
+    <p class="try-picklab">Eleven products. Click one to load it, or
+      <a href="https://cambiumpak.com/products.html" target="_blank" rel="noopener">open
+      the CambiumPak catalog in a new tab</a> and copy any product URL.</p>
+    <div class="try-chips" id="cp-chips"></div>
+  </div>
+
+  <!-- what the generator resolved, before it builds anything -->
+  <div class="try-resolved" id="cp-resolved" hidden>
+    <div class="res-head">
+      <span class="res-kick">resolved from the record</span>
+      <span class="res-key" id="cp-reskey"></span>
+    </div>
+    <div class="res-grid" id="cp-resgrid"></div>
+  </div>
+
+  <!-- the checks, run on the real output -->
+  <div class="try-checks" id="cp-checks" hidden>
+    <p class="chk-kick">checks run on the generated file</p>
+    <ul class="chk-list" id="cp-chklist"></ul>
+  </div>
+
+  <!-- the deck -->
+  <div class="try-out" id="cp-out" hidden>
+    <div class="out-bar">
+      <span class="out-name" id="cp-outname"></span>
+      <span class="out-actions">
+        <button type="button" class="out-btn" id="cp-open">Open full size</button>
+        <button type="button" class="out-btn" id="cp-download">Download</button>
+        <button type="button" class="out-btn" id="cp-print">Print to PDF</button>
+      </span>
+    </div>
+    <div class="out-frame"><iframe id="cp-frame" title="Generated deck"
+      scrolling="no"></iframe></div>
+    <div class="out-nav">
+      <button type="button" class="nav-btn" id="cp-prev">&larr; previous</button>
+      <span class="out-count" id="cp-count">1 / 9</span>
+      <button type="button" class="nav-btn" id="cp-next">next &rarr;</button>
+    </div>
+    <p class="out-note">Nine slides, 1280 &times; 720. Print to PDF gives nine
+    16:9 pages, because the page declares its own size. Nothing on a slide was
+    typed by hand.</p>
+  </div>
+
+  <p class="try-fine">The employer tool this stands in for fetched the product
+  page, found the spec-sheet PDF in its markup and passed it to a model for
+  structured extraction. A browser cannot fetch cambiumpak.com directly, so this
+  resolves the same URL against a bundled copy of the product record instead.
+  Everything after the lookup is the real generator, running here.
+  <a href="https://github.com/belleofthebot/cambiumpak/tree/main/deck" target="_blank"
+  rel="noopener">Source</a>.</p>
+</div>
+</div>
+
+<div class="wrap narrow">
 <div class="reading well">
 
 <div class="block"><p class="h">the problem</p>
@@ -105,5 +190,9 @@
 </div></div></div>
 <footer><div class="wrap"><span>elizabeth beier · albuquerque, new mexico</span><span>designed, built, and measured by me</span></div></footer>
 </main>
+<script src="cp-deck-css.js"></script>
+<script src="cp-data.js"></script>
+<script src="cp-deck.js"></script>
+<script src="cp-widget.js"></script>
 </body>
 </html>
