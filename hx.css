@@ -1,0 +1,85 @@
+/* ============================ the hero, nine changes, one at a time ==
+   Scoped to #hx. The hero itself renders in a frame at a true 1280 and is
+   scaled to fit, so every measurement quoted in the list is the measurement
+   in the stylesheet.
+   ================================================================== */
+#hx{
+  --pine:#1E4D3B; --pine-deep:#143529; --kraft:#A87D52; --kraft-deep:#8A6138;
+  --cpink:#232A26; --paper:#F7F4ED; --hair:#DDD5C6; --cpmute:#6E7A70;
+  --well:#FFFDF8; --bad:#9A4B36;
+  position:relative;background:var(--paper);color:var(--cpink);
+  border:1px solid var(--hair);border-top:3px solid var(--pine);
+  border-radius:var(--radius-card);padding:var(--space-4);margin:var(--space-4) 0;
+  font-family:'Inter',Arial,Helvetica,sans-serif}
+
+#hx .try-bar{margin-bottom:var(--space-2)}
+#hx .fsbtn{color:var(--pine)}
+.hx-kick{font-size:.72rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--kraft-deep)}
+#hx h3{font-family:inherit;font-size:clamp(1.35rem,2.6vw,1.75rem);font-weight:600;
+  line-height:1.16;letter-spacing:-.5px;color:var(--pine);margin:0 0 10px;max-width:28ch}
+.hx-lede{font-size:.96rem;line-height:1.62;color:#3C443E;margin:0 0 var(--space-3);
+  max-width:72ch}
+
+.hx-ctl{display:flex;gap:12px;align-items:center;flex-wrap:wrap;
+  border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);
+  padding:13px 0;margin-bottom:var(--space-3)}
+.hx-ctl .lab{font-size:.7rem;font-weight:600;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--cpmute)}
+.hx-set{display:flex;gap:6px}
+.hx-set button{background:var(--well);border:1px solid var(--hair);color:#3C443E;
+  border-radius:5px;padding:8px 14px;font-family:inherit;font-size:.83rem;cursor:pointer;
+  transition:background .15s,border-color .15s,color .15s}
+.hx-set button:hover{border-color:var(--pine)}
+.hx-set button.on{background:var(--pine);border-color:var(--pine);color:var(--paper);
+  font-weight:600}
+.hx-count{margin-left:auto;font-size:.8rem;color:var(--kraft-deep);font-weight:600}
+
+.hx-stage{width:100%;overflow:hidden;border:1px solid var(--hair);border-radius:6px;
+  background:#fff;margin-bottom:var(--space-3);transition:height .18s}
+#hx-frame{width:1280px;height:640px;border:0;display:block;transform-origin:top left;
+  transition:transform .18s}
+
+.hx-grace{margin:0 0 var(--space-3);border-left:3px solid var(--pine);
+  background:#E9EFE9;border-radius:0 6px 6px 0;padding:12px 15px;
+  font-size:.88rem;line-height:1.6;color:#3C443E;max-width:78ch}
+.hx-grace b{color:var(--pine)}
+
+.hx-list{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.hx-ch{display:flex;gap:11px;text-align:left;background:var(--well);
+  border:1px solid var(--hair);border-radius:6px;padding:12px 13px;cursor:pointer;
+  font-family:inherit;transition:border-color .15s,background .15s}
+.hx-ch:hover{border-color:var(--pine)}
+.hx-ch.on{border-left:3px solid var(--pine);padding-left:11px}
+.hx-n{flex:0 0 auto;width:20px;height:20px;border-radius:50%;display:grid;
+  place-items:center;font-size:.68rem;font-weight:700;background:#EDEAE0;
+  color:var(--cpmute)}
+.hx-ch.on .hx-n{background:var(--pine);color:var(--paper)}
+.hx-b{display:block;min-width:0}
+.hx-name{display:block;font-size:.86rem;font-weight:600;color:var(--cpink);
+  margin-bottom:6px;line-height:1.3}
+.hx-ch.on .hx-name{color:var(--pine)}
+.hx-ba{display:block;font-size:.72rem;line-height:1.5;color:var(--cpmute);
+  margin-bottom:2px}
+.hx-ba em{font-style:normal;font-weight:600;letter-spacing:.05em;
+  text-transform:uppercase;font-size:.62rem;color:var(--kraft-deep);
+  display:inline-block;width:34px}
+.hx-why{display:block;font-size:.76rem;line-height:1.55;color:#3C443E;margin-top:7px}
+
+.hx-fine{font-size:.78rem;line-height:1.6;color:var(--cpmute);
+  border-top:1px solid var(--hair);margin-top:var(--space-3);
+  padding-top:var(--space-3);max-width:80ch}
+.hx-fine b{color:var(--bad);font-weight:600}
+
+#hx.is-max,#hx:fullscreen,#hx:-webkit-full-screen{
+  margin:0;border-radius:0;border-top-width:3px;max-width:none;
+  padding:var(--space-4);overflow:auto}
+#hx.is-max{position:fixed;inset:0;z-index:200}
+
+@media(max-width:980px){.hx-list{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){
+  #hx{padding:var(--space-3)}
+  .hx-list{grid-template-columns:1fr}
+  .hx-ctl{align-items:flex-start;flex-direction:column;gap:var(--space-2)}
+  .hx-count{margin-left:0}
+}

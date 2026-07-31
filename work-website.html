@@ -15,6 +15,8 @@
 <meta property="og:title" content="A website reimagining, without voiding the contract — Elizabeth Beier">
 <meta property="og:description" content="A CEO's vision, an agency-built site still under warranty, and a deadline. The first move was reading the agreement.">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="hx.css">
+<link rel="stylesheet" href="cssx.css">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://elizabethbportfolio.com/work-website.html">
 <meta property="og:site_name" content="Elizabeth Beier">
@@ -47,6 +49,118 @@
 <div><span class="n">0</span><span class="l">child theme files touched</span></div>
 </div>
 
+</div>
+
+<!-- ============================ the hero, nine changes, one at a time ==
+     hx.js renders the hero in a frame at a true 1280 and scales it to fit,
+     so every measurement in the list is the measurement in the stylesheet.
+     ================================================================== -->
+<div class="wrap narrow">
+<div id="hx" data-tryit>
+  <div class="try-bar"><span class="hx-kick">try it</span><button type="button" class="fsbtn" data-fs aria-pressed="false"><svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path class="e" d="M1.5 5V1.5H5M9 1.5h3.5V5M12.5 9v3.5H9M5 12.5H1.5V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path class="x" d="M5 1.5V5H1.5M12.5 5H9V1.5M9 12.5V9h3.5M1.5 9H5v3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="fsl">full screen</span></button></div>
+  <h3>Nine changes to one hero</h3>
+  <p class="hx-lede">The CEO wanted the look and feel of a newly built site
+  changed, and the site belonged to an agency under contract. This is the home
+  page hero, rebuilt on CambiumPak. <b>Every change is a switch.</b> Turn them
+  all off to see what the agency delivered, turn them on one at a time to see
+  what each decision was for. The measurements are the ones in the stylesheet,
+  dated 2 June 2026.</p>
+
+  <div class="hx-ctl">
+    <span class="lab">The hero</span>
+    <div class="hx-set">
+      <button type="button" data-all="off">As delivered</button>
+      <button type="button" data-all="on">As shipped</button>
+    </div>
+    <span class="lab" style="margin-left:18px">Copy on this page</span>
+    <div class="hx-set">
+      <button type="button" data-paras="2" class="on">Two paragraphs</button>
+      <button type="button" data-paras="1">One paragraph</button>
+    </div>
+    <span class="hx-count"></span>
+  </div>
+
+  <div class="hx-stage"><iframe id="hx-frame" title="The hero, rendered"></iframe></div>
+
+  <p class="hx-grace" hidden><b>This is what change nine is for.</b> The
+  two-tier treatment is scoped to <code>p:first-of-type:not(:last-of-type)</code>,
+  so on a page whose hero carries a single paragraph it stands down and the copy
+  renders as ordinary body text. Switch change nine off and watch a lone
+  paragraph get promoted to a 26px tagline it was never written to be. That is
+  the difference between styling a page and building something that survives the
+  next page.</p>
+
+  <div class="hx-list"></div>
+
+  <p class="hx-fine"><b>The brand and the content are CambiumPak.</b> The real
+  site is my employer&rsquo;s, and its brand blue is identifiably theirs, so the
+  accent here is Pine and the copy is invented. What is not invented is the
+  work: every change, every measurement and every reason above is what was
+  actually done, taken from the stylesheet. The full production file reached
+  v2.20 across nine documented sections, of which the hero is the first.</p>
+</div>
+</div>
+
+<!-- ===================== the override stylesheet, demonstrated in a cascade ==
+     cssx.js builds a real iframe with two real stylesheets, the agency theme
+     and the override sheet, so the cascade in there resolves for the same
+     reason it did in production.
+     ======================================================================= -->
+<div class="wrap narrow">
+<div id="cssx" data-tryit>
+  <div class="try-bar"><span class="cx-kick">try it</span><button type="button" class="fsbtn" data-fs aria-pressed="false"><svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path class="e" d="M1.5 5V1.5H5M9 1.5h3.5V5M12.5 9v3.5H9M5 12.5H1.5V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path class="x" d="M5 1.5V5H1.5M12.5 5H9V1.5M9 12.5V9h3.5M1.5 9H5v3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="fsl">full screen</span></button></div>
+  <h3>Two ways to win a cascade you don&rsquo;t own</h3>
+  <p class="cx-lede">The site was an agency build under contract, so the whole
+  job lived in one stylesheet loaded after theirs. Below is a page in that
+  situation, running for real: the theme, then my override sheet, in an actual
+  browser cascade. <b>Switch the approach and the rendered page does not
+  change.</b> The file you hand to the next person does.</p>
+
+  <div class="cx-ctl">
+    <div class="cx-grp"><span class="lab">Approach</span>
+      <div class="cx-set">
+        <button type="button" class="cx-b" data-g="approach" data-k="force">Force with !important</button>
+        <button type="button" class="cx-b" data-g="approach" data-k="spec">Win on specificity</button>
+      </div></div>
+    <div class="cx-grp"><span class="lab">The page</span>
+      <div class="cx-set">
+        <button type="button" class="cx-b" data-g="page" data-k="built">As delivered</button>
+        <button type="button" class="cx-b" data-g="page" data-k="moved">Agency adds a section</button>
+      </div></div>
+    <div class="cx-grp"><span class="lab">Tile handle</span>
+      <div class="cx-set">
+        <button type="button" class="cx-b" data-g="handle" data-k="positional">Third section on the page</button>
+        <button type="button" class="cx-b" data-g="handle" data-k="hook">The hook class I asked for</button>
+      </div></div>
+  </div>
+
+  <div class="cx-stats"></div>
+  <div class="cx-verdict"></div>
+
+  <div class="cx-panes">
+    <div class="cx-pane">
+      <p class="cx-ph">the rendered page &middot; theme + override, live</p>
+      <iframe id="cx-frame" title="The page, rendered from both stylesheets"></iframe>
+    </div>
+    <div class="cx-pane">
+      <p class="cx-ph">the only file I was allowed to write</p>
+      <pre class="cx-code"></pre>
+    </div>
+  </div>
+
+  <p class="cx-fine"><b>The page is CambiumPak, not the real site.</b> The real
+  one is my employer&rsquo;s and identifying it here would defeat the point of a
+  stand-in, so the theme below is a plausible agency build rather than a copy of
+  theirs. What is not invented is the shape of the problem: deep descendant
+  selectors in a stylesheet I could not edit, one override file loaded after it,
+  and a contract that put child theme changes on the agency&rsquo;s side of the
+  line. In production that override sheet reached v2.20 across nine documented
+  sections, and the !important count came down from roughly two hundred to a
+  handful.</p>
+</div>
+</div>
+
+<div class="wrap narrow">
 <div class="reading well">
 <div class="block"><p class="h">the problem</p>
 <p>Leadership wanted to change the look and feel of the newly relaunched website, built by an external agency under contract. Both obvious paths were bad: commission the agency, which is slow and expensive, or start editing theme files, which is fast and a possible contract and warranty breach.</p></div>
@@ -99,5 +213,8 @@
 </div></div></div>
 <footer><div class="wrap"><span>elizabeth beier · albuquerque, new mexico</span><span>designed, built, and measured by me</span></div></footer>
 </main>
+<script src="hx.js"></script>
+<script src="cssx.js"></script>
+<script src="tryit.js" defer></script>
 </body>
 </html>

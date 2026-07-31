@@ -1,0 +1,98 @@
+/* ===================== the override stylesheet, demonstrated in a cascade ==
+   Scoped to #cssx. The page inside the frame carries its own two stylesheets
+   and shares nothing with this one, which is the point: the cascade in there
+   is real, so what wins in there wins for the same reason it did in
+   production.
+   ======================================================================== */
+#cssx{
+  --pine:#1E4D3B; --pine-deep:#143529; --kraft:#A87D52; --kraft-deep:#8A6138;
+  --cpink:#232A26; --paper:#F7F4ED; --hair:#DDD5C6; --cpmute:#6E7A70;
+  --well:#FFFDF8; --bad:#9A4B36;
+
+  position:relative;background:var(--paper);color:var(--cpink);
+  border:1px solid var(--hair);border-top:3px solid var(--pine);
+  border-radius:var(--radius-card);padding:var(--space-4);margin:var(--space-4) 0;
+  font-family:'Inter',Arial,Helvetica,sans-serif}
+
+#cssx .try-bar{margin-bottom:var(--space-2)}
+#cssx .fsbtn{color:var(--pine)}
+.cx-kick{font-size:.72rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--kraft-deep)}
+#cssx h3{font-family:inherit;font-size:clamp(1.35rem,2.6vw,1.75rem);font-weight:600;
+  line-height:1.16;letter-spacing:-.5px;color:var(--pine);margin:0 0 10px;max-width:28ch}
+.cx-lede{font-size:.96rem;line-height:1.62;color:#3C443E;margin:0 0 var(--space-3);
+  max-width:72ch}
+
+/* controls */
+.cx-ctl{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);
+  padding:4px 0 13px;margin-bottom:var(--space-3)}
+.cx-grp{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;padding-top:11px}
+.cx-grp>.lab{flex:0 0 116px;font-size:.7rem;font-weight:600;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--cpmute)}
+.cx-set{display:flex;gap:6px;flex-wrap:wrap}
+.cx-b{background:var(--well);border:1px solid var(--hair);color:#3C443E;
+  border-radius:5px;padding:7px 13px;font-family:inherit;font-size:.82rem;cursor:pointer;
+  transition:background .15s,border-color .15s,color .15s}
+.cx-b:hover{border-color:var(--pine)}
+.cx-b.on{background:var(--pine);border-color:var(--pine);color:var(--paper);font-weight:600}
+
+/* the counters */
+.cx-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.cx-s{background:var(--well);border:1px solid var(--hair);border-radius:6px;
+  padding:12px 14px}
+.cx-s.good{border-left:3px solid var(--pine)}
+.cx-s.bad{border-left:3px solid var(--bad)}
+.cx-s b{display:block;font-size:1.6rem;font-weight:600;color:var(--pine);
+  letter-spacing:-.5px;line-height:1;margin-bottom:6px}
+.cx-s.bad b{color:var(--bad)}
+.cx-s span{display:block;font-size:.72rem;line-height:1.45;color:var(--cpmute)}
+
+/* the verdict */
+.cx-note{border-left:3px solid var(--kraft);background:#F2E9DE;
+  border-radius:0 6px 6px 0;padding:12px 15px;margin-bottom:14px;
+  font-size:.9rem;line-height:1.6;color:#3C443E;max-width:78ch}
+.cx-note b{color:var(--kraft-deep)}
+.cx-note em{font-style:italic}
+.cx-note.cx-bad{border-left-color:var(--bad);background:#F6E7E2}
+.cx-note.cx-bad b{color:var(--bad)}
+.cx-note.cx-ok{border-left-color:var(--pine);background:#E9EFE9}
+.cx-note.cx-ok b{color:var(--pine)}
+
+/* the two panes */
+.cx-panes{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;align-items:start}
+.cx-pane{border:1px solid var(--hair);border-radius:6px;overflow:hidden;
+  background:var(--well)}
+.cx-ph{font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:#9AA49C;
+  padding:9px 13px;border-bottom:1px solid var(--hair);background:var(--paper)}
+#cx-frame{width:100%;height:470px;border:0;display:block;background:#fff;
+  transition:height .2s}
+.cx-code{margin:0;padding:13px;font-family:'IBM Plex Mono',ui-monospace,monospace;
+  font-size:.66rem;line-height:1.6;color:#3C443E;white-space:pre-wrap;
+  word-break:break-word;max-height:640px;overflow:auto}
+
+[data-tryit].is-max #cx-frame,[data-tryit]:fullscreen #cx-frame{
+  height:calc(100vh - 380px);min-height:320px}
+[data-tryit].is-max .cx-code,[data-tryit]:fullscreen .cx-code{
+  max-height:calc(100vh - 380px)}
+
+.cx-fine{font-size:.78rem;line-height:1.6;color:var(--cpmute);
+  border-top:1px solid var(--hair);margin-top:var(--space-3);
+  padding-top:var(--space-3);max-width:80ch}
+.cx-fine b{color:var(--bad);font-weight:600}
+
+/* full screen. #cssx is an id and outranks the shared [data-tryit] rules. */
+#cssx.is-max,#cssx:fullscreen,#cssx:-webkit-full-screen{
+  margin:0;border-radius:0;border-top-width:3px;max-width:none;
+  padding:var(--space-4);overflow:auto}
+#cssx.is-max{position:fixed;inset:0;z-index:200}
+
+@media(max-width:900px){
+  .cx-panes{grid-template-columns:1fr}
+  .cx-stats{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:640px){
+  #cssx{padding:var(--space-3)}
+  .cx-grp{flex-direction:column;gap:7px}
+  .cx-grp>.lab{flex:0 0 auto}
+  .cx-stats{grid-template-columns:1fr}
+}
