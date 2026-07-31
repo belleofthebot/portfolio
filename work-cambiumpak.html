@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Building a brand system in two days — Elizabeth Beier</title>
+<meta name="description" content="An invented packaging company needed a mark, a palette, five certification marks and a rulebook — built in two days so four NDA case studies could be shown without publishing client data.">
+<meta name="author" content="Elizabeth Beier">
+<meta name="theme-color" content="#17121C">
+<meta property="og:title" content="Building a brand system in two days — Elizabeth Beier">
+<meta property="og:description" content="An invented packaging company needed a mark, a palette, five certification marks and a rulebook — built in two days.">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ---------------------------------------------------------------- disclosure */
+.fict{border:1px solid var(--rose); border-left-width:3px; background:var(--rose-tint);
+  border-radius:var(--radius); padding:var(--space-3) var(--space-4); margin:0 0 var(--space-4)}
+.fict b{color:var(--rose); font-weight:500}
+.fict p{margin:0; font-size:var(--size-small); line-height:1.6; color:var(--text-2)}
+.fict p+p{margin-top:6px}
+.fict a{color:var(--rose)}
+
+/* ---------------------------------------------------------------- CambiumPak surface */
+.cp{--pine:#1E4D3B; --pine-deep:#143529; --kraft:#A87D52; --kraft-deep:#8A6138;
+  --moss:#7D9161; --cpink:#232A26; --paper:#F7F4ED; --hair:#DDD5C6;
+  background:var(--paper); color:var(--cpink); border:1px solid var(--hair);
+  border-radius:var(--radius-card); padding:var(--space-4);
+  font-family:'Inter',Arial,Helvetica,sans-serif; margin:var(--space-3) 0}
+.cp h3{font-family:inherit; font-size:1.05rem; font-weight:600; color:var(--pine); margin:0 0 4px}
+.cp .cpsub{font-size:.74rem; color:#6E7A70; margin:0 0 var(--space-3); letter-spacing:.02em}
+.cp p{font-size:.88rem; line-height:1.65; color:#3C443E; max-width:64ch}
+
+/* lockups */
+.lockups{display:grid; gap:var(--space-2); grid-template-columns:repeat(3,1fr); margin-top:var(--space-2)}
+.lock{border:1px solid var(--hair); border-radius:8px; padding:18px 16px 12px; background:#FFFDF8}
+.lock.rev{background:var(--pine-deep); border-color:var(--pine-deep)}
+.lock svg{width:100%; height:auto; display:block}
+.lock .cap{font-size:.64rem; letter-spacing:.1em; text-transform:uppercase; color:#8A9188; margin-top:12px; display:block}
+.lock.rev .cap{color:#9FB3A6}
+
+/* palette */
+.swatches{display:grid; grid-template-columns:repeat(7,1fr); gap:8px; margin-top:var(--space-2)}
+.sw{border-radius:6px; overflow:hidden; border:1px solid var(--hair); background:#FFFDF8}
+.sw i{display:block; height:52px}
+.sw b{display:block; font-size:.66rem; font-weight:600; padding:7px 8px 1px; color:var(--cpink)}
+.sw span{display:block; font-family:var(--mono); font-size:.58rem; padding:0 8px 8px; color:#8A9188}
+
+/* certification marks */
+.certs{display:grid; grid-template-columns:repeat(5,1fr); gap:var(--space-2); margin-top:var(--space-2)}
+.cert{border:1px solid var(--hair); border-radius:8px; padding:14px 10px; text-align:center; background:#FFFDF8}
+.cert svg{width:52px; height:52px; display:block; margin:0 auto 9px}
+.cert b{display:block; font-size:.72rem; font-weight:600; color:var(--pine); line-height:1.3}
+.cert span{display:block; font-size:.62rem; color:#6E7A70; margin-top:4px; line-height:1.4}
+
+/* rules list */
+.cprules{counter-reset:cr; display:grid; gap:10px; margin-top:var(--space-2)}
+.cprule{position:relative; padding-left:34px; font-size:.86rem; line-height:1.6; color:#3C443E}
+.cprule::before{counter-increment:cr; content:counter(cr); position:absolute; left:0; top:1px;
+  width:22px; height:22px; border-radius:50%; background:var(--pine); color:var(--paper);
+  font-size:.66rem; font-weight:600; display:grid; place-items:center}
+.cprule b{color:var(--cpink); font-weight:600}
+
+/* rejected names */
+table.rej{width:100%; border-collapse:collapse; font-size:.84rem; margin-top:10px}
+table.rej th,table.rej td{text-align:left; padding:8px 10px; border-bottom:1px solid var(--line-soft); vertical-align:top}
+table.rej th{font-family:var(--mono); font-size:var(--size-mono); color:var(--rose); text-transform:lowercase; font-weight:400}
+table.rej td:first-child{font-weight:500; white-space:nowrap; width:170px}
+table.rej tr:last-child td{border-bottom:0}
+table.rej .ok{color:var(--mint)}
+
+@media(max-width:860px){
+  .lockups{grid-template-columns:1fr}
+  .swatches{grid-template-columns:repeat(4,1fr)}
+  .certs{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:520px){
+  .swatches{grid-template-columns:repeat(2,1fr)}
+  table.rej td:first-child{width:auto}
+}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://elizabethbportfolio.com/work-cambiumpak.html">
+<meta property="og:site_name" content="Elizabeth Beier">
+<meta property="og:image" content="https://elizabethbportfolio.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="elizabethbeier_ — marketing technology, analytics, and design">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://elizabethbportfolio.com/og-image.png">
+</head>
+<body class="">
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav"><div class="nav-in">
+<a class="mark" href="index.html">elizabeth<span class="bot">beier</span><span class="cur">_</span></a>
+<a class="link" href="index.html">work</a><a class="link" href="resume.html">résumé</a><a class="link" href="index.html#stack">stack</a><a class="link" href="index.html#about">about</a><a class="link" href="index.html#contact">contact</a></div></header>
+<main id="main">
+
+<div class="wrap narrow case-hero">
+<a class="backlink" href="index.html">← back to work</a>
+<span class="kicker">case study · brand system</span>
+<h1>A brand system for a company that doesn't exist</h1>
+<p class="meta">two days · mark, palette, five certification marks, a rulebook, and a live site</p>
+<p class="oneline">I'm proud of work I'm not allowed to show. So I built a company I could.</p>
+</div>
+
+<div class="wrap narrow">
+
+<div class="fict">
+<p><b>CambiumPak is invented.</b> I'm proud of the work I did at an LED lighting manufacturer and I can't show you any of it — it's confidential. So I designed an imaginary company with a similar structure and similar needs, and built the same systems and tools there that I built for my employer. Every CambiumPak product, figure, certification mark and test result is made up.</p>
+<p>The site is live at <a href="https://cambiumpak.com/" target="_blank" rel="noopener">cambiumpak.com</a> — eleven product families, seventeen SKUs, forty-four documents.</p>
+</div>
+
+<div class="statrow">
+<div><span class="n">2 days</span><span class="l">mark, palette, marks, rules, site</span></div>
+<div><span class="n">10</span><span class="l">company names rejected before one was free</span></div>
+<div><span class="n">5</span><span class="l">certification marks, all invented</span></div>
+<div><span class="n">0</span><span class="l">real trademarks used</span></div>
+</div>
+
+<div class="reading well">
+
+<div class="block"><p class="h">why it exists</p>
+<p>Two of the tools I built for my employer make the same claim: brand compliance enforced by code. That claim is invisible without a brand to be compliant with. I can't publish my employer's, so I needed one I could.</p></div>
+
+<div class="block"><p class="h">the constraint that shaped everything</p>
+<p><strong>It had to look nothing like my own brand.</strong> No rose, no plum, no ivory, no Space Grotesk. If a generated deck came out in my palette, the demo quietly says "my tool makes things in my style" — when the real claim is that it applies <em>somebody else's</em> system. The contrast between this page's chrome and a CambiumPak artifact sitting inside it is the demonstration.</p>
+<p>Second constraint: sober mid-market B2B. Competent, unfashionable, faintly conservative. If it looks too designed, it reads as a branding exercise rather than an operations tool.</p></div>
+
+<div class="block"><p class="h">naming took longer than the mark</p>
+<p>Ten candidates checked and rejected. Real words in an established industry are almost always taken.</p>
+<table class="rej">
+<tr><th>name</th><th>why it was rejected</th></tr>
+<tr><td>Terrapak</td><td>Real twice — two live packaging companies. Also one letter from Tetra Pak.</td></tr>
+<tr><td>Gaiapak</td><td>Three existing packaging companies using Gaia.</td></tr>
+<tr><td>Mycelia Packaging</td><td>Mycelium packaging is a material category, not a brand — like naming a lighting firm "LED Lighting Co."</td></tr>
+<tr><td>Terracrate</td><td>Sits next to TerraCycle and Terravive, both real sustainable packaging.</td></tr>
+<tr><td>Mossbank</td><td>"Moss Packaging" exists.</td></tr>
+<tr><td>Coppice</td><td>Coppice Alupack, and coppice.net. Both packaging.</td></tr>
+<tr><td>Understory</td><td>Real company, plus a retail shop.</td></tr>
+<tr><td>Loamfold</td><td>Free. Built under it first, then superseded.</td></tr>
+<tr><td class="ok">CambiumPak</td><td class="ok">Cambium is the living layer under bark that makes new wood. Bare "Cambium" is crowded in materials — the <code>-Pak</code> suffix is what makes it read as a distinct entity. No existing Cambium uses it.</td></tr>
+</table>
+<p style="margin-top:14px">The near-miss on Terrapak is the one worth remembering: same industry, one letter from a global brand. That's the failure mode — not picking a name nobody has, but picking one that reads as a knock-off of someone who has lawyers.</p></div>
+
+<div class="block"><p class="h">the mark</p>
+<p>Four half-rings on two centres, offset along a shared vertical seam. It reads three ways at once: growth rings, a taped carton seam, and a C over a P in the counters.</p>
+
+<div class="cp">
+<h3>Lockups</h3>
+<p class="cpsub">three approved · nothing else is legal</p>
+<div class="lockups">
+  <div class="lock">
+    <svg viewBox="0 0 364 100" role="img" aria-label="CambiumPak primary lockup">
+      <g transform="translate(0 6) scale(0.88)" fill="none" stroke="#1E4D3B" stroke-width="10" stroke-linecap="butt">
+        <path d="M50 82 A18 18 0 0 1 50 46"/><path d="M50 98 A34 34 0 0 1 50 30"/>
+        <path d="M50 54 A18 18 0 0 0 50 18"/><path d="M50 70 A34 34 0 0 0 50 2"/>
+      </g>
+      <text x="106" y="64" font-family="Inter,Arial,sans-serif" font-weight="700" font-size="40" letter-spacing="-0.6">
+        <tspan fill="#1E4D3B">Cambium</tspan><tspan fill="#A87D52">Pak</tspan></text>
+    </svg>
+    <span class="cap">primary</span>
+  </div>
+  <div class="lock rev">
+    <svg viewBox="0 0 364 100" role="img" aria-label="CambiumPak reversed lockup">
+      <g transform="translate(0 6) scale(0.88)" fill="none" stroke="#F7F4ED" stroke-width="10" stroke-linecap="butt">
+        <path d="M50 82 A18 18 0 0 1 50 46"/><path d="M50 98 A34 34 0 0 1 50 30"/>
+        <path d="M50 54 A18 18 0 0 0 50 18"/><path d="M50 70 A34 34 0 0 0 50 2"/>
+      </g>
+      <text x="106" y="64" font-family="Inter,Arial,sans-serif" font-weight="700" font-size="40" letter-spacing="-0.6">
+        <tspan fill="#FFFFFF">Cambium</tspan><tspan fill="#E4D3BE">Pak</tspan></text>
+    </svg>
+    <span class="cap">reversed</span>
+  </div>
+  <div class="lock">
+    <svg viewBox="0 0 364 100" role="img" aria-label="CambiumPak mono lockup">
+      <g transform="translate(0 6) scale(0.88)" fill="none" stroke="#232A26" stroke-width="10" stroke-linecap="butt">
+        <path d="M50 82 A18 18 0 0 1 50 46"/><path d="M50 98 A34 34 0 0 1 50 30"/>
+        <path d="M50 54 A18 18 0 0 0 50 18"/><path d="M50 70 A34 34 0 0 0 50 2"/>
+      </g>
+      <text x="106" y="64" font-family="Inter,Arial,sans-serif" font-weight="700" font-size="40" letter-spacing="-0.6" fill="#232A26">CambiumPak</text>
+    </svg>
+    <span class="cap">mono · one ink</span>
+  </div>
+</div>
+</div>
+
+<p><strong>The flat ends against the seam are the whole idea.</strong> The stroke caps are butt, not round. A round cap closes the gap and turns it into a generic swirl — it stops reading as a seam and stops reading as letterforms. It's one attribute and it's the difference between this mark and a thousand others.</p>
+<p>The real constraint was reproduction: it had to survive being stamped in one colour on brown corrugated board. That kills gradients, hairlines, tight counters, and anything needing a second ink. It also has to hold at 12mm on a tape roll and 2m on a trade-show banner. Designing for the worst substrate first is why the mono lockup isn't an afterthought.</p></div>
+
+<div class="block"><p class="h">the palette, and the one colour with a job</p>
+<div class="cp">
+<h3>Tokens</h3>
+<p class="cpsub">one grotesque, two weights · no display face</p>
+<div class="swatches">
+  <div class="sw"><i style="background:#1E4D3B"></i><b>Pine</b><span>#1E4D3B</span></div>
+  <div class="sw"><i style="background:#143529"></i><b>Pine deep</b><span>#143529</span></div>
+  <div class="sw"><i style="background:#A87D52"></i><b>Kraft</b><span>#A87D52</span></div>
+  <div class="sw"><i style="background:#8A6138"></i><b>Kraft deep</b><span>#8A6138</span></div>
+  <div class="sw"><i style="background:#7D9161"></i><b>Moss</b><span>#7D9161</span></div>
+  <div class="sw"><i style="background:#232A26"></i><b>Ink</b><span>#232A26</span></div>
+  <div class="sw"><i style="background:#F7F4ED;box-shadow:inset 0 0 0 1px #DDD5C6"></i><b>Paper</b><span>#F7F4ED</span></div>
+</div>
+</div>
+<p><strong>Moss is the one to protect.</strong> It carries a single meaning — recycled-content percentages — and nothing else. A moss-coloured number that isn't a recycled percentage is a defect, not a style choice.</p>
+<p>That rule caught something real in production. The bar charts on the spec sheets are Pine, not Moss, even though Moss would have looked better against the kraft. They aren't recycled figures, so they don't get the colour. A rule that never costs you anything isn't doing any work.</p></div>
+
+<div class="block"><p class="h">five certification marks, all invented</p>
+<p>This is the part that mattered most to get right. FSC, BPI Compostable, How2Recycle, SFI and ISTA are real trademarks belonging to real standards bodies. Putting any of them on a fictional company's spec sheets would be trademark misuse on a public portfolio.</p>
+<p>So they were removed and replaced with five invented ones, none confusable with a real mark.</p>
+
+<div class="cp">
+<h3>The set</h3>
+<p class="cpsub">14mm square, single colour · they sit in a row along the foot of a spec sheet</p>
+<div class="certs">
+  <div class="cert">
+    <svg viewBox="0 0 48 48" fill="none" stroke="#1E4D3B" stroke-width="3" stroke-linecap="butt">
+      <path d="M40 24a16 16 0 1 1-6-12.5"/><path d="M40 8v8h-8"/>
+      <text x="24" y="30" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" font-weight="700" fill="#1E4D3B" stroke="none">90</text>
+    </svg>
+    <b>CircleFibre 90</b><span>post-consumer fibre, verified by mill declaration</span>
+  </div>
+  <div class="cert">
+    <svg viewBox="0 0 48 48" fill="none" stroke="#1E4D3B" stroke-width="3" stroke-linecap="butt">
+      <rect x="7" y="7" width="34" height="34" rx="7"/><path d="M16 25l6 6 11-13"/>
+    </svg>
+    <b>ReturnReady</b><span>accepted whole into kerbside paper collection</span>
+  </div>
+  <div class="cert">
+    <svg viewBox="0 0 48 48" fill="none" stroke="#1E4D3B" stroke-width="3" stroke-linecap="butt">
+      <circle cx="24" cy="27" r="15"/>
+      <path d="M24 34c-6 0-8-4-8-8 5 0 8 3 8 8zM24 34c6 0 8-4 8-8-5 0-8 3-8 8z"/>
+      <text x="24" y="9" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#1E4D3B" stroke="none">180</text>
+    </svg>
+    <b>SoilSafe 180</b><span>disintegrates commercially inside 180 days</span>
+  </div>
+  <div class="cert">
+    <svg viewBox="0 0 48 48" fill="none" stroke="#1E4D3B" stroke-width="3" stroke-linecap="butt">
+      <path d="M24 5l14 5v13c0 10-7 16-14 20-7-4-14-10-14-20V10z"/>
+      <circle cx="19" cy="22" r="6"/><circle cx="29" cy="22" r="6"/>
+    </svg>
+    <b>ChainMark</b><span>fibre traced to managed regrowth forestry</span>
+  </div>
+  <div class="cert">
+    <svg viewBox="0 0 48 48" fill="none" stroke="#1E4D3B" stroke-width="3" stroke-linecap="butt">
+      <path d="M8 15h32v26H8zM8 15l6-8h20l6 8M24 7v8"/>
+      <text x="24" y="34" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="700" fill="#1E4D3B" stroke="none">D3</text>
+    </svg>
+    <b>DropRated D3</b><span>survives the D3 transit drop sequence at rated weight</span>
+  </div>
+</div>
+</div>
+
+<p>They share a stroke weight and a corner treatment so they read as a set — which a real certification row never does, and making them cohere is what sells the whole thing.</p>
+<p><strong>The rule underneath them is the interesting part.</strong> A family-level badge row shows the <em>intersection</em> of its members' marks, never the union. If two tape codes hold ChainMark and the third doesn't, the family claims neither — it claims only what every SKU can support, and the difference is disclosed in a note. A site that shows the union is making a claim two-thirds of the range can't back. That's exactly the class of error the tooling is supposed to prevent, so getting it right here is the demo working rather than arguing against itself.</p></div>
+
+<div class="block"><p class="h">the rulebook</p>
+<div class="cp">
+<h3>Five rules</h3>
+<p class="cpsub">three of them are enforceable in code, and are</p>
+<div class="cprules">
+<p class="cprule"><b>The mark is never recoloured, rotated, or set on a busy photograph.</b> On anything darker than Paper, the reversed lockup is the only legal one.</p>
+<p class="cprule"><b>Kraft carries SKUs and rules. Moss carries recycled figures and nothing else.</b> One accent, one meaning.</p>
+<p class="cprule"><b>Certification badges are resolved from the SKU record, never placed by hand.</b></p>
+<p class="cprule"><b>Every dimension is stated internal, in millimetres, in L × W × D order.</b></p>
+<p class="cprule"><b>Recycled content is banded, never implied.</b> 0–39, 40–69, 70–100.</p>
+</div>
+</div>
+<p>Rules 3, 4 and 5 are checked by the build. The site fails CI if a rendered page or the product record contains any of the five real certification body names — a check that exists because one slipped in early and I'd rather the build catch it than a hiring manager.</p></div>
+
+<div class="outcome"><p class="h">what two days bought</p>
+<ul>
+<li>A mark that works in one ink on brown board, at 12mm and at 2m.</li>
+<li>A palette with one colour under a semantic rule, which has already caught a real defect.</li>
+<li>Five certification marks that read as a set and infringe nothing.</li>
+<li>A rulebook where three of five rules are machine-checked rather than remembered.</li>
+<li>A live site, eleven product families, forty-four documents, deployed with a CI check that fails if the built site drifts from its source record.</li>
+</ul></div>
+
+<div class="diff"><p class="h">what I'd do differently</p>
+<p>I built the first version under a different name — Loamfold — before running the trademark search properly. It was free, so nothing was lost, but I'd checked availability after designing rather than before. Ten minutes of searching at the start would have saved redoing the wordmark.</p></div>
+</div>
+
+<div class="tags"><span class="tag rose">brand systems</span><span class="tag ">logo design</span><span class="tag ">svg</span><span class="tag ">colour systems</span><span class="tag ">trademark screening</span><span class="tag ">design tokens</span><span class="tag ">documentation</span><span class="tag ">ci enforcement</span></div>
+
+<div class="protolink">
+<div>
+<span class="kicker">the whole thing, live</span>
+<p class="pl-t">cambiumpak.com</p>
+<p class="pl-n">Eleven product families, seventeen SKUs, forty-four downloadable documents. Invented, and it says so on every page.</p>
+</div>
+<a class="btn" href="https://cambiumpak.com/" target="_blank" rel="noopener">open the site →</a>
+</div>
+
+<div class="nextprev"><a href="work-analytics.html">← a measurement capability from zero</a><a href="index.html">back to work →</a></div>
+</div>
+
+<div class="contact" id="contact"><div class="wrap">
+<p class="avail"><span class="pulse-dot"></span> open to marketing operations, analytics and martech roles</p>
+<h2>Let's talk.</h2>
+<p>Remote, or Albuquerque and hybrid. Happy to walk through the architecture behind any of this.</p>
+<div class="contact-links">
+<a class="clink primary" href="mailto:elizabethbportfolio@gmail.com">elizabethbportfolio@gmail.com</a>
+<a class="clink" href="resume.html">résumé</a>
+<a class="clink" href="https://github.com/belleofthebot" target="_blank" rel="noopener">github</a>
+<a class="clink" href="https://www.instagram.com/paintingthesouthwest/" target="_blank" rel="noopener">instagram</a>
+</div></div></div>
+<footer><div class="wrap"><span>elizabeth beier · albuquerque, new mexico</span><span>designed, built, and measured by me</span></div></footer>
+</main>
+</body>
+</html>

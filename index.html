@@ -95,6 +95,20 @@
   .cpvisit{margin-left:0}
 }
 
+/* ---------- group headings: the three kinds of work ---------- */
+.group-h{margin-bottom:var(--space-3)}
+.gtitle{font-size:clamp(1.3rem,2.6vw,1.6rem);font-weight:500;line-height:1.25;
+  margin:0 0 8px;color:var(--text);max-width:30ch;display:flex;align-items:baseline;gap:12px}
+.gtitle::before{content:'';flex:0 0 auto;width:22px;height:3px;background:var(--rose);
+  border-radius:2px;transform:translateY(-6px)}
+.group-h .group-p{font-size:var(--size-small);color:var(--text-3);max-width:66ch;margin:0;
+  padding-left:34px}
+@media(max-width:640px){
+  .gtitle{gap:9px}
+  .gtitle::before{width:16px}
+  .group-h .group-p{padding-left:25px}
+}
+
 /* artifact tile */
 .na{background:var(--paper);border-radius:7px;overflow:hidden;display:flex;flex-direction:column;
   font-family:'Inter',Arial,sans-serif;border:1px solid var(--hair);transition:border-color .15s,filter .15s}
@@ -131,6 +145,15 @@
 .mark-sm{fill:none;stroke:var(--paper);stroke-width:11;stroke-linecap:butt}
 
 </style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://elizabethbportfolio.com/">
+<meta property="og:site_name" content="Elizabeth Beier">
+<meta property="og:image" content="https://elizabethbportfolio.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="elizabethbeier_ — marketing technology, analytics, and design">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://elizabethbportfolio.com/og-image.png">
 </head>
 <body class="">
 <a class="skip" href="#main">Skip to content</a>
@@ -139,11 +162,10 @@
 <a class="link" href="index.html" aria-current="page">work</a><a class="link" href="resume.html">résumé</a><a class="link" href="index.html#stack">stack</a><a class="link" href="index.html#about">about</a><a class="link" href="index.html#contact">contact</a></div></header>
 <main id="main">
 <section id="work"><div class="wrap">
-<div class="sec-head"><span class="kicker">selected work</span>
-<h2>Selected work</h2>
+<div class="sec-head"><h2>Selected work</h2>
 <p>Employer projects are described rather than linked — no client data, no credentials, no proprietary figures.</p></div>
 
-<div class="group"><div class="group-h"><span class="kicker">for my employer</span></div>
+<div class="group"><div class="group-h"><p class="gtitle">Work for my employer, demonstrated on a stand-in brand</p><p class="group-p">Marketing technology and analytics at a commercial LED lighting manufacturer, built in my first four months there.</p></div>
 <div class="cpblock">
 
   <div class="cphead">
@@ -231,8 +253,7 @@
 </div>
 </div>
 
-<div class="group"><div class="group-h"><span class="kicker">for clients and my own studio</span>
-<p class="group-p">Brand, growth and content operations.</p></div>
+<div class="group"><div class="group-h"><p class="gtitle">For clients and my studio</p><p class="group-p">Brand, growth and content operations.</p></div>
 <div class="cards"><a class="wcard" href="work-rebrand.html">
 <div class="thumb well">
 <div class="ba-mini">
@@ -271,8 +292,7 @@
 <span class="foot">buffer · webflow · editorial calendar · <span class="read">read →</span></span>
 </a></div></div>
 
-<div class="group"><div class="group-h"><span class="kicker">for learning and fun</span>
-<p class="group-p">Two on my own time, one with three classmates. All three open and work right now.</p></div>
+<div class="group"><div class="group-h"><p class="gtitle">For learning and for fun</p><p class="group-p">Two projects you can open and use right now.</p></div>
 <div class="cards"><a class="wcard" href="work-drive-505.html">
 <div class="thumb well" style="padding:0;overflow:hidden">
 <img src="drive-the-505-preview.jpg" alt="Three screens from Drive the 505: the car knowledge module, the home screen, and the interactive Albuquerque map." style="width:100%;height:100%;object-fit:cover;object-position:top">
@@ -281,14 +301,6 @@
 <h3>Drive the 505</h3>
 <p>A learning app for nervous drivers in Albuquerque. Modules, flashcards, quizzes, and an interactive map of the city grid.</p>
 <span class="foot">javascript · interactive svg · playable · <span class="read">read →</span></span>
-</a><a class="wcard" href="work-passage.html">
-<div class="thumb well" style="padding:0;overflow:hidden">
-<img src="passage-preview.jpg" alt="Three Passage screens: the caregiving dashboard, the self-care screen, and daily self-care shortcuts." style="width:100%;height:100%;object-fit:cover;object-position:top">
-</div>
-<span class="ptag">team project · my concept and ui</span>
-<h3>Passage</h3>
-<p>An app for someone caring for a person with a terminal illness — tracking the care, and tracking the caregiver. Every illustration painted by hand. Fifteen screens, clickable.</p>
-<span class="foot">ux/ui · illustration · team of four · <span class="read">read →</span></span>
 </a><a class="wcard" href="work-bookspot.html">
 <div class="thumb well" style="padding:0;overflow:hidden">
 <img src="bookspot-preview.jpg" alt="Three Bookspot screens: the map of London spots, a spot detail for Platform 9 and three quarters, and the well spotted stamp." style="width:100%;height:100%;object-fit:cover;object-position:top">
