@@ -233,16 +233,16 @@
 .ebwho{font-family:var(--mono);font-size:var(--size-mono);color:var(--text-3);
   margin:var(--space-3) 0 0}
 
-/* The glyph changes on every second blink of the wordmark cursor. The cursor
-   runs at 1.1s, so the swap is 2.2s and the two stay in step for as long as the
-   page is open — no shared clock, just the same number twice. */
+/* The glyph changes on every blink of the wordmark cursor: both run at 1.1s, so
+   the two stay in step for as long as the page is open — no shared clock, just
+   the same number twice. */
 .ebglyph{position:relative;width:190px;height:190px;justify-self:end;
   background:var(--tile);border:1px solid var(--line);border-radius:var(--radius-card)}
 /* Fading two line drawings through each other reads as a tangle, so the swap is
    sequenced: the outgoing one clears before the incoming one arrives. */
 .ebglyph svg{position:absolute;inset:0;width:100%;height:100%;
-  opacity:0;transform:scale(.94);transition:opacity .26s ease,transform .26s ease}
-.ebglyph svg.on{opacity:1;transform:none;transition-delay:.28s}
+  opacity:0;transform:scale(.95);transition:opacity .18s ease,transform .18s ease}
+.ebglyph svg.on{opacity:1;transform:none;transition-delay:.19s}
 .ebglyph .st{fill:none;stroke:var(--rose);stroke-width:2.4;
   stroke-linecap:round;stroke-linejoin:round}
 .ebglyph .st2{fill:none;stroke:var(--mint);stroke-width:2.4;
@@ -322,7 +322,7 @@
   </div>
   <div class="ebglyph" id="ebglyph" aria-hidden="true"></div>
 </div>
-<div class="pills" id="ebpills"><button type="button" class="pill" data-k="design" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="2.5" width="14" height="14" rx="1.5"/><path d="M2.5 7h14M7 2.5v14"/></svg><span class="lb">graphic design</span><span class="ct">12</span></button><button type="button" class="pill" data-k="analytics" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 16.5h15M5 13.5V8M9.5 13.5V3.5M14 13.5V10.5"/></svg><span class="lb">analytics</span><span class="ct">4</span></button><button type="button" class="pill" data-k="ai" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 2.5v14M2.5 9.5h14M4.7 4.7l9.6 9.6M14.3 4.7l-9.6 9.6"/></svg><span class="lb">prompting & AI</span><span class="ct">4</span></button><button type="button" class="pill" data-k="web" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="3.5" width="14" height="12" rx="1.5"/><path d="M2.5 7.5h14"/></svg><span class="lb">web build</span><span class="ct">5</span></button><button type="button" class="pill" data-k="brand" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9.5" cy="9.5" r="7"/><circle cx="9.5" cy="9.5" r="2.6"/></svg><span class="lb">brand systems</span><span class="ct">2</span></button><button type="button" class="pill" data-k="product" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="2.5" width="8" height="14" rx="2"/><path d="M8 14h3"/></svg><span class="lb">ux / product</span><span class="ct">3</span></button><button type="button" class="pill" data-k="illustration" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16.5l3-7.5 7-5 3 3-5 7-8 2.5z"/><path d="M6 9l4.5 4.5"/></svg><span class="lb">illustration</span><span class="ct">5</span></button><button type="button" class="pill" data-k="animation" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6.5" cy="9.5" r="4"/><circle cx="13" cy="9.5" r="4"/></svg><span class="lb">animation</span><span class="ct">1</span></button><button type="button" class="pill zero" data-k="social" disabled aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="9.5" r="2.5"/><circle cx="14" cy="5" r="2.5"/><circle cx="14" cy="14" r="2.5"/><path d="M7.2 8.3l4.6-2.3M7.2 10.7l4.6 2.3"/></svg><span class="lb">social campaigns</span><span class="ct">0</span></button></div>
+<div class="pills" id="ebpills"><button type="button" class="pill" data-k="design" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="2.5" width="14" height="14" rx="1.5"/><path d="M2.5 7h14M7 2.5v14"/></svg><span class="lb">graphic design</span><span class="ct">12</span></button><button type="button" class="pill" data-k="analytics" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 16.5h15M5 13.5V8M9.5 13.5V3.5M14 13.5V10.5"/></svg><span class="lb">analytics</span><span class="ct">4</span></button><button type="button" class="pill" data-k="ai" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 2.5v14M2.5 9.5h14M4.7 4.7l9.6 9.6M14.3 4.7l-9.6 9.6"/></svg><span class="lb">prompting & AI</span><span class="ct">10</span></button><button type="button" class="pill" data-k="web" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="3.5" width="14" height="12" rx="1.5"/><path d="M2.5 7.5h14"/></svg><span class="lb">web build</span><span class="ct">5</span></button><button type="button" class="pill" data-k="brand" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9.5" cy="9.5" r="7"/><circle cx="9.5" cy="9.5" r="2.6"/></svg><span class="lb">brand systems</span><span class="ct">2</span></button><button type="button" class="pill" data-k="product" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="2.5" width="8" height="14" rx="2"/><path d="M8 14h3"/></svg><span class="lb">ux / product</span><span class="ct">3</span></button><button type="button" class="pill" data-k="illustration" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16.5l3-7.5 7-5 3 3-5 7-8 2.5z"/><path d="M6 9l4.5 4.5"/></svg><span class="lb">illustration</span><span class="ct">5</span></button><button type="button" class="pill" data-k="animation" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6.5" cy="9.5" r="4"/><circle cx="13" cy="9.5" r="4"/></svg><span class="lb">animation</span><span class="ct">1</span></button><button type="button" class="pill zero" data-k="social" disabled aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="9.5" r="2.5"/><circle cx="14" cy="5" r="2.5"/><circle cx="14" cy="14" r="2.5"/><path d="M7.2 8.3l4.6-2.3M7.2 10.7l4.6 2.3"/></svg><span class="lb">social campaigns</span><span class="ct">0</span></button></div>
 <p class="ebstate" id="ebstate" hidden></p>
 
 <div class="sec-head"><h2>Selected work</h2>
@@ -381,7 +381,7 @@
     <p>Tracking architecture and governance, live before a relaunch &mdash; because that window closes on launch day. Every tool here is measured by it.</p>
     <span class="foot">ga4 &middot; tag manager &middot; data api &middot; <span class="read">read &rarr;</span></span>
   </a>
-  <a class="cpcard" href="work-website.html" data-f="design web analytics">
+  <a class="cpcard" href="work-website.html" data-f="design web analytics ai">
     <div class="thumb"><img class="cpshot" src="thumb-website.jpg" width="1000" height="372" loading="lazy" decoding="async" alt="The CambiumPak hero as reworked: full-bleed photography, headline bottom-left over a gradient"></div>
     <span class="ptag">the live site</span>
     <h3>A website reimagining, without voiding the contract</h3>
@@ -425,7 +425,7 @@
 <h3>Choose Democracy</h3>
 <p>400+ drawings inside an interactive book, four animated explainers, and the art on a nonprofit's website — all held to one style since 2021.</p>
 <span class="foot">illustration · animation · house style · <span class="read">read →</span></span>
-</a><a class="wcard" href="work-studio.html" data-f="analytics web design">
+</a><a class="wcard" href="work-studio.html" data-f="analytics web design ai">
 <div class="thumb"><img class="cpshot" src="thumb-studio.jpg" width="1000" height="372" loading="lazy" decoding="async" alt="The StudioKeeper dashboard: time-window controls above revenue, orders, average order and pieces"></div>
 <span class="ptag">data &amp; tooling</span>
 <h3>A studio dashboard for my art business</h3>
@@ -442,7 +442,7 @@
 </a></div></div>
 
 <div class="group"><div class="group-h"><p class="gtitle">For learning and for fun</p><p class="group-p">Two projects you can open and use right now, and two drawn to explain something.</p></div>
-<div class="cards"><a class="wcard" href="work-drive-505.html" data-f="web design product">
+<div class="cards"><a class="wcard" href="work-drive-505.html" data-f="web design product ai">
 <div class="thumb well" style="padding:0;overflow:hidden">
 <img src="drive-the-505-preview.jpg" alt="Three screens from Drive the 505: the car knowledge module, the home screen, and the interactive Albuquerque map." style="width:100%;height:100%;object-fit:cover;object-position:top">
 </div>
@@ -450,7 +450,7 @@
 <h3>Drive the 505</h3>
 <p>A learning app for nervous drivers in Albuquerque. Modules, flashcards, quizzes, and an interactive map of the city grid.</p>
 <span class="foot">javascript · interactive svg · playable · <span class="read">read →</span></span>
-</a><a class="wcard" href="work-bookspot.html" data-f="product design">
+</a><a class="wcard" href="work-bookspot.html" data-f="product design ai">
 <div class="thumb well" style="padding:0;overflow:hidden">
 <img src="bookspot-preview.jpg" alt="Three Bookspot screens: the map of London spots, a spot detail for Platform 9 and three quarters, and the well spotted stamp." style="width:100%;height:100%;object-fit:cover;object-position:top">
 </div>
@@ -458,7 +458,7 @@
 <h3>Bookspot</h3>
 <p>An app for readers who want to visit real places from fiction. Eight interviews, ten versions of one flow, 40+ screens, clickable prototype.</p>
 <span class="foot">research · prototype · usability testing · <span class="read">read →</span></span>
-</a><a class="wcard" href="work-passage.html" data-f="product design illustration">
+</a><a class="wcard" href="work-passage.html" data-f="product design illustration ai">
 <div class="thumb well" style="padding:0;overflow:hidden">
 <img src="passage-preview.jpg" alt="Three Passage screens: the caregiver’s home with today’s three small things, a meditation player, and the journal." style="width:100%;height:100%;object-fit:cover;object-position:top">
 </div>
@@ -474,7 +474,7 @@
 <h3>Aristotle's Poetics, on one sheet</h3>
 <p>An infographic for a comics class at California College of the Arts. Drawn in Illustrator and shipped as SVG, so you can zoom into any panel and nothing softens.</p>
 <span class="foot">illustrator · information design · svg · <span class="read">read →</span></span>
-</a><a class="wcard" href="work-sleep-apnea.html" data-f="illustration design">
+</a><a class="wcard" href="work-sleep-apnea.html" data-f="illustration design ai">
 <div class="thumb well" style="padding:0;overflow:hidden">
 <img src="sa-preview.jpg" width="1000" height="372" loading="lazy" decoding="async" alt="A cutaway drawing on dark navy of a sleep apnea machine: air filter, spinning impeller, humidifier tubes and the green power cord." style="width:100%;height:100%;object-fit:cover">
 </div>
@@ -536,12 +536,12 @@
     var gs = box.querySelectorAll('svg'), gi = 0;
     gs[0].classList.add('on');
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      /* 2.2s = two blinks of the 1.1s cursor in the wordmark */
+      /* 1.1s — in step with every blink of the cursor in the wordmark */
       setInterval(function () {
         gs[gi].classList.remove('on');
         gi = (gi + 1) % gs.length;
         gs[gi].classList.add('on');
-      }, 2200);
+      }, 1100);
     }
   }
 
