@@ -99,15 +99,21 @@ h1{font-size:var(--size-hero);line-height:1.12;max-width:18ch;margin:0 0 var(--s
 .thesis h2{font-size:var(--size-h2);margin:0 0 var(--space-1)}
 .thesis .cap{color:var(--text-2);max-width:62ch;margin:0 0 var(--space-3);font-size:var(--size-small)}
 .trow{border:1px solid var(--line);border-radius:var(--radius-card);overflow:hidden;background:var(--panel)}
-.trow > div{display:grid;grid-template-columns:1fr 34px 1.25fr;border-bottom:1px solid var(--line-soft)}
-.trow > div:last-child{border-bottom:none}
+/* A row is an <a> where it leads somewhere and a <div> where it does not, so
+   every rule that shaped the row has to accept both. */
+.trow > div,.trow > a{display:grid;grid-template-columns:1fr 34px 1.25fr;
+  border-bottom:1px solid var(--line-soft)}
+.trow > div:last-child,.trow > a:last-child{border-bottom:none}
+.trow > a{text-decoration:none;color:inherit;cursor:pointer;
+  transition:background .18s}
+.trow > a:focus-visible{outline:2px solid var(--rose);outline-offset:-2px}
 .trow span{padding:var(--space-2) var(--space-3);font-size:var(--size-small);line-height:1.55}
 .trow .a{color:var(--text-3)}
 .trow .arw{display:flex;align-items:center;justify-content:center;color:var(--rose);padding:0;font-family:var(--mono)}
 .trow .b{font-weight:500;color:var(--text)}
 .trow .th{background:var(--tile)}
 .trow .th span{font-family:var(--mono);font-size:var(--size-mono);color:var(--rose);text-transform:lowercase}
-@media(max-width:720px){.trow > div{grid-template-columns:1fr}.trow .arw,.trow .th{display:none}.trow .a{padding-bottom:0}.trow .b{padding-top:2px}.trow .b::before{content:"→ ";color:var(--rose);font-family:var(--mono)}}
+@media(max-width:720px){.trow > div,.trow > a{grid-template-columns:1fr}.trow .arw,.trow .th{display:none}.trow .a{padding-bottom:0}.trow .b{padding-top:2px}.trow .b::before{content:"→ ";color:var(--rose);font-family:var(--mono)}}
 
 /* ---------- metrics ---------- */
 .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-3);margin-top:var(--space-5)}
