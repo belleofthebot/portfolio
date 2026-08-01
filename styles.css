@@ -690,28 +690,23 @@ footer span{font-family:var(--mono);font-size:var(--size-mono);color:var(--text-
 .xp{width:min(1060px,calc(100vw - 40px));margin-left:50%;transform:translateX(-50%)}
 @media print{.xp{width:auto;margin-left:0;transform:none}}
 
-/* The fold glyphs move a little, without changing size. Everything here is a
-   transform on the SVG's own children inside a fixed 64x48 box, so the tile
-   never reflows — only what is drawn in it drifts. Amplitudes are in viewBox
-   units: at this scale one unit is well under a pixel on screen, which is the
-   point. The children are addressed by position rather than by name so the
-   same rules fit every glyph in the set. */
-.fold-th svg > *{transform-box:fill-box;transform-origin:center;
-  animation:glyphA 5.2s ease-in-out infinite}
-.fold-th svg > *:nth-child(2){animation-name:glyphB;animation-duration:6.1s;
-  animation-delay:-1.4s}
-.fold-th svg > *:nth-child(3){animation-name:glyphC;animation-duration:5.6s;
-  animation-delay:-2.7s}
-.fold-th svg > *:nth-child(4){animation-name:glyphB;animation-duration:6.8s;
-  animation-delay:-0.8s}
-.fold-th svg > *:nth-child(5){animation-name:glyphC;animation-duration:5.9s;
-  animation-delay:-3.3s}
-.fold-th svg > *:nth-child(n+6){animation-name:glyphA;animation-duration:7.2s;
-  animation-delay:-1.9s}
-@keyframes glyphA{0%,100%{transform:translateY(0)}50%{transform:translateY(-1.1px)}}
-@keyframes glyphB{0%,100%{transform:translateX(0)}50%{transform:translateX(1.3px)}}
-@keyframes glyphC{0%,100%{transform:translateY(0) scale(1)}
-  50%{transform:translateY(0.9px) scale(1.035)}}
-/* the fold opens and closes; a paused glyph in a closed fold costs nothing */
-.fold:not([open]) .fold-th svg > *{animation-play-state:paused}
-@media(prefers-reduced-motion:reduce){.fold-th svg > *{animation:none}}
+/* The fold glyphs. Only the accent-coloured marks move — the rose and the mint
+   details, never the structural strokes in --line or --text-3. Moving every
+   child made the whole icon look like it was sliding; holding the structure
+   still and letting the highlight shift reads as the drawing being alive
+   inside its tile. The tile is a fixed 64x48 and nothing here can change it:
+   these are transforms on the SVG's own children, so no layout is involved. */
+.fold-th svg [stroke="#DFA192"],.fold-th svg [fill="#DFA192"],
+.fold-th svg [stroke="#9FE0CE"],.fold-th svg [fill="#9FE0CE"]{
+  transform-box:fill-box;transform-origin:center;
+  animation:glyphA 4.4s ease-in-out infinite}
+.fold-th svg [stroke="#9FE0CE"],.fold-th svg [fill="#9FE0CE"]{
+  animation-name:glyphB;animation-duration:5.3s;animation-delay:-1.6s}
+/* a second accent mark in the same glyph offsets, so they never move as one */
+.fold-th svg [stroke="#DFA192"]~[stroke="#DFA192"],
+.fold-th svg [fill="#DFA192"]~[fill="#DFA192"]{
+  animation-duration:5.1s;animation-delay:-2.2s}
+@keyframes glyphA{0%,100%{transform:translateY(0)}50%{transform:translateY(-1.2px)}}
+@keyframes glyphB{0%,100%{transform:translateX(0)}50%{transform:translateX(1.2px)}}
+.fold:not([open]) .fold-th svg *{animation-play-state:paused}
+@media(prefers-reduced-motion:reduce){.fold-th svg *{animation:none}}
