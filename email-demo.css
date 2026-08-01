@@ -71,7 +71,7 @@
 .ea-tabs{display:flex;gap:6px;margin-bottom:12px}
 .ea-pane{border:1px solid var(--hair);border-radius:6px;background:var(--well);
   overflow:hidden}
-#ea-frame{width:100%;height:660px;border:0;display:block;background:#E8E3D7}
+#ea-frame{width:100%;height:820px;border:0;display:block;background:#E8E3D7}
 [data-tryit].is-max #ea-frame,[data-tryit]:fullscreen #ea-frame{
   height:calc(100vh - 300px);min-height:340px}
 .ea-pane-audit,.ea-pane-src{padding:var(--space-3)}

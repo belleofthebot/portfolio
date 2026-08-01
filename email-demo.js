@@ -149,19 +149,19 @@
       return '<tr><td style="padding:' + (p || pad) + ';">' + inner + '</td></tr>';
     }
 
+    /* A slim reversed brand bar rather than a full-bleed photograph. The
+       photograph cost about 250px at the top of the message, which is most of
+       what a preview pane shows before anybody scrolls. */
     var head =
-      '<tr><td style="padding:22px 34px 16px;border-bottom:1px solid ' + HAIR + ';">' +
-      '<a href="' + esc(link(site + '/', ELEMENTS.headerLogo, 'Header logo', camp)) + '" ' +
-      'style="' + A + 'font-size:19px;font-weight:bold;color:' + PINE +
+      '<tr><td style="padding:14px 34px;background:' + PINE + ';">' +
+      '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>' +
+      '<td><a href="' + esc(link(site + '/', ELEMENTS.headerLogo, 'Header logo', camp)) + '" ' +
+      'style="' + A + 'font-size:18px;font-weight:bold;color:' + PAPER +
       ';text-decoration:none;letter-spacing:-0.3px;">Cambium' +
-      '<span style="color:' + KRAFT + ';">Pak</span></a></td></tr>';
-
-    /* hero photograph, full bleed */
-    var hero =
-      '<tr><td style="padding:0;">' +
-      '<a href="' + esc(link(fam.url, ELEMENTS.heroImage, 'Hero image', camp)) + '">' +
-      '<img src="cp-scene-board.jpg" width="600" alt="Corrugated board" ' +
-      'style="display:block;width:100%;max-width:600px;height:auto;border:0;"></a></td></tr>';
+      '<span style="color:#E4D3BE;">Pak</span></a></td>' +
+      '<td align="right" style="' + A + 'font-size:11px;letter-spacing:1.2px;' +
+      'text-transform:uppercase;color:#A9C4B6;">Ship in paper</td>' +
+      '</tr></table></td></tr>';
 
     var intro = cell(
       '<p style="margin:0 0 8px;' + A + 'font-size:12px;font-weight:bold;' +
@@ -171,14 +171,14 @@
       '<p style="margin:0 0 14px;' + A + 'font-size:15px;color:' + MUTE + ';">' +
       esc(fam.tagline || '') + '</p>' +
       '<p style="margin:0 0 16px;' + A + 'font-size:16px;line-height:1.62;color:' + INK + ';">' +
-      esc(first) + '</p>' + tags(fam), '26px 34px 0');
+      esc(first) + '</p>' + tags(fam), '24px 34px 0');
 
     /* the product itself, beside what it is for */
     var feature = cell(
       '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" ' +
       'style="border-collapse:collapse;margin:22px 0 0;"><tr>' +
       '<td width="228" valign="top" style="padding:0 18px 0 0;">' +
-      '<a href="' + esc(link(fam.url, ELEMENTS.sectionImg, 'Product image', camp)) + '">' +
+      '<a href="' + esc(link(fam.url, ELEMENTS.heroImage, 'Hero image', camp)) + '">' +
       '<img src="' + esc(fam.cover || '') + '" width="228" alt="' + esc(fam.name) + '" ' +
       'style="display:block;width:228px;max-width:100%;height:auto;border:1px solid ' +
       HAIR + ';border-radius:4px;"></a></td>' +
@@ -200,7 +200,7 @@
       '<tr><td style="padding:26px 0 0;">' +
       '<a href="' + esc(link(site + '/sustainability.html', ELEMENTS.sectionImg,
                              'Sustainability image', camp)) + '">' +
-      '<img src="cp-scene-forest.jpg" width="600" alt="" ' +
+      '<img src="cp-scene-forest-band.jpg" width="600" alt="" ' +
       'style="display:block;width:100%;max-width:600px;height:auto;border:0;"></a></td></tr>' +
       '<tr><td style="padding:20px 34px;background:#EDF1E7;">' +
       '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>' +
@@ -293,7 +293,7 @@
       'style="background:#E8E3D7;"><tr><td align="center" style="padding:22px 12px;">' +
       '<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" ' +
       'style="width:600px;max-width:600px;background:' + PAPER + ';border-collapse:collapse;">' +
-      head + hero + intro + feature + cta + green + docBlock + also + footer +
+      head + intro + feature + cta + green + docBlock + also + footer +
       '</table></td></tr></table></body></html>';
   }
 

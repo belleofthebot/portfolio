@@ -60,8 +60,11 @@
   <div class="try-bar"><span class="hx-kick">try it</span><button type="button" class="fsbtn" data-fs aria-pressed="false"><svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path class="e" d="M1.5 5V1.5H5M9 1.5h3.5V5M12.5 9v3.5H9M5 12.5H1.5V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path class="x" d="M5 1.5V5H1.5M12.5 5H9V1.5M9 12.5V9h3.5M1.5 9H5v3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="fsl">full screen</span></button></div>
   <h3>Nine changes to one hero</h3>
   <p class="hx-lede">The CEO wanted the look and feel of a newly built site
-  changed, and the site belonged to an agency under contract. This is the home
-  page hero, rebuilt on CambiumPak. <b>Every change is a switch.</b> Turn them
+  changed, and the site belonged to an agency under contract. Below is a stand-in
+  page carrying CambiumPak&rsquo;s brand &mdash; <b>not the real
+  <a href="https://cambiumpak.com/" target="_blank" rel="noopener">cambiumpak.com</a></b>,
+  which was never redesigned and looks nothing like this. It exists here only so
+  the nine changes have a hero to happen to. <b>Every change is a switch.</b> Turn them
   all off to see what the agency delivered, turn them on one at a time to see
   what each decision was for. The measurements are the ones in the stylesheet,
   dated 2 June 2026.</p>
@@ -92,8 +95,11 @@
 
   <div class="hx-list"></div>
 
-  <p class="hx-fine"><b>The brand and the content are CambiumPak.</b> The real
-  site is my employer&rsquo;s, and its brand blue is identifiably theirs, so the
+  <p class="hx-fine"><b>This is a demonstration page, not a website.</b> The site
+  that was actually redesigned is my employer&rsquo;s and cannot be shown, and the
+  real CambiumPak site was never part of this project, so what you are looking at
+  is a hero built for the sole purpose of switching nine changes on and off. The
+  brand blue in the original stylesheet is identifiably my employer&rsquo;s, so the
   accent here is Pine and the copy is invented. What is not invented is the
   work: every change, every measurement and every reason above is what was
   actually done, taken from the stylesheet. The full production file reached
@@ -148,10 +154,12 @@
     </div>
   </div>
 
-  <p class="cx-fine"><b>The page is CambiumPak, not the real site.</b> The real
-  one is my employer&rsquo;s and identifying it here would defeat the point of a
-  stand-in, so the theme below is a plausible agency build rather than a copy of
-  theirs. What is not invented is the shape of the problem: deep descendant
+  <p class="cx-fine"><b>This page is a fixture, not anybody&rsquo;s website.</b>
+  The site that was actually reworked is my employer&rsquo;s and identifying it
+  here would defeat the point of a stand-in. The real
+  <a href="https://cambiumpak.com/" target="_blank" rel="noopener">cambiumpak.com</a>
+  is a different thing again and was never touched by this work. What is below is
+  a plausible agency build, made to have a cascade you can fight. What is not invented is the shape of the problem: deep descendant
   selectors in a stylesheet I could not edit, one override file loaded after it,
   and a contract that put child theme changes on the agency&rsquo;s side of the
   line. In production that override sheet reached v2.20 across nine documented
@@ -161,30 +169,35 @@
 </div>
 
 <div class="wrap narrow">
-<div class="reading well">
-<div class="block"><p class="h">the problem</p>
-<p>Leadership wanted to change the look and feel of the newly relaunched website, built by an external agency under contract. Both obvious paths were bad: commission the agency, which is slow and expensive, or start editing theme files, which is fast and a possible contract and warranty breach.</p></div>
+<div class="folds">
+<details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><rect x="12" y="8" width="40" height="8" rx="2" stroke="#423748" stroke-width="1.5"/><rect x="6" y="20" width="40" height="8" rx="2" stroke="#DFA192" stroke-width="1.5"/><rect x="12" y="32" width="40" height="8" rx="2" stroke="#423748" stroke-width="1.5"/><path d="M49 20l6 8M55 20l-6 8" stroke="#DFA192" stroke-width="1.5" stroke-linecap="round"/></svg></span>the problem<span class="n">two bad options</span></summary>
+<div class="fold-b">
+<p>Leadership wanted to change the look and feel of the newly relaunched website, built by an external agency under contract. Both obvious paths were bad: commission the agency, which is slow and expensive, or start editing theme files, which is fast and a possible contract and warranty breach.</p></div></details>
 
-<div class="block"><p class="h">the first move was reading the contract</p>
-<p>Before touching anything I reviewed the agency agreement to establish which layers could be modified in house without voiding the warranty. That set the boundary: presentation-layer changes internally, anything needing child theme modification routed to the agency.</p></div>
+<details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><path d="M14 6h24l8 8v28H14z" stroke="#8B8494" stroke-width="1.5" stroke-linejoin="round"/><path d="M38 6v8h8" stroke="#8B8494" stroke-width="1.5" stroke-linejoin="round"/><path d="M19 20h16M19 26h20" stroke="#423748" stroke-width="1.5" stroke-linecap="round"/><path d="M8 32h48" stroke="#DFA192" stroke-width="1.5" stroke-dasharray="3 3" stroke-linecap="round"/><path d="M19 38h13" stroke="#9FE0CE" stroke-width="1.5" stroke-linecap="round"/></svg></span>the first move was reading the contract<span class="n">the boundary</span></summary>
+<div class="fold-b">
+<p>Before touching anything I reviewed the agency agreement to establish which layers could be modified in house without voiding the warranty. That set the boundary: presentation-layer changes internally, anything needing child theme modification routed to the agency.</p></div></details>
 
-<div class="block"><p class="h">what I delivered</p>
+<details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><path d="M6 13h13M6 20h13M6 27h13M6 34h8" stroke="#8B8494" stroke-width="2" stroke-linecap="round"/><path d="M24 24h8" stroke="#DFA192" stroke-width="1.5" stroke-linecap="round"/><path d="M29 21l3.5 3-3.5 3" stroke="#DFA192" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 9h13l8 8v22H37z" stroke="#DFA192" stroke-width="1.5" stroke-linejoin="round"/><path d="M50 9v8h8" stroke="#DFA192" stroke-width="1.5" stroke-linejoin="round"/><path d="M41 24h12M41 30h12M41 35h7" stroke="#423748" stroke-width="1.5" stroke-linecap="round"/></svg></span>what I delivered<span class="n">3 areas</span></summary>
+<div class="fold-b">
 <ul>
 <li>Home and About pages reworked — the pages every customer and distributor lands on first.</li>
 <li>Full-bleed banner imagery sourced and produced, plus all new icons.</li>
 <li>A production CSS system versioned to v2.20 covering hero treatment, trust bar and icon columns, footer, solutions tiles and spotlights, industry tiles with floating SVG icons, responsive breakpoints, typography, and a scoped sustainability banner.</li>
-</ul></div>
+</ul></div></details>
 
-<div class="block"><p class="h">the discipline inside the css</p>
+<details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><path d="M32 5v38" stroke="#423748" stroke-width="1.5" stroke-dasharray="3 3"/><path d="M6 13h20M38 13h20M6 24h20M38 24h14" stroke="#9FE0CE" stroke-width="2" stroke-linecap="round"/><path d="M6 35h20" stroke="#DFA192" stroke-width="2" stroke-linecap="round"/><path d="M29 32l6 6M35 32l-6 6" stroke="#DFA192" stroke-width="1.5" stroke-linecap="round"/></svg></span>the discipline inside the css<span class="n">4 disciplines</span></summary>
+<div class="fold-b">
 <ul>
 <li><strong>Specificity over force.</strong> Force-override declarations cut from roughly two hundred to a handful by using doubled and tripled class selectors instead. Every remaining exception is commented with its justification.</li>
 <li><strong>Structured and changelogged.</strong> Nine documented sections with version history in the file header, so it's maintainable by someone who isn't me.</li>
 <li><strong>Fragility flagged, not hidden.</strong> One selector depends on homepage section order and will break if that order changes. Documented in the handoff and escalated to the agency with a request for a dedicated class.</li>
 <li><strong>Scope boundary held.</strong> Child theme files never touched. A running list of required changes compiled and quoted to the agency instead.</li>
-</ul></div>
+</ul></div></details>
 
-<div class="block"><p class="h">then enablement, then measurement</p>
-<p>A step-by-step adoption guide so the team could use the new site. And the dashboard from the analytics build closed the loop, so the company can evaluate whether the redesign performed rather than arguing about taste.</p></div>
+<details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><rect x="7" y="8" width="11" height="10" rx="2" stroke="#423748" stroke-width="1.5"/><rect x="21" y="8" width="11" height="10" rx="2" stroke="#423748" stroke-width="1.5"/><rect x="35" y="8" width="11" height="10" rx="2" stroke="#423748" stroke-width="1.5"/><rect x="49" y="8" width="8" height="10" rx="2" stroke="#423748" stroke-width="1.5"/><path d="M10 11.5h5M24 11.5h5M38 11.5h5M52 11.5h3" stroke="#8B8494" stroke-width="1.5" stroke-linecap="round"/><rect x="7" y="22" width="50" height="19" rx="2" stroke="#423748" stroke-width="1.5"/><path d="M11 36l7-6 6 4 7-8 6 5 8-7" stroke="#DFA192" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>then enablement, then measurement<span class="n">closing the loop</span></summary>
+<div class="fold-b">
+<p>A step-by-step adoption guide so the team could use the new site. And the dashboard from the analytics build closed the loop, so the company can evaluate whether the redesign performed rather than arguing about taste.</p></div></details>
 
 <div class="outcome"><p class="h">outcome</p>
 <ul>
