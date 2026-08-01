@@ -75,6 +75,13 @@ header.nav{position:sticky;top:0;z-index:50;background:var(--ground);border-bott
 .nav a.link{text-decoration:none;font-family:var(--mono);font-size:var(--size-mono);color:var(--text-3);text-transform:lowercase;padding:4px 0;border-bottom:1px solid transparent}
 .nav a.link:hover,.nav a.link:focus,.nav a.link[aria-current="page"]{color:var(--rose);border-bottom-color:var(--rose)}
 @media(max-width:760px){.nav-in{gap:var(--space-3);padding:var(--space-2) var(--space-3);flex-wrap:wrap}}
+/* On a phone the row holds the wordmark plus three of the five links, and the
+   other two drop to a second line flush left, which reads as an accident. Give
+   the wordmark the whole first row so the links wrap as one group underneath. */
+@media(max-width:560px){
+  .nav-in{row-gap:9px;column-gap:var(--space-3)}
+  .nav-in .mark{flex:0 0 100%;margin-right:0}
+}
 
 /* ---------- hero ---------- */
 .hero{padding:var(--space-6) 0 var(--space-5)}
@@ -273,7 +280,10 @@ body.tryit-locked{overflow:hidden}
 .flowmini u{color:var(--rose);font-family:var(--mono);text-decoration:none;font-size:0.7rem}
 
 /* ---------- case study pages ---------- */
-.case-hero{padding:var(--space-5) 0 var(--space-4)}
+/* padding-block only. The shorthand here used to zero the sides, which beat
+   .wrap's own side padding and left every case-study hero flush against the
+   screen edge on a phone. */
+.case-hero{padding-top:var(--space-5);padding-bottom:var(--space-4)}
 .case-hero h1{font-size:clamp(1.9rem,4vw,2.8rem);max-width:24ch;margin:0 0 var(--space-2)}
 .case-hero .oneline{color:var(--rose);font-size:1.1rem;line-height:1.5;max-width:58ch;margin:var(--space-3) 0 0}
 .backlink{font-family:var(--mono);font-size:var(--size-mono);color:var(--text-3);text-decoration:none;text-transform:lowercase;display:inline-block;margin-bottom:var(--space-3)}
@@ -325,6 +335,9 @@ body.tryit-locked{overflow:hidden}
 .note{font-size:var(--size-small);color:var(--text-3);margin:var(--space-3) 0 0;line-height:1.6;max-width:62ch}
 .nextprev{display:flex;justify-content:space-between;gap:var(--space-2);border-top:1px solid var(--line);margin-top:var(--space-5);padding-top:var(--space-3);font-family:var(--mono);font-size:var(--size-mono);text-transform:lowercase}
 .nextprev a{color:var(--rose);text-decoration:none}
+/* two links side by side leaves each about 120px on a phone, which wraps the
+   case-study titles to one or two words a line */
+@media(max-width:560px){.nextprev{flex-direction:column;gap:var(--space-3)}}
 
 /* ---------- generic cards ---------- */
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-3)}

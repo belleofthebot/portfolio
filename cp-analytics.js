@@ -130,11 +130,23 @@
   /* ---------------------------------------------------------------- charts */
   /* Every chart is hand-built SVG. No chart library, for the same reason the
      rest of this project has no dependencies: it has to open from a file with
-     nothing installed. */
+     nothing installed.
+
+     An SVG scales, and so does the type inside it. On a phone the panel is
+     about 290px wide, so a 720-unit chart is drawn at roughly 0.4x and a 13px
+     label lands at 5px, which is not a label. The charts therefore have a
+     narrow geometry: a smaller viewBox, so the scale is close to 1:1, and a
+     layout that puts each label on its own line rather than in a column that
+     would have to be four times its width to hold the text. */
+
+  var NARROW = global.matchMedia ? global.matchMedia('(max-width: 640px)') : null;
+  function narrow() { return !!(NARROW && NARROW.matches); }
 
   function areaChart(rows, key, opts) {
     opts = opts || {};
-    var W = 720, H = 190, PADL = 44, PADB = 26, PADT = 12;
+    var nw = narrow();
+    var W = nw ? 340 : 720, H = nw ? 150 : 190, PADL = nw ? 34 : 44,
+        PADB = nw ? 22 : 26, PADT = 12;
     var vals = rows.map(function (r) { return r[key]; });
     var max = Math.max.apply(null, vals) * 1.12;
     var x = function (i) { return PADL + i / (rows.length - 1) * (W - PADL - 12); };
@@ -152,7 +164,7 @@
         'class="axl">' + fmt(Math.round(v)) + '</text>';
     }).join('');
 
-    var every = Math.max(1, Math.round(rows.length / 6));
+    var every = Math.max(1, Math.round(rows.length / (nw ? 3 : 6)));
     var xlab = rows.map(function (r, i) {
       if (i % every || i > rows.length - 3) return '';
       return '<text x="' + x(i).toFixed(1) + '" y="' + (H - 8) + '" text-anchor="middle" class="axl">' +
@@ -180,7 +192,9 @@
 
   function barsChart(items, opts) {
     opts = opts || {};
-    var rowH = 34, W = 720, LAB = opts.labelWidth || 176, PADR = 62;
+    var nw = narrow();
+    var rowH = nw ? 50 : 34, W = nw ? 340 : 720,
+        LAB = nw ? 0 : (opts.labelWidth || 176), PADR = nw ? 44 : 62;
     var H = items.length * rowH + 6;
     var max = Math.max.apply(null, items.map(function (i) { return i.value; }));
     var body = items.map(function (it, i) {
@@ -188,19 +202,22 @@
       var w = Math.max(2, (it.value / max) * (W - LAB - PADR));
       var fill = opts.ramp ? RAMP[Math.min(RAMP.length - 1,
         Math.round((1 - i / Math.max(1, items.length - 1)) * (RAMP.length - 1)))] : PINE;
-      return '<text x="0" y="' + (y + 16) + '" class="bl">' + esc(it.label) + '</text>' +
-        '<rect class="hit bar" x="' + LAB + '" y="' + (y + 4) + '" width="' + w.toFixed(1) +
-        '" height="18" rx="4" fill="' + fill + '"' +
+      var barY = nw ? y + 20 : y + 4;
+      return '<text x="0" y="' + (nw ? y + 12 : y + 16) + '" class="bl">' +
+        esc(it.label) + '</text>' +
+        '<rect class="hit bar" x="' + LAB + '" y="' + barY + '" width="' + w.toFixed(1) +
+        '" height="' + (nw ? 15 : 18) + '" rx="4" fill="' + fill + '"' +
         ' data-label="' + esc(it.label) + '" data-value="' + fmt(it.value) + ' ' +
         esc(opts.unit || '') + '"/>' +
-        '<text x="' + (LAB + w + 10).toFixed(1) + '" y="' + (y + 18) + '" class="bv">' +
-        fmt(it.value) + '</text>';
+        '<text x="' + (LAB + w + 8).toFixed(1) + '" y="' + (barY + (nw ? 12 : 14)) +
+        '" class="bv">' + fmt(it.value) + '</text>';
     }).join('');
     return '<svg class="chart" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' +
       esc(opts.alt || '') + '">' + body + '</svg>';
   }
 
   function funnelChart(stages) {
+    if (narrow()) return funnelNarrow(stages);
     var W = 720, H = 128, gap = 14, bw = (W - gap * 2) / 3;
     var max = stages[0].value;
     var body = stages.map(function (s, i) {
@@ -217,6 +234,30 @@
         esc(s.label) + '</text>' +
         (drop !== null ? '<text x="' + (x + bw / 2) + '" y="118" text-anchor="middle" class="fd">' +
           drop + '% of the step before</text>' : '');
+    }).join('');
+    return '<svg class="chart" viewBox="0 0 ' + W + ' ' + H + '" role="img" ' +
+      'aria-label="Buyer journey funnel">' + body + '</svg>';
+  }
+
+  /* Three side-by-side columns at 100px each is not a funnel, it is three
+     illegible slivers. Stacked, the drop between steps still reads as a drop
+     because the bars still share one scale. */
+  function funnelNarrow(stages) {
+    var W = 340, rowH = 60, PADR = 52;
+    var H = stages.length * rowH + 4;
+    var max = stages[0].value;
+    var body = stages.map(function (s, i) {
+      var y = i * rowH + 4;
+      var w = Math.max(6, s.value / max * (W - PADR));
+      var drop = i ? Math.round(s.value / stages[i - 1].value * 100) : null;
+      return '<text x="0" y="' + (y + 12) + '" class="fl">' + esc(s.label) + '</text>' +
+        '<rect class="hit" x="0" y="' + (y + 19) + '" width="' + w.toFixed(1) +
+        '" height="15" rx="4" fill="' + RAMP[Math.min(RAMP.length - 1, 4 - i)] + '"' +
+        ' data-label="' + esc(s.label) + '" data-value="' + fmt(s.value) + ' sessions"/>' +
+        '<text x="' + (w + 8).toFixed(1) + '" y="' + (y + 31) + '" class="fv">' +
+        fmt(s.value) + '</text>' +
+        (drop !== null ? '<text x="0" y="' + (y + 46) + '" class="fd">' + drop +
+          '% of the step before</text>' : '');
     }).join('');
     return '<svg class="chart" viewBox="0 0 ' + W + ' ' + H + '" role="img" ' +
       'aria-label="Buyer journey funnel">' + body + '</svg>';
@@ -380,6 +421,14 @@
         render(root);
       }
     });
+
+    /* the charts are laid out differently either side of the breakpoint, so
+       crossing it has to redraw rather than just rescale */
+    if (NARROW) {
+      var redraw = function () { render(root); };
+      if (NARROW.addEventListener) NARROW.addEventListener('change', redraw);
+      else if (NARROW.addListener) NARROW.addListener(redraw);
+    }
 
     render(root);
   }
