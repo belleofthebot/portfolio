@@ -40,8 +40,9 @@
 .cpband-top{display:flex;align-items:center;gap:var(--space-3);flex-wrap:wrap;
   margin-bottom:var(--space-3)}
 .cpband .lock{width:196px;max-width:100%;height:auto;display:block}
-.cpband-tag{margin-left:auto;font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;
-  text-transform:uppercase;color:#A9C4B6}
+.cpband-tag{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;
+  text-transform:uppercase;color:#A9C4B6;padding-left:var(--space-3);
+  border-left:1px solid rgba(228,211,190,.34)}
 .cpband-lede{font-size:1.02rem;line-height:1.62;color:#DCE7DF;margin:0 0 14px;max-width:52ch}
 .cpband-lede b{color:#fff;font-weight:600}
 .cpband-facts{font-family:var(--mono);font-size:.72rem;line-height:1.7;color:#A9C4B6;
@@ -60,6 +61,11 @@
   .cpband-in{grid-template-columns:1fr;gap:var(--space-3)}
   .cpband-prod{max-width:260px;margin:0 auto}
   .cpband::after{background:linear-gradient(180deg,rgba(12,22,16,.92) 0%,rgba(12,22,16,.86) 60%,rgba(12,22,16,.9) 100%)}
+}
+@media(max-width:520px){
+  /* the tag wraps below the lockup here, so the divider rule would be a
+     stray tick under the mark rather than a separator beside it */
+  .cpband-tag{padding-left:0;border-left:0}
 }
 
 /* ---------- what was asked for ---------- */
