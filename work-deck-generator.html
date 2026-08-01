@@ -150,35 +150,23 @@
 <div class="block"><p class="h">overview</p>
 <p>Sales needed a slide deck per product, for launches and for distributor presentations. What existed was a fifty-three slide quarterly training deck covering a whole release &mdash; so anyone who needed one product presented all fifty-three or rebuilt it by hand: pulling the spec sheet, retyping technical values, hunting photography across a shared drive, placing certification badges, applying brand typography, generating a QR code, proofreading.</p>
 <p>I timed that build rather than estimating it. <strong>42 minutes a product, across a 27-product queue.</strong></p>
-<p>What replaced it is one field. Paste the product page URL and the tool fetches the page, finds and reads the spec sheet, resolves badge artwork from a library of 411 assets, and hands the extraction back as a filled-in form. Check it, correct anything wrong, build. Nothing on a slide has to be typed by hand, and anything the sheet doesn't state comes back empty rather than invented.</p></div>
+<p>What replaced it is one field. Paste the product page URL and the tool fetches the page, finds and reads the spec sheet, resolves badge artwork from a library of 411 assets, and hands the extraction back as a filled-in form. Check it, correct anything wrong, build. Nothing on a slide has to be typed by hand, and anything the sheet doesn’t state comes back empty rather than invented.</p></div>
 </div>
 </div>
 
 <div class="wrap narrow">
 
-<div class="outcome"><p class="h">outcome</p>
-<ul>
-<li>The nine-layout template shipped first and roughly halved the manual build on its own &mdash; from an estimated one to two hours down to a measured 42 minutes.</li>
-<li>The generator replaces those 42 minutes with a URL and a review. Usage went under instrumentation this month, so the saving is being measured rather than claimed.</li>
-<li>411 badge assets resolve automatically, in spec-sheet order, so any slide can be checked against its source.</li>
-<li>Anything the sheet doesn't state comes back empty. The generator has no path to inventing a figure.</li>
-</ul></div>
-
-<div class="diff"><p class="h">what I'd do differently</p>
-<p>I should have instrumented it on day one. I built the tool and then went back to measure the thing it replaced. A usage counter and a per-run timer went in this month, but the first months of evidence are gone. On the next build the counter ships with version one.</p></div>
-
 <div class="folds">
 
 <details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><path d="M8 13h44" stroke="#8B8494" stroke-width="4" stroke-linecap="round"/><path d="M8 25h20" stroke="#DFA192" stroke-width="4" stroke-linecap="round"/><path d="M8 37h9" stroke="#423748" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 5"/><path d="M8 6v36" stroke="#423748" stroke-width="1.5" stroke-linecap="round"/></svg></span>what it cost, measured<span class="n">42 min</span></summary>
 <div class="fold-b">
-<p>I timed it rather than estimating it.</p>
 <div class="qa">
 <div class="qh"><span>stage</span><span>time per product</span></div>
-<div><span>Before the template existed</span><span>One to two hours &mdash; an estimate, and the only figure here I didn't measure</span></div>
+<div><span>Before the template existed</span><span>One to two hours &mdash; an estimate, and the only figure here I didn’t measure</span></div>
 <div><span>With the nine-layout template</span><span><strong>42 minutes, measured</strong> &mdash; the template alone roughly halved it</span></div>
-<div><span>With the generator</span><span>Instrumented as of this month; the number lands here when there's enough data to mean something</span></div>
+<div><span>With the generator</span><span>Instrumented as of this month; the number lands here when there’s enough data to mean something</span></div>
 </div>
-<p style="margin-top:14px">42 minutes across 27 products is <strong>roughly 19 hours per cycle</strong> &mdash; and that's the improved figure, after the template. The generator is measured against that rather than against the flattering original.</p>
+<p style="margin-top:14px">42 minutes across 27 products is <strong>roughly 19 hours per cycle</strong> &mdash; and that’s the improved figure, after the template. The generator is measured against that rather than against the flattering original.</p>
 </div></details>
 
 <details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><rect x="6" y="8" width="16" height="12" rx="2" stroke="#DFA192" stroke-width="1.5"/><rect x="24" y="8" width="16" height="12" rx="2" stroke="#423748" stroke-width="1.5"/><rect x="42" y="8" width="16" height="12" rx="2" stroke="#423748" stroke-width="1.5"/><rect x="6" y="24" width="16" height="12" rx="2" stroke="#423748" stroke-width="1.5"/><rect x="24" y="24" width="16" height="12" rx="2" stroke="#423748" stroke-width="1.5"/><rect x="42" y="24" width="16" height="12" rx="2" stroke="#423748" stroke-width="1.5"/><path d="M9 12h6M9 16h10" stroke="#DFA192" stroke-width="1.5" stroke-linecap="round"/></svg></span>the first decision was not to build the generator<span class="n">template first</span></summary>
@@ -199,14 +187,14 @@
 
 <details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><path d="M17 9c-4 0-4 4-4 7s-3 8-5 8c2 0 5 2 5 8s0 7 4 7" stroke="#8B8494" stroke-width="1.5" stroke-linecap="round"/><path d="M47 9c4 0 4 4 4 7s3 8 5 8c-2 0-5 2-5 8s0 7-4 7" stroke="#8B8494" stroke-width="1.5" stroke-linecap="round"/><path d="M21 16h10M35 16h8" stroke="#423748" stroke-width="2" stroke-linecap="round"/><path d="M21 24h10M35 24h6" stroke="#423748" stroke-width="2" stroke-linecap="round"/><path d="M21 32h10" stroke="#DFA192" stroke-width="2" stroke-linecap="round"/><rect x="35" y="29.5" width="9" height="5" rx="2.5" stroke="#DFA192" stroke-width="1.5" stroke-dasharray="2 2"/></svg></span>the prompt is the artifact<span class="n">the contract</span></summary>
 <div class="fold-b">
-<p>The extraction prompt isn't "summarise this PDF." It encodes domain rules: metric values compacted for small display cards with ranges compressed rather than enumerated; certification tags limited to those with matching badge artwork, excluding test report standards that look like certifications but aren't; ordering matched to the spec sheet so output is checkable against source; available badge filenames passed in as context so extracted names resolve to real assets.</p>
+<p>The extraction prompt isn’t "summarise this PDF." It encodes domain rules: metric values compacted for small display cards with ranges compressed rather than enumerated; certification tags limited to those with matching badge artwork, excluding test report standards that look like certifications but aren’t; ordering matched to the spec sheet so output is checkable against source; available badge filenames passed in as context so extracted names resolve to real assets.</p>
 <p>And the rule that matters most: <strong>anything not stated on the sheet returns an empty string, never an invented value.</strong> A generator that invents a performance figure onto a sales deck is worse than no generator.</p>
 </div></details>
 
 <details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><rect x="12" y="8" width="40" height="8" rx="2" stroke="#423748" stroke-width="1.5"/><rect x="6" y="20" width="40" height="8" rx="2" stroke="#DFA192" stroke-width="1.5"/><rect x="12" y="32" width="40" height="8" rx="2" stroke="#423748" stroke-width="1.5"/><path d="M49 20l6 8M55 20l-6 8" stroke="#DFA192" stroke-width="1.5" stroke-linecap="round"/></svg></span>the parts that were hard<span class="n">5 bugs</span></summary>
 <div class="fold-b">
 <ul>
-<li><strong>A grey box behind every product image.</strong> Several hypotheses eliminated. Root cause was alpha channel handling in canvas compositing.</li>
+<li><strong>A gray box behind every product image.</strong> Several hypotheses eliminated. Root cause was alpha channel handling in canvas compositing.</li>
 <li><strong>Files that triggered the repair prompt on open.</strong> Duplicate bold attributes injected into slide XML, fixed by stripping before writing. Only surfaced through hands-on testing with real files &mdash; the automated checks passed.</li>
 <li><strong>Cover typography that broke on long names.</strong> A hard-coded font size that happened to work for a three-character product name, replaced with a measure-and-fit helper.</li>
 <li><strong>Badges assigned to the wrong products.</strong> Naive string containment, replaced with word-level scoring.</li>
@@ -224,13 +212,24 @@
 
 </div>
 
+<div class="outcome"><p class="h">outcome</p>
+<ul>
+<li>The nine-layout template shipped first and roughly halved the manual build on its own &mdash; from an estimated one to two hours down to a measured 42 minutes.</li>
+<li>The generator replaces those 42 minutes with a URL and a review. Usage went under instrumentation this month, so the saving is being measured rather than claimed.</li>
+<li>411 badge assets resolve automatically, in spec-sheet order, so any slide can be checked against its source.</li>
+<li>Anything the sheet doesn’t state comes back empty. The generator has no path to inventing a figure.</li>
+</ul></div>
+
+<div class="diff"><p class="h">what I’d do differently</p>
+<p>I should have instrumented it on day one. I built the tool and then went back to measure the thing it replaced. A usage counter and a per-run timer went in this month, but the first months of evidence are gone. On the next build the counter ships with version one.</p></div>
+
 <div class="tags"><span class="tag rose">prompt engineering</span><span class="tag ">serverless functions</span><span class="tag ">edge middleware auth</span><span class="tag ">llm integration</span><span class="tag ">anti hallucination constraints</span><span class="tag ">office open xml</span><span class="tag ">canvas image pipeline</span><span class="tag ">design systems</span><span class="tag ">scope discipline</span></div>
 
 <div class="nextprev"><a href="work-website.html">&larr; a website reimagining</a><a href="work-email-generator.html">the email campaign generator &rarr;</a></div>
 </div>
 <div class="contact" id="contact"><div class="wrap">
 <p class="avail"><span class="pulse-dot"></span> open to marketing operations, analytics and martech roles</p>
-<h2>Let's talk.</h2>
+<h2>Let’s talk.</h2>
 <p>Remote, or Albuquerque and hybrid. Happy to walk through the architecture behind any of this.</p>
 <div class="contact-links">
 <a class="clink primary" href="mailto:elizabethbportfolio@gmail.com">elizabethbportfolio@gmail.com</a>

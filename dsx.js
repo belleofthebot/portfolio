@@ -121,8 +121,8 @@
     { key: 'pine', name: 'Pine', hex: '#1E4D3B', chosen: true,
       verdict: 'chosen', tone: 'ok',
       why: 'The only candidate that is dark enough to set body copy and headings, ' +
-           'far enough from Kraft to survive colour blindness, and warm enough not ' +
-           'to fight a brown substrate. It reads as fibre without shouting eco, ' +
+           'far enough from Kraft to survive color blindness, and warm enough not ' +
+           'to fight a brown substrate. It reads as fiber without shouting eco, ' +
            'which matters when the buyer is an operations manager who has been ' +
            'sold greenwash before.' },
     { key: 'sky', name: 'Sky blue', hex: '#3A7CA5',
@@ -150,9 +150,9 @@
     { key: 'plum', name: 'Plum', hex: '#5B2E4E',
       verdict: 'best numbers, disqualified', tone: 'warn',
       why: 'The highest scoring candidate of the five, and disqualified by a ' +
-           'constraint no colour tool knows about: plum and rose are my own ' +
+           'constraint no color tool knows about: plum and rose are my own ' +
            'portfolio palette. If a generated CambiumPak deck came out in my ' +
-           'colours, the demo quietly says my tool makes things in my style, when ' +
+           'colors, the demo quietly says my tool makes things in my style, when ' +
            'the whole claim is that it applies somebody else’s system.' }
   ];
 
@@ -186,17 +186,17 @@
   ];
 
   var PHOTOS = [
-    { key: 'colour', name: 'Full colour', chosen: true, verdict: 'chosen',
+    { key: 'colour', name: 'Full color', chosen: true, verdict: 'chosen',
       why: 'Kraft brown is the product. Every photograph in the library is a ' +
            'picture of the material, and the material is the argument.' },
     { key: 'bw', name: 'Black and white', verdict: 'says less',
       why: 'Looks more designed and communicates less. It also breaks the ' +
-           'recycled-content story, because you cannot see fibre colour, and ' +
-           'fibre colour is how a buyer judges recycled content by eye.' },
+           'recycled-content story, because you cannot see fiber color, and ' +
+           'fiber color is how a buyer judges recycled content by eye.' },
     { key: 'duo', name: 'Duotone', verdict: 'ties the library to the accent',
       why: 'Cohesive, and it makes every photograph a derivative of the accent. ' +
            'Change the green and the whole library has to be re-rendered. Watch ' +
-           'the pictures move when you change the colour above.' }
+           'the pictures move when you change the color above.' }
   ];
 
   var state = { accent: 'pine', font: 'inter', photo: 'colour' };

@@ -17,7 +17,8 @@
 <link rel="stylesheet" href="styles.css">
 <style>
 /* page-specific layout, layered on the belle design tokens */
-.bs-hero{display:grid;grid-template-columns:1.2fr 0.8fr;gap:var(--space-5);align-items:center}
+.bs-hero{display:grid;grid-template-columns:1.2fr 0.8fr;gap:var(--space-5);align-items:start}
+.bs-hero>div:first-child{padding-top:var(--space-5)}
 .bs-hero .phone{width:100%;height:auto;border-radius:var(--radius-card)}
 .bs-rolegrid{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;font-size:0.9rem;margin-top:var(--space-3)}
 .bs-rolegrid .v{color:var(--text-2)}
@@ -65,7 +66,6 @@
 <span class="kicker">case study · ux/ui design · 2022</span>
 <h1 style="font-size:var(--size-hero);line-height:1.1;margin:0 0 var(--space-3);max-width:18ch">Bookspot</h1>
 <p style="font-size:1.2rem;line-height:1.55;color:var(--text-2);max-width:42ch;margin:0 0 var(--space-4)">An app for avid readers who want to visit real places from fantastic fiction — like stepping onto Platform 9¾, but for every book you love.</p>
-<div class="tags" style="margin:0 0 var(--space-3)"><span class="tag rose">ux research</span><span class="tag">mobile app</span><span class="tag">prototyping</span><span class="tag">usability testing</span></div>
 <div class="bs-rolegrid">
 <span class="meta">role</span><span class="v">end to end: research, UX, UI, testing</span>
 <span class="meta">tools</span><span class="v">Figma · Mapbox · iOS Human Interface Guidelines</span>
@@ -96,12 +96,12 @@
 <span class="kicker">the problem</span>
 <h2 style="font-size:var(--size-h2);margin:0 0 var(--space-3);max-width:30ch">You can map every bar in London. You cannot map a single novel.</h2>
 <div style="max-width:62ch;line-height:1.65;color:var(--text-2)">
-<p style="margin:0 0 12px">Travellers can find almost anything on Google Maps or Yelp — bars, museums, shopping. But readers who get to know places through books have no way to search for fictional landmarks. Where did Mrs. Dalloway start her walk? Where does Sherlock Holmes set up shop? The information exists, scattered across blogs and book tours, but there is no single place to find it. Travelling bookworms miss out on the joy of literature coming to life.</p>
+<p style="margin:0 0 12px">Travelers can find almost anything on Google Maps or Yelp — bars, museums, shopping. But readers who get to know places through books have no way to search for fictional landmarks. Where did Mrs. Dalloway start her walk? Where does Sherlock Holmes set up shop? The information exists, scattered across blogs and book tours, but there is no single place to find it. Traveling bookworms miss out on the joy of literature coming to life.</p>
 <p style="margin:0"><strong>How could we create an end to end app for readers visiting a new city to explore its literary spots?</strong></p>
 </div>
 <div class="card" style="margin-top:var(--space-4);max-width:560px">
 <span class="kicker">value proposition</span>
-<p style="margin:0;font-size:1.15rem;line-height:1.5">Bookspot brings literature to life with a map to beloved book settings — for book worms with a travel bug.</p>
+<p style="margin:0;font-size:1.15rem;line-height:1.5">Bookspot brings literature to life with a map to beloved book settings — for bookworms with a travel bug.</p>
 </div>
 </div>
 </section>
@@ -119,7 +119,7 @@
 </div>
 <span class="kicker">what I heard, again and again</span>
 <div class="bs-grid2">
-<div class="card"><div class="bs-quote"><img class="bs-avatar sm" src="assets/people/laura.jpg" alt=""><span class="meta">Laura, 32 · engineer · literary fiction</span></div><p style="margin:0;font-size:1.05rem;line-height:1.55">"I like that I can inhabit other worlds and realities, and experience the world through other people's visions."</p></div>
+<div class="card"><div class="bs-quote"><img class="bs-avatar sm" src="assets/people/laura.jpg" alt=""><span class="meta">Laura, 32 · engineer · literary fiction</span></div><p style="margin:0;font-size:1.05rem;line-height:1.55">"I like that I can inhabit other worlds and realities, and experience the world through other people’s visions."</p></div>
 <div class="card"><div class="bs-quote"><img class="bs-avatar sm" src="assets/people/michelle.jpg" alt=""><span class="meta">Michelle, 28 · teacher · non-fiction</span></div><p style="margin:0;font-size:1.05rem;line-height:1.55">"Reading is such a great way to calm the mind and learn something new, a great opportunity to transport your mind somewhere else."</p></div>
 <div class="card"><div class="bs-quote"><img class="bs-avatar sm" src="assets/people/natalie.jpg" alt=""><span class="meta">Natalie, 38 · business owner · sci-fi</span></div><p style="margin:0;font-size:1.05rem;line-height:1.55">"The stories that we tell influence our lives and our social structure and the way we interact with each other in the world."</p></div>
 <div class="card"><div class="bs-quote"><img class="bs-avatar sm" src="assets/people/brenda.jpg" alt=""><span class="meta">Brenda, 57 · scholar &amp; author · everything</span></div><p style="margin:0;font-size:1.05rem;line-height:1.55">"I love reading as the opportunity to experience new things, reading stuff that I could never have imagined on my own."</p></div>
@@ -131,7 +131,7 @@
 <span class="kicker">02 · define</span>
 <h2 style="font-size:var(--size-h2);margin:0 0 var(--space-3)">One sentence to design against</h2>
 <div class="card">
-<p style="margin:0;font-size:clamp(1.2rem,2.2vw,1.6rem);font-weight:500;line-height:1.45;max-width:34ch">Julia, a dedicated reader, wants to visit her favourite book settings while travelling, to feel <span style="color:var(--rose)">transported, curious, and joyful</span>.</p>
+<p style="margin:0;font-size:clamp(1.2rem,2.2vw,1.6rem);font-weight:500;line-height:1.45;max-width:34ch">Julia, a dedicated reader, wants to visit her favourite book settings while traveling, to feel <span style="color:var(--rose)">transported, curious, and joyful</span>.</p>
 </div>
 <p style="max-width:62ch;line-height:1.65;color:var(--text-2);margin:var(--space-3) 0 0">Everything that made it into the app had to serve that sentence. Everything that did not got cut.</p>
 </div></section>
@@ -160,7 +160,7 @@
 <div class="wrap" style="padding:var(--space-6) var(--space-4)">
 <span class="kicker">04 · prototype</span>
 <h2 style="font-size:var(--size-h2);margin:0 0 var(--space-3);max-width:32ch">Sketches, wireframes, and ten versions of one flow</h2>
-<p style="max-width:62ch;line-height:1.65;color:var(--text-2);margin:0 0 var(--space-4)">I will admit it: I fell into visual design early, exploring two polished directions before the wireframes were ready. Pulling back to paper sketches and lo-fi frames was the best decision of the project, the structure got solid before the paint went on. The user flow below went through ten numbered revisions as testing reshaped it.</p>
+<p style="max-width:62ch;line-height:1.65;color:var(--text-2);margin:0 0 var(--space-4)">I will admit it: I fell into visual design early, exploring two polished directions before the wireframes were ready. Pulling back to paper sketches and lo-fi frames was the best decision of the project: the structure got solid before the paint went on. The user flow below went through ten numbered revisions as testing reshaped it.</p>
 <div class="bs-grid3" style="margin-bottom:8px">
 <img class="bs-shot" src="assets/sketches/sk-6-up.jpg" alt="Paper sketches of Bookspot screens on grid paper" loading="lazy">
 <img class="bs-shot" src="assets/sketches/sk-7-up.jpg" alt="Paper sketches with red revision notes" loading="lazy">
@@ -176,20 +176,20 @@
 <section><div class="wrap">
 <span class="kicker">05 · test</span>
 <h2 style="font-size:var(--size-h2);margin:0 0 var(--space-3)">Testing rewrote the front door</h2>
-<p style="max-width:62ch;line-height:1.65;color:var(--text-2);margin:0 0 var(--space-4)">I ran moderated sessions over Zoom with three tasks: find step by step directions to Mrs. Dalloway's walk, save the spot where Harry Potter catches his train, and filter to 21st century literary fiction by women of colour. The feedback changed three big things.</p>
+<p style="max-width:62ch;line-height:1.65;color:var(--text-2);margin:0 0 var(--space-4)">I ran moderated sessions over Zoom with three tasks: find step by step directions to Mrs. Dalloway’s walk, save the spot where Harry Potter catches his train, and filter to 21st century literary fiction by women of color. The feedback changed three big things.</p>
 <div class="bs-grid3">
-<div class="card"><span class="kicker">1 · added a tutorial</span><p style="margin:0;font-size:0.95rem;line-height:1.6;color:var(--text-2)">Testers wanted context before exploring, so a three step tour now opens the app, skippable, per Audible's lesson.</p></div>
+<div class="card"><span class="kicker">1 · added a tutorial</span><p style="margin:0;font-size:0.95rem;line-height:1.6;color:var(--text-2)">Testers wanted context before exploring, so a three step tour now opens the app, skippable, per Audible’s lesson.</p></div>
 <div class="card"><span class="kicker">2 · added a list view</span><p style="margin:0;font-size:0.95rem;line-height:1.6;color:var(--text-2)">Some testers wanted a longer scan of spots than the map allowed, so home gained a map and list toggle.</p></div>
-<div class="card"><span class="kicker">3 · deferred the asks</span><p style="margin:0;font-size:0.95rem;line-height:1.6;color:var(--text-2)">Location and account requests moved deeper into the flow, users explore first, commit later.</p></div>
+<div class="card"><span class="kicker">3 · deferred the asks</span><p style="margin:0;font-size:0.95rem;line-height:1.6;color:var(--text-2)">Location and account requests moved deeper into the flow: users explore first, commit later.</p></div>
 </div>
 </div></section>
 
 <section id="prototype"><div class="wrap">
 <span class="kicker">the design · 2026</span>
 <h2 style="font-size:var(--size-h2);margin:0 0 var(--space-3);max-width:32ch">Sage &amp; parchment, four years wiser</h2>
-<p style="max-width:62ch;line-height:1.65;color:var(--text-2);margin:0 0 var(--space-4)">The bootcamp prototype earned its stamp, and the design kept evolving. This is Bookspot as I would ship it today: the same sage and parchment soul with a full bleed map, book covers as pins, chip filters, and collectible stamps. It is fully clickable — tap through onboarding, find a spot, get directions, collect your stamp.</p>
+<p style="max-width:62ch;line-height:1.65;color:var(--text-2);margin:0 0 var(--space-4)">The bootcamp prototype earned its stamp, and the design kept evolving. This is Bookspot as I would ship it today: the same sage and parchment soul with a full bleed map, book covers as pins, chip filters, and collectible stamps.</p>
 <div class="protolink">
-<div><span class="kicker">clickable prototype</span><p class="pl-t">Bookspot, 2026</p><p class="pl-n">Tap through onboarding, find a spot, get directions, collect a stamp.</p></div>
+<div><span class="kicker">clickable prototype</span><p class="pl-t">Bookspot, 2026</p><p class="pl-n">The same prototype as the one at the top, in its own tab.</p></div>
 <a class="btn" href="proto/bookspot-app.html" target="_blank" rel="noopener">Open it →</a>
 </div>
 <span class="kicker" style="margin-top:var(--space-5);display:block">the final hi-fi screens</span>
@@ -212,7 +212,7 @@
 <div class="bs-grid3">
 <div class="card"><span class="kicker">structure before beauty</span><p style="margin:0;font-size:0.95rem;line-height:1.6;color:var(--text-2)">I love making things beautiful, and the polish lands better when it is informed by lo-fi mockups and testing first.</p></div>
 <div class="card"><span class="kicker">never design in a vacuum</span><p style="margin:0;font-size:0.95rem;line-height:1.6;color:var(--text-2)">Critique from classmates and instructors reshaped the flow more than any solo iteration. Feedback loops stay in my process.</p></div>
-<div class="card"><span class="kicker">tools compound</span><p style="margin:0;font-size:0.95rem;line-height:1.6;color:var(--text-2)">This project made Figma a home base, components, variants and clickable prototypes carried every phase after paper.</p></div>
+<div class="card"><span class="kicker">tools compound</span><p style="margin:0;font-size:0.95rem;line-height:1.6;color:var(--text-2)">This project made Figma a home base: components, variants and clickable prototypes carried every phase after paper.</p></div>
 </div>
 <p style="max-width:62ch;line-height:1.65;color:var(--text-2);margin:var(--space-4) 0 0">Bookspot is where my UX habit started: research first, polish second. No dashboards on this one, just listening. It is also the reason the analytics work later came out the way it did, because writing a tracking plan around business questions is the same discipline as writing a design around an interview.</p>
 </div>
@@ -225,7 +225,7 @@
 
 <div class="contact" id="contact"><div class="wrap">
 <p class="avail"><span class="pulse-dot"></span> open to marketing operations, analytics and martech roles</p>
-<h2>Let's talk.</h2>
+<h2>Let’s talk.</h2>
 <p>Remote, or Albuquerque and hybrid. If you want the architecture behind any of the work here, ask me and I will walk you through it.</p>
 <div class="contact-links">
 <a class="clink primary" href="mailto:elizabethbportfolio@gmail.com">elizabethbportfolio@gmail.com</a>

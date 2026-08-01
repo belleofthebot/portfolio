@@ -32,7 +32,7 @@
   border-radius:var(--radius-card); padding:var(--space-4);
   font-family:'Inter',Arial,Helvetica,sans-serif; margin:var(--space-3) 0}
 .cp h3{font-family:inherit; font-size:1.05rem; font-weight:600; color:var(--pine); margin:0 0 4px}
-.cp .cpsub{font-size:.74rem; color:#6E7A70; margin:0 0 var(--space-3); letter-spacing:.02em}
+.cp .cpsub{font-size:.74rem; color:#5C665E; margin:0 0 var(--space-3); letter-spacing:.02em}
 .cp p{font-size:.88rem; line-height:1.65; color:#3C443E; max-width:64ch}
 
 /* lockups */
@@ -40,7 +40,7 @@
 .lock{border:1px solid var(--hair); border-radius:8px; padding:18px 16px 12px; background:#FFFDF8}
 .lock.rev{background:var(--pine-deep); border-color:var(--pine-deep)}
 .lock svg{width:100%; height:auto; display:block}
-.lock .cap{font-size:.64rem; letter-spacing:.1em; text-transform:uppercase; color:#8A9188; margin-top:12px; display:block}
+.lock .cap{font-size:.64rem; letter-spacing:.1em; text-transform:uppercase; color:#5C665E; margin-top:12px; display:block}
 .lock.rev .cap{color:#9FB3A6}
 
 /* palette */
@@ -48,14 +48,14 @@
 .sw{border-radius:6px; overflow:hidden; border:1px solid var(--hair); background:#FFFDF8}
 .sw i{display:block; height:52px}
 .sw b{display:block; font-size:.66rem; font-weight:600; padding:7px 8px 1px; color:var(--cpink)}
-.sw span{display:block; font-family:var(--mono); font-size:.58rem; padding:0 8px 8px; color:#8A9188}
+.sw span{display:block; font-family:var(--mono); font-size:.58rem; padding:0 8px 8px; color:#5C665E}
 
 /* certification marks */
 .certs{display:grid; grid-template-columns:repeat(5,1fr); gap:var(--space-2); margin-top:var(--space-2)}
 .cert{border:1px solid var(--hair); border-radius:8px; padding:14px 10px; text-align:center; background:#FFFDF8}
 .cert svg{width:52px; height:52px; display:block; margin:0 auto 9px}
 .cert b{display:block; font-size:.72rem; font-weight:600; color:var(--pine); line-height:1.3}
-.cert span{display:block; font-size:.62rem; color:#6E7A70; margin-top:4px; line-height:1.4}
+.cert span{display:block; font-size:.62rem; color:#5C665E; margin-top:4px; line-height:1.4}
 
 /* rules list */
 .cprules{counter-reset:cr; display:grid; gap:10px; margin-top:var(--space-2)}
@@ -71,7 +71,8 @@ table.rej th,table.rej td{text-align:left; padding:8px 10px; border-bottom:1px s
 table.rej th{font-family:var(--mono); font-size:var(--size-mono); color:var(--rose); text-transform:lowercase; font-weight:400}
 table.rej td:first-child{font-weight:500; white-space:nowrap; width:170px}
 table.rej tr:last-child td{border-bottom:0}
-table.rej .ok{color:var(--mint)}
+table.rej .ok{color:var(--text-2)}
+table.rej td.ok:first-child{color:var(--rose)}
 
 @media(max-width:860px){
   .lockups{grid-template-columns:1fr}
@@ -103,15 +104,15 @@ table.rej .ok{color:var(--mint)}
 <div class="wrap narrow case-hero">
 <a class="backlink" href="index.html">← back to work</a>
 <span class="kicker">case study · brand system</span>
-<h1>A brand system for a company that doesn't exist</h1>
-<p class="meta">two days · mark, palette, five certification marks, a rulebook, and a live site</p>
-<p class="oneline">I'm proud of work I'm not allowed to show. So I built a company I could.</p>
+<h1>A brand system for a company that doesn’t exist</h1>
+<p class="meta">2026 &middot; two days · mark, palette, five certification marks, a rulebook, and a live site</p>
+<p class="oneline">I’m proud of work I’m not allowed to show. So I built a company I could.</p>
 </div>
 
 <div class="wrap narrow">
 
 <div class="fict">
-<p><b>CambiumPak is invented.</b> I'm proud of the work I did for my employer and I can't show you any of it — it's confidential. So I designed an imaginary company with a similar structure and similar needs, and built the same systems and tools there that I built for my employer. Every CambiumPak product, figure, certification mark and test result is made up.</p>
+<p><b>CambiumPak is invented.</b> I’m proud of the work I did for my employer and I can’t show you any of it — it’s confidential. So I designed an imaginary company with a similar structure and similar needs, and built the same systems and tools there that I built for my employer. Every CambiumPak product, figure, certification mark and test result is made up.</p>
 <p>The site is live at <a href="https://cambiumpak.com/" target="_blank" rel="noopener">cambiumpak.com</a> — eleven product families, seventeen SKUs, forty-four documents.</p>
 </div>
 
@@ -137,9 +138,8 @@ table.rej .ok{color:var(--mint)}
   days, with me editing rather than accepting. Push it around: change the green
   to sky blue or burnt orange, change the typeface, drop the photography to
   black and white. Every surface below moves at once, because they all read the
-  same tokens. <b>The panel argues back.</b> Two of the four alternatives are
-  eliminated by measurement. The other two are not, and that is the more
-  interesting half.</p>
+  same tokens. <b>The panel argues back.</b> Two of the four alternatives fail on
+  measurement. Two survive it.</p>
 
   <div class="dsx-ctl">
     <div class="dsx-grp"><span class="lab">Accent</span>
@@ -238,14 +238,15 @@ table.rej .ok{color:var(--mint)}
 
   <p class="dsx-note"><b>CambiumPak is invented</b> and so is everything in it.
   The numbers above are computed live, not looked up: WCAG relative luminance
-  for contrast, CIEDE2000 for colour separation, and the Vi&eacute;not, Brettel
+  for contrast, CIEDE2000 for color separation, and the Vi&eacute;not, Brettel
   and Mollon 1999 transform to simulate protanopia and deuteranopia. Photography
-  is from Unsplash under its own license. <b>Moss stays green whatever you
-  pick</b>, because Moss carries recycled-content figures and nothing else. It
-  is not the accent&rsquo;s to change, and watching the 90% hold while every
-  other surface moves is brand rule two made visible. The duotone is an SVG filter built
+  is from Unsplash under its own license.</p>
+  <p class="dsx-note"><b>Moss stays green whatever you
+  pick</b>, because Moss carries recycled-content figures and nothing else.
+  The 90% holds while everything else moves &mdash; brand rule two, visible.
+  The duotone is an SVG filter built
   from whichever accent is currently selected, which is why the pictures move
-  when the colour does.</p>
+  when the color does.</p>
 </div>
 </div>
 
@@ -254,11 +255,11 @@ table.rej .ok{color:var(--mint)}
 
 <details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><path d="M32 5v38" stroke="#423748" stroke-width="1.5" stroke-dasharray="3 3"/><path d="M6 13h20M38 13h20M6 24h20M38 24h14" stroke="#9FE0CE" stroke-width="2" stroke-linecap="round"/><path d="M6 35h20" stroke="#DFA192" stroke-width="2" stroke-linecap="round"/><path d="M29 32l6 6M35 32l-6 6" stroke="#DFA192" stroke-width="1.5" stroke-linecap="round"/></svg></span>why it exists<span class="n">the claim</span></summary>
 <div class="fold-b">
-<p>Two of the tools I built for my employer make the same claim: brand compliance enforced by code. That claim is invisible without a brand to be compliant with. I can't publish my employer's, so I needed one I could.</p></div></details>
+<p>Two of the tools I built for my employer make the same claim: brand compliance enforced by code. That claim is invisible without a brand to be compliant with. I can’t publish my employer’s, so I needed one I could.</p></div></details>
 
 <details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><path d="M14 6h24l8 8v28H14z" stroke="#8B8494" stroke-width="1.5" stroke-linejoin="round"/><path d="M38 6v8h8" stroke="#8B8494" stroke-width="1.5" stroke-linejoin="round"/><path d="M19 20h16M19 26h20" stroke="#423748" stroke-width="1.5" stroke-linecap="round"/><path d="M8 32h48" stroke="#DFA192" stroke-width="1.5" stroke-dasharray="3 3" stroke-linecap="round"/><path d="M19 38h13" stroke="#9FE0CE" stroke-width="1.5" stroke-linecap="round"/></svg></span>the constraint that shaped everything<span class="n">2 constraints</span></summary>
 <div class="fold-b">
-<p><strong>It had to look nothing like my own brand.</strong> No rose, no plum, no ivory, no Space Grotesk. If a generated deck came out in my palette, the demo quietly says "my tool makes things in my style" — when the real claim is that it applies <em>somebody else's</em> system. The contrast between this page's chrome and a CambiumPak artifact sitting inside it is the demonstration.</p>
+<p><strong>It had to look nothing like my own brand.</strong> No rose, no plum, no ivory, no Space Grotesk. If a generated deck came out in my palette, the demo quietly says "my tool makes things in my style" — when the real claim is that it applies <em>somebody else’s</em> system. The contrast between this page’s chrome and a CambiumPak artifact sitting inside it is the demonstration.</p>
 <p>Second constraint: sober mid-market B2B. Competent, unfashionable, faintly conservative. If it looks too designed, it reads as a branding exercise rather than an operations tool.</p></div></details>
 
 <details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><path d="M8 10h26M8 18h30M8 26h22" stroke="#423748" stroke-width="2" stroke-linecap="round"/><path d="M40 7l5 6M45 7l-5 6M44 15l5 6M49 15l-5 6M38 23l5 6M43 23l-5 6" stroke="#DFA192" stroke-width="1.5" stroke-linecap="round"/><path d="M8 38h20" stroke="#9FE0CE" stroke-width="2" stroke-linecap="round"/><path d="M33 37.5l2.5 2.5 4-5" stroke="#9FE0CE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>naming took longer than the mark<span class="n">10 checked</span></summary>
@@ -276,11 +277,11 @@ table.rej .ok{color:var(--mint)}
 <tr><td>Loamfold</td><td>Free. Built under it first, then superseded.</td></tr>
 <tr><td class="ok">CambiumPak</td><td class="ok">Cambium is the living layer under bark that makes new wood. Bare "Cambium" is crowded in materials — the <code>-Pak</code> suffix is what makes it read as a distinct entity. No existing Cambium uses it.</td></tr>
 </table>
-<p style="margin-top:14px">The near-miss on Terrapak is the one worth remembering: same industry, one letter from a global brand. That's the failure mode — not picking a name nobody has, but picking one that reads as a knock-off of someone who has lawyers.</p></div></details>
+<p style="margin-top:14px">The near-miss on Terrapak is the one worth remembering: same industry, one letter from a global brand. That’s the failure mode — not picking a name nobody has, but picking one that reads as a knock-off of someone who has lawyers.</p></div></details>
 
 <details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><g stroke="#DFA192" stroke-width="3.4" stroke-linecap="butt"><path d="M32 38 A8 8 0 0 1 32 22"/><path d="M32 45 A15 15 0 0 1 32 15"/><path d="M32 26 A8 8 0 0 0 32 10"/><path d="M32 33 A15 15 0 0 0 32 3"/></g><path d="M32 2v44" stroke="#423748" stroke-width="1" stroke-dasharray="2 3"/></svg></span>the mark<span class="n">3 lockups</span></summary>
 <div class="fold-b">
-<p>Four half-rings on two centres, offset along a shared vertical seam. It reads three ways at once: growth rings, a taped carton seam, and a C over a P in the counters.</p>
+<p>Four half-rings on two centers, offset along a shared vertical seam. It reads three ways at once: growth rings, a taped carton seam, and a C over a P in the counters.</p>
 
 <div class="cp">
 <h3>Lockups</h3>
@@ -321,10 +322,10 @@ table.rej .ok{color:var(--mint)}
 </div>
 </div>
 
-<p><strong>The flat ends against the seam are the whole idea.</strong> The stroke caps are butt, not round. A round cap closes the gap and turns it into a generic swirl — it stops reading as a seam and stops reading as letterforms. It's one attribute and it's the difference between this mark and a thousand others.</p>
-<p>The real constraint was reproduction: it had to survive being stamped in one colour on brown corrugated board. That kills gradients, hairlines, tight counters, and anything needing a second ink. It also has to hold at 12mm on a tape roll and 2m on a trade-show banner. Designing for the worst substrate first is why the mono lockup isn't an afterthought.</p></div></details>
+<p><strong>The flat ends against the seam are the whole idea.</strong> The stroke caps are butt, not round. A round cap closes the gap and turns it into a generic swirl — it stops reading as a seam and stops reading as letterforms. It is one attribute, and the mark depends on it.</p>
+<p>The real constraint was reproduction: it had to survive being stamped in one color on brown corrugated board. That kills gradients, hairlines, tight counters, and anything needing a second ink. It also has to hold at 12mm on a tape roll and 2m on a trade-show banner. Designing for the worst substrate first is why the mono lockup isn’t an afterthought.</p></div></details>
 
-<details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><rect x="5" y="14" width="10" height="20" rx="2" fill="#1E4D3B"/><rect x="17" y="14" width="10" height="20" rx="2" fill="#143529"/><rect x="29" y="14" width="10" height="20" rx="2" fill="#A87D52"/><rect x="41" y="14" width="10" height="20" rx="2" fill="#9FE0CE"/><rect x="53" y="14" width="6" height="20" rx="2" stroke="#423748" stroke-width="1.5"/><path d="M41 38h10" stroke="#9FE0CE" stroke-width="2" stroke-linecap="round"/></svg></span>the palette, and the one colour with a job<span class="n">7 tokens</span></summary>
+<details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><rect x="5" y="14" width="10" height="20" rx="2" fill="#1E4D3B"/><rect x="17" y="14" width="10" height="20" rx="2" fill="#143529"/><rect x="29" y="14" width="10" height="20" rx="2" fill="#A87D52"/><rect x="41" y="14" width="10" height="20" rx="2" fill="#9FE0CE"/><rect x="53" y="14" width="6" height="20" rx="2" stroke="#423748" stroke-width="1.5"/><path d="M41 38h10" stroke="#9FE0CE" stroke-width="2" stroke-linecap="round"/></svg></span>the palette, and the one color with a job<span class="n">7 tokens</span></summary>
 <div class="fold-b">
 <div class="cp">
 <h3>Tokens</h3>
@@ -339,24 +340,24 @@ table.rej .ok{color:var(--mint)}
   <div class="sw"><i style="background:#F7F4ED;box-shadow:inset 0 0 0 1px #DDD5C6"></i><b>Paper</b><span>#F7F4ED</span></div>
 </div>
 </div>
-<p><strong>Moss is the one to protect.</strong> It carries a single meaning — recycled-content percentages — and nothing else. A moss-coloured number that isn't a recycled percentage is a defect, not a style choice.</p>
-<p>That rule caught something real in production. The bar charts on the spec sheets are Pine, not Moss, even though Moss would have looked better against the kraft. They aren't recycled figures, so they don't get the colour. A rule that never costs you anything isn't doing any work.</p></div></details>
+<p><strong>Moss is the one to protect.</strong> It carries a single meaning — recycled-content percentages — and nothing else. A moss-colored number that isn’t a recycled percentage is a defect, not a style choice.</p>
+<p>That rule caught something real in production. The bar charts on the spec sheets are Pine, not Moss, even though Moss would have looked better against the kraft. They aren’t recycled figures, so they don’t get the color. A rule that never costs you anything isn’t doing any work.</p></div></details>
 
 <details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><rect x="4" y="17" width="11" height="14" rx="2" stroke="#DFA192" stroke-width="1.5"/><rect x="17" y="17" width="11" height="14" rx="2" stroke="#DFA192" stroke-width="1.5"/><rect x="30" y="17" width="11" height="14" rx="2" stroke="#DFA192" stroke-width="1.5"/><rect x="43" y="17" width="11" height="14" rx="2" stroke="#DFA192" stroke-width="1.5"/><path d="M7.5 24h4M20.5 24h4M33.5 24h4M46.5 24h4" stroke="#8B8494" stroke-width="1.5" stroke-linecap="round"/><path d="M4 38h50" stroke="#423748" stroke-width="1.5" stroke-linecap="round"/></svg></span>five certification marks, all invented<span class="n">5 marks</span></summary>
 <div class="fold-b">
-<p>This is the part that mattered most to get right. FSC, BPI Compostable, How2Recycle, SFI and ISTA are real trademarks belonging to real standards bodies. Putting any of them on a fictional company's spec sheets would be trademark misuse on a public portfolio.</p>
+<p>This is the part that mattered most to get right. FSC, BPI Compostable, How2Recycle, SFI and ISTA are real trademarks belonging to real standards bodies. Putting any of them on a fictional company’s spec sheets would be trademark misuse on a public portfolio.</p>
 <p>So they were removed and replaced with five invented ones, none confusable with a real mark.</p>
 
 <div class="cp">
 <h3>The set</h3>
-<p class="cpsub">14mm square, single colour · they sit in a row along the foot of a spec sheet</p>
+<p class="cpsub">14mm square, single color · they sit in a row along the foot of a spec sheet</p>
 <div class="certs">
   <div class="cert">
     <svg viewBox="0 0 48 48" fill="none" stroke="#1E4D3B" stroke-width="3" stroke-linecap="butt">
       <path d="M40 24a16 16 0 1 1-6-12.5"/><path d="M40 8v8h-8"/>
       <text x="24" y="30" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" font-weight="700" fill="#1E4D3B" stroke="none">90</text>
     </svg>
-    <b>CircleFibre 90</b><span>post-consumer fibre, verified by mill declaration</span>
+    <b>CircleFibre 90</b><span>post-consumer fiber, verified by mill declaration</span>
   </div>
   <div class="cert">
     <svg viewBox="0 0 48 48" fill="none" stroke="#1E4D3B" stroke-width="3" stroke-linecap="butt">
@@ -377,7 +378,7 @@ table.rej .ok{color:var(--mint)}
       <path d="M24 5l14 5v13c0 10-7 16-14 20-7-4-14-10-14-20V10z"/>
       <circle cx="19" cy="22" r="6"/><circle cx="29" cy="22" r="6"/>
     </svg>
-    <b>ChainMark</b><span>fibre traced to managed regrowth forestry</span>
+    <b>ChainMark</b><span>fiber traced to managed regrowth forestry</span>
   </div>
   <div class="cert">
     <svg viewBox="0 0 48 48" fill="none" stroke="#1E4D3B" stroke-width="3" stroke-linecap="butt">
@@ -389,8 +390,8 @@ table.rej .ok{color:var(--mint)}
 </div>
 </div>
 
-<p>They share a stroke weight and a corner treatment so they read as a set — which a real certification row never does, and making them cohere is what sells the whole thing.</p>
-<p><strong>The rule underneath them is the interesting part.</strong> A family-level badge row shows the <em>intersection</em> of its members' marks, never the union. If two tape codes hold ChainMark and the third doesn't, the family claims neither — it claims only what every SKU can support, and the difference is disclosed in a note. A site that shows the union is making a claim two-thirds of the range can't back. That's exactly the class of error the tooling is supposed to prevent, so getting it right here is the demo working rather than arguing against itself.</p></div></details>
+<p>They share a stroke weight and a corner treatment so they read as a set, which a real certification row never does.</p>
+<p><strong>The rule underneath them is the interesting part.</strong> A family-level badge row shows the <em>intersection</em> of its members’ marks, never the union. If two tape codes hold ChainMark and the third doesn’t, the family claims neither — it claims only what every SKU can support, and the difference is disclosed in a note. A site that shows the union is making a claim two-thirds of the range can’t back. That is the class of error the tooling exists to prevent, so this page had to get it right.</p></div></details>
 
 <details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><path d="M11 12.5l2.5 2.5 4-5M11 23.5l2.5 2.5 4-5M11 34.5l2.5 2.5 4-5" stroke="#9FE0CE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 14h29M26 25h24M26 36h27" stroke="#423748" stroke-width="2" stroke-linecap="round"/></svg></span>the rulebook<span class="n">5 rules</span></summary>
 <div class="fold-b">
@@ -405,22 +406,22 @@ table.rej .ok{color:var(--mint)}
 <p class="cprule"><b>Recycled content is banded, never implied.</b> 0–39, 40–69, 70–100.</p>
 </div>
 </div>
-<p>Rules 3, 4 and 5 are checked by the build. The site fails CI if a rendered page or the product record contains any of the five real certification body names — a check that exists because one slipped in early and I'd rather the build catch it than a hiring manager.</p></div></details>
+<p>Rules 3, 4 and 5 are checked by the build. The site fails CI if a rendered page or the product record contains any of the five real certification body names — a check that exists because one slipped in early and I’d rather the build catch it than a hiring manager.</p></div></details>
 
 <div class="outcome"><p class="h">what two days bought</p>
 <ul>
 <li>A mark that works in one ink on brown board, at 12mm and at 2m.</li>
-<li>A palette with one colour under a semantic rule, which has already caught a real defect.</li>
+<li>A palette with one color under a semantic rule, which has already caught a real defect.</li>
 <li>Five certification marks that read as a set and infringe nothing.</li>
 <li>A rulebook where three of five rules are machine-checked rather than remembered.</li>
 <li>A live site, eleven product families, forty-four documents, deployed with a CI check that fails if the built site drifts from its source record.</li>
 </ul></div>
 
-<div class="diff"><p class="h">what I'd do differently</p>
-<p>I built the first version under a different name — Loamfold — before running the trademark search properly. It was free, so nothing was lost, but I'd checked availability after designing rather than before. Ten minutes of searching at the start would have saved redoing the wordmark.</p></div>
+<div class="diff"><p class="h">what I’d do differently</p>
+<p>I built the first version under a different name — Loamfold — before running the trademark search properly. It was free, so nothing was lost, but I’d checked availability after designing rather than before. Ten minutes of searching at the start would have saved redoing the wordmark.</p></div>
 </div>
 
-<div class="tags"><span class="tag rose">brand systems</span><span class="tag ">logo design</span><span class="tag ">svg</span><span class="tag ">colour systems</span><span class="tag ">trademark screening</span><span class="tag ">design tokens</span><span class="tag ">documentation</span><span class="tag ">ci enforcement</span></div>
+<div class="tags"><span class="tag rose">brand systems</span><span class="tag ">logo design</span><span class="tag ">svg</span><span class="tag ">color systems</span><span class="tag ">trademark screening</span><span class="tag ">design tokens</span><span class="tag ">documentation</span><span class="tag ">ci enforcement</span></div>
 
 <div class="protolink">
 <div>
@@ -431,12 +432,12 @@ table.rej .ok{color:var(--mint)}
 <a class="btn" href="https://cambiumpak.com/" target="_blank" rel="noopener">open the site →</a>
 </div>
 
-<div class="nextprev"><a href="work-email-generator.html">&larr; the email campaign generator</a><a href="work-studio.html">StudioKeeper &rarr;</a></div>
+<div class="nextprev"><a href="work-email-generator.html">&larr; the email campaign generator</a><a href="work-choose-democracy.html">choose democracy &rarr;</a></div>
 </div>
 
 <div class="contact" id="contact"><div class="wrap">
 <p class="avail"><span class="pulse-dot"></span> open to marketing operations, analytics and martech roles</p>
-<h2>Let's talk.</h2>
+<h2>Let’s talk.</h2>
 <p>Remote, or Albuquerque and hybrid. Happy to walk through the architecture behind any of this.</p>
 <div class="contact-links">
 <a class="clink primary" href="mailto:elizabethbportfolio@gmail.com">elizabethbportfolio@gmail.com</a>

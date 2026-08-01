@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 <meta property="og:title" content="How the measurement got built, step by step — Elizabeth Beier">
-<meta property="og:description" content="Nine steps from 'sessions are up and I can't do anything with that' to a report that killed a subscription. Rebuilt on an invented company so the process can be shown in full.">
+<meta property="og:description" content="Nine steps from 'sessions are up and I can't do anything with that' to a report that put a subscription renewal on evidence. Rebuilt on an invented company so the process can be shown in full.">
 <link rel="stylesheet" href="styles.css">
 <style>
 /* ================================================================
@@ -200,14 +200,14 @@ pre.code .c{color:#7C8794; font-style:italic}
   <a class="backlink" href="work-analytics.html">← back to the analytics case study</a>
   <span class="kicker">process · analytics · rebuilt on an invented company</span>
   <h1>How the measurement actually got built</h1>
-  <p class="meta">nine steps · one conversation, one plan, eleven tags, one report that changed a decision</p>
+  <p class="meta">2026 &middot; nine steps · one conversation, one plan, eleven tags, one report that changed a decision</p>
   <p class="oneline">The case study says what I built. This says how, in order, with the screens — because "I built an analytics practice" is a claim, and a measurement plan with a tag behind it is evidence.</p>
 </div>
 
 <div class="wrap narrow">
 
   <div class="fict">
-    <p><b>CambiumPak is not a real company.</b> It is an invented maker of recycled and compostable B2B packaging supplies, built so I can show this process end to end. Every product, figure, document, certification mark, stakeholder and screen on this page is fabricated. No mark named here belongs to a real standards body, and no number here is any employer's number.</p>
+    <p><b>CambiumPak is not a real company.</b> It is an invented maker of recycled and compostable B2B packaging supplies, built so I can show this process end to end. Every product, figure, document, certification mark, stakeholder and screen on this page is fabricated. No mark named here belongs to a real standards body, and no number here is any employer’s number.</p>
     <p>The real version of this work was done under NDA for my employer, so I cannot publish its data, its screens or its code. <b>What is real is the sequence</b> — the order of the steps, the reasoning at each one, and the artifacts each step produces. That is the transferable part, and it is the same shape I would build on any site.</p>
     <p>Every reconstructed interface below is a hand-built HTML recreation of the <em>layout</em> of a working analytics tool, not a screenshot of one. It carries invented data.</p>
     <p><b>The company has a real site.</b> CambiumPak is published at <a href="https://cambiumpak.com/" target="_blank" rel="noopener">cambiumpak.com</a> — eleven product families, seventeen SKUs and forty-four downloadable documents, every one of them written for this. That site is the thing the measurement below was built against, so the events, the SKU codes and the four document types on this page all resolve to something you can go and click.</p>
@@ -241,17 +241,17 @@ pre.code .c{color:#7C8794; font-style:italic}
     <div class="turn"><span class="who">Dana · marketing director</span>
       <p>I can see sessions are up. I can see the top pages. I genuinely cannot tell you what to do with either of those.</p></div>
     <div class="turn me"><span class="who">me</span>
-      <p>Give me the question you get asked that you can't answer.</p></div>
+      <p>Give me the question you get asked that you can’t answer.</p></div>
     <div class="turn"><span class="who">Dana</span>
-      <p>Which documents matter. We publish four sheets per product — spec, comparison, features and benefits, and the instructions. That's forty-four PDFs. Right now downloads come through as one number, so "downloads are up" is the entire insight. Up on what? For which product? Nobody can tell me.</p></div>
+      <p>Which documents matter. We publish four sheets per product — spec, comparison, features and benefits, and the instructions. That’s forty-four PDFs. Right now downloads come through as one number, so "downloads are up" is the entire insight. Up on what? For which product? Nobody can tell me.</p></div>
     <div class="turn"><span class="who">Dana</span>
-      <p>And the portal. It looks busy. I don't know whether that's distributors, our own reps checking stock, or the fulfilment house. Those are three completely different businesses and I'm reporting them as one line.</p></div>
+      <p>And the portal. It looks busy. I don’t know whether that’s distributors, our own reps checking stock, or the fulfillment house. Those are three completely different businesses and I’m reporting them as one line.</p></div>
     <div class="turn"><span class="who">Dana</span>
       <p>Then the real one: <em>where do people stop?</em> Somebody lands on a family page and somebody else requests a sample, and I have no idea what happens in between or where we lose them.</p></div>
     <div class="turn me"><span class="who">me</span>
       <p>And the five new tools?</p></div>
     <div class="turn"><span class="who">Dana</span>
-      <p>Eight months of work between them, and on launch day I will have no way of knowing whether a single person used any of them. One of them we pay for every month and I'd have to renew it on a feeling.</p></div>
+      <p>Eight months of work between them, and on launch day I will have no way of knowing whether a single person used any of them. One of them we pay for every month and I’d have to renew it on a feeling.</p></div>
   </div>
 
   <p>Four frustrations. I wrote them down as questions rather than as features, because a question survives a tooling change and a feature request does not:</p>
@@ -265,8 +265,8 @@ pre.code .c{color:#7C8794; font-style:italic}
   </div>
 
   <div class="diff">
-    <p class="h">the thing I would say to a hiring manager about this step</p>
-    <p>Nobody asks for an event. They describe a frustration. The skill is not tagging — the skill is hearing "the portal looks busy" and recognising it as a segmentation problem with a one-line fix, before anyone has scoped a project around it.</p>
+    <p class="h">why this step comes first</p>
+    <p>Nobody asks for an event. They describe a frustration. Hearing "the portal looks busy" as a segmentation problem with a one-line fix is what kept it from becoming a scoped project.</p>
   </div>
 </div>
 
@@ -275,7 +275,7 @@ pre.code .c{color:#7C8794; font-style:italic}
   <div class="step-h"><span class="step-n">step 02</span><h2>What the default install could and could not answer</h2></div>
   <p class="step-why">an honest audit before proposing work · half of what people want is already there and free</p>
 
-  <p>Before proposing anything I checked what a standard analytics install gives you for nothing, because <strong>proposing work that the platform already does is the fastest way to lose credibility in the room.</strong> Enhanced measurement was already collecting page views, scrolls, outbound clicks, site search and file downloads. That last one is the interesting case, and it is the one that shows exactly where a default install stops being useful.</p>
+  <p>Before proposing anything I checked what a standard analytics install gives you for nothing. Enhanced measurement was already collecting page views, scrolls, outbound clicks, site search and file downloads. That last one is the interesting case, and it is the one that shows exactly where a default install stops being useful.</p>
 
   <p>Here is the file-download report as it actually arrived, before I built anything. It is not empty. It is worse than empty — it is <em>plausible</em>.</p>
 
@@ -329,7 +329,7 @@ pre.code .c{color:#7C8794; font-style:italic}
     </div>
   </div>
 
-  <p>That right-hand column is the project. It is also, precisely, Dana's four questions — which is how I knew the scope was right rather than invented.</p>
+  <p>That right-hand column is the project. It is also, precisely, Dana’s four questions — which is how I knew the scope was right rather than invented.</p>
 </div>
 
 <!-- ============================================================ 3 -->
@@ -339,7 +339,7 @@ pre.code .c{color:#7C8794; font-style:italic}
 
   <p>This is the artifact I care most about and the one most analytics work skips. It is a single document with one row per event, and <strong>the leftmost column is the business question.</strong> If a row cannot name the decision it informs, it does not get built — which is how you end up with a property that answers questions instead of one that collects everything and answers nothing.</p>
 
-  <p>It also names the parameters up front, and that matters more than it looks: a parameter you did not think of on day one is not recoverable on day ninety. You cannot backfill it.</p>
+  <p>It also names the parameters up front, and that matters more than it looks: a parameter you did not think of on day one is not recoverable on day ninety.</p>
 
   <div class="ui">
     <div class="t">
@@ -391,7 +391,7 @@ pre.code .c{color:#7C8794; font-style:italic}
 
   <div class="diff">
     <p class="h">the judgment call in this table</p>
-    <p>That last row is a decision not to build something. The calculator is a vendor component that regenerates its element IDs on every render — DOM-based tracking against it would appear to work perfectly and then break silently on the vendor's next release, at which point the report keeps showing a number and the number is wrong. Silent wrong data is worse than no data. I shipped a launch count, wrote the boundary into the plan, and said so out loud. <strong>Declining to build fragile tracking is a harder call than building it, and nobody thanks you for it until eighteen months later.</strong></p>
+    <p>That last row is a decision not to build something. The calculator is a vendor component that regenerates its element IDs on every render — DOM-based tracking against it would appear to work perfectly and then break silently on the vendor’s next release, at which point the report keeps showing a number and the number is wrong. Silent wrong data is worse than no data. I shipped a launch count, wrote the boundary into the plan, and said so out loud.</p>
   </div>
 </div>
 
@@ -407,7 +407,7 @@ pre.code .c{color:#7C8794; font-style:italic}
 window.dataLayer.push({
   <span class="k">event</span>: <span class="s">'document_download'</span>,
   <span class="k">doc_type</span>: <span class="s">'spec'</span>,              <span class="c">// spec | comparison | features | instructions</span>
-  <span class="k">product_sku</span>: <span class="s">'CP-MLR-1208'</span>,
+  <span class="k">product_sku</span>: <span class="s">'CP-MLR-1209'</span>,
   <span class="k">product_family</span>: <span class="s">'mailer'</span>,     <span class="c">// so roll-ups need no lookup table</span>
   <span class="k">source_page</span>: <span class="s">'family'</span>          <span class="c">// family | compare | portal | search</span>
 });
@@ -415,7 +415,7 @@ window.dataLayer.push({
 <span class="c">// Fired once, after authentication resolves. Never on page load.</span>
 window.dataLayer.push({
   <span class="k">event</span>: <span class="s">'portal_login'</span>,
-  <span class="k">customer_type</span>: <span class="s">'distributor_rep'</span>,  <span class="c">// internal | distributor_rep | fulfilment | brand</span>
+  <span class="k">customer_type</span>: <span class="s">'distributor_rep'</span>,  <span class="c">// internal | distributor_rep | fulfillment | brand</span>
   <span class="k">account_tier</span>: <span class="s">'tier_2'</span>,
   <span class="k">first_login</span>: <span class="s">false</span>                <span class="c">// true once, ever — activation, not traffic</span>
 });</pre>
@@ -426,7 +426,7 @@ window.dataLayer.push({
       <ul>
         <li>Without it, every roll-up needs a join against a SKU list somebody has to maintain.</li>
         <li>Nobody maintains it.</li>
-        <li>Within a year the reporting quietly stops matching the catalogue and no one notices which one is wrong.</li>
+        <li>Within a year the reporting quietly stops matching the catalog and no one notices which one is wrong.</li>
         <li>One extra key at push time costs nothing and removes that failure mode permanently.</li>
       </ul>
     </div>
@@ -436,7 +436,7 @@ window.dataLayer.push({
         <li>The brand system states recycled content as a band — <span class="mono">0–39 / 40–69 / 70–100</span> — never as an implied precision.</li>
         <li>Sending the raw figure would let a report make a claim the certification does not support.</li>
         <li>Banding at the push is the only place it can be enforced for everyone downstream.</li>
-        <li>Governance you have to remember is governance that fails. Put it in the contract.</li>
+        <li>A rule in the contract does not depend on anyone remembering it.</li>
       </ul>
     </div>
   </div>
@@ -449,7 +449,7 @@ window.dataLayer.push({
 
   <p>Eleven tags, nine variables, seven triggers. Three are worth showing because each solves a different class of problem: mapping a messy input to a clean one, passing structured parameters through, and reading something the page already knows but never told anyone.</p>
 
-  <p><strong>First, the one that fixes Dana's forty-four rows.</strong> A lookup table maps a filename pattern to a document type. This is the fallback path — the dataLayer contract from step 04 is the primary source — but legacy links, emailed PDFs and links inside the portal do not always go through it, and a fallback that produces a clean value beats a fallback that produces a filename.</p>
+  <p><strong>First, the one that fixes Dana’s forty-four rows.</strong> A lookup table maps a filename pattern to a document type. This is the fallback path — the dataLayer contract from step 04 is the primary source — but legacy links, emailed PDFs and links inside the portal do not always go through it, and a fallback that produces a clean value beats a fallback that produces a filename.</p>
 
   <div class="ui">
     <div class="t">
@@ -535,7 +535,7 @@ window.dataLayer.push({
 
   <span class="k">var</span> map = {
     staff: <span class="s">'internal'</span>, rep: <span class="s">'distributor_rep'</span>,
-    threepl: <span class="s">'fulfilment'</span>, brand: <span class="s">'brand'</span>
+    threepl: <span class="s">'fulfillment'</span>, brand: <span class="s">'brand'</span>
   };
   <span class="k">return</span> map[m[1]] || <span class="s">'unmapped_'</span> + m[1];  <span class="c">// a new role shows up named, not as noise</span>
 }</pre>
@@ -580,7 +580,7 @@ window.dataLayer.push({
             <thead><tr><th style="width:38%">Variable</th><th>Resolved value</th></tr></thead>
             <tbody>
               <tr class="hl"><td class="mono">dlv — doc_type</td><td class="mono">spec</td></tr>
-              <tr class="hl"><td class="mono">dlv — product_sku</td><td class="mono">CP-MLR-1208</td></tr>
+              <tr class="hl"><td class="mono">dlv — product_sku</td><td class="mono">CP-MLR-1209</td></tr>
               <tr class="hl"><td class="mono">dlv — product_family</td><td class="mono">mailer</td></tr>
               <tr><td class="mono">dlv — source_page</td><td class="mono">family</td></tr>
               <tr><td class="mono">var — doc type from filename</td><td class="mono t-faint">spec <span class="pill off">fallback, unused</span></td></tr>
@@ -648,7 +648,7 @@ window.dataLayer.push({
 
   <div class="diff">
     <p class="h">why the screenshot row exists</p>
-    <p>Every verified tag was screenshotted and filed before publish. Not for me — for the conversation eleven weeks later that starts "was this tracking live at launch?" On a relaunch you are one party among several, and the difference between "I'm fairly sure we tested that" and a dated screenshot sent to the web vendor at the time is the difference between a discussion and an argument. It costs four seconds per tag.</p>
+    <p>Every verified tag was screenshotted and filed before publish. Not for me — for the conversation eleven weeks later that starts "was this tracking live at launch?" On a relaunch you are one party among several, and the difference between "I’m fairly sure we tested that" and a dated screenshot sent to the web vendor at the time is the difference between a discussion and an argument. It costs four seconds per tag.</p>
   </div>
 </div>
 
@@ -657,7 +657,7 @@ window.dataLayer.push({
   <div class="step-h"><span class="step-n">step 07</span><h2>Registering the dimensions, which is not optional and is not retroactive</h2></div>
   <p class="step-why">the quiet step that decides whether any of the previous six were worth doing</p>
 
-  <p>A parameter that is collected but not registered as a custom dimension is <strong>invisible in reporting.</strong> The data is arriving, it is in the payload, and it does not appear in a single report or exploration. People discover this months later, register the dimension, and find it populates from that day forward and not one day earlier. <strong>Registration is not retroactive.</strong> There is no backfill, no support ticket, no recovery.</p>
+  <p>A parameter that is collected but not registered as a custom dimension is <strong>invisible in reporting.</strong> The data is arriving, it is in the payload, and it does not appear in a single report or exploration. People discover this months later, register the dimension, and find it populates from that day forward and not one day earlier. <strong>Registration is not retroactive.</strong></p>
 
   <p>So this happened on the same day the tags were built, not after the first month of data.</p>
 
@@ -750,7 +750,7 @@ window.dataLayer.push({
     <p class="ui-cap"><b>reconstruction</b> · the free-form exploration · invented figures. the answer to her question is the body of the table. the more interesting finding is in the last column.</p>
   </div>
 
-  <p><strong>Her question, answered.</strong> Spec sheets and instructions dominate. The comparison sheet is the least-downloaded document in every single family, without exception — and the comparison sheet is the one whose entire job is to help somebody decide whether this is the right format. The document built to win the specification decision was the one nobody was finding. That is a navigation problem wearing a content problem's clothes, and it went straight onto the website roadmap.</p>
+  <p><strong>Her question, answered.</strong> Spec sheets and instructions dominate. The comparison sheet is the least-downloaded document in every single family, without exception — and the comparison sheet is the one whose entire job is to help somebody decide whether this is the right format. The document built to win the specification decision was the one nobody was finding. That is a navigation problem wearing a content problem’s clothes, and it went straight onto the website roadmap.</p>
 
   <p><strong>Then the last column.</strong> Because the metric is sessions and sessions de-duplicate, the row cells and the row total say two different things — and the gap between them is a finding nobody asked for.</p>
 
@@ -784,7 +784,7 @@ window.dataLayer.push({
     <div>
       <span class="kicker">demonstrator · working</span>
       <p class="pl-t">The CambiumPak executive dashboard</p>
-      <p class="pl-n">The dashboard these events feed, built on the same invented company. Period filters, stat tiles, the tool sparklines, and the finding that killed a subscription.</p>
+      <p class="pl-n">The dashboard these events feed, built on the same invented company. Period filters, stat tiles, the tool sparklines, and the finding that put a subscription renewal on evidence.</p>
     </div>
     <a class="btn" href="demo/cambiumpak-dashboard.html">open the dashboard →</a>
   </div>
@@ -801,16 +801,16 @@ window.dataLayer.push({
   <div class="outcome">
     <p class="h">what the nine steps produced</p>
     <ul>
-      <li><strong>Four questions in, four questions answerable out.</strong> Every event traces to a line Dana said in step 01, and nothing was built that could not name the decision it informed.</li>
+      <li><strong>Four questions in, four questions answerable out.</strong> Nothing was built that could not name the decision it informed.</li>
       <li><strong>Forty-four filename rows became four document types</strong> that roll up by family without a lookup table anyone has to maintain.</li>
-      <li><strong>A portal login became a segment</strong> — six lines of JavaScript instead of a cross-vendor backend project, registered at user scope so it colours everything else that person does.</li>
+      <li><strong>A portal login became a segment</strong> — six lines of JavaScript instead of a cross-vendor backend project, registered at user scope so it colors everything else that person does.</li>
       <li><strong>Five new tools went from no measurable signal to individually reportable</strong> on day one of the relaunch, including the one billed monthly, whose renewal now rests on usage rather than on a feeling.</li>
       <li><strong>One finding nobody asked for</strong> — the average downloading session needed 2.15 of the four sheets — which is now the business case for a website change, and came out of choosing sessions over event count.</li>
     </ul>
   </div>
 
   <div class="diff">
-    <p class="h">the part I would want asked about in an interview</p>
+    <p class="h">the two steps that decide everything</p>
     <p>Step 01 and step 07. The conversation, because that is where the scope is set and everything downstream is either an answer to it or waste. And the dimension registration, because it is a five-minute admin screen that silently determines whether the previous six steps produced anything usable at all — and it is the mistake I have most often been called in to find, months after it stopped being fixable.</p>
   </div>
 </div>
@@ -832,7 +832,7 @@ window.dataLayer.push({
 
 <div class="contact" id="contact"><div class="wrap">
   <p class="avail"><span class="pulse-dot"></span> open to marketing operations, analytics and martech roles</p>
-  <h2>Let's talk.</h2>
+  <h2>Let’s talk.</h2>
   <p>Remote, or Albuquerque and hybrid. If you want the architecture behind any of the work here, ask me and I will walk you through it.</p>
   <div class="contact-links">
     <a class="clink primary" href="mailto:elizabethbportfolio@gmail.com">elizabethbportfolio@gmail.com</a>

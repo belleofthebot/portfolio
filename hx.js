@@ -54,7 +54,7 @@
     { key: 'head', on: true, name: 'Headline at editorial scale',
       before: 'Default theme size and weight',
       after: '72px / 700 / 1.05, white, over a 3px brand rule',
-      why: 'Editorial scale, and the rule ties the hero to the brand colour ' +
+      why: 'Editorial scale, and the rule ties the hero to the brand color ' +
            'without dropping a logo lockup into the picture.' },
     { key: 'tiers', on: true, name: 'Two-tier body copy',
       before: 'One undifferentiated paragraph style',

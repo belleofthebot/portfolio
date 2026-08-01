@@ -56,10 +56,9 @@
   campaign: a launch hero, what the product is for, the recycled-content figure,
   one document rather than four, and two more products underneath. 600px tables,
   inline CSS, an Outlook-safe button, a hidden preheader. Then it audits what it
-  just wrote. Sixteen links, and three of them point at the same product page:
-  the photograph, the button, and the button again because Outlook needs its own
-  &mdash; which is exactly why the tag carries the element and not only the
-  campaign. Turn
+  just wrote. Sixteen links, and three point at the same product page: the
+  photo, the button, and the Outlook copy of the button. That is why the tag
+  carries the element, not only the campaign. Turn
   <b>UTM tagging</b> off and the email still looks perfect, which is the whole
   problem with tagging by hand.</p>
 
@@ -86,9 +85,7 @@
     </div>
     <p class="ea-locknote" hidden>There is deliberately no switch here. The
     compliance block is assembled from a server-side constant, so "forgot the
-    unsubscribe link" is not a state this system can produce. That is the
-    difference between training people to remember something and removing the
-    chance to forget it.</p>
+    unsubscribe link" is not a state this system can produce.</p>
   </div>
 
   <div class="ea-out" hidden>
@@ -105,8 +102,8 @@
   <p class="ea-note"><b>CambiumPak is invented,</b> and so is every product in
   it. The employer tool this stands in for fetches the product page server-side
   and passes the copy to a model against a system prompt that encodes the brand
-  and the email spec. A browser cannot fetch cambiumpak.com, so this resolves
-  the URL against a bundled copy of the product record instead. Everything after
+  and the email spec. The demo resolves the URL against a bundled copy of the
+  product record, as on the deck generator page. Everything after
   the lookup is the real thing, including the audit, which is plain JavaScript
   reading the emitted HTML rather than a model marking its own work.</p>
 </div>
@@ -117,37 +114,37 @@
 
 <details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><rect x="12" y="8" width="40" height="8" rx="2" stroke="#423748" stroke-width="1.5"/><rect x="6" y="20" width="40" height="8" rx="2" stroke="#DFA192" stroke-width="1.5"/><rect x="12" y="32" width="40" height="8" rx="2" stroke="#423748" stroke-width="1.5"/><path d="M49 20l6 8M55 20l-6 8" stroke="#DFA192" stroke-width="1.5" stroke-linecap="round"/></svg></span>the problem<span class="n">75 min a send</span></summary>
 <div class="fold-b">
-<p>Campaign emails were built by hand every time: source the copy, rebuild the layout, get it rendering in Outlook, apply the brand system, tag every link, remember the opt-out. Every step was a place to introduce an error, and the errors were invisible until after send. A mistagged link doesn't look broken — it quietly corrupts campaign reporting.</p>
-<p>I timed the manual build at <strong>75 minutes per campaign</strong>. On a weekly send that's roughly 65 hours a year rebuilding the same layout.</p></div></details>
+<p>Campaign emails were built by hand every time: source the copy, rebuild the layout, get it rendering in Outlook, apply the brand system, tag every link, remember the opt-out. Every step was a place to introduce an error, and the errors were invisible until after send. A mistagged link doesn’t look broken — it quietly corrupts campaign reporting.</p>
+<p>I timed the manual build at <strong>75 minutes per campaign</strong>. On a weekly send that’s roughly 65 hours a year rebuilding the same layout.</p></div></details>
 
 <details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><path d="M6 13h13M6 20h13M6 27h13M6 34h8" stroke="#8B8494" stroke-width="2" stroke-linecap="round"/><path d="M24 24h8" stroke="#DFA192" stroke-width="1.5" stroke-linecap="round"/><path d="M29 21l3.5 3-3.5 3" stroke="#DFA192" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 9h13l8 8v22H37z" stroke="#DFA192" stroke-width="1.5" stroke-linejoin="round"/><path d="M50 9v8h8" stroke="#DFA192" stroke-width="1.5" stroke-linejoin="round"/><path d="M41 24h12M41 30h12M41 35h7" stroke="#423748" stroke-width="1.5" stroke-linecap="round"/></svg></span>what I built<span class="n">6 parts</span></summary>
 <div class="fold-b">
 <ul>
 <li><strong>Source copy fetched automatically</strong> from a product page URL server-side, or from an uploaded sell sheet, so nothing is pasted by hand.</li>
 <li><strong>The base template lives in the repository</strong> and loads every session, so it never has to be re-supplied.</li>
-<li><strong>The brand and technical spec is encoded in the system prompt:</strong> 600px table-based centred layout, inline CSS only, Outlook rendering via MSO conditional comments and VML bulletproof buttons, no grid or flex, no web fonts, no background images for critical content, specified colour roles, hidden preheader.</li>
+<li><strong>The brand and technical spec is encoded in the system prompt:</strong> 600px table-based centered layout, inline CSS only, Outlook rendering via MSO conditional comments and VML bulletproof buttons, no grid or flex, no web fonts, no background images for critical content, specified color roles, hidden preheader.</li>
 <li><strong>UTM tagging enforced on every link,</strong> with a documented taxonomy of medium names by element type: header logo, hero image, action CTA, document download, section image, section text link, footer logo, footer link, and social by platform. Mailto links, anchors and merge tags are explicitly exempted.</li>
 <li><strong>Placeholder tokens instead of invented URLs.</strong> Any asset without a final URL gets a named token, listed in a comment block at the top of the file. The model is forbidden from guessing a URL.</li>
 <li><strong>A self-generated audit trail</strong> appended to every output: one line per link, with element, destination and tag.</li>
 </ul></div></details>
 
-<details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><path d="M32 5v38" stroke="#423748" stroke-width="1.5" stroke-dasharray="3 3"/><path d="M6 13h20M38 13h20M6 24h20M38 24h14" stroke="#9FE0CE" stroke-width="2" stroke-linecap="round"/><path d="M6 35h20" stroke="#DFA192" stroke-width="2" stroke-linecap="round"/><path d="M29 32l6 6M35 32l-6 6" stroke="#DFA192" stroke-width="1.5" stroke-linecap="round"/></svg></span>the idea it's built around<span class="n">impossible to omit</span></summary>
+<details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><path d="M32 5v38" stroke="#423748" stroke-width="1.5" stroke-dasharray="3 3"/><path d="M6 13h20M38 13h20M6 24h20M38 24h14" stroke="#9FE0CE" stroke-width="2" stroke-linecap="round"/><path d="M6 35h20" stroke="#DFA192" stroke-width="2" stroke-linecap="round"/><path d="M29 32l6 6M35 32l-6 6" stroke="#DFA192" stroke-width="1.5" stroke-linecap="round"/></svg></span>the idea it’s built around<span class="n">impossible to omit</span></summary>
 <div class="fold-b">
-<p>Rather than training people to remember the unsubscribe link and the tagging convention, both were made impossible to omit. The compliance link is a server-side constant the generator can't be asked to leave out. The tagging is audited against the actual output, in code, every run.</p></div></details>
+<p>Rather than training people to remember the unsubscribe link and the tagging convention, both were made impossible to omit. The compliance link is a server-side constant the generator can’t be asked to leave out. The tagging is audited against the actual output, in code, every run.</p></div></details>
 
-<details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><path d="M17 9c-4 0-4 4-4 7s-3 8-5 8c2 0 5 2 5 8s0 7 4 7" stroke="#8B8494" stroke-width="1.5" stroke-linecap="round"/><path d="M47 9c4 0 4 4 4 7s3 8 5 8c-2 0-5 2-5 8s0 7-4 7" stroke="#8B8494" stroke-width="1.5" stroke-linecap="round"/><path d="M21 16h10M35 16h8" stroke="#423748" stroke-width="2" stroke-linecap="round"/><path d="M21 24h10M35 24h6" stroke="#423748" stroke-width="2" stroke-linecap="round"/><path d="M21 32h10" stroke="#DFA192" stroke-width="2" stroke-linecap="round"/><rect x="35" y="29.5" width="9" height="5" rx="2.5" stroke="#DFA192" stroke-width="1.5" stroke-dasharray="2 2"/></svg></span>where the AI isn't<span class="n">the audit</span></summary>
+<details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><path d="M17 9c-4 0-4 4-4 7s-3 8-5 8c2 0 5 2 5 8s0 7 4 7" stroke="#8B8494" stroke-width="1.5" stroke-linecap="round"/><path d="M47 9c4 0 4 4 4 7s3 8 5 8c-2 0-5 2-5 8s0 7-4 7" stroke="#8B8494" stroke-width="1.5" stroke-linecap="round"/><path d="M21 16h10M35 16h8" stroke="#423748" stroke-width="2" stroke-linecap="round"/><path d="M21 24h10M35 24h6" stroke="#423748" stroke-width="2" stroke-linecap="round"/><path d="M21 32h10" stroke="#DFA192" stroke-width="2" stroke-linecap="round"/><rect x="35" y="29.5" width="9" height="5" rx="2.5" stroke="#DFA192" stroke-width="1.5" stroke-dasharray="2 2"/></svg></span>where the AI isn’t<span class="n">the audit</span></summary>
 <div class="fold-b">
-<p>The audit is deterministic JavaScript parsing the real output HTML. It isn't the language model checking its own work.</p></div></details>
+<p>The audit is deterministic JavaScript parsing the real output HTML. It isn’t the language model checking its own work.</p></div></details>
 
 <div class="outcome"><p class="h">outcome</p>
 <ul>
 <li>Campaign email drafted from a product page URL rather than rebuilt from scratch.</li>
-<li>Opt-out compliance can't be omitted, because omitting it isn't a state the system can produce.</li>
+<li>Opt-out compliance can’t be omitted, because omitting it isn’t a state the system can produce.</li>
 <li>UTM tagging verified deterministically on every output, so attribution data stops silently degrading.</li>
 </ul></div>
 
-<div class="diff"><p class="h">what I'd do differently</p>
-<p>Same as the deck generator: the tool shipped before the measurement did. I've since timed the manual baseline properly and instrumented the generator. The compliance argument never needed a number, but the time argument does, and I shouldn't have had to go back for it.</p></div>
+<div class="diff"><p class="h">what I’d do differently</p>
+<p>Same as the deck generator: the tool shipped before the measurement did. I’ve since timed the manual baseline properly and instrumented the generator. The compliance argument never needed a number, but the time argument does, and I shouldn’t have had to go back for it.</p></div>
 </div>
 
 <div class="tags"><span class="tag rose">compliance by design</span><span class="tag ">utm taxonomy</span><span class="tag ">email html</span><span class="tag ">mso conditionals &amp; vml</span><span class="tag ">prompt as specification</span><span class="tag ">deterministic verification</span><span class="tag ">sop authoring</span></div>
@@ -156,7 +153,7 @@
 </div>
 <div class="contact" id="contact"><div class="wrap">
 <p class="avail"><span class="pulse-dot"></span> open to marketing operations, analytics and martech roles</p>
-<h2>Let's talk.</h2>
+<h2>Let’s talk.</h2>
 <p>Remote, or Albuquerque and hybrid. Happy to walk through the architecture behind any of this.</p>
 <div class="contact-links">
 <a class="clink primary" href="mailto:elizabethbportfolio@gmail.com">elizabethbportfolio@gmail.com</a>

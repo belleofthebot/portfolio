@@ -38,14 +38,14 @@
 <span class="kicker">case study · web</span>
 <h1>A website reimagining, without voiding the contract</h1>
 <p class="meta">2026 · agency-built site under active contract</p>
-<p class="oneline">A CEO's vision, a site that couldn't be touched without contractual risk, and a deadline.</p>
+<p class="oneline">A CEO’s vision, a site that couldn’t be touched without contractual risk, and a deadline.</p>
 </div>
 <div class="wrap narrow">
 
 <div class="statrow">
 <div><span class="n">v2.20</span><span class="l">production CSS, versioned and changelogged</span></div>
 <div><span class="n">9</span><span class="l">documented sections in the stylesheet</span></div>
-<div><span class="n">~200 → few</span><span class="l">force-override declarations, cut by using specificity</span></div>
+<div><span class="n">few</span><span class="l">force overrides left, down from roughly 200</span></div>
 <div><span class="n">0</span><span class="l">child theme files touched</span></div>
 </div>
 
@@ -89,9 +89,7 @@
   two-tier treatment is scoped to <code>p:first-of-type:not(:last-of-type)</code>,
   so on a page whose hero carries a single paragraph it stands down and the copy
   renders as ordinary body text. Switch change nine off and watch a lone
-  paragraph get promoted to a 26px tagline it was never written to be. That is
-  the difference between styling a page and building something that survives the
-  next page.</p>
+  paragraph get promoted to a 26px tagline it was never written to be.</p>
 
   <div class="hx-list"></div>
 
@@ -102,8 +100,8 @@
   brand blue in the original stylesheet is identifiably my employer&rsquo;s, so the
   accent here is Pine and the copy is invented. What is not invented is the
   work: every change, every measurement and every reason above is what was
-  actually done, taken from the stylesheet. The full production file reached
-  v2.20 across nine documented sections, of which the hero is the first.</p>
+  actually done, taken from the stylesheet. The hero is the first of the
+  stylesheet’s nine documented sections.</p>
 </div>
 </div>
 
@@ -162,9 +160,7 @@
   a plausible agency build, made to have a cascade you can fight. What is not invented is the shape of the problem: deep descendant
   selectors in a stylesheet I could not edit, one override file loaded after it,
   and a contract that put child theme changes on the agency&rsquo;s side of the
-  line. In production that override sheet reached v2.20 across nine documented
-  sections, and the !important count came down from roughly two hundred to a
-  handful.</p>
+  line.</p>
 </div>
 </div>
 
@@ -190,7 +186,7 @@
 <div class="fold-b">
 <ul>
 <li><strong>Specificity over force.</strong> Force-override declarations cut from roughly two hundred to a handful by using doubled and tripled class selectors instead. Every remaining exception is commented with its justification.</li>
-<li><strong>Structured and changelogged.</strong> Nine documented sections with version history in the file header, so it's maintainable by someone who isn't me.</li>
+<li><strong>Structured and changelogged.</strong> Nine documented sections with version history in the file header, so it’s maintainable by someone who isn’t me.</li>
 <li><strong>Fragility flagged, not hidden.</strong> One selector depends on homepage section order and will break if that order changes. Documented in the handoff and escalated to the agency with a request for a dedicated class.</li>
 <li><strong>Scope boundary held.</strong> Child theme files never touched. A running list of required changes compiled and quoted to the agency instead.</li>
 </ul></div></details>
@@ -206,8 +202,8 @@
 <li>One of two company-wide recognition awards I received in my first four months.</li>
 </ul></div>
 
-<div class="diff"><p class="h">what I'd do differently</p>
-<p>I'd have asked the agency for dedicated hook classes at the start rather than after I found the order-dependent selector. Ten minutes of scoping at kickoff would have removed the one fragile thing in an otherwise durable system.</p></div>
+<div class="diff"><p class="h">what I’d do differently</p>
+<p>I’d have asked the agency for dedicated hook classes at the start rather than after I found the order-dependent selector. Ten minutes of scoping at kickoff would have removed the one fragile thing in an otherwise durable system.</p></div>
 </div>
 
 <div class="tags"><span class="tag rose">production css</span><span class="tag ">specificity architecture</span><span class="tag ">vendor management</span><span class="tag ">contract scope</span><span class="tag ">wordpress theme boundaries</span><span class="tag ">enablement &amp; documentation</span><span class="tag ">art direction</span></div>
@@ -216,7 +212,7 @@
 </div>
 <div class="contact" id="contact"><div class="wrap">
 <p class="avail"><span class="pulse-dot"></span> open to marketing operations, analytics and martech roles</p>
-<h2>Let's talk.</h2>
+<h2>Let’s talk.</h2>
 <p>Remote, or Albuquerque and hybrid. Happy to walk through the architecture behind any of this.</p>
 <div class="contact-links">
 <a class="clink primary" href="mailto:elizabethbportfolio@gmail.com">elizabethbportfolio@gmail.com</a>

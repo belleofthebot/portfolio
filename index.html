@@ -252,6 +252,9 @@
 
 /* the pill row needs air under it, or it collides with "Selected work" */
 .pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:var(--space-5)}
+/* [hidden] loses to display:inline-flex, so state it — the social pill is
+   parked until IPL ships and a disabled zero only advertises the gap */
+.pill[hidden]{display:none}
 .pill{background:var(--tile);border:1px solid var(--line);color:var(--text-2);
   border-radius:999px;font-family:var(--mono);cursor:pointer;display:inline-flex;
   align-items:center;padding:8px 15px 8px 12px;gap:9px;font-size:.76rem;
@@ -315,7 +318,7 @@
 <meta property="og:image" content="https://elizabethbportfolio.com/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="elizabethbeier_ — marketing technology, analytics, and design">
+<meta property="og:image:alt" content="elizabethbeier_ - marketing technology, analytics, and design">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://elizabethbportfolio.com/og-image.png">
 </head>
@@ -328,14 +331,15 @@
 <section id="work"><div class="wrap">
 <div class="ebhero">
   <div class="ebhero-copy">
-    <h1>Over a decade of creative design experience.<br>
-    <span class="l2">On the cutting edge of AI and analytics.</span></h1>
+    <h1>I make marketing beautiful, then prove it worked.<br>
+    <span class="l2">Ten years of design work, and the analytics and AI skills I built on top of it.</span></h1>
     <p class="ebwho">Elizabeth Beier &middot; marketing operations, analytics and martech
     &middot; albuquerque</p>
   </div>
   <div class="ebglyph" id="ebglyph" aria-hidden="true"></div>
 </div>
-<div class="pills" id="ebpills"><button type="button" class="pill" data-k="design" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="2.5" width="14" height="14" rx="1.5"/><path d="M2.5 7h14M7 2.5v14"/></svg><span class="lb">graphic design</span><span class="ct">12</span></button><button type="button" class="pill" data-k="analytics" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 16.5h15M5 13.5V8M9.5 13.5V3.5M14 13.5V10.5"/></svg><span class="lb">analytics</span><span class="ct">4</span></button><button type="button" class="pill" data-k="ai" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 2.5v14M2.5 9.5h14M4.7 4.7l9.6 9.6M14.3 4.7l-9.6 9.6"/></svg><span class="lb">prompting & AI</span><span class="ct">11</span></button><button type="button" class="pill" data-k="web" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="3.5" width="14" height="12" rx="1.5"/><path d="M2.5 7.5h14"/></svg><span class="lb">web build</span><span class="ct">5</span></button><button type="button" class="pill" data-k="brand" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9.5" cy="9.5" r="7"/><circle cx="9.5" cy="9.5" r="2.6"/></svg><span class="lb">brand systems</span><span class="ct">2</span></button><button type="button" class="pill" data-k="product" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="2.5" width="8" height="14" rx="2"/><path d="M8 14h3"/></svg><span class="lb">ux / product</span><span class="ct">3</span></button><button type="button" class="pill" data-k="illustration" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16.5l3-7.5 7-5 3 3-5 7-8 2.5z"/><path d="M6 9l4.5 4.5"/></svg><span class="lb">illustration</span><span class="ct">5</span></button><button type="button" class="pill" data-k="animation" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6.5" cy="9.5" r="4"/><circle cx="13" cy="9.5" r="4"/></svg><span class="lb">animation</span><span class="ct">1</span></button><button type="button" class="pill zero" data-k="social" disabled aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="9.5" r="2.5"/><circle cx="14" cy="5" r="2.5"/><circle cx="14" cy="14" r="2.5"/><path d="M7.2 8.3l4.6-2.3M7.2 10.7l4.6 2.3"/></svg><span class="lb">social campaigns</span><span class="ct">0</span></button></div>
+<div class="pills" id="ebpills"><button type="button" class="pill" data-k="design" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="2.5" width="14" height="14" rx="1.5"/><path d="M2.5 7h14M7 2.5v14"/></svg><span class="lb">graphic design</span><span class="ct">12</span></button><button type="button" class="pill" data-k="analytics" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 16.5h15M5 13.5V8M9.5 13.5V3.5M14 13.5V10.5"/></svg><span class="lb">analytics</span><span class="ct">4</span></button><button type="button" class="pill" data-k="ai" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 2.5v14M2.5 9.5h14M4.7 4.7l9.6 9.6M14.3 4.7l-9.6 9.6"/></svg><span class="lb">prompting & AI</span><span class="ct">11</span></button><button type="button" class="pill" data-k="web" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="3.5" width="14" height="12" rx="1.5"/><path d="M2.5 7.5h14"/></svg><span class="lb">web build</span><span class="ct">5</span></button><button type="button" class="pill" data-k="brand" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9.5" cy="9.5" r="7"/><circle cx="9.5" cy="9.5" r="2.6"/></svg><span class="lb">brand systems</span><span class="ct">2</span></button><button type="button" class="pill" data-k="product" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="2.5" width="8" height="14" rx="2"/><path d="M8 14h3"/></svg><span class="lb">ux / product</span><span class="ct">3</span></button><button type="button" class="pill" data-k="illustration" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16.5l3-7.5 7-5 3 3-5 7-8 2.5z"/><path d="M6 9l4.5 4.5"/></svg><span class="lb">illustration</span><span class="ct">5</span></button><button type="button" class="pill" data-k="animation" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6.5" cy="9.5" r="4"/><circle cx="13" cy="9.5" r="4"/></svg><span class="lb">animation</span><span class="ct">1</span></button><!-- social campaigns pill parked until IPL ships: a zero count advertises the gap
+--><button type="button" class="pill zero" data-k="social" disabled aria-pressed="false" hidden><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="9.5" r="2.5"/><circle cx="14" cy="5" r="2.5"/><circle cx="14" cy="14" r="2.5"/><path d="M7.2 8.3l4.6-2.3M7.2 10.7l4.6 2.3"/></svg><span class="lb">social campaigns</span><span class="ct">0</span></button></div>
 <p class="ebstate" id="ebstate" hidden></p>
 
 <div class="sec-head"><h2>Selected work</h2>
@@ -398,7 +402,7 @@
     <div class="thumb"><img class="cpshot" src="thumb-website.jpg" width="1000" height="372" loading="lazy" decoding="async" alt="The CambiumPak hero as reworked: full-bleed photography, headline bottom-left over a gradient"></div>
     <span class="ptag">the live site</span>
     <h3>A website reimagining, without voiding the contract</h3>
-    <p>A CEO's vision, an agency-built site still under warranty, and a deadline. The first move was reading the agreement.</p>
+    <p>A CEO’s vision, an agency-built site still under warranty, and a deadline. The first move was reading the agreement.</p>
     <span class="foot">production css v2.20 &middot; vendor management &middot; <span class="read">read &rarr;</span></span>
   </a>
   <a class="cpcard" href="work-deck-generator.html" data-f="ai design web">
@@ -421,7 +425,7 @@
     <div class="pal"><i style="background:#1E4D3B"></i><i style="background:#143529"></i><i style="background:#A87D52"></i><i style="background:#8A6138"></i><i style="background:#7D9161"></i><i style="background:#232A26"></i><i style="background:#F7F4ED"></i></div>
     <div>
       <h3>btw &mdash; I built the brand too</h3>
-      <p>Mark, palette, five invented certification marks and a rulebook, in two days. I didn't build my employer's brand; this exists so the tools have one to enforce.</p>
+      <p>Mark, palette, five invented certification marks and a rulebook, in two days. I didn’t build my employer’s brand; this exists so the tools have one to enforce.</p>
     </div>
     <span class="go">read &rarr;</span>
   </a>
@@ -436,7 +440,7 @@
 </div>
 <span class="ptag">client · four years</span>
 <h3>Choose Democracy</h3>
-<p>400+ drawings inside an interactive book, four animated explainers, and the art on a nonprofit's website — all held to one style since 2021.</p>
+<p>400+ drawings inside an interactive book, four animated explainers, and the art on a nonprofit’s website — all held to one style since 2021.</p>
 <span class="foot">illustration · animation · house style · <span class="read">read →</span></span>
 </a><a class="wcard" href="work-studio.html" data-f="analytics web design ai">
 <div class="thumb"><img class="cpshot" src="thumb-studio.jpg" width="1000" height="372" loading="lazy" decoding="async" alt="The StudioKeeper dashboard: time-window controls above revenue, orders, average order and pieces"></div>
@@ -450,11 +454,11 @@
 </div>
 <span class="ptag">brand · client</span>
 <h3>Chaney Family Dentistry</h3>
-<p>A brand refresh for a father-and-son dental practice — a mark drawn half above ground and half below, a seven-colour palette, four drawn portraits and print.</p>
+<p>A brand refresh for a father-and-son dental practice — a mark drawn half above ground and half below, a seven-color palette, four drawn portraits and print.</p>
 <span class="foot">brand · illustration · print · <span class="read">read →</span></span>
 </a></div></div>
 
-<div class="group"><div class="group-h"><p class="gtitle">For learning and for fun</p><p class="group-p">Two projects you can open and use right now, and two drawn to explain something.</p></div>
+<div class="group"><div class="group-h"><p class="gtitle">For learning and for fun</p><p class="group-p">Three projects you can open and use right now, and two drawn to explain something.</p></div>
 <div class="cards"><a class="wcard" href="work-drive-505.html" data-f="web design product ai">
 <div class="thumb well" style="padding:0;overflow:hidden">
 <img src="drive-the-505-preview.jpg" alt="Three screens from Drive the 505: the car knowledge module, the home screen, and the interactive Albuquerque map." style="width:100%;height:100%;object-fit:cover;object-position:top">
@@ -484,7 +488,7 @@
 <img src="aristotle-preview.jpg" width="1600" height="595" loading="lazy" decoding="async" alt="The top of the Aristotle's Poetics poster: the title, and the six parts of tragedy — plot, character, thought, diction, song, spectacle — each with a drawn icon." style="width:100%;height:100%;object-fit:cover">
 </div>
 <span class="ptag">illustration · teaching</span>
-<h3>Aristotle's Poetics, on one sheet</h3>
+<h3>Aristotle’s Poetics, on one sheet</h3>
 <p>An infographic for a comics class at California College of the Arts. Drawn in Illustrator and shipped as SVG, so you can zoom into any panel and nothing softens.</p>
 <span class="foot">illustrator · information design · svg · <span class="read">read →</span></span>
 </a><a class="wcard" href="work-sleep-apnea.html" data-f="illustration design ai">
@@ -500,7 +504,7 @@
 
 <div class="alsobox"><span class="kicker">also</span>
 <p><strong>Workflow documentation.</strong> The product page launch process written up end to end in five parts — image production, CMS build, asset linking, URL structure, project tracking.</p>
-<p><strong>Production and print.</strong> Brand-standard creative across digital, social, email and print, including packaging QR systems generated in-file with standardised UTM tagging.</p>
+<p><strong>Production and print.</strong> Brand-standard creative across digital, social, email and print, including packaging QR systems generated in-file with standardized UTM tagging.</p>
 </div>
 </div></section>
 
@@ -522,7 +526,7 @@
 <p>LLM integration for extraction and generation &middot; prompt engineering as enforceable specification &middot; internal AI enablement</p></div>
 <div class="stack-cell"><h4>marketing operations</h4>
 <span class="tier">on my own</span>
-<p>Email and lifecycle marketing &middot; marketing automation &middot; HubSpot (certification in progress) &middot; Buffer &middot; ecommerce operations &middot; campaign SOPs &middot; link tracking &middot; reporting and data visualisation &middot; Meta Ads Manager</p></div>
+<p>Email and lifecycle marketing &middot; marketing automation &middot; HubSpot (certification in progress) &middot; Buffer &middot; ecommerce operations &middot; campaign SOPs &middot; link tracking &middot; reporting and data visualization &middot; Meta Ads Manager</p></div>
 <div class="stack-cell"><h4>front end, web &amp; documents</h4>
 <span class="tier">on my own</span>
 <p>WordPress and page builders &middot; Webflow &middot; Squarespace &middot; GitHub &middot; Vercel</p>
@@ -539,12 +543,12 @@
 <p>I spent the first decade of my career making things — illustration, design, video, teaching graduate students how to tell a story in pictures. I got tired of handing work over and never finding out whether it moved anything, so I learned the measurement side.</p>
 <p>I was hired in March 2026 as a production designer. Within four months the job included the website, the analytics build, and shipping internal software, because those things needed doing and there was nobody else to do them. No development background, no developer, no budget beyond a subscription.</p>
 <p>None of it happened alone. The tracking ran through IT for access and the agency for implementation. The website work stayed inside a contract boundary agreed with the vendor. Both tools shipped with written procedures.</p>
-<p>I'm in Albuquerque, work well remotely, and I'm looking for marketing operations, analytics or martech roles where this is the job rather than the thing I do after hours.</p>
+<p>I’m in Albuquerque, work well remotely, and I’m looking for marketing operations, analytics or martech roles where this is the job rather than the thing I do after hours.</p>
 </div></div></section>
 
 <div class="contact" id="contact"><div class="wrap">
 <p class="avail"><span class="pulse-dot"></span> open to marketing operations, analytics and martech roles</p>
-<h2>Let's talk.</h2>
+<h2>Let’s talk.</h2>
 <p>Remote, or Albuquerque and hybrid. Happy to walk through the architecture behind any of this.</p>
 <div class="contact-links">
 <a class="clink primary" href="mailto:elizabethbportfolio@gmail.com">elizabethbportfolio@gmail.com</a>
@@ -573,8 +577,14 @@
          the glyph is a function of the same timeline and cannot come loose. */
       var cur = document.querySelector('.mark .cur');
       var anim = cur && cur.getAnimations ? cur.getAnimations()[0] : null;
+      /* Wrap the index rather than trusting the modulo. On the frame a CSS
+         animation's startTime lands just ahead of the timeline read, currentTime
+         comes back very slightly negative, Math.floor makes that -1, and a bare
+         % leaves it at -1 — gs[-1] is undefined, the throw kills this rAF loop,
+         and the glyph freezes on drawing one for the rest of the visit. */
       function setTo(n) {
-        if (n === gi) return;
+        n = ((n % gs.length) + gs.length) % gs.length;
+        if (n === gi || !gs[n]) return;
         gs[gi].classList.remove('on');
         gi = n;
         gs[gi].classList.add('on');
@@ -587,7 +597,7 @@
            beat, two things, no crossfade to smear it. */
         (function tick() {
           var t = anim.currentTime;
-          if (t != null) setTo(Math.floor(t / 1100) % gs.length);
+          if (t != null && isFinite(t)) setTo(Math.floor(t / 1100));
           requestAnimationFrame(tick);
         })();
       } else {

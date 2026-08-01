@@ -280,7 +280,7 @@
 
     var preheader =
       '<div style="display:none;max-height:0;overflow:hidden;mso-hide:all;">' +
-      esc(fam.name) + ' is here, plus ' + pct + ' recycled fibre and a sample pack ' +
+      esc(fam.name) + ' is here, plus ' + pct + ' recycled fiber and a sample pack ' +
       'on request.' + '&#8203;'.repeat(60) + '</div>';
 
     return '<!DOCTYPE html><html><head><meta charset="utf-8">' +

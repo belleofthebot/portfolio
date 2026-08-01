@@ -132,7 +132,7 @@
       '<a class="cta" href="#">Request a sample</a></section>';
 
     var trust =
-      '<section class="trust"><span class="t">Recycled fibre</span>' +
+      '<section class="trust"><span class="t">Recycled fiber</span>' +
       '<span class="t">Tape-free closure</span><span class="t">Made in New Mexico</span></section>';
 
     /* The agency drops a promo band in above solutions, without telling

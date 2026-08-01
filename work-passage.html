@@ -16,7 +16,8 @@
 <meta property="og:description" content="An app for people caring for someone with a terminal illness — tracking the care, and the caregiver.">
 <link rel="stylesheet" href="styles.css">
 <style>
-.pg-hero{display:grid;grid-template-columns:1fr 408px;gap:var(--space-5);align-items:center;margin:var(--space-4) 0 var(--space-5)}
+.pg-hero{display:grid;grid-template-columns:1fr 408px;gap:var(--space-5);align-items:start;margin:var(--space-4) 0 var(--space-5)}
+.pg-hero>div:first-child{padding-top:var(--space-5)}
 .pg-proto{width:100%;max-width:408px;aspect-ratio:408/862;border:0;display:block;margin:0 auto;background:var(--ground);color-scheme:dark;border-radius:var(--radius-card)}
 .pg-screens{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px 12px}
 .pg-screens img{width:100%;aspect-ratio:390/844;object-fit:cover;border-radius:16px;border:1px solid var(--line);display:block;margin-bottom:7px}
@@ -53,8 +54,8 @@
 
 <div class="statrow">
   <div><span class="n">3</span><span class="l">halves the app is built from: tracking, care, and you</span></div>
-  <div><span class="n">4</span><span class="l">of us, and the idea and the interface were mine</span></div>
-  <div><span class="n">100%</span><span class="l">of the illustration painted by hand, by me</span></div>
+  <div><span class="n">4</span><span class="l">of us on the team; who did what is below</span></div>
+  <div><span class="n">100%</span><span class="l">of the illustration painted by hand</span></div>
   <div><span class="n">15</span><span class="l">screens in the 2026 redesign, all clickable</span></div>
 </div>
 
@@ -78,7 +79,7 @@
 
 <details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><circle cx="20" cy="24" r="12" stroke="#8B8494" stroke-width="1.5"/><circle cx="44" cy="24" r="12" stroke="#8B8494" stroke-width="1.5"/><circle cx="32" cy="24" r="12" stroke="#DFA192" stroke-width="1.5"/><circle cx="32" cy="24" r="2.5" fill="#DFA192"/></svg></span>the shape · three halves, which is the point<span class="n">3 halves</span></summary>
 <div class="fold-b">
-<p>Most caregiving tools stop at logistics. Passage is deliberately lopsided — two thirds of it is the job, and one third is the person doing the job, given equal weight in the navigation so it cannot be skipped.</p>
+<p>Most caregiving tools stop at logistics. Passage is deliberately lopsided — two of its three tabs are the job, and the third is the person doing the job, given equal weight in the navigation so it cannot be skipped.</p>
 <ul>
 <li><strong>Tracking.</strong> Medications with doses and times, meals, hygiene, movement — the things that get counted because forgetting one has consequences. The home screen opens on rings, not a list, so a glance answers "what still needs doing today".</li>
 <li><strong>Care.</strong> The near future: upcoming appointments, scheduled exams, lab tests. And, because this is an app about a terminal illness and pretending otherwise would be a lie, end-of-life planning sits on the home screen too — find in-home hospice care, choose a funeral home, write a eulogy.</li>
@@ -87,7 +88,7 @@
 
 <details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><path d="M5 24c6-9 12-9 18 0s12 9 18 0 12-9 18 0" stroke="#8B8494" stroke-width="1.5"/><path d="M5 34c6-4 12-4 18 0s12 4 18 0 12-4 18 0" stroke="#423748" stroke-width="1.5"/><circle cx="41" cy="14" r="4" fill="#DFA192"/></svg></span>the design · calm, and never cheerful<span class="n">the tone</span></summary>
 <div class="fold-b">
-<p>The hard part was tone. An app that is bright and encouraging about hospice is grotesque; an app that is grey and clinical adds weight to someone already carrying too much. The answer was a deep blue ground with one warm yellow doing all the emphasis — the accent appears where a person needs to act, and nowhere else — and painted landscapes rather than stock photography or illustration-library people.</p>
+<p>The hard part was tone. An app that is bright and encouraging about hospice is grotesque; an app that is gray and clinical adds weight to someone already carrying too much. The answer was a deep blue ground with one warm yellow doing all the emphasis — the accent appears where a person needs to act, and nowhere else — and painted landscapes rather than stock photography or illustration-library people.</p>
 <p>I painted the landscapes myself: a valley, a river, willows and cottonwoods. They are the only soft-edged thing in the interface, and they carry the emotional register so the rest of the screens can stay literal and quiet. The one figurative illustration in the app — a caregiver pushing a wheelchair — is the only place a person appears, and it is on the page that explains what the app is for.</p></div></details>
 
 </div>
@@ -131,7 +132,7 @@
 <details class="fold" open><summary><span class="fold-th"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><path d="M11 12.5l2.5 2.5 4-5M11 23.5l2.5 2.5 4-5M11 34.5l2.5 2.5 4-5" stroke="#9FE0CE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 14h29M26 25h24M26 36h27" stroke="#423748" stroke-width="2" stroke-linecap="round"/></svg></span>what it taught me</summary>
 <div class="fold-b">
 <ul>
-<li><strong>Tone is a design decision with a right answer.</strong> On a subject this heavy, the difference between callous and comforting is a colour temperature and a verb tense, and you can test for it.</li>
+<li><strong>Tone is a design decision with a right answer.</strong> On a subject this heavy, the difference between callous and comforting is a color temperature and a verb tense, and you can test for it.</li>
 <li><strong>Give the neglected job equal billing.</strong> Self-care would have been a settings screen if we had followed the logistics. Putting it in the tab bar is the whole argument of the product.</li>
 <li><strong>Being the one with the idea is not the same as being the one who is right.</strong> The interviews my teammates ran moved things I was attached to, and the app got better for it.</li>
 </ul></div></details>
@@ -161,7 +162,7 @@
   </div>
 </div>
 
-<div class="protolink"><div><span class="kicker">clickable prototype</span><p class="pl-t">Passage, 2026</p><p class="pl-n">All fifteen screens, wired: onboarding, Lucia&rsquo;s care, your own tab, the journal, the meditation player and the Circle.</p></div><a class="btn" href="proto/passage-app.html" target="_blank" rel="noopener">Open it &rarr;</a></div>
+<div class="protolink"><div><span class="kicker">clickable prototype</span><p class="pl-t">Passage, 2026</p><p class="pl-n">Onboarding, Lucia&rsquo;s care, your own tab, the journal, the meditation player and the Circle.</p></div><a class="btn" href="proto/passage-app.html" target="_blank" rel="noopener">Open it &rarr;</a></div>
 
 <span class="kicker" style="margin-top:var(--space-5);display:block">all fifteen screens</span>
 <div class="pg-screens" style="margin-top:var(--space-2)">
@@ -190,7 +191,7 @@
 </div>
 <div class="contact" id="contact"><div class="wrap">
 <p class="avail"><span class="pulse-dot"></span> open to marketing operations, analytics and martech roles</p>
-<h2>Let's talk.</h2>
+<h2>Let’s talk.</h2>
 <p>Remote, or Albuquerque and hybrid. If you want the architecture behind any of the work here, ask me and I will walk you through it.</p>
 <div class="contact-links">
 <a class="clink primary" href="mailto:elizabethbportfolio@gmail.com">elizabethbportfolio@gmail.com</a>
