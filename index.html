@@ -569,12 +569,31 @@
     var gs = box.querySelectorAll('svg'), gi = 0;
     gs[0].classList.add('on');
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      /* 1.1s — in step with every blink of the cursor in the wordmark */
-      setInterval(function () {
+      /* Both the cursor and the glyph run at 1.1s, but a setInterval started
+         when this script parsed and a CSS animation started when the stylesheet
+         applied are two different clocks: they begin a few hundred milliseconds
+         apart and drift after that. Read the cursor's own animation instead, so
+         the glyph is a function of the same timeline and cannot come loose. */
+      var cur = document.querySelector('.mark .cur');
+      var anim = cur && cur.getAnimations ? cur.getAnimations()[0] : null;
+      function setTo(n) {
+        if (n === gi) return;
         gs[gi].classList.remove('on');
-        gi = (gi + 1) % gs.length;
+        gi = n;
         gs[gi].classList.add('on');
-      }, 1100);
+      }
+      if (anim) {
+        /* the cursor keyframes hold at full opacity to 49% and cut out at 50%,
+           so half a period of lead lands the swap on the beat it goes dark and
+           the change is covered by the blink */
+        (function tick() {
+          var t = anim.currentTime;
+          if (t != null) setTo(Math.floor((t + 550) / 1100) % gs.length);
+          requestAnimationFrame(tick);
+        })();
+      } else {
+        setInterval(function () { setTo((gi + 1) % gs.length); }, 1100);
+      }
     }
   }
 
