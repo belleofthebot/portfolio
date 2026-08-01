@@ -569,3 +569,33 @@ footer span{font-family:var(--mono);font-size:var(--size-mono);color:var(--text-
 .mcard .foot .read{color:var(--rose)}
 @media(max-width:860px){.mrow{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.mrow{grid-template-columns:1fr}}
+
+/* ============================================================
+   Choose Democracy — illustration galleries
+   The art is on white grounds, so the tiles carry a white plate
+   rather than sitting on the page's dark ground.
+   ============================================================ */
+.cdvid{margin-top:var(--space-3)}
+.cdvid iframe{width:100%;aspect-ratio:16/9;border:0;display:block;border-radius:var(--radius);
+  background:var(--screen)}
+.cdvids{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-2);margin-top:var(--space-3)}
+@media(max-width:720px){.cdvids{grid-template-columns:1fr}}
+
+.cdfig{margin:0 0 var(--space-4)}
+.cdfig .plate{background:#fff;border:1px solid var(--line);border-radius:var(--radius-card);
+  padding:var(--space-3);display:block}
+.cdfig img{width:100%;height:auto;display:block}
+.cdfig figcaption{font-size:var(--size-small);color:var(--text-3);line-height:1.55;
+  margin-top:10px;max-width:66ch}
+
+/* the 400-drawing gallery: many small plates, opened full size on click */
+.cdgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));
+  gap:var(--space-2);margin-top:var(--space-3)}
+.cdgrid a{display:block;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;transition:border-color .15s,transform .15s}
+.cdgrid a:hover,.cdgrid a:focus-visible{border-color:var(--rose);transform:translateY(-2px)}
+.cdgrid img{width:100%;height:auto;display:block;aspect-ratio:4/3;object-fit:contain;
+  background:#fff}
+@media(max-width:520px){.cdgrid{grid-template-columns:repeat(auto-fill,minmax(132px,1fr))}}
+.sect-h{font-size:var(--size-h2);margin:var(--space-5) 0 6px}
+.sect-p{color:var(--text-2);font-size:var(--size-small);max-width:62ch;margin:0 0 var(--space-3)}

@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 751" role="img" aria-labelledby="t d">
+<title id="t">Choose Democracy</title>
+<desc id="d">A branching decision tree of the kind used in a choose-your-own-adventure, drawn beside a video frame with a play button.</desc>
+<rect width="1200" height="751" fill="#141019"/>
+
+<!-- left: the branching path -->
+<g fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- trunk -->
+  <path d="M96 620 C 96 560, 150 540, 210 540" stroke="#8B8494" stroke-width="5"/>
+  <!-- first fork -->
+  <path d="M210 540 C 280 540, 300 470, 370 470" stroke="#DFA192" stroke-width="5"/>
+  <path d="M210 540 C 280 540, 300 610, 370 610" stroke="#423748" stroke-width="5" stroke-dasharray="10 12"/>
+  <!-- second fork, upper -->
+  <path d="M370 470 C 440 470, 452 386, 522 386" stroke="#DFA192" stroke-width="5"/>
+  <path d="M370 470 C 440 470, 452 540, 522 540" stroke="#423748" stroke-width="5" stroke-dasharray="10 12"/>
+  <!-- second fork, lower -->
+  <path d="M370 610 C 440 610, 452 664, 522 664" stroke="#423748" stroke-width="5" stroke-dasharray="10 12"/>
+  <!-- third fork -->
+  <path d="M522 386 C 588 386, 600 316, 664 316" stroke="#9FE0CE" stroke-width="5"/>
+  <path d="M522 386 C 588 386, 600 452, 664 452" stroke="#423748" stroke-width="5" stroke-dasharray="10 12"/>
+</g>
+
+<!-- decision nodes -->
+<g>
+  <circle cx="96"  cy="620" r="15" fill="#141019" stroke="#8B8494" stroke-width="5"/>
+  <circle cx="210" cy="540" r="15" fill="#141019" stroke="#DFA192" stroke-width="5"/>
+  <circle cx="370" cy="470" r="15" fill="#141019" stroke="#DFA192" stroke-width="5"/>
+  <circle cx="370" cy="610" r="13" fill="#141019" stroke="#423748" stroke-width="5"/>
+  <circle cx="522" cy="386" r="15" fill="#141019" stroke="#DFA192" stroke-width="5"/>
+  <circle cx="522" cy="540" r="13" fill="#141019" stroke="#423748" stroke-width="5"/>
+  <circle cx="522" cy="664" r="13" fill="#141019" stroke="#423748" stroke-width="5"/>
+  <circle cx="664" cy="452" r="13" fill="#141019" stroke="#423748" stroke-width="5"/>
+  <circle cx="664" cy="316" r="19" fill="#9FE0CE"/>
+</g>
+
+<!-- drawn panels hanging off two of the nodes: this is an illustrated book -->
+<g fill="#1D1724" stroke="#423748" stroke-width="4">
+  <rect x="126" y="140" width="150" height="112" rx="8"/>
+  <rect x="300" y="196" width="150" height="112" rx="8"/>
+</g>
+<g fill="none" stroke="#8B8494" stroke-width="4" stroke-linecap="round">
+  <path d="M150 232 l30 -36 24 26 26 -44 26 54"/>
+  <path d="M324 288 l28 -34 26 28 24 -40 24 46"/>
+</g>
+<circle cx="168" cy="172" r="11" fill="#DFA192"/>
+<circle cx="342" cy="228" r="11" fill="#DFA192"/>
+<g stroke="#423748" stroke-width="4" stroke-dasharray="8 10" stroke-linecap="round">
+  <path d="M201 262 L210 522"/>
+  <path d="M375 318 L372 452"/>
+</g>
+
+<!-- right: the video frame -->
+<rect x="770" y="214" width="330" height="248" rx="12" fill="#1D1724" stroke="#423748" stroke-width="5"/>
+<rect x="770" y="214" width="330" height="40" rx="12" fill="#241D2B"/>
+<path d="M770 254 h330" stroke="#423748" stroke-width="5"/>
+<g fill="#423748"><circle cx="798" cy="234" r="7"/><circle cx="822" cy="234" r="7"/><circle cx="846" cy="234" r="7"/></g>
+<circle cx="935" cy="358" r="52" fill="none" stroke="#DFA192" stroke-width="5"/>
+<path d="M921 332 l38 26 -38 26 z" fill="#DFA192"/>
+<g stroke="#423748" stroke-width="5" stroke-linecap="round">
+  <path d="M800 500 h270"/><path d="M800 534 h200"/>
+</g>
+
+<!-- caption strip -->
+<g stroke="#423748" stroke-width="5" stroke-linecap="round">
+  <path d="M96 690 h140"/>
+</g>
+</svg>
