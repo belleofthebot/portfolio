@@ -79,20 +79,7 @@
 /* Room, and a real difference between the two sides. The ask is recessed on
    the sunk ground in the muted face; what got built sits on the mint tint,
    which is the colour this site already uses for "this passed". */
-.asked .trow>div,.asked .trow>a{grid-template-columns:1fr 44px 1.3fr}
-/* Each row leads to the case study it describes. The affordance is a chevron
-   that sits dim until the pointer arrives, so the table still reads as a table
-   rather than as a stack of buttons. */
-.asked .trow>a .b{position:relative;padding-right:34px}
-.asked .trow>a .b::after{content:"\2192";position:absolute;right:var(--space-3);
-  top:50%;transform:translateY(-50%);color:var(--mint);opacity:.34;
-  font-family:var(--mono);transition:opacity .18s,transform .18s}
-.asked .trow>a:hover .b::after,.asked .trow>a:focus-visible .b::after{
-  opacity:1;transform:translateY(-50%) translateX(3px)}
-.asked .trow>a:hover .a{color:var(--text-2)}
-.asked .trow>a:hover .arw{color:var(--text)}
-.asked .trow>a:hover .b{box-shadow:inset 3px 0 0 var(--mint)}
-@media(hover:none){.asked .trow>a .b::after{opacity:.7}}
+.asked .trow>div{grid-template-columns:1fr 44px 1.3fr}
 .asked .trow span{padding:var(--space-3) var(--space-3);line-height:1.6}
 .asked .trow .a{background:var(--screen);color:var(--text-3)}
 .asked .trow .arw{background:var(--screen);color:var(--rose);font-size:1rem}
@@ -105,7 +92,7 @@
      is the more specific selector and was still forcing three columns, which
      squeezed both sides down to about one word per line on a phone. Restate
      the stack here so the override loses where it should. */
-  .asked .trow>div,.asked .trow>a{grid-template-columns:1fr}
+  .asked .trow>div{grid-template-columns:1fr}
   .asked .trow .b{box-shadow:inset 0 2px 0 var(--mint)}
   .asked .trow .a{padding-bottom:var(--space-2)}
   .asked .trow .b{padding-top:var(--space-2)}
@@ -276,10 +263,10 @@
     <p class="cap">Each one came in as a request for a single deliverable.</p>
     <div class="trow">
       <div class="th"><span>what was asked for</span><span></span><span>what I built</span></div>
-      <a href="work-website.html"><span class="a">Make these website changes</span><span class="arw">&rarr;</span><span class="b">A versioned CSS system, documented, with an adoption guide</span></a>
-      <a href="work-deck-generator.html"><span class="a">Build a slide deck for this product</span><span class="arw">&rarr;</span><span class="b">A generator that builds one for any product, from a URL</span></a>
-      <a href="work-email-generator.html"><span class="a">Send this campaign email</span><span class="arw">&rarr;</span><span class="b">A generator with the opt-out and UTM tagging enforced in code</span></a>
-      <a href="work-analytics.html"><span class="a">Pull the numbers for this meeting</span><span class="arw">&rarr;</span><span class="b">A dashboard the team opens themselves</span></a>
+      <div><span class="a">Make these website changes</span><span class="arw">&rarr;</span><span class="b">A versioned CSS system, documented, with an adoption guide</span></div>
+      <div><span class="a">Build a slide deck for this product</span><span class="arw">&rarr;</span><span class="b">A generator that builds one for any product, from a URL</span></div>
+      <div><span class="a">Send this campaign email</span><span class="arw">&rarr;</span><span class="b">A generator with the opt-out and UTM tagging enforced in code</span></div>
+      <div><span class="a">Pull the numbers for this meeting</span><span class="arw">&rarr;</span><span class="b">A dashboard the team opens themselves</span></div>
     </div>
   </div>
 
@@ -343,9 +330,17 @@
 <h3>A studio dashboard for my art business</h3>
 <p>Five revenue channels on one screen — sales, restock alerts, and the tax envelope. $0 a month. Clickable.</p>
 <span class="foot">data model · build · automation · <span class="read">read →</span></span>
+</a><a class="wcard" href="work-chaney.html">
+<div class="thumb well" style="padding:0;overflow:hidden">
+<img src="cfd-preview.jpg" width="1000" height="372" loading="lazy" decoding="async" alt="The Chaney Family Dentistry logo before and after: a small tree-on-a-hill roundel beside the new rooted oak lockup." style="width:100%;height:100%;object-fit:cover">
+</div>
+<span class="ptag">brand · client</span>
+<h3>Chaney Family Dentistry</h3>
+<p>A brand refresh for a father-and-son dental practice — a mark drawn half above ground and half below, an eight-colour palette, portraits and print.</p>
+<span class="foot">brand · illustration · print · <span class="read">read →</span></span>
 </a></div></div>
 
-<div class="group"><div class="group-h"><p class="gtitle">For learning and for fun</p><p class="group-p">Two you can open and use right now, one you can zoom all the way into, and one that started as my own idea.</p></div>
+<div class="group"><div class="group-h"><p class="gtitle">For learning and for fun</p><p class="group-p">Two projects you can open and use right now, and two drawn to explain something.</p></div>
 <div class="cards"><a class="wcard" href="work-drive-505.html">
 <div class="thumb well" style="padding:0;overflow:hidden">
 <img src="drive-the-505-preview.jpg" alt="Three screens from Drive the 505: the car knowledge module, the home screen, and the interactive Albuquerque map." style="width:100%;height:100%;object-fit:cover;object-position:top">
@@ -362,14 +357,6 @@
 <h3>Bookspot</h3>
 <p>An app for readers who want to visit real places from fiction. Eight interviews, ten versions of one flow, 40+ screens, clickable prototype.</p>
 <span class="foot">research · prototype · usability testing · <span class="read">read →</span></span>
-</a><a class="wcard" href="work-passage.html">
-<div class="thumb well" style="padding:0;overflow:hidden">
-<img src="passage-preview.jpg" alt="Three Passage screens: the caregiver's home with today's three small things, a meditation player, and the journal." style="width:100%;height:100%;object-fit:cover;object-position:top">
-</div>
-<span class="ptag">concept · team of four</span>
-<h3>Passage</h3>
-<p>An app for someone caring for a person with a terminal illness &mdash; tracking the care, and tracking the caregiver. My idea; concept, UI and every illustration mine.</p>
-<span class="foot">research · ui design · illustration · <span class="read">read &rarr;</span></span>
 </a><a class="wcard" href="work-aristotle.html">
 <div class="thumb well" style="padding:0;overflow:hidden">
 <img src="aristotle-preview.jpg" width="1600" height="595" loading="lazy" decoding="async" alt="The top of the Aristotle's Poetics poster: the title, and the six parts of tragedy — plot, character, thought, diction, song, spectacle — each with a drawn icon." style="width:100%;height:100%;object-fit:cover">
@@ -378,6 +365,14 @@
 <h3>Aristotle's Poetics, on one sheet</h3>
 <p>An infographic for a comics class at California College of the Arts. Drawn in Illustrator and shipped as SVG, so you can zoom into any panel and nothing softens.</p>
 <span class="foot">illustrator · information design · svg · <span class="read">read →</span></span>
+</a><a class="wcard" href="work-sleep-apnea.html">
+<div class="thumb well" style="padding:0;overflow:hidden">
+<img src="sa-preview.jpg" width="1000" height="372" loading="lazy" decoding="async" alt="A line drawing on dark navy of a sleep apnea machine on a bedside table, hose running to a sleeping figure in a mask." style="width:100%;height:100%;object-fit:cover">
+</div>
+<span class="ptag">personal project</span>
+<h3>How a sleep apnea machine works</h3>
+<p>I took my own APAP machine apart and drew what was inside. Line only, one accent colour, no fills — an infographic set built to explain a sealed grey box.</p>
+<span class="foot">illustrator · information design · <span class="read">read →</span></span>
 </a></div>
 </div>
 

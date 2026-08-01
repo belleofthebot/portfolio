@@ -99,21 +99,15 @@ h1{font-size:var(--size-hero);line-height:1.12;max-width:18ch;margin:0 0 var(--s
 .thesis h2{font-size:var(--size-h2);margin:0 0 var(--space-1)}
 .thesis .cap{color:var(--text-2);max-width:62ch;margin:0 0 var(--space-3);font-size:var(--size-small)}
 .trow{border:1px solid var(--line);border-radius:var(--radius-card);overflow:hidden;background:var(--panel)}
-/* A row is an <a> where it leads somewhere and a <div> where it does not, so
-   every rule that shaped the row has to accept both. */
-.trow > div,.trow > a{display:grid;grid-template-columns:1fr 34px 1.25fr;
-  border-bottom:1px solid var(--line-soft)}
-.trow > div:last-child,.trow > a:last-child{border-bottom:none}
-.trow > a{text-decoration:none;color:inherit;cursor:pointer;
-  transition:background .18s}
-.trow > a:focus-visible{outline:2px solid var(--rose);outline-offset:-2px}
+.trow > div{display:grid;grid-template-columns:1fr 34px 1.25fr;border-bottom:1px solid var(--line-soft)}
+.trow > div:last-child{border-bottom:none}
 .trow span{padding:var(--space-2) var(--space-3);font-size:var(--size-small);line-height:1.55}
 .trow .a{color:var(--text-3)}
 .trow .arw{display:flex;align-items:center;justify-content:center;color:var(--rose);padding:0;font-family:var(--mono)}
 .trow .b{font-weight:500;color:var(--text)}
 .trow .th{background:var(--tile)}
 .trow .th span{font-family:var(--mono);font-size:var(--size-mono);color:var(--rose);text-transform:lowercase}
-@media(max-width:720px){.trow > div,.trow > a{grid-template-columns:1fr}.trow .arw,.trow .th{display:none}.trow .a{padding-bottom:0}.trow .b{padding-top:2px}.trow .b::before{content:"→ ";color:var(--rose);font-family:var(--mono)}}
+@media(max-width:720px){.trow > div{grid-template-columns:1fr}.trow .arw,.trow .th{display:none}.trow .a{padding-bottom:0}.trow .b{padding-top:2px}.trow .b::before{content:"→ ";color:var(--rose);font-family:var(--mono)}}
 
 /* ---------- metrics ---------- */
 .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-3);margin-top:var(--space-5)}
@@ -555,3 +549,41 @@ footer span{font-family:var(--mono);font-size:var(--size-mono);color:var(--text-
 
 .sect-h{font-size:var(--size-h2);margin:var(--space-5) 0 6px}
 .sect-p{color:var(--text-2);font-size:var(--size-small);max-width:62ch;margin:0 0 var(--space-3)}
+
+/* ============================================================
+   Brand case study — Chaney Family Dentistry
+   ============================================================ */
+/* before / after: two plates side by side, both on white, because a
+   logo comparison is only fair if both sit on the same ground */
+.baw{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3);margin-top:var(--space-3)}
+.baw figure{margin:0}
+.baw .plate{background:#fff;border:1px solid var(--line);border-radius:var(--radius-card);
+  padding:var(--space-4);display:flex;align-items:center;justify-content:center;min-height:200px}
+.baw img{max-width:100%;height:auto;display:block}
+.baw figcaption{font-family:var(--mono);font-size:var(--size-mono);color:var(--text-3);
+  text-transform:lowercase;margin-top:10px}
+@media(max-width:640px){.baw{grid-template-columns:1fr}}
+
+.pal{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-2);margin-top:var(--space-3)}
+.pal>div{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
+  background:var(--tile)}
+.pal .chip{display:block;height:78px}
+.pal .nm{display:block;font-family:var(--mono);font-size:var(--size-mono);color:var(--text-2);
+  text-transform:lowercase;padding:9px 11px 1px}
+.pal .hx{display:block;font-family:var(--mono);font-size:.7rem;color:var(--text-3);
+  padding:0 11px 10px;text-transform:uppercase}
+@media(max-width:640px){.pal{grid-template-columns:repeat(2,1fr)}}
+
+.quote{border-left:2px solid var(--rose);background:var(--panel);
+  border-radius:0 var(--radius-card) var(--radius-card) 0;
+  padding:var(--space-3) var(--space-4);margin:var(--space-4) 0}
+.quote p{font-size:1.02rem;line-height:1.72;color:var(--text-2);margin:0 0 var(--space-2);
+  max-width:64ch}
+.quote cite{font-family:var(--mono);font-size:var(--size-mono);color:var(--text-3);
+  font-style:normal;text-transform:lowercase}
+
+/* a single wide plate — used for the lockup and for the apnea slide */
+.plateshot{background:#fff;border:1px solid var(--line);border-radius:var(--radius-card);
+  padding:var(--space-4);margin-top:var(--space-3)}
+.plateshot.dark{background:var(--screen);padding:0;overflow:hidden}
+.plateshot img{width:100%;height:auto;display:block}
