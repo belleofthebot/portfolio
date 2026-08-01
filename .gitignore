@@ -1,8 +1,7 @@
 _hero*.html
 _heroes*.html
-_t/
-_t2/
-_t3/
-_t4/
-_t5/
+_apply-hero.py
+_hero.css
+_hero.js
+_t*/
 _to_delete/
