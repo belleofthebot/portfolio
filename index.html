@@ -228,8 +228,7 @@
 .ebhero-copy{min-width:0}
 .ebhero h1{font-size:clamp(1.55rem,3.3vw,2.3rem);line-height:1.2;letter-spacing:-1.1px;
   font-weight:500;margin:0;max-width:30ch}
-.ebsub{font-size:clamp(1rem,1.6vw,1.15rem);line-height:1.5;color:var(--text-2);
-  margin:var(--space-2) 0 0;max-width:44ch}
+.ebhero h1 .l2{color:var(--rose)}
 .ebwho{font-family:var(--mono);font-size:var(--size-mono);color:var(--text-3);
   margin:var(--space-3) 0 0}
 
@@ -295,6 +294,23 @@
   .pill{padding:6px 11px 6px 9px;font-size:.68rem;gap:7px}
   .pill .ic{width:13px;height:13px}
 }
+
+/* Two tiers in each cell: what she does unaided, and what AI widens the range
+   on. The distinction is the honest one and it is also the argument. */
+.stack-cell .tier{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--text-3);margin:14px 0 6px;
+  display:flex;align-items:center;gap:7px}
+.stack-cell .tier::before{content:"";width:7px;height:7px;border-radius:2px;
+  background:var(--text-3);flex:0 0 7px}
+.stack-cell .tier.ai{color:var(--mint)}
+.stack-cell .tier.ai::before{background:var(--mint)}
+.stack-cell .tier:first-of-type{margin-top:0}
+.stack-key{display:flex;gap:var(--space-4);flex-wrap:wrap;font-family:var(--mono);
+  font-size:.7rem;line-height:1.6;color:var(--text-3);margin:0 0 var(--space-3);max-width:88ch}
+.stack-key s{text-decoration:none;display:inline-flex;align-items:baseline;gap:8px}
+.stack-key i{width:8px;height:8px;border-radius:2px;display:block;background:var(--text-3);
+  flex:0 0 8px;position:relative;top:1px}
+.stack-key i.m{background:var(--mint)}
 </style>
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://elizabethbportfolio.com/">
@@ -315,8 +331,8 @@
 <section id="work"><div class="wrap">
 <div class="ebhero">
   <div class="ebhero-copy">
-    <h1>I build marketing analytics, and the AI tools that use them.</h1>
-    <p class="ebsub">Over a decade of creative design experience behind both.</p>
+    <h1>Over a decade of creative design experience.<br>
+    <span class="l2">On the cutting edge of AI and analytics.</span></h1>
     <p class="ebwho">Elizabeth Beier &middot; marketing operations, analytics and martech
     &middot; albuquerque</p>
   </div>
@@ -493,14 +509,31 @@
 
 <section id="stack"><div class="wrap">
 <div class="sec-head"><span class="kicker">stack</span><h2>What I work in</h2>
-<p>If it's on this list I've used it to ship something.</p></div>
+<p>If it&rsquo;s on this list I&rsquo;ve used it to ship something. The second mark says how.</p></div>
+<p class="stack-key">
+<s><i></i> on my own</s>
+<s><i class="m"></i> AI-accelerated &mdash; the range is wider because I know which tool to reach for and how to hold it to a spec</s>
+</p>
 <div class="stack">
-<div class="stack-cell"><h4>analytics engineering</h4><p>GA4 property architecture · Tag Manager governance and migration · custom JavaScript, RegEx table, DOM element and element visibility variables · custom dimension registration · preview-mode QA and hit-level verification · relaunch baseline preservation · UTM taxonomy and enforcement</p></div>
-<div class="stack-cell"><h4>backend &amp; serverless</h4><p>Serverless API endpoints · edge middleware authentication · JWT construction and RSA signing · OAuth token exchange · multi-tier caching · request batching · least-privilege service accounts · third-party and LLM API integration</p></div>
-<div class="stack-cell"><h4>ai implementation</h4><p>LLM integration for extraction and generation · prompt engineering as enforceable specification · anti-hallucination constraints · deterministic verification of model output · internal AI enablement</p></div>
-<div class="stack-cell"><h4>marketing operations</h4><p>Email and lifecycle marketing · marketing automation · HubSpot (certification in progress) · Buffer · ecommerce operations · campaign SOPs · link tracking · reporting and data visualisation · Meta Ads Manager</p></div>
-<div class="stack-cell"><h4>front end, web &amp; documents</h4><p>HTML · production CSS architecture · JavaScript · React · browser canvas processing · Office Open XML manipulation · email HTML with MSO conditionals and VML · WordPress and page builders · Webflow · Squarespace · GitHub · Vercel</p></div>
-<div class="stack-cell"><h4>design &amp; certifications</h4><p>Figma · Illustrator, Photoshop, After Effects, InDesign · brand systems · long-document typography · art direction · copywriting — Google Digital Marketing &amp; Ecommerce 2025 · Google Analytics Individual Qualification 2025 · HubSpot Marketing in progress · UX and UI Design, UC Berkeley Extension 2022</p></div>
+<div class="stack-cell"><h4>analytics engineering</h4>
+<span class="tier">on my own</span>
+<p>GA4 property architecture &middot; Tag Manager governance and migration &middot; custom dimension registration &middot; preview-mode QA and hit-level verification &middot; relaunch baseline preservation &middot; UTM taxonomy and enforcement</p>
+<span class="tier ai">AI-accelerated</span>
+<p>Custom JavaScript, RegEx table, DOM element and element visibility variables</p></div>
+<div class="stack-cell"><h4>ai implementation</h4>
+<span class="tier">on my own</span>
+<p>LLM integration for extraction and generation &middot; prompt engineering as enforceable specification &middot; internal AI enablement</p></div>
+<div class="stack-cell"><h4>marketing operations</h4>
+<span class="tier">on my own</span>
+<p>Email and lifecycle marketing &middot; marketing automation &middot; HubSpot (certification in progress) &middot; Buffer &middot; ecommerce operations &middot; campaign SOPs &middot; link tracking &middot; reporting and data visualisation &middot; Meta Ads Manager</p></div>
+<div class="stack-cell"><h4>front end, web &amp; documents</h4>
+<span class="tier">on my own</span>
+<p>WordPress and page builders &middot; Webflow &middot; Squarespace &middot; GitHub &middot; Vercel</p>
+<span class="tier ai">AI-accelerated</span>
+<p>HTML &middot; production CSS architecture &middot; JavaScript &middot; email HTML with MSO conditionals and VML</p></div>
+<div class="stack-cell"><h4>design &amp; certifications</h4>
+<span class="tier">on my own</span>
+<p>Figma · Illustrator, Photoshop, After Effects, InDesign · brand systems · long-document typography · art direction · copywriting — Google Digital Marketing &amp; Ecommerce 2025 · Google Analytics Individual Qualification 2025 · HubSpot Marketing in progress · UX and UI Design, UC Berkeley Extension 2022</p></div>
 </div></div></section>
 
 <section id="about"><div class="wrap">
