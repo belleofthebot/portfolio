@@ -630,21 +630,194 @@ footer span{font-family:var(--mono);font-size:var(--size-mono);color:var(--text-
   text-decoration:none;white-space:nowrap;margin-left:.6em}
 .flow-cap a.capfull:hover{color:var(--rose);border-bottom-color:var(--rose)}
 
+/* before/after on a dark ground, for artwork that already has its own night sky */
+.baw.dark .plate{background:var(--screen);padding:0;overflow:hidden;min-height:0}
+.baw.dark img{width:100%}
+
 /* ============================================================
-   Explainer widget — artwork with numbered pins, steps as real type
-   Built for the sleep apnea set: a 16:9 slide with baked-in callouts
-   cannot be read at 390px, so the drawing stays an image and every
-   word next to it becomes HTML that reflows and scales.
+   THE SLEEP APNEA EXPLAINER
+   Rebuilt. The first version put every drawing inside an identical
+   bordered card at an identical width and hung a two-column caption
+   list underneath it, five times running. That is the shape of a slide
+   deck, not of a page, and no amount of work inside the cards was going
+   to fix a rhythm the cards themselves were making.
+   So the frames came off. The artwork is transparent now, so each
+   drawing sits directly on a band that runs nearly the full width of
+   the window, mixed for that drawing; the steps move alongside the art
+   instead of queueing beneath it; and the craft notes at the end land
+   on paper, because a page about a thing that happens in a dark room
+   still has to let the reader out of the dark room at some point.
+   None of these classes are shared with another page.
    ============================================================ */
-.xp{margin:var(--space-3) 0 0;padding:0}
-/* The drawings used to carry their own halftone field. That field is stripped
-   out of the artwork now, so the stage supplies the ground: a slow radial lift
-   behind the subject and a flat deep base, which lets the line work and the
-   three accent colours sit forward instead of competing with a texture. */
-.xp-stage{position:relative;border:1px solid var(--line);
-  background:radial-gradient(120% 108% at 50% 30%,#1B1726 0%,#161221 46%,#100D18 100%);
-  border-radius:var(--radius-card);overflow:hidden;line-height:0}
-.xp-stage>img{width:100%;height:auto;display:block}
+
+/* Bands live inside .wrap.narrow and break out of it. Not 100vw: 100vw
+   counts the scrollbar, so a true full-bleed band is wider than the
+   client area and raises a horizontal scrollbar on every desktop that
+   shows one. The usual cure is overflow-x:hidden on the body, which
+   would kill the sticky header. min(1560px, 100vw - 22px) clears the
+   widest scrollbar and reads as full bleed at any real window size. */
+.sa-band{width:min(1560px,calc(100vw - 22px));margin-left:50%;
+  transform:translateX(-50%);padding:var(--space-6) var(--space-4);
+  margin-top:var(--space-5);margin-bottom:var(--space-5)}
+.sa-in{max-width:1220px;margin:0 auto}
+@media(max-width:640px){.sa-band{padding:var(--space-5) var(--space-3)}}
+@media print{.sa-band{width:auto;margin-left:0;transform:none;padding:0;background:none}}
+
+/* Four grounds, not one. A page whose every panel is mixed identically
+   reads as a template even when the drawings on it do not. The two
+   anatomy plates deliberately share g2 — same ground, same cross
+   section, forty lines of copy apart. */
+/* The bands are navy, not the site's warm near-black, because the drawings
+   are: every plate was drawn on a field of #131F46 and two of them still
+   carry it. Matching the page to the artwork rather than the artwork to the
+   page is what lets a drawing sit on the band with no frame and no seam. The
+   line and secondary-text colours go cool inside a band for the same reason —
+   a purple-grey rule on a navy ground reads as a leftover. */
+.sa-band,.sa-band .sa-in{--line:#2C3C68;--line-soft:#212D51;
+  --text-2:#B7BFD8;--text-3:#8C95B6}
+.sa-band.g1{background:radial-gradient(120% 140% at 30% 18%,#17244F 0%,#131F46 44%,#0E1737 100%)}
+.sa-band.g2{background:radial-gradient(95% 125% at 50% 42%,#16224C 0%,#121C41 48%,#0C1430 100%)}
+.sa-band.g3{background:linear-gradient(180deg,#0C1430 0%,#182550 46%,#182550 54%,#0C1430 100%)}
+.sa-band.g4{background:radial-gradient(80% 115% at 50% 46%,#1A2856 0%,#101A3C 55%,#080D22 100%)}
+
+/* a band's own header: index, label, and a rule that runs out to the edge */
+.sa-bh{display:flex;align-items:center;gap:var(--space-3);margin:0 0 var(--space-4)}
+.sa-bh .ix{font-family:var(--mono);font-size:var(--size-mono);color:var(--rose);letter-spacing:.12em}
+.sa-bh .ti{font-family:var(--mono);font-size:var(--size-mono);color:var(--text-3);
+  text-transform:lowercase;letter-spacing:.05em}
+.sa-bh .ru{flex:1 1 40px;height:1px;background:var(--line)}
+
+/* art beside its steps, rather than art above its steps */
+.sa-two{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);
+  gap:var(--space-5);align-items:center}
+.sa-two.top{align-items:start}
+@media(max-width:900px){.sa-two{grid-template-columns:1fr;gap:var(--space-4);align-items:start}}
+
+/* No border, no radius, no fill. The drawing is transparent and the band
+   is already its ground; a frame here puts the art back on a slide. */
+.sa-stage{position:relative;line-height:0}
+.sa-stage>img{width:100%;height:auto;display:block}
+.sa-stage.mid{max-width:820px;margin:0 auto}
+
+.sa-cap{font-family:var(--mono);font-size:var(--size-mono);color:var(--text-3);
+  text-transform:lowercase;line-height:1.65;margin:var(--space-3) 0 0;max-width:44ch}
+.sa-cap.warn{color:#D98878}
+
+/* a vertical step column */
+.sa-steps{list-style:none;margin:0;padding:0;display:grid;gap:1px}
+.sa-steps li{margin:0}
+.sa-step{display:flex;gap:13px;width:100%;text-align:left;background:none;border:0;
+  border-left:2px solid transparent;padding:11px 14px;color:inherit;cursor:pointer;
+  font:inherit;transition:background .18s,border-color .18s}
+.sa-step:hover{background:rgba(255,255,255,.04)}
+.sa-step.on{background:rgba(255,255,255,.06);border-left-color:var(--rose)}
+.sa-step:focus-visible{outline:2px solid var(--rose);outline-offset:-2px}
+.sa-n{flex:0 0 auto;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;
+  font-family:var(--mono);font-size:.7rem;background:#13293F;color:#A7E6F8;margin-top:2px;
+  transition:background .18s,color .18s}
+.sa-step.on .sa-n{background:var(--rose);color:#241D2B}
+.sa-t{font-size:var(--size-small);color:var(--text-2);line-height:1.6}
+.sa-t b{display:block;font-weight:600;color:var(--text);margin-bottom:2px}
+
+/* The flow strip. The system drawing is one unbroken left-to-right path,
+   so its steps run left to right too, threaded on a rule standing in for
+   the line the air travels. Under 900px the rule turns vertical instead
+   of vanishing — the sequence is the content, not decoration on it. */
+.sa-flow{list-style:none;margin:var(--space-5) 0 0;padding:0;position:relative;
+  display:grid;grid-template-columns:repeat(6,1fr)}
+.sa-flow::before{content:"";position:absolute;left:8%;right:8%;top:12px;height:1px;
+  background:linear-gradient(90deg,transparent,#3E618A 10%,#3E618A 90%,transparent)}
+.sa-flow li{margin:0}
+.sa-fstep{width:100%;background:none;border:0;padding:0 9px;color:inherit;font:inherit;
+  cursor:pointer;text-align:center;display:block}
+.sa-fstep:focus-visible{outline:2px solid var(--rose);outline-offset:3px}
+.sa-fdot{width:25px;height:25px;border-radius:50%;margin:0 auto 13px;display:grid;
+  place-items:center;font-family:var(--mono);font-size:.7rem;background:#0F1A28;
+  border:1px solid #3E618A;color:#A7E6F8;
+  transition:background .18s,border-color .18s,color .18s}
+.sa-fstep:hover .sa-fdot,.sa-fstep.on .sa-fdot{background:var(--rose);border-color:var(--rose);color:#241D2B}
+.sa-ft{font-size:.78rem;line-height:1.5;color:var(--text-3);transition:color .18s}
+.sa-ft b{display:block;font-weight:600;color:var(--text-2);margin-bottom:3px;
+  font-size:var(--size-small);transition:color .18s}
+.sa-fstep:hover .sa-ft,.sa-fstep.on .sa-ft{color:var(--text-2)}
+.sa-fstep:hover .sa-ft b,.sa-fstep.on .sa-ft b{color:var(--text)}
+@media(max-width:900px){
+  .sa-flow{grid-template-columns:1fr;gap:var(--space-2)}
+  .sa-flow::before{left:12px;right:auto;top:8px;bottom:8px;width:1px;height:auto;
+    background:linear-gradient(180deg,transparent,#3E618A 8%,#3E618A 92%,transparent)}
+  .sa-fstep{display:flex;gap:13px;text-align:left;padding:0}
+  .sa-fdot{margin:0;flex:0 0 25px}
+}
+
+/* Seven parts in a fixed order is a sequence, so the flagship drawing
+   gets a way to walk it rather than only a way to browse it. */
+.sa-seq{display:flex;align-items:center;gap:9px;margin:var(--space-4) 0 0;
+  border-top:1px solid var(--line);padding-top:var(--space-3)}
+.sa-sb{font-family:var(--mono);font-size:var(--size-mono);text-transform:lowercase;
+  background:none;border:1px solid var(--line);color:var(--text-2);padding:6px 14px;
+  border-radius:999px;cursor:pointer;transition:border-color .15s,color .15s}
+.sa-sb:hover:not([disabled]){border-color:var(--rose);color:var(--rose)}
+.sa-sb:focus-visible{outline:2px solid var(--rose);outline-offset:2px}
+.sa-sb[disabled]{opacity:.3;cursor:default}
+.sa-pos{font-family:var(--mono);font-size:var(--size-mono);color:var(--text-3);margin-left:auto}
+
+/* The key. Three colours, three jobs, stated once at the top and then
+   never repeated on a plate. It is the reason none of the drawings below
+   need a legend of their own. */
+.sa-key{display:flex;gap:var(--space-4);flex-wrap:wrap;padding:var(--space-3) 0;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  margin:var(--space-4) 0 0}
+.sa-key div{display:flex;gap:10px;flex:1 1 200px}
+.sa-key i{width:9px;height:9px;border-radius:2px;flex:0 0 9px;margin-top:7px}
+.sa-key .kt{font-size:.79rem;line-height:1.5;color:var(--text-3)}
+.sa-key .kt b{display:block;font-family:var(--mono);font-size:var(--size-mono);font-weight:400;
+  text-transform:lowercase;letter-spacing:.05em;color:var(--text-2);margin-bottom:3px}
+
+/* a numbered section head in the reading column, to match the bands */
+.sa-sec{margin:var(--space-6) 0 0}
+.sa-sec .ix{font-family:var(--mono);font-size:var(--size-mono);color:var(--rose);
+  letter-spacing:.12em;display:block;margin-bottom:11px}
+.sa-sec h2{font-size:var(--size-h2);margin:0 0 var(--space-2);max-width:26ch;line-height:1.2}
+.sa-sec>p{color:var(--text-2);max-width:64ch}
+.sa-sec>p.lead{color:var(--text-2);font-size:var(--size-small);max-width:62ch}
+
+/* The acronym. It was a centred bordered card, which made four words of
+   plain vocabulary look like a pull quote. It is four words. */
+.sa-apap{margin:var(--space-4) 0 0}
+.sa-apap .w{font-size:clamp(1.5rem,5vw,2.9rem);line-height:1.14;font-weight:500;
+  margin:0;letter-spacing:-.01em}
+.sa-apap .w i{font-style:normal;color:#A5E04B}
+.sa-apap .s{color:var(--text-2);font-size:var(--size-small);margin:var(--space-3) 0 0;max-width:58ch}
+
+/* The payoff plate carries the closed airway beside it, cropped to the
+   closure itself and shown small. Repeating the whole earlier drawing would
+   read as a duplicate; a 168px detail of the one place the two plates differ
+   reads as what it is, a reference back to the state the machine undoes. */
+.sa-cmp{display:flex;gap:var(--space-3);align-items:flex-start;margin:var(--space-4) 0 0}
+.sa-cmp img{width:168px;flex:0 0 168px;height:auto;opacity:.62;filter:saturate(.8)}
+.sa-cmp p{font-size:.78rem;line-height:1.55;color:var(--text-3);margin:0}
+.sa-cmp p b{display:block;font-family:var(--mono);font-size:var(--size-mono);font-weight:400;
+  color:var(--text-2);text-transform:lowercase;margin-bottom:4px}
+
+/* The craft notes, on paper. Five bold-lead paragraphs on the dark ground
+   was the one stretch of the page with no design on it at all, and
+   arriving at paper after two thousand pixels of night is a bigger
+   rhythm change than any single panel could have made. */
+.sa-well{width:min(1560px,calc(100vw - 22px));margin-left:50%;transform:translateX(-50%);
+  margin-top:var(--space-6);margin-bottom:var(--space-6);padding:var(--space-6) var(--space-4)}
+@media print{.sa-well{width:auto;margin-left:0;transform:none}}
+.sa-rules{list-style:none;margin:var(--space-5) 0 0;padding:0;display:grid;
+  grid-template-columns:1fr 1fr;gap:var(--space-4) var(--space-5)}
+@media(max-width:820px){.sa-rules{grid-template-columns:1fr}}
+.sa-rules li{margin:0;border-top:1px solid var(--line);padding-top:var(--space-3)}
+.sa-rules li.wide{grid-column:1/-1}
+.sa-rules .rn{font-family:var(--mono);font-size:var(--size-mono);color:var(--rose);
+  letter-spacing:.12em;display:block;margin-bottom:9px}
+.sa-rules h3{font-size:1.02rem;line-height:1.34;margin:0 0 7px;font-weight:600}
+.sa-rules p{font-size:var(--size-small);line-height:1.62;color:var(--text-2);margin:0}
+
+/* the pins on the artwork, unchanged in behaviour: cyan at rest because
+   cyan is air on every plate, rose when live because rose is this site */
 .xp-pins{position:absolute;inset:0;width:100%;height:100%}
 .xp-pin{cursor:pointer}
 .xp-pin .h{fill:#6FD3EE;opacity:.14;transition:opacity .18s,fill .18s}
@@ -655,40 +828,13 @@ footer span{font-family:var(--mono);font-size:var(--size-mono);color:var(--text-
 .xp-pin.on .d{fill:#DFA192;stroke:#F6E6E0}
 .xp-pin.on .n{fill:#241D2B}
 
-.xp-steps{list-style:none;margin:var(--space-3) 0 0;padding:0;
-  display:grid;grid-template-columns:1fr 1fr;gap:4px var(--space-3)}
-.xp-steps li{margin:0}
-.xp-step{display:flex;gap:12px;width:100%;text-align:left;background:none;border:0;
-  padding:10px 12px;border-radius:var(--radius);color:inherit;cursor:pointer;
-  font:inherit;transition:background .18s}
-.xp-step:hover,.xp-step.on{background:var(--panel)}
-.xp-step:focus-visible{outline:2px solid var(--rose);outline-offset:2px}
-.xp-n{flex:0 0 auto;width:23px;height:23px;border-radius:50%;display:grid;place-items:center;
-  font-family:var(--mono);font-size:.7rem;background:#12283F;color:#A7E6F8;margin-top:2px;
-  transition:background .18s,color .18s}
-.xp-step.on .xp-n{background:var(--rose);color:var(--ground)}
-.xp-t{font-size:var(--size-small);color:var(--text-2);line-height:1.62}
-.xp-t b{display:block;font-weight:600;color:var(--text);margin-bottom:1px}
-@media(max-width:720px){.xp-steps{grid-template-columns:1fr}}
-@media(prefers-reduced-motion:reduce){.xp-pin *,.xp-step,.xp-n{transition:none}}
-@media print{.xp-step{background:none}.xp-steps{grid-template-columns:1fr 1fr}}
-
-/* the acronym, as type rather than as a picture of type */
-.apap{background:var(--screen);border:1px solid var(--line);border-radius:var(--radius-card);
-  padding:var(--space-5) var(--space-4);text-align:center;margin-top:var(--space-3)}
-.apap .k{font-family:var(--mono);font-size:var(--size-mono);color:var(--text-3)}
-.apap .w{font-size:clamp(1.4rem,4.2vw,2.5rem);line-height:1.24;margin:12px 0 0;font-weight:500}
-.apap .w i{font-style:normal;color:#A5E04B}
-.apap .s{color:var(--text-2);font-size:var(--size-small);margin:16px auto 0;max-width:48ch}
-
-/* before/after on a dark ground, for artwork that already has its own night sky */
-.baw.dark .plate{background:var(--screen);padding:0;overflow:hidden;min-height:0}
-.baw.dark img{width:100%}
-
-/* the explainer gets the same break-out width as a slide plate — the artwork
-   needs the room, and two columns of steps need it more */
-.xp{width:min(1060px,calc(100vw - 40px));margin-left:50%;transform:translateX(-50%)}
-@media print{.xp{width:auto;margin-left:0;transform:none}}
+@media(prefers-reduced-motion:reduce){
+  .xp-pin *,.sa-step,.sa-n,.sa-fdot,.sa-ft,.sa-ft b,.sa-sb{transition:none}
+}
+@media print{
+  .sa-step,.sa-fstep{background:none}
+  .sa-seq{display:none}
+}
 
 /* The fold glyphs. Only the accent-coloured marks move — the rose and the mint
    details, never the structural strokes in --line or --text-3. Moving every
