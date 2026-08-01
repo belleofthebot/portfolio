@@ -530,7 +530,10 @@ footer span{font-family:var(--mono);font-size:var(--size-mono);color:var(--text-
   margin-left:auto}
 /* touch-action:none is what lets a one-finger drag pan the poster instead of
    scrolling the page; overscroll-behavior stops a pinch from rubber-banding it */
-.pv-stage{position:relative;height:clamp(300px,58vh,620px);border:1px solid var(--line);
+/* The poster is 3941 x 2550, so a short stage letterboxes it and leaves grey
+   down both sides when the whole thing is in view. Taller than the poster's
+   own ratio would be, so a fitted poster very nearly fills the width. */
+.pv-stage{position:relative;height:clamp(380px,74vh,860px);border:1px solid var(--line);
   border-radius:var(--radius);overflow:hidden;background:#5E5D5C;touch-action:none;
   cursor:grab;overscroll-behavior:contain}
 .pv-stage.is-grab{cursor:grabbing}
