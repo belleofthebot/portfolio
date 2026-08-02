@@ -1,7 +1,18 @@
-_hero*.html
-_heroes*.html
-_apply-hero.py
-_hero.css
-_hero.js
-_t*/
-_to_delete/
+# Scratch and working files. Anything starting with an underscore is a working
+# file from a build session and does not belong in the published repo.
+_*
+!_headers
+!_redirects
+
+# macOS
+.DS_Store
+._*
+Thumbs.db
+
+# Orphaned duplicate of assets/app/ — proto/bookspot-app.html reads from
+# assets/app/, which is the copy that is actually used.
+/app/
+
+# Spent handoff notes from earlier upload batches
+READ-ME.txt
+READ-ME-FIRST.txt
