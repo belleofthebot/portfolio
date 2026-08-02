@@ -16,3 +16,7 @@ Thumbs.db
 # Spent handoff notes from earlier upload batches
 READ-ME.txt
 READ-ME-FIRST.txt
+
+# Orphaned duplicate of proto/passage-app.html, which is the copy
+# work-passage.html actually embeds.
+/passage-app.html
