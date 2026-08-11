@@ -899,3 +899,35 @@ details.fold[open] .fold-b{animation:foldIn .22s ease-out}
 .xp-pin.on .h{animation:xpPulse .5s ease-out}
 @keyframes xpPulse{from{opacity:.55}to{opacity:.3}}
 @media(prefers-reduced-motion:reduce){.xp-pin.on .h{animation:none}}
+
+/* ---------------------------------------------------------- most recent
+   One project gets the top of the page. It is the newest work, it is the
+   only one whose source can be shown in full, and it is the clearest single
+   argument for how evidence gets handled here - so it leads rather than
+   sitting in the personal-projects row. */
+.recentband{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
+  gap:var(--space-4);align-items:center;background:var(--panel);
+  border:1px solid var(--line);border-radius:var(--radius-card);
+  padding:var(--space-4);position:relative;overflow:hidden}
+.recentband:before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:var(--rose)}
+.rb-shot{display:block;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line-soft);
+  line-height:0;transition:transform .2s ease}
+.rb-shot img{width:100%;height:auto;display:block}
+.recentband:hover .rb-shot{transform:translateY(-2px)}
+.rb-copy .ptag{display:inline-block;font-family:var(--mono);font-size:var(--size-mono);
+  text-transform:lowercase;background:var(--rose-tint);color:var(--on-rose-tint);
+  border-radius:999px;padding:4px 13px;margin-bottom:var(--space-2)}
+.rb-copy h3{font-size:var(--size-h3);margin:0 0 var(--space-2)}
+.rb-copy h3 a{color:var(--text);text-decoration:none}
+.rb-copy h3 a:hover{color:var(--rose)}
+.rb-copy p{color:var(--text-2);font-size:var(--size-small);margin:0 0 var(--space-2);max-width:52ch}
+.rb-facts{font-family:var(--mono);font-size:var(--size-mono);color:var(--text-3)!important}
+.rb-links{display:flex;gap:var(--space-3);align-items:center;flex-wrap:wrap;margin-top:var(--space-3)}
+.rb-live{display:inline-flex;gap:8px;align-items:center;font-family:var(--mono);
+  font-size:var(--size-mono);color:var(--mint);text-decoration:none;border-bottom:1px solid transparent}
+.rb-live:hover{border-bottom-color:var(--mint)}
+.rb-live .rb-a{transition:transform .15s ease}
+.rb-live:hover .rb-a{transform:translateX(3px)}
+@media(max-width:760px){.recentband{grid-template-columns:1fr;padding:var(--space-3)}}
+@media(prefers-reduced-motion:reduce){.rb-shot,.rb-live .rb-a{transition:none}
+  .recentband:hover .rb-shot{transform:none}}
