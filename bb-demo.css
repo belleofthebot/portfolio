@@ -1,0 +1,93 @@
+/* ============================================================
+   belleofthebot demonstrator, on the case study page
+   A card walkthrough and three quiz questions, playable here, so the
+   page shows the thing rather than only describing it. Self-contained:
+   its own tokens, so it renders as the product does rather than as the
+   portfolio does.
+   ============================================================ */
+.bbd{margin:var(--space-5) 0}
+.bbd-h{display:flex;align-items:baseline;justify-content:space-between;gap:var(--space-3);
+  flex-wrap:wrap;margin-bottom:var(--space-2)}
+.bbd-h .kicker{margin:0}
+.bbd-note{font-family:var(--mono);font-size:var(--size-mono);color:var(--text-3)}
+
+/* ---- the card, in its own ground ---- */
+.bbcard{--bg:#6E5570;--fg:#F6F1F6;--acc:#E8C4E4;--soft:#D6C4D6;--faint:#B49CB4;
+  --edge:#8B6E8D;--ic-rose:#E8C4E4;--ic-mint:#9FE0CE;--ic-dim:#B49CB4;
+  background:var(--bg);color:var(--fg);border-radius:var(--radius-card);
+  padding:var(--space-4);border:1px solid var(--edge)}
+.bbc-top{display:flex;justify-content:space-between;align-items:center;gap:var(--space-2);
+  font-family:var(--mono);font-size:var(--size-mono);color:var(--faint);margin-bottom:var(--space-3)}
+.bbc-flag{border:1px solid var(--edge);border-radius:999px;padding:3px 11px;white-space:nowrap}
+.bbc-body{min-height:250px}
+.bbc-kick{font-family:var(--mono);font-size:var(--size-mono);color:var(--faint);display:block;
+  margin-bottom:var(--space-2)}
+.bbc-lead{font-size:1.35rem;line-height:1.3;margin:0 0 var(--space-2);max-width:30ch}
+.bbc-lead .rose{color:var(--acc)}
+.bbc-sub{color:var(--soft);font-size:var(--size-small);margin:0;max-width:52ch}
+.bbc-sub .rose{color:var(--acc)}
+.bbi{width:44px;height:44px;flex:0 0 auto;fill:none}
+.bbc-row{display:flex;gap:var(--space-3);align-items:flex-start;margin-bottom:var(--space-3)}
+.bbc-row b{display:block;color:var(--fg);font-weight:500;margin-bottom:3px}
+.bbc-row span{color:var(--soft);font-size:var(--size-small)}
+.bbc-foot{color:var(--faint);font-size:var(--size-small);border-top:1px solid var(--edge);
+  padding-top:var(--space-2);margin-top:var(--space-2)}
+.bbc-src{font-family:var(--mono);font-size:var(--size-mono);color:var(--faint);line-height:1.5}
+
+/* options */
+.bbc-opts{display:flex;flex-direction:column;gap:8px;margin-top:var(--space-2)}
+.bbo{text-align:left;font:inherit;font-size:var(--size-small);color:var(--fg);
+  background:rgba(255,255,255,.07);border:1px solid var(--edge);border-radius:var(--radius);
+  padding:11px 14px;cursor:pointer;transition:background .13s,border-color .13s}
+.bbo:hover:not([disabled]){border-color:var(--acc);background:rgba(255,255,255,.12)}
+.bbo[disabled]{cursor:default}
+.bbo.yes{border-color:var(--ic-mint);background:rgba(159,224,206,.16)}
+.bbo.no{border-color:#E9A79A;background:rgba(233,167,154,.14)}
+.bbc-fb{margin-top:var(--space-2);font-size:var(--size-small);color:var(--soft);min-height:2.4em}
+.bbc-fb b{color:var(--fg)}
+
+/* nav */
+.bbc-nav{display:flex;align-items:center;gap:var(--space-2);margin-top:var(--space-3);
+  border-top:1px solid var(--edge);padding-top:var(--space-3)}
+.bbdots{display:flex;gap:6px;margin:0 auto}
+.bbdots i{width:8px;height:8px;border-radius:50%;background:var(--edge);display:block;
+  cursor:pointer;transition:background .15s,transform .15s}
+.bbdots i.on{background:var(--acc);transform:scale(1.25)}
+.bbc-nav button{font-family:var(--mono);font-size:var(--size-mono);border-radius:var(--radius);
+  padding:8px 15px;cursor:pointer;border:1px solid var(--edge);background:none;color:var(--soft)}
+.bbc-nav button:hover:not([disabled]){color:var(--fg);border-color:var(--acc)}
+.bbc-nav button[disabled]{opacity:.35;cursor:default}
+.bbc-nav .go{background:var(--acc);border-color:var(--acc);color:#332034}
+
+/* ---- the quiz, light: the product inverts for a round, so this does too ---- */
+.bbq{--ink:#1C1B20;--well:#F5F1EC;--wline:#E2DCD2;--wrose:#AE5A47;--wmint:#2E9B7F;
+  --ic-rose:#AE5A47;--ic-mint:#2E9B7F;--ic-dim:#8C8394;
+  background:var(--well);color:var(--ink);border:1px solid var(--wline);
+  border-radius:var(--radius-card);padding:var(--space-4);margin-top:var(--space-3)}
+.bbq-top{display:flex;justify-content:space-between;font-family:var(--mono);
+  font-size:var(--size-mono);color:#6C6472;margin-bottom:var(--space-2)}
+.bbq-bar{height:4px;background:#E3DCD2;border-radius:2px;overflow:hidden;margin-bottom:var(--space-3)}
+.bbq-fill{display:block;height:100%;background:var(--wrose);width:0;transition:width .25s}
+.bbq-head{display:flex;gap:var(--space-3);align-items:center;margin-bottom:var(--space-3)}
+.bbq-q{font-size:1.15rem;line-height:1.35;margin:0}
+.bbq .bbo{color:var(--ink);background:#fff;border-color:var(--wline)}
+.bbq .bbo:hover:not([disabled]){border-color:var(--wrose);background:#FFFDFA}
+.bbq .bbo.yes{border-color:var(--wmint);background:#EAF7F2}
+.bbq .bbo.no{border-color:var(--wrose);background:#FBEDE9}
+.bbq-fb{margin-top:var(--space-3);font-size:var(--size-small);color:#4A4450;min-height:2.6em}
+.bbq-fb .y{color:var(--wmint);font-weight:500}
+.bbq-fb .n{color:var(--wrose);font-weight:500}
+.bbq-nav{display:flex;align-items:center;gap:var(--space-3);margin-top:var(--space-3);
+  border-top:1px solid var(--wline);padding-top:var(--space-3);
+  font-family:var(--mono);font-size:var(--size-mono);color:#6C6472}
+.bbq-nav button{margin-left:auto;font-family:var(--mono);font-size:var(--size-mono);
+  border:0;border-radius:var(--radius);padding:9px 18px;cursor:pointer;
+  background:var(--wrose);color:var(--well)}
+.bbq-nav button[disabled]{opacity:.35;cursor:default}
+.bbq-done{text-align:center;padding:var(--space-3) 0}
+.bbq-done .sc{font-family:var(--mono);font-size:2rem;color:var(--ink);display:block}
+.bbq-done p{color:#4A4450;font-size:var(--size-small);margin:var(--space-2) 0 var(--space-3)}
+
+@media(max-width:640px){.bbc-lead{font-size:1.15rem}.bbi{width:34px;height:34px}
+  .bbc-body{min-height:300px}}
+@media(prefers-reduced-motion:reduce){.bbo,.bbdots i,.bbq-fill{transition:none}}

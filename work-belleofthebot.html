@@ -15,6 +15,7 @@
 <meta property="og:title" content="belleofthebot — an AI technology and risk study companion — Elizabeth Beier">
 <meta property="og:description" content="A study companion for AI technology and risk: 133 cards on how these systems are built, what they do that nobody expected, and what could go wrong, each marked with what kind of claim it is and where it came from.">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="bb-demo.css">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://elizabethbportfolio.com/work-belleofthebot.html">
 <meta property="og:site_name" content="Elizabeth Beier">
@@ -37,6 +38,7 @@
 <h1>A study companion for how AI works and what could go wrong</h1>
 <p class="meta">2026 · built solo, in public, at whatthebot.vercel.app</p>
 <p class="oneline">A study companion for how AI is built, what it does that nobody expected, and what could go wrong &mdash; 133 cards, each marked with what kind of claim it is and where it came from, and one source file the whole thing generates from.</p>
+<p style="margin-top:var(--space-3)"><a class="btn" href="https://whatthebot.vercel.app/" target="_blank" rel="noopener">open the live site &rarr;</a><span class="meta" style="margin-left:var(--space-3)">or play with it below</span></p>
 </div>
 <div class="wrap narrow">
 
@@ -63,6 +65,27 @@
 <li><strong>Quizzes that teach rather than score.</strong> Three gated levels a subject, 80% to advance, and a wrong answer always names the right one and says why. The hardest level asks you to classify the claim yourself, which is the actual skill the site is for.</li>
 <li><strong>Claims corrected before publication, not after.</strong> Several widely repeated figures did not survive a look at the primary source and were changed or dropped.</li>
 </ul></div>
+
+<!-- ================================================== the demonstrator ==
+     The case study claims the cards mark their claims and the quizzes teach
+     rather than score. Both are easier to show than to describe, so both run
+     here on the real content, with the real answer positions. -->
+<div class="bbd">
+<div class="bbd-h"><span class="kicker">try it &middot; a real card</span>
+<span class="bbd-note">7 panels &middot; misuse and misalignment</span></div>
+<p>Every card walks the same seven steps, and the question comes before the answer
+on purpose. This is the live content, not a mock-up.</p>
+<div class="bbcard" data-bbcard></div>
+</div>
+
+<div class="bbd">
+<div class="bbd-h"><span class="kicker">try it &middot; three questions</span>
+<span class="bbd-note">a round is 10 to 12</span></div>
+<p>A round inverts to the light screen so it feels like a different room. Get one
+wrong and it names the right answer and says why &mdash; the rule the whole quiz
+is built on.</p>
+<div class="bbq" data-bbquiz></div>
+</div>
 
 <div class="diff"><p class="h">honest limitation</p>
 <p>I am not a researcher and nothing here is peer reviewed. The site&rsquo;s whole claim is careful handling of other people&rsquo;s evidence, which means the standard I have to meet is applying it to myself — and the first time I measured my own quizzes properly, they failed. The correct answer was the longest option on 91% of cards, so a reader could have scored full marks without reading a single question. Fixing that turned up three cards where the answer key was simply wrong. Both are fixed and both are on this page because leaving them off would be the exact failure the site is about.</p></div>
@@ -154,6 +177,7 @@
 </div></div></div>
 <footer><div class="wrap"><span>elizabeth beier · albuquerque, new mexico</span><span>designed, built, and measured by me</span></div></footer>
 </main>
+<script src="bb-demo.js" defer></script>
 <script src="tryit.js" defer></script>
 </body>
 </html>
