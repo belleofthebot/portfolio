@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Elizabeth Beier — marketing technology &amp; analytics</title>
-<meta name="description" content="GA4 and Tag Manager architecture, custom dashboards, and internal tools that cut recurring work. Albuquerque and remote.">
+<title>Elizabeth Beier · design, storytelling, AI &amp; marketing analytics</title>
+<meta name="description" content="I turn complexity into clarity. A decade of design and storytelling, now bolstered by marketing analytics and the AI tools I build myself. Albuquerque and remote.">
 <meta name="author" content="Elizabeth Beier">
 <meta name="theme-color" content="#17121C">
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -12,8 +12,8 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<meta property="og:title" content="Elizabeth Beier — marketing technology &amp; analytics">
-<meta property="og:description" content="GA4 and Tag Manager architecture, custom dashboards, and internal tools that cut recurring work. Albuquerque and remote.">
+<meta property="og:title" content="Elizabeth Beier · design, storytelling, AI &amp; marketing analytics">
+<meta property="og:description" content="I turn complexity into clarity. A decade of design and storytelling, now bolstered by marketing analytics and the AI tools I build myself. Albuquerque and remote.">
 <link rel="stylesheet" href="styles.css">
 <style>
 :root{--pine:#1E4D3B;--pine-deep:#143529;--kraft:#A87D52;--kraft-deep:#8A6138;
@@ -311,6 +311,41 @@
 .stack-key i{width:8px;height:8px;border-radius:2px;display:block;background:var(--text-3);
   flex:0 0 8px;position:relative;top:1px}
 .stack-key i.m{background:var(--mint)}
+
+/* ---------- recently made: the Belle of the Bot spotlight ----------
+   Everything else on the page is finished work, argued for afterward. This
+   one is live and still changing, so it leads with the product itself — the
+   actual homepage, not a recreation — the same way the sibling app cards
+   below use real screenshots rather than drawn recreations. The screenshot
+   sits in its own clean panel rather than behind the copy, both so the
+   product stays legible and so this doesn't turn into a second copy of the
+   CambiumPak band's dark full-bleed plate. */
+.recent{display:grid;grid-template-columns:1fr 480px;gap:var(--space-4);
+  align-items:center;background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--radius-card);padding:var(--space-4);
+  text-decoration:none;color:inherit;margin-bottom:var(--space-6);
+  transition:border-color .18s,filter .15s}
+.recent:hover{border-color:var(--mint);filter:brightness(1.05)}
+.recent:focus-visible{outline:2px solid var(--mint);outline-offset:3px}
+.recent-in{min-width:0}
+.recent-in .kicker{margin-bottom:10px}
+.recent-in h2{font-size:var(--size-h2);margin:0 0 12px;line-height:1.22;
+  letter-spacing:-.4px}
+.recent-in p{font-size:var(--size-small);color:var(--text-2);line-height:1.65;
+  margin:0 0 var(--space-3);max-width:52ch}
+.recent-cta{display:inline-flex;align-items:baseline;gap:8px;font-family:var(--mono);
+  font-size:.85rem;font-weight:500;color:var(--mint);text-transform:lowercase}
+.recent-cta .a{display:inline-block;transition:transform .15s}
+.recent:hover .recent-cta .a{transform:translateX(3px)}
+.recent-thumb{border-radius:var(--radius);overflow:hidden;height:280px;
+  display:block;border:1px solid var(--line-soft)}
+.recent-thumb img{width:100%;height:100%;object-fit:cover;object-position:top;
+  display:block}
+@media(max-width:860px){
+  .recent{grid-template-columns:1fr}
+  .recent-thumb{order:-1;height:auto;aspect-ratio:1000/372}
+}
+@media(max-width:520px){.recent{padding:var(--space-3)}}
 </style>
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://elizabethbportfolio.com/">
@@ -331,43 +366,32 @@
 <section id="work"><div class="wrap">
 <div class="ebhero">
   <div class="ebhero-copy">
-    <h1>I make marketing beautiful, then prove it worked.<br>
-    <span class="l2">Ten years of design work, and the analytics and AI skills I built on top of it.</span></h1>
-    <p class="ebwho">Elizabeth Beier &middot; marketing operations, analytics and martech
+    <h1>I turn complexity into clarity.<br>
+    <span class="l2">A decade of design and storytelling, now bolstered by marketing analytics and the AI tools I build myself.</span></h1>
+    <p class="ebwho">Elizabeth Beier &middot; design, storytelling, marketing analytics and AI
     &middot; albuquerque</p>
   </div>
-  <div class="ebglyph" id="ebglyph" aria-hidden="true"></div>
+  <div class="ebglyph" id="ebglyph-tangle" aria-hidden="true"><svg class="hero-art on" viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A wriggling tangled line resolving into a clean rising curve"> <style> .anim { display: inline; } .static { display: none; } @media (prefers-reduced-motion: reduce) { .anim { display: none; } .static { display: inline; } } </style> <rect x="14" y="14" width="272" height="372" rx="36" fill="none" stroke="#DFA192" stroke-width="7"/> <g class="anim"> <path fill="none" stroke-width="6" stroke-linecap="round" stroke="#DFA192"> <animate attributeName="d" dur="10s" repeatCount="indefinite" calcMode="spline" keyTimes="0; 0.055; 0.11; 0.16; 0.28; 0.9; 1" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.2 1; 0.4 0 0.6 1; 0.4 0 0.6 1" values="M 52 318 C 68.4 372.0, 117.6 372.0, 134 318 C 44.5 291.9, 196.5 114.0, 81 94 C 144.4 43.1, 146.2 221.4, 211 168 C 245.1 268.5, 124.9 66.2, 168 187 C 150.1 81.0, 173.6 110.4, 195 181 C 257.8 290.1, 192.5 342.0, 93 275 C 191.7 264.7, 28.0 167.7, 109 158 C 193.0 215.2, 90.8 37.6, 173 93 C 73.0 91.4, 233.0 255.8, 116 248 C 229.8 292.7, 272.0 173.1, 246 96; M 52 318 C 28.0 235.7, 196.6 248.1, 157 175 C 219.5 104.4, 30.4 225.6, 119 132 C 240.1 110.9, 261.0 174.8, 158 237 C 83.5 128.3, 272.0 267.1, 236 162 C 235.9 41.6, 202.5 257.1, 201 160 C 272.0 212.8, 60.5 247.6, 158 308 C 67.7 242.1, 272.0 154.6, 207 92 C 272.0 178.9, 49.6 180.2, 123 259 C 191.4 164.6, 141.0 145.9, 64 202 C 43.1 82.4, 270.7 222.1, 246 96; M 52 318 C 28.0 265.1, 198.7 175.8, 79 119 C 28.0 215.3, 235.3 107.6, 164 209 C 39.8 193.9, 272.0 172.7, 166 158 C 93.5 257.9, 256.1 131.0, 212 199 C 133.3 168.1, 262.7 279.9, 184 249 C 245.2 318.6, 62.2 241.5, 131 317 C 250.6 267.2, 29.7 292.6, 112 254 C 114.3 329.9, 65.2 166.5, 70 260 C 28.0 203.5, 28.0 143.2, 105 163 C 179.9 247.9, 253.8 185.2, 246 96; M 52 318 C 68.4 372.0, 117.6 372.0, 134 318 C 44.5 291.9, 196.5 114.0, 81 94 C 144.4 43.1, 146.2 221.4, 211 168 C 245.1 268.5, 124.9 66.2, 168 187 C 150.1 81.0, 173.6 110.4, 195 181 C 257.8 290.1, 192.5 342.0, 93 275 C 191.7 264.7, 28.0 167.7, 109 158 C 193.0 215.2, 90.8 37.6, 173 93 C 73.0 91.4, 233.0 255.8, 116 248 C 229.8 292.7, 272.0 173.1, 246 96; M 52 318 C 55.2 317.0, 64.5 314.3, 71 312 C 77.5 309.7, 84.5 308.0, 91 304 C 97.5 300.0, 103.5 295.7, 110 288 C 116.5 280.3, 123.5 269.2, 130 258 C 136.5 246.8, 142.7 233.0, 149 221 C 155.3 209.0, 161.5 196.2, 168 186 C 174.5 175.8, 181.5 167.3, 188 160 C 194.5 152.7, 200.5 148.0, 207 142 C 213.5 136.0, 220.5 131.7, 227 124 C 233.5 116.3, 242.8 100.7, 246 96; M 52 318 C 55.2 317.0, 64.5 314.3, 71 312 C 77.5 309.7, 84.5 308.0, 91 304 C 97.5 300.0, 103.5 295.7, 110 288 C 116.5 280.3, 123.5 269.2, 130 258 C 136.5 246.8, 142.7 233.0, 149 221 C 155.3 209.0, 161.5 196.2, 168 186 C 174.5 175.8, 181.5 167.3, 188 160 C 194.5 152.7, 200.5 148.0, 207 142 C 213.5 136.0, 220.5 131.7, 227 124 C 233.5 116.3, 242.8 100.7, 246 96; M 52 318 C 68.4 372.0, 117.6 372.0, 134 318 C 44.5 291.9, 196.5 114.0, 81 94 C 144.4 43.1, 146.2 221.4, 211 168 C 245.1 268.5, 124.9 66.2, 168 187 C 150.1 81.0, 173.6 110.4, 195 181 C 257.8 290.1, 192.5 342.0, 93 275 C 191.7 264.7, 28.0 167.7, 109 158 C 193.0 215.2, 90.8 37.6, 173 93 C 73.0 91.4, 233.0 255.8, 116 248 C 229.8 292.7, 272.0 173.1, 246 96"/> <animate attributeName="stroke" dur="10s" repeatCount="indefinite" keyTimes="0; 0.16; 0.28; 0.9; 1" values="#DFA192; #DFA192; #9FE0CE; #9FE0CE; #DFA192"/> </path> <circle r="9" fill="#9FE0CE" cx="246" cy="96"> <animate attributeName="opacity" dur="10s" repeatCount="indefinite" keyTimes="0; 0.265; 0.315; 0.88; 0.94; 1" values="0; 0; 1; 1; 0; 0"/> </circle> </g> <g class="static"> <path fill="none" stroke="#9FE0CE" stroke-width="6" stroke-linecap="round" d="M 52 318 C 55.2 317.0, 64.5 314.3, 71 312 C 77.5 309.7, 84.5 308.0, 91 304 C 97.5 300.0, 103.5 295.7, 110 288 C 116.5 280.3, 123.5 269.2, 130 258 C 136.5 246.8, 142.7 233.0, 149 221 C 155.3 209.0, 161.5 196.2, 168 186 C 174.5 175.8, 181.5 167.3, 188 160 C 194.5 152.7, 200.5 148.0, 207 142 C 213.5 136.0, 220.5 131.7, 227 124 C 233.5 116.3, 242.8 100.7, 246 96"/> <circle r="9" fill="#9FE0CE" cx="246" cy="96"/> </g> </svg></div>
 </div>
-<div class="pills" id="ebpills"><button type="button" class="pill" data-k="design" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="2.5" width="14" height="14" rx="1.5"/><path d="M2.5 7h14M7 2.5v14"/></svg><span class="lb">graphic design</span><span class="ct">13</span></button><button type="button" class="pill" data-k="analytics" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 16.5h15M5 13.5V8M9.5 13.5V3.5M14 13.5V10.5"/></svg><span class="lb">analytics</span><span class="ct">4</span></button><button type="button" class="pill" data-k="ai" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 2.5v14M2.5 9.5h14M4.7 4.7l9.6 9.6M14.3 4.7l-9.6 9.6"/></svg><span class="lb">prompting & AI</span><span class="ct">12</span></button><button type="button" class="pill" data-k="web" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="3.5" width="14" height="12" rx="1.5"/><path d="M2.5 7.5h14"/></svg><span class="lb">web build</span><span class="ct">6</span></button><button type="button" class="pill" data-k="brand" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9.5" cy="9.5" r="7"/><circle cx="9.5" cy="9.5" r="2.6"/></svg><span class="lb">brand systems</span><span class="ct">2</span></button><button type="button" class="pill" data-k="product" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="2.5" width="8" height="14" rx="2"/><path d="M8 14h3"/></svg><span class="lb">ux / product</span><span class="ct">3</span></button><button type="button" class="pill" data-k="illustration" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16.5l3-7.5 7-5 3 3-5 7-8 2.5z"/><path d="M6 9l4.5 4.5"/></svg><span class="lb">illustration</span><span class="ct">6</span></button><button type="button" class="pill" data-k="animation" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6.5" cy="9.5" r="4"/><circle cx="13" cy="9.5" r="4"/></svg><span class="lb">animation</span><span class="ct">1</span></button><!-- social campaigns pill parked until IPL ships: a zero count advertises the gap
+<div class="pills" id="ebpills"><button type="button" class="pill" data-k="design" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="2.5" width="14" height="14" rx="1.5"/><path d="M2.5 7h14M7 2.5v14"/></svg><span class="lb">graphic design</span><span class="ct">12</span></button><button type="button" class="pill" data-k="ai" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 2.5v14M2.5 9.5h14M4.7 4.7l9.6 9.6M14.3 4.7l-9.6 9.6"/></svg><span class="lb">prompting & AI</span><span class="ct">11</span></button><button type="button" class="pill" data-k="analytics" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 16.5h15M5 13.5V8M9.5 13.5V3.5M14 13.5V10.5"/></svg><span class="lb">analytics</span><span class="ct">4</span></button><button type="button" class="pill" data-k="web" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="3.5" width="14" height="12" rx="1.5"/><path d="M2.5 7.5h14"/></svg><span class="lb">web build</span><span class="ct">5</span></button><button type="button" class="pill" data-k="brand" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9.5" cy="9.5" r="7"/><circle cx="9.5" cy="9.5" r="2.6"/></svg><span class="lb">brand systems</span><span class="ct">2</span></button><button type="button" class="pill" data-k="product" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="2.5" width="8" height="14" rx="2"/><path d="M8 14h3"/></svg><span class="lb">ux / product</span><span class="ct">3</span></button><button type="button" class="pill" data-k="illustration" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16.5l3-7.5 7-5 3 3-5 7-8 2.5z"/><path d="M6 9l4.5 4.5"/></svg><span class="lb">illustration</span><span class="ct">5</span></button><button type="button" class="pill" data-k="animation" aria-pressed="false"><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6.5" cy="9.5" r="4"/><circle cx="13" cy="9.5" r="4"/></svg><span class="lb">animation</span><span class="ct">1</span></button><!-- social campaigns pill parked until IPL ships: a zero count advertises the gap
 --><button type="button" class="pill zero" data-k="social" disabled aria-pressed="false" hidden><svg class="ic" viewBox="0 0 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="9.5" r="2.5"/><circle cx="14" cy="5" r="2.5"/><circle cx="14" cy="14" r="2.5"/><path d="M7.2 8.3l4.6-2.3M7.2 10.7l4.6 2.3"/></svg><span class="lb">social campaigns</span><span class="ct">0</span></button></div>
 <p class="ebstate" id="ebstate" hidden></p>
 
+<a class="recent" href="https://whatthebot.vercel.app/" target="_blank" rel="noopener">
+  <div class="recent-in">
+    <span class="kicker">recently made</span>
+    <h2>Belle of the Bot</h2>
+    <p>An AI-literacy site and Instagram account, built solo &mdash; 133 explainer
+    cards across five subjects, each one marked measurement, theory, definition,
+    or someone&rsquo;s position. It&rsquo;s generated from one Python file, so
+    the site, the quizzes, and the Instagram carousels can&rsquo;t drift apart.</p>
+    <span class="recent-cta">visit the site <span class="a" aria-hidden="true">&rarr;</span></span>
+  </div>
+  <div class="recent-thumb"><img src="belleofthebot-spotlight.jpg" width="1600" height="597" loading="lazy" decoding="async" alt="The Belle of the Bot homepage: the mascot Belle waving beside the headline “AI is complicated. Let’s learn about it together,” with the subject and claim-type filter pills below."></div>
+</a>
+
 <div class="sec-head"><h2>Selected work</h2>
 <p>Employer projects are described rather than linked — no client data, no credentials, no proprietary figures.</p></div>
-
-<div class="group" id="recent"><div class="group-h"><p class="gtitle">Most recent</p>
-<p class="group-p">Built in the open, on my own time, and the only thing here I can show you every line of.</p></div>
-
-<div class="recentband" data-f="ai design web illustration">
-  <a class="rb-shot" href="work-belleofthebot.html" tabindex="-1" aria-hidden="true">
-    <img src="thumb-belleofthebot.jpg" width="1000" height="372" loading="lazy" decoding="async" alt="">
-  </a>
-  <div class="rb-copy">
-    <span class="ptag">most recent &middot; 2026</span>
-    <h3><a href="work-belleofthebot.html">belleofthebot &mdash; an AI technology and risk study companion</a></h3>
-    <p>A study companion for how AI is actually built, what it does that nobody expected, and what
-    could go wrong &mdash; 133 cards, each marked with what kind of claim it is and where it came
-    from. Site, quizzes and 133 Instagram carousels all generate from one file.</p>
-    <p class="rb-facts">133 cards &middot; 1,064 slides generated &middot; every source named</p>
-    <div class="rb-links">
-      <a class="btn" href="work-belleofthebot.html">read the case study &rarr;</a>
-      <a class="rb-live" href="https://whatthebot.vercel.app/" target="_blank" rel="noopener">
-        <span>see it live at whatthebot.vercel.app</span><span class="rb-a" aria-hidden="true">&rarr;</span></a>
-    </div>
-  </div>
-</div>
-</div>
-
 
 <div class="group"><div class="group-h"><p class="gtitle">Work for my employer, demonstrated on a stand-in brand</p></div>
 <div class="cpblock">
