@@ -1029,6 +1029,17 @@ details.fold[open] .fold-b{animation:foldIn .22s ease-out}
 .lp-shot img{width:100%;height:100%;object-fit:cover;object-position:top;border-radius:var(--radius)}
 .lp-credit{font-family:var(--mono);font-size:var(--size-mono);color:var(--text-3);
   line-height:1.5;display:block;margin:0 0 var(--space-2)}
+
+/* the receipt under a headline number. Sits directly beneath the metrics strip,
+   quieter than the strip and louder than a footnote, because a reader who
+   doubts the number should not have to go looking. */
+.lp-proofnote{max-width:74ch;margin:var(--space-3) 0 0;font-size:var(--size-small);
+  line-height:1.65;color:var(--text-2);border-left:2px solid var(--line);
+  padding-left:var(--space-3)}
+.pn-srcs{display:block;margin-top:8px;font-family:var(--mono);
+  font-size:var(--size-mono)}
+.pn-srcs a{color:var(--rose);margin-right:var(--space-3)}
+.pn-srcs a:last-child{margin-right:0}
 .lp-pending{font-family:var(--mono);font-size:var(--size-mono);color:var(--on-mint-tint);
   background:var(--mint-tint);border-radius:var(--radius);padding:6px 11px;
   display:block;margin:0 0 var(--space-2);line-height:1.5}

@@ -492,6 +492,18 @@ const LANE_META = {
       { n: '400+', l: 'illustrations across a book, an interactive and training slides' },
       { n: '123,190', l: 'signatures on a campaign that won', pulse: true },
     ],
+    /* The 123,190 is the largest audience on this page, and until now the page
+       asserted it without naming the campaign. A number that size has to carry
+       its receipt. Wording follows the record: she started the petition and
+       fronted it to the press, and the signature total is a merge of several
+       petitions, which is said here rather than glossed. */
+    proofNote: {
+      text: 'The 123,190 is the Savannah Dietrich petition, July 2012. She was seventeen, she named the two boys who had assaulted her in violation of a court gag order, and their attorneys moved to have her held in contempt. I started the petition asking for that charge to be dropped, and spoke for the campaign to national press. The motion was withdrawn on 23 July 2012. Change.org marks the petition a victory, which it does for very few. Several petitions ran at once and their signatures were combined.',
+      srcs: [
+        { l: 'the petition, marked a victory', href: 'https://www.change.org/petitions/judge-deana-dee-mcdonald-louisville-ky-drop-charges-against-savannah-dietrich' },
+        { l: 'CBS News, 24 July 2012', href: 'https://www.cbsnews.com/news/kentucky-teen-savannah-dietrich-spared-contempt-charge-after-naming-attackers-on-twitter/' },
+      ],
+    },
     pressHead: 'Also on the record',
     press: [
       { q: 'Thank you for making something we can hold onto.', s: 'A Lexington Club patron, quoted in Mission Local', href: 'http://web.archive.org/web/20200919195105/https://blog.sfgate.com/inthemission/2015/05/22/mission-cartoonist-draws-the-lexington-clubs-last-days/' },

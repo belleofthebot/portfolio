@@ -77,6 +77,17 @@ function proof(m) {
   return '';
 }
 
+/* A number big enough to lead with has to be checkable on the page carrying it,
+   not just in the record behind it. Optional, and only the nonprofit lane uses
+   it so far. */
+function proofNote(m) {
+  if (!m.proofNote) return '';
+  const n = m.proofNote;
+  const srcs = (n.srcs || []).map((x) =>
+    `<a href="${x.href}" target="_blank" rel="noopener">${esc(x.l)}</a>`).join('');
+  return `<p class="lp-proofnote">${esc(n.text)}${srcs ? `<span class="pn-srcs">${srcs}</span>` : ''}</p>`;
+}
+
 /* extra press band for lanes that lead with numbers but still carry quotes */
 function extraPress(m) {
   if (m.proofStyle === 'press' || !m.press) return '';
@@ -184,6 +195,7 @@ ${pills(lane)}
   <div class="lp-hero-art"><img src="${h.src}" alt="${attr(h.alt)}" decoding="async"></div>
 </div>
 ${proof(m)}
+${proofNote(m)}
 </div></section>
 
 <section class="lp-sec"><div class="wrap">
