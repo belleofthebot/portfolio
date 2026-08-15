@@ -21,6 +21,10 @@ const HERO = {
 };
 
 const esc = (s) => String(s).replace(/&(?![a-z#0-9]+;)/gi, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+/* esc() alone is not safe inside a double-quoted attribute: an alt or a meta
+   description containing a quotation mark closes the attribute early and spills
+   the rest into the markup. Anything going into an attribute uses attr(). */
+const attr = (s) => esc(s).replace(/"/g, '&quot;');
 
 /* ---------------------------------------------------------------- nav ----- */
 function nav(lane) {
@@ -85,7 +89,7 @@ function extraPress(m) {
 function thumb(c, lazy) {
   if (c.thumb.drawn) return c.thumb.drawn;
   const t = c.thumb;
-  return `<div class="thumb lp-shot"><img src="${t.src}"${t.w ? ` width="${t.w}" height="${t.h}"` : ''} ${lazy ? 'loading="lazy" ' : ''}decoding="async" alt="${esc(t.alt)}"></div>`;
+  return `<div class="thumb lp-shot"><img src="${t.src}"${t.w ? ` width="${t.w}" height="${t.h}"` : ''} ${lazy ? 'loading="lazy" ' : ''}decoding="async" alt="${attr(t.alt)}"></div>`;
 }
 
 function leadCard(c, lane, i) {
@@ -106,8 +110,15 @@ ${credit}${pend}
 function tile(c, lane) {
   const L = c.lanes[lane];
   const ext = c.external ? ' target="_blank" rel="noopener"' : '';
-  return `<a class="ltile" href="${c.href}"${ext}>
-<span class="lt-tag">${esc(c.tag)}</span>
+  /* the held-back work carries its artwork too, so the second section reads as
+     more of the same deck rather than a list of leftovers. Cropped shallower
+     than a lead card, and always lazy: this section is below the fold. */
+  const t = c.thumb;
+  const shot = t && t.src
+    ? `<div class="lt-shot"><img src="${t.src}"${t.w ? ` width="${t.w}" height="${t.h}"` : ''} loading="lazy" decoding="async" alt="${attr(t.alt)}"></div>`
+    : '';
+  return `<a class="ltile${shot ? ' has-shot' : ''}" href="${c.href}"${ext}>
+${shot}<span class="lt-tag">${esc(c.tag)}</span>
 <h3>${esc(c.title)}</h3>
 <p>${esc(L.line)}</p>
 <span class="lt-go" aria-hidden="true">→</span>
@@ -139,7 +150,7 @@ function page(lane) {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(m.title)} · Elizabeth Beier</title>
-<meta name="description" content="${esc(m.metaDesc)}">
+<meta name="description" content="${attr(m.metaDesc)}">
 <meta name="author" content="Elizabeth Beier">
 <meta name="theme-color" content="#17121C">
 <!-- One portfolio, five arrangements. Search should index the homepage, not five
@@ -149,8 +160,8 @@ function page(lane) {
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta property="og:title" content="${esc(m.title)} · Elizabeth Beier">
-<meta property="og:description" content="${esc(m.metaDesc)}">
+<meta property="og:title" content="${attr(m.title)} · Elizabeth Beier">
+<meta property="og:description" content="${attr(m.metaDesc)}">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body data-lane="${lane}">
@@ -170,7 +181,7 @@ ${pills(lane)}
       <a class="btn ghost" href="resume.html">Résumé</a>
     </div>
   </div>
-  <div class="lp-hero-art"><img src="${h.src}" alt="${esc(h.alt)}" decoding="async"></div>
+  <div class="lp-hero-art"><img src="${h.src}" alt="${attr(h.alt)}" decoding="async"></div>
 </div>
 ${proof(m)}
 </div></section>
