@@ -464,7 +464,6 @@ const LANE_META = {
     stage: [
       { l: 'Moth StorySLAM winner, then the Moth GrandSLAM at the Castro Theatre in front of 1,200 people', href: 'https://www.youtube.com/watch?v=a5SD30M0EG8' },
       { l: 'A RADAR reading at the San Francisco Public Library, on the library’s own channel', href: 'https://www.youtube.com/watch?v=YB_R4g_f-q4' },
-      { l: '23 published items on Muck Rack', href: 'https://muckrack.com/elizabeth-beier' },
     ],
     leadHead: 'Featured communications work',
     leadNote: 'Reported, published, and read by people who did not have to.',
