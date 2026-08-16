@@ -1,0 +1,713 @@
+{
+ "nib": {
+  "kept": 30,
+  "panels": [
+   {
+    "orig": "Nib-01.jpg",
+    "file": "nib-prop8-01.jpg",
+    "w": 797,
+    "h": 1000,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Nib-02.jpg",
+    "file": "nib-prop8-02.jpg",
+    "w": 803,
+    "h": 1000,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Nib-03.jpg",
+    "file": "nib-prop8-03.jpg",
+    "w": 808,
+    "h": 1000,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Nib-04.webp",
+    "file": "nib-prop8-04.jpg",
+    "w": 768,
+    "h": 970,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Nib-05.webp",
+    "file": "nib-prop8-05.jpg",
+    "w": 768,
+    "h": 961,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Nib-06.webp",
+    "file": "nib-prop8-06.jpg",
+    "w": 768,
+    "h": 959,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Nib-07.webp",
+    "file": "nib-prop8-07.jpg",
+    "w": 768,
+    "h": 982,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Nib-08.webp",
+    "file": "nib-prop8-08.jpg",
+    "w": 768,
+    "h": 939,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Nib-09.jpeg",
+    "file": "nib-prop8-09.jpg",
+    "w": 1035,
+    "h": 1000,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Nib-10.jpeg",
+    "file": "nib-prop8-10.jpg",
+    "w": 1400,
+    "h": 875,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Nib-11.webp",
+    "file": "nib-prop8-11.jpg",
+    "w": 768,
+    "h": 924,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Nib-12.webp",
+    "file": "nib-prop8-12.jpg",
+    "w": 768,
+    "h": 999,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Nib-13.webp",
+    "file": "nib-prop8-13.jpg",
+    "w": 768,
+    "h": 958,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Nib-14.webp",
+    "file": "nib-prop8-14.jpg",
+    "w": 768,
+    "h": 962,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Nib-15.webp",
+    "file": "nib-prop8-15.jpg",
+    "w": 768,
+    "h": 964,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Nib-16.jpeg",
+    "file": "nib-prop8-16.jpg",
+    "w": 803,
+    "h": 1000,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Nib-17.webp",
+    "file": "nib-prop8-17.jpg",
+    "w": 768,
+    "h": 956,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Nib-18.webp",
+    "file": "nib-prop8-18.jpg",
+    "w": 768,
+    "h": 964,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Nib-19.webp",
+    "file": "nib-prop8-19.jpg",
+    "w": 768,
+    "h": 971,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Nib-20.webp",
+    "file": "nib-prop8-20.jpg",
+    "w": 768,
+    "h": 949,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Nib-21.jpeg",
+    "file": "nib-prop8-21.jpg",
+    "w": 795,
+    "h": 1000,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Nib-22.webp",
+    "file": "nib-prop8-22.jpg",
+    "w": 768,
+    "h": 990,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Nib-23.webp",
+    "file": "nib-prop8-23.jpg",
+    "w": 768,
+    "h": 932,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Nib-24.jpeg",
+    "file": "nib-prop8-24.jpg",
+    "w": 1356,
+    "h": 1000,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Nib-25.jpeg",
+    "file": "nib-prop8-25.jpg",
+    "w": 965,
+    "h": 1000,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Nib-26.webp",
+    "file": "nib-prop8-26.jpg",
+    "w": 768,
+    "h": 972,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Nib-27.webp",
+    "file": "nib-prop8-27.jpg",
+    "w": 768,
+    "h": 948,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Nib-28.jpeg",
+    "file": "nib-prop8-28.jpg",
+    "w": 864,
+    "h": 1000,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Nib-29.jpeg",
+    "file": "nib-prop8-29.jpg",
+    "w": 1306,
+    "h": 1000,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Nib-30.jpeg",
+    "file": "nib-prop8-30.jpg",
+    "w": 1274,
+    "h": 1000,
+    "fmt": "JPEG"
+   }
+  ]
+ },
+ "stonewall": {
+  "kept": 11,
+  "panels": [
+   {
+    "orig": "Lily-stonewall-01.jpeg",
+    "file": "lily-stonewall-01.jpg",
+    "w": 1400,
+    "h": 758,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-stonewall-02.jpeg",
+    "file": "lily-stonewall-02.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-stonewall-03.jpeg",
+    "file": "lily-stonewall-03.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-stonewall-04.jpeg",
+    "file": "lily-stonewall-04.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-stonewall-05.jpeg",
+    "file": "lily-stonewall-05.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-stonewall-06.jpeg",
+    "file": "lily-stonewall-06.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-stonewall-07.jpeg",
+    "file": "lily-stonewall-07.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-stonewall-08.jpeg",
+    "file": "lily-stonewall-08.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-stonewall-09.jpeg",
+    "file": "lily-stonewall-09.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-stonewall-10.jpeg",
+    "file": "lily-stonewall-10.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-stonewall-11.jpeg",
+    "file": "lily-stonewall-11.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   }
+  ]
+ },
+ "convo": {
+  "kept": 11,
+  "panels": [
+   {
+    "orig": "Lily-convo-01.jpeg",
+    "file": "lily-conversation-01.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-convo-02.jpeg",
+    "file": "lily-conversation-02.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Lily-convo-03.jpeg",
+    "file": "lily-conversation-03.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-convo-04.jpeg",
+    "file": "lily-conversation-04.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-convo-05.jpeg",
+    "file": "lily-conversation-05.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "AVIF"
+   },
+   {
+    "orig": "Lily-convo-06.jpeg",
+    "file": "lily-conversation-06.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-convo-07.jpeg",
+    "file": "lily-conversation-07.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Lily-convo-08.jpeg",
+    "file": "lily-conversation-08.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-convo-09.jpeg",
+    "file": "lily-conversation-09.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-convo-10.jpeg",
+    "file": "lily-conversation-10.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-convo-11.jpeg",
+    "file": "lily-conversation-11.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   }
+  ]
+ },
+ "weight": {
+  "dupes": [
+   "Lily-weight-08.jpeg == Lily-weight-07.jpeg"
+  ],
+  "kept": 10,
+  "panels": [
+   {
+    "orig": "Lily-weight-01.jpeg",
+    "file": "lily-weight-01.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-weight-02.jpeg",
+    "file": "lily-weight-02.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-weight-03.jpeg",
+    "file": "lily-weight-03.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-weight-04.jpeg",
+    "file": "lily-weight-04.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-weight-05.jpeg",
+    "file": "lily-weight-05.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-weight-06.jpeg",
+    "file": "lily-weight-06.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-weight-07.jpeg",
+    "file": "lily-weight-07.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-weight-09.jpeg",
+    "file": "lily-weight-08.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-weight-10.jpeg",
+    "file": "lily-weight-09.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-weight-11.jpeg",
+    "file": "lily-weight-10.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   }
+  ]
+ },
+ "scotus": {
+  "kept": 10,
+  "panels": [
+   {
+    "orig": "Lily-scotus-01.jpeg",
+    "file": "lily-scotus-01.jpg",
+    "w": 1400,
+    "h": 758,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-scotus-02.jpeg",
+    "file": "lily-scotus-02.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Lily-scotus-03.jpeg",
+    "file": "lily-scotus-03.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Lily-scotus-04.jpeg",
+    "file": "lily-scotus-04.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Lily-scotus-05.jpeg",
+    "file": "lily-scotus-05.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Lily-scotus-06.jpeg",
+    "file": "lily-scotus-06.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Lily-scotus-07.jpeg",
+    "file": "lily-scotus-07.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Lily-scotus-08.jpeg",
+    "file": "lily-scotus-08.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Lily-scotus-09.jpeg",
+    "file": "lily-scotus-09.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Lily-scotus-10.jpeg",
+    "file": "lily-scotus-10.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "WEBP"
+   }
+  ]
+ },
+ "sa": {
+  "kept": 9,
+  "panels": [
+   {
+    "orig": "Lily-sa-01.jpeg",
+    "file": "lily-openletter-01.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "AVIF"
+   },
+   {
+    "orig": "Lily-sa-02.jpeg",
+    "file": "lily-openletter-02.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-sa-03.jpeg",
+    "file": "lily-openletter-03.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-sa-04.jpeg",
+    "file": "lily-openletter-04.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-sa-05.jpeg",
+    "file": "lily-openletter-05.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-sa-06.jpeg",
+    "file": "lily-openletter-06.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-sa-07.jpeg",
+    "file": "lily-openletter-07.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "AVIF"
+   },
+   {
+    "orig": "Lily-sa-08.jpeg",
+    "file": "lily-openletter-08.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-sa-09.jpeg",
+    "file": "lily-openletter-09.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "AVIF"
+   }
+  ]
+ },
+ "hm": {
+  "dupes": [
+   "Lily-hm-04.jpeg == Lily-hm-03.jpeg"
+  ],
+  "kept": 4,
+  "panels": [
+   {
+    "orig": "Lily-hm-01.jpeg",
+    "file": "lily-goosebumps-01.jpg",
+    "w": 1400,
+    "h": 758,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-hm-02.jpeg",
+    "file": "lily-goosebumps-02.jpg",
+    "w": 1024,
+    "h": 1024,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "Lily-hm-03.jpeg",
+    "file": "lily-goosebumps-03.jpg",
+    "w": 1024,
+    "h": 1024,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "Lily-hm-05.jpeg",
+    "file": "lily-goosebumps-04.jpg",
+    "w": 1024,
+    "h": 1024,
+    "fmt": "WEBP"
+   }
+  ]
+ },
+ "safeprotest": {
+  "kept": 10,
+  "panels": [
+   {
+    "orig": "lily-safeprotest-01.jpeg",
+    "file": "lily-safeprotest-01.jpg",
+    "w": 1400,
+    "h": 758,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "lily-safeprotest-02.jpeg",
+    "file": "lily-safeprotest-02.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "lily-safeprotest-03.jpeg",
+    "file": "lily-safeprotest-03.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "AVIF"
+   },
+   {
+    "orig": "lily-safeprotest-04.jpeg",
+    "file": "lily-safeprotest-04.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "lily-safeprotest-05.jpeg",
+    "file": "lily-safeprotest-05.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "lily-safeprotest-06.jpeg",
+    "file": "lily-safeprotest-06.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "AVIF"
+   },
+   {
+    "orig": "lily-safeprotest-07.jpeg",
+    "file": "lily-safeprotest-07.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "lily-safeprotest-08.jpeg",
+    "file": "lily-safeprotest-08.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   },
+   {
+    "orig": "lily-safeprotest-09.jpeg",
+    "file": "lily-safeprotest-09.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "WEBP"
+   },
+   {
+    "orig": "lily-safeprotest-10.jpeg",
+    "file": "lily-safeprotest-10.jpg",
+    "w": 1400,
+    "h": 1400,
+    "fmt": "JPEG"
+   }
+  ]
+ }
+}
