@@ -1143,6 +1143,33 @@ details.fold[open] .fold-b{animation:foldIn .22s ease-out}
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);align-items:start}
 @media(max-width:700px){.pair{grid-template-columns:1fr}}
 
+/* ---------- the comics index: square thumbnails, work before words ----------
+   Each thumbnail is a square crop of the comic's own opening panel, taken from
+   the top so hand lettering survives the crop. No separate thumbnail files: the
+   panels are already in the repo and the crop is done in the box. */
+.cread{margin:var(--space-5) 0 var(--space-6)}
+.cgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-3)}
+@media(max-width:940px){.cgrid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:700px){.cgrid{grid-template-columns:repeat(2,1fr)}}
+.ccard{display:flex;flex-direction:column;text-decoration:none;color:inherit;border-bottom:0}
+.cthumb{display:block;aspect-ratio:1 / 1;overflow:hidden;border-radius:var(--radius-card);
+  border:1px solid var(--line);background:var(--tile);margin-bottom:var(--space-2);
+  transition:border-color .15s}
+.cthumb img{display:block;width:100%;height:100%;object-fit:cover;object-position:center top;
+  transition:transform .35s cubic-bezier(.2,.8,.3,1)}
+.ccard:hover .cthumb,.ccard:focus-visible .cthumb{border-color:var(--rose)}
+.ccard:hover .cthumb img,.ccard:focus-visible .cthumb img{transform:scale(1.05)}
+.ccard:focus-visible{outline:2px solid var(--mint);outline-offset:4px;border-radius:var(--radius)}
+.ccard .ct{font-size:.95rem;line-height:1.35;margin-bottom:5px}
+.ccard:hover .ct{color:var(--rose)}
+.ccard .cm{display:block;font-family:var(--mono);font-size:var(--size-mono);
+  color:var(--text-3);text-transform:lowercase;white-space:nowrap}
+/* .cnote is already the reader pages' mint content-note panel, so the
+   chip in this grid gets its own name. */
+.cflag{display:block;margin-top:3px;font-family:var(--mono);font-size:var(--size-mono);
+  text-transform:lowercase;color:var(--rose)}
+@supports not (aspect-ratio: 1 / 1){.cthumb{height:220px}}
+
 /* ---------- comic reader pages ---------- */
 .comic{margin:var(--space-5) 0}
 .cpanel{margin:0 0 var(--space-3)}
