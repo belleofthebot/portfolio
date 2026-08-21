@@ -1,0 +1,184 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Elizabeth Beier — visual journalism</title>
+<meta name="robots" content="noindex,follow">
+<meta name="description" content="Editorial illustration, visual identity, and rapid news graphics — reporting that gets drawn.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ground:#FAF7F1;--card:#FFFFFF;--ink:#221E2A;--muted:#6C6472;--plum:#17121C;--plum2:#241D28;
+--rose:#B04C57;/* darkened from #B85A64 on 21 Aug 2026: the original failed WCAG AA on every light ground (3.91 on the back bar). #B04C57 keeps the hue and clears 4.5 everywhere, including white-on-rose for the req pills. */--rosed:#DFA192;--line:#E7DFD3;--sans:'Inter','Helvetica Neue',Arial,sans-serif;
+--serif:'Newsreader',Georgia,'Times New Roman',serif;--mono:'Inter','Helvetica Neue',Arial,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+/* top bar */
+.top{background:var(--plum);color:#F4F1FA}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;padding:16px 22px}
+.mark{font-family:var(--serif);font-weight:600;font-size:1.15rem;letter-spacing:.01em;text-decoration:none;color:#fff}
+.mark .e{color:var(--rosed)}
+.top nav a{font-family:var(--mono);font-size:.78rem;color:#CFC7E6;text-decoration:none;margin-left:18px}
+.top nav a:hover{color:#fff}
+/* hero */
+.hero{padding:64px 0 34px;background:linear-gradient(180deg,#F8EEEA 0%,var(--ground) 80%)}
+.hero .kick{font-family:var(--mono);font-size:.8rem;color:var(--rose);text-transform:lowercase;letter-spacing:.04em}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(2.5rem,6vw,4.3rem);line-height:1.02;letter-spacing:-.02em;margin:.28em 0 .18em}
+.hero .sub{font-size:1.16rem;max-width:60ch;color:var(--ink)}
+.hero .mission{font-size:1rem;max-width:60ch;color:var(--muted);margin-top:14px}
+/* filter pills */
+.filterwrap{position:sticky;top:0;z-index:5;background:var(--ground);border-bottom:1px solid var(--line);padding:12px 0}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.pill{font-family:var(--mono);font-size:.76rem;border:1px solid var(--line);background:var(--card);color:var(--ink);
+padding:7px 13px;border-radius:999px;cursor:pointer;/* was transition:all, which animated the focus outline in over 120ms; a keyboard ring has to appear at once */transition:background-color .12s,border-color .12s,color .12s}
+.pill:hover{border-color:var(--plum)}
+.pill.active{background:var(--plum);color:#fff;border-color:var(--plum)}
+/* featured */
+.featured{padding:34px 0 8px}
+.eyebrow{font-family:var(--mono);font-size:.78rem;color:var(--muted);letter-spacing:.03em;margin-bottom:14px}
+.eyebrow b{color:var(--rose);font-weight:500}
+/* sections */
+.sec{padding:30px 0;border-top:1px solid var(--line)}
+.sec:first-of-type{border-top:none}
+.sechead{margin-bottom:20px}
+.sechead .kick{font-family:var(--mono);font-size:.76rem;color:var(--rose);text-transform:lowercase;letter-spacing:.04em}
+.sechead h2{font-family:var(--serif);font-weight:500;font-size:clamp(1.7rem,3.4vw,2.5rem);letter-spacing:-.015em;margin:.15em 0 0}
+.intro{color:var(--muted);max-width:64ch;margin:.5em 0 0}
+.intro a{color:var(--rose);text-decoration:none;font-weight:500}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:26px 22px;margin-top:18px}
+.featured .grid{grid-template-columns:repeat(4,1fr)}
+@media(max-width:900px){.featured .grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.featured .grid{grid-template-columns:1fr}}
+.card{display:flex;flex-direction:column}
+.thumb{display:block;position:relative;aspect-ratio:3/2;border-radius:10px;overflow:hidden;background:#F0EADF;
+border:1px solid var(--line);text-decoration:none}
+.thumb img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;z-index:1;background:#F0EADF}
+
+a.thumb:hover img{transform:scale(1.02)}a.thumb img{transition:transform .3s}@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.cbody{padding-top:12px}
+.req{display:inline-block;font-family:var(--mono);font-size:.7rem;color:#fff;background:var(--rose);
+padding:3px 8px;border-radius:5px;margin-bottom:8px;letter-spacing:.02em}
+.card h3{font-family:var(--serif);font-weight:500;font-size:1.16rem;line-height:1.2;margin:0 0 6px}
+a.thumb+.cbody h3,.card h3{color:var(--ink)}
+.credit{font-size:.92rem;color:var(--muted);margin:0 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-family:var(--mono);font-size:.66rem;color:var(--plum2);border:1px solid var(--line);
+border-radius:999px;padding:3px 8px;background:#fff}
+/* quotes */
+.quotes{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+blockquote{margin:0;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--rose);
+border-radius:8px;padding:16px 18px;font-family:var(--serif);font-size:1.06rem;line-height:1.4}
+blockquote cite{display:block;font-family:var(--mono);font-size:.72rem;color:var(--muted);font-style:normal;margin-top:10px}
+.feature{display:grid;grid-template-columns:1.05fr 1fr;gap:34px;align-items:center;margin-top:6px}
+.feature-media{display:block;position:relative;border-radius:12px;overflow:hidden;background:#F0EADF;border:1px solid var(--line);width:100%;text-decoration:none}
+.feature-media img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;z-index:1;background:#F0EADF}
+
+.fprose{font-size:1.12rem;line-height:1.6;color:var(--ink);margin:0 0 6px;max-width:52ch}
+.mini{font-size:.82rem;color:var(--muted);margin:16px 0 8px;font-weight:600}
+.metrics{display:flex;gap:30px;margin:16px 0 12px;flex-wrap:wrap}
+.metric .fig{font-family:var(--serif);font-weight:500;font-size:2.1rem;color:var(--rose);display:block;line-height:1}
+.metric .lbl{font-size:.85rem;color:var(--muted)}
+.slider{display:flex;align-items:center;gap:12px;margin:2px 0 6px}
+.slider .slides{flex:1}
+.slide{display:none}.slide.active{display:block}
+.arw{flex:none;width:40px;height:40px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--plum);font-size:1.4rem;line-height:1;cursor:pointer}
+.arw:hover{border-color:var(--plum)}
+.slider blockquote{margin:0;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--rose);border-radius:8px;padding:15px 17px;font-family:var(--serif);font-size:1.03rem;line-height:1.4}
+.slider cite{display:block;font-size:.78rem;color:var(--muted);font-style:normal;margin-top:9px}
+@media(max-width:720px){.feature{grid-template-columns:1fr}.feature-media{aspect-ratio:16/10 !important}}
+.mwgrid{grid-template-columns:1fr;gap:0}
+.mwrow{flex-direction:row;align-items:baseline;gap:14px;padding:13px 2px;border-bottom:1px solid var(--line)}
+.mwlink{font-family:var(--serif);font-size:1.12rem;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rose)}
+.mwlink:hover{color:var(--rose)}
+.mwmeta{font-size:.92rem;color:var(--muted)}
+.sec.hidden,.card.hidden{display:none}
+/* footer */
+.foot{background:var(--plum);color:#EEEAF7;margin-top:40px}
+.foot .wrap{padding:44px 22px}
+.foot .avail{font-family:var(--mono);font-size:.8rem;color:#9FE0CE;margin:0 0 8px}
+.foot h2{font-family:var(--serif);font-weight:500;font-size:2rem;margin:0 0 18px}
+.foot a{color:#fff;font-family:var(--mono);font-size:.82rem;text-decoration:none;margin-right:20px;border-bottom:1px solid var(--rosed);padding-bottom:2px}
+.foot .fnote{color:#9F97B6;font-size:.8rem;margin-top:24px;font-family:var(--mono)}
+@media(max-width:600px){.hero{padding:44px 0 18px}}
+
+.backbar{border-top:1px solid var(--line);background:#F4EFE6}
+.backbar .wrap{padding:26px 22px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.backbtn{font-family:var(--sans);font-weight:500;font-size:.95rem;color:#fff;background:var(--plum);
+ text-decoration:none;padding:11px 20px;border-radius:999px;border:1px solid var(--plum);white-space:nowrap}
+.backbtn:hover{background:var(--rose);border-color:var(--rose)}
+.backnote{font-size:.9rem;color:var(--muted);max-width:52ch}
+a:focus-visible,button:focus-visible,.pill:focus-visible,.arw:focus-visible,.backbtn:focus-visible,.thumb:focus-visible,.feature-media:focus-visible,.mwlink:focus-visible,.skiplink:focus{outline:3px solid var(--rose);outline-offset:3px}.top nav a:focus-visible,.foot a:focus-visible{outline:3px solid var(--rosed);outline-offset:3px}
+.skiplink{position:absolute;left:-9999px}
+.skiplink:focus{left:12px;top:12px;z-index:99;background:var(--plum);color:#fff;padding:10px 16px;border-radius:6px}
+</style></head><body>
+<a class="skiplink" href="#main">Skip to content</a>
+
+<div class="top"><div class="wrap">
+<a class="mark" href="index.html"><span class="e">E</span>lizabeth Beier</a>
+<nav><a href="index.html">portfolio</a><a href="resume.html">résumé</a><a href="mailto:elizabethbportfolio@gmail.com">contact</a></nav>
+</div></div>
+
+<header class="hero"><div class="wrap">
+<span class="kick">portfolio: visual journalism and graphic storytelling</span>
+<h1>Reporting that draws you in.</h1>
+<p class="sub">Visual storytelling that makes complex topics clear.</p>
+</div></header>
+
+<div class="filterwrap"><div class="wrap"><div class="filters"><button class="pill active" data-tag="all">All work</button><button class="pill" data-tag="lgbtq">LGBTQ+</button><button class="pill" data-tag="gender">Gender</button><button class="pill" data-tag="democracy">Democracy</button><button class="pill" data-tag="environment">Environment</button><button class="pill" data-tag="editorial-illustration">Editorial illustration</button><button class="pill" data-tag="infographic">Infographic</button><button class="pill" data-tag="social">Social graphics</button><button class="pill" data-tag="vis">Visual identity system</button><button class="pill" data-tag="quick">Quick news response</button><button class="pill" data-tag="longform">Long-form</button><button class="pill" data-tag="writing">Writing sample</button><button class="pill" data-tag="artdirection">Art direction</button><button class="pill" data-tag="motion">Motion & animation</button><button class="pill" data-tag="caregiving">Caregiving</button><button class="pill" data-tag="figma">Figma</button><button class="pill" data-tag="adobe">Adobe CS</button></div></div></div>
+
+<div class="wrap" id="main">
+<section class="sec featured">
+<p class="eyebrow">Featured projects</p>
+<div class="grid"><article class="card" data-tags="quick editorial-illustration gender democracy"><div class="thumb"><img src="gf-warren.jpg" alt="Elizabeth Warren town hall — live illustration" loading="lazy" onerror="this.remove()"></div><div class="cbody"><span class="req">Quick turnaround</span><h3>Elizabeth Warren town hall — live illustration</h3><p class="credit">Drawn live at the town hall. Senator Warren’s social team tweeted it right after.</p><div class="chips"><span class="chip">Democracy</span><span class="chip">Quick news response</span><span class="chip">Editorial illustration</span><span class="chip">Gender</span></div></div></article><article class="card" data-tags="longform editorial-illustration lgbtq gender democracy"><a class="thumb" href="read-nib-prop8.html"><img src="j-nib.jpg" alt="The Nib — “A Decade Since Prop 8”" loading="lazy" onerror="this.remove()"></a><div class="cbody"><span class="req">Long-form</span><h3>The Nib — “A Decade Since Prop 8”</h3><p class="credit">Written and illustrated by me. Editor: Eleri Harris, The Nib.</p><div class="chips"><span class="chip">Democracy</span><span class="chip">Long-form</span><span class="chip">Editorial illustration</span><span class="chip">LGBTQ+</span><span class="chip">Gender</span></div></div></article><article class="card" data-tags="artdirection motion quick editorial-illustration democracy"><div class="thumb"><img src="j-cd-video.jpg" alt="A title card from a Choose Democracy explainer video, hand lettered, reading five facts about how votes are counted." loading="lazy"></div><div class="cbody"><span class="req">Art direction</span><h3>Choose Democracy — 2020 election videos</h3><p class="credit">Animated explainers for the 2020 election — I shaped the script and visual style, and directed the voice actor.</p><div class="chips"><span class="chip">Democracy</span><span class="chip">Art direction</span><span class="chip">Motion & animation</span><span class="chip">Quick news response</span><span class="chip">Editorial illustration</span></div></div></article><article class="card" data-tags="vis editorial-illustration gender lgbtq"><a class="thumb" href="read-lily-stonewall.html"><img src="lily-stonewall.jpg" alt="The Lily / The Washington Post — reported comics" loading="lazy" onerror="this.remove()"></a><div class="cbody"><span class="req">Visual identity system</span><h3>The Lily / The Washington Post — reported comics</h3><p class="credit">Seven reported comics that held the Lily’s colors and house brand across every piece. Art director: Rachel Orr. A favorite of the year, 2018 and 2019.</p><div class="chips"><span class="chip">Visual identity system</span><span class="chip">Editorial illustration</span><span class="chip">Gender</span><span class="chip">LGBTQ+</span></div></div></article></div>
+</section>
+
+<section class="sec"><div class="sechead"><span class="kick">published work</span><h2>Comics journalism</h2><p class="intro">Reported, written, and drawn. Named a favorite of the year at The Lily two years running — pieces art-directed by Rachel Orr; The Nib by Eleri Harris.</p></div><div class="grid"><article class="card" data-tags="editorial-illustration lgbtq gender"><a class="thumb" href="read-lily-stonewall.html"><img src="lily-stonewall.jpg" alt="The Lily — Stonewall" loading="lazy" onerror="this.remove()"></a><div class="cbody"><h3>The Lily — Stonewall</h3><p class="credit">One object, one date, the whole story loaded. The Washington Post.</p><div class="chips"><span class="chip">Editorial illustration</span><span class="chip">LGBTQ+</span><span class="chip">Gender</span></div></div></article><article class="card" data-tags="editorial-illustration lgbtq gender democracy"><a class="thumb" href="read-lily-scotus.html"><img src="lily-scotus.jpg" alt="The Lily — the Supreme Court" loading="lazy" onerror="this.remove()"></a><div class="cbody"><h3>The Lily — the Supreme Court</h3><p class="credit">Scale doing the argument. The Washington Post.</p><div class="chips"><span class="chip">Democracy</span><span class="chip">Editorial illustration</span><span class="chip">LGBTQ+</span><span class="chip">Gender</span></div></div></article><article class="card" data-tags="editorial-illustration gender"><a class="thumb" href="read-lily-weight.html"><img src="lily-weight.jpg" alt="The Lily — weight, health & appearance" loading="lazy" onerror="this.remove()"></a><div class="cbody"><h3>The Lily — weight, health & appearance</h3><p class="credit">The lettering carries the pressure the sentence describes. The Washington Post.</p><div class="chips"><span class="chip">Editorial illustration</span><span class="chip">Gender</span></div></div></article><article class="card" data-tags="editorial-illustration gender infographic"><a class="thumb" href="read-lily-conversation.html"><img src="lily-convo.jpg" alt="The Lily — a hard conversation, in steps" loading="lazy" onerror="this.remove()"></a><div class="cbody"><h3>The Lily — a hard conversation, in steps</h3><p class="credit">Service journalism built as numbered steps. The Washington Post.</p><div class="chips"><span class="chip">Editorial illustration</span><span class="chip">Gender</span><span class="chip">Infographic</span></div></div></article><article class="card" data-tags="editorial-illustration infographic quick democracy"><a class="thumb" href="read-lily-safeprotest.html"><img src="lily-safeprotest.jpg" alt="A protester kneeling with one fist raised, drawn in teal and grey." loading="lazy"></a><div class="cbody"><h3>The Lily &mdash; how to protest safely</h3><p class="credit">A do&rsquo;s and don&rsquo;ts guide drawn for the street, 2020. The Washington Post.</p><div class="chips"><span class="chip">Democracy</span><span class="chip">Editorial illustration</span><span class="chip">Infographic</span><span class="chip">Quick news response</span></div></div></article><article class="card" data-tags="editorial-illustration gender writing"><a class="thumb" href="read-lily-openletter.html"><img src="lily-openletter.jpg" alt="An opening panel from the open letter comic, hand lettered." loading="lazy"></a><div class="cbody"><h3>The Lily &mdash; an open letter after a rape</h3><p class="credit">Written and drawn for survivors, closing with RAINN. The Washington Post.</p><div class="chips"><span class="chip">Editorial illustration</span><span class="chip">Gender</span><span class="chip">Writing sample</span></div></div></article><article class="card" data-tags="editorial-illustration writing"><a class="thumb" href="read-lily-goosebumps.html"><img src="lily-goosebumps.jpg" alt="A panel about the Goosebumps book The Haunted Mask." loading="lazy"></a><div class="cbody"><h3>The Lily &mdash; The Haunted Mask</h3><p class="credit">On growing up inside Goosebumps, and the one that stuck. The Washington Post.</p><div class="chips"><span class="chip">Editorial illustration</span><span class="chip">Writing sample</span></div></div></article><article class="card" data-tags="editorial-illustration lgbtq gender longform democracy"><a class="thumb" href="read-nib-prop8.html"><img src="j-nib.jpg" alt="The Nib — “A Decade Since Prop 8”" loading="lazy" onerror="this.remove()"></a><div class="cbody"><h3>The Nib — “A Decade Since Prop 8”</h3><p class="credit">Written and illustrated. Editor: Eleri Harris, The Nib.</p><div class="chips"><span class="chip">Democracy</span><span class="chip">Editorial illustration</span><span class="chip">LGBTQ+</span><span class="chip">Gender</span><span class="chip">Long-form</span></div></div></article></div></section><section class="sec featurewrap" data-tags="lgbtq longform editorial-illustration"><div class="sechead"><span class="kick">graphic novel</span><h2>The Big Book of Bisexual Trials and Errors</h2></div><div class="feature"><div class="feature-media" style="aspect-ratio:3/4"></a><div class="feature-body"><p class="fprose">A full-length memoir in comics. Northwest Press, 2017, 216 pages, and named to The Advocate’s best LGBT graphic novels of 2017.</p><p class="mini">What the reviews said</p><div class="slider" data-slider><button class="arw" data-dir="-1" aria-label="previous review">&#8249;</button><div class="slides"><blockquote class="slide active">&ldquo;Beier&rsquo;s tale of self-acceptance and the beautiful renderings of the people around her make this book an absolute joy to read.&rdquo;<cite>Okazu &middot; overall 8</cite></blockquote><blockquote class="slide">&ldquo;The art in this is unique, and very obviously a style someone has spent years practicing with daily.&rdquo;<cite>What A Nerd</cite></blockquote><blockquote class="slide">Named one of the best LGBT graphic novels of 2017.<cite>The Advocate</cite></blockquote></div><button class="arw" data-dir="1" aria-label="next review">&#8250;</button></div></div></section><section class="sec"><div class="sechead"><span class="kick">graphics journalism</span><h2>Live, in the room</h2></div><div class="grid"><article class="card" data-tags="editorial-illustration writing lgbtq"><a class="thumb" href="https://www.tcj.com/live-scribing-with-elizabeth-beier/"><img src="tcj-georges-tamaki.jpg" alt="The Comics Journal — live scribing" loading="lazy" onerror="this.remove()"></a><div class="cbody"><h3>The Comics Journal — live scribing</h3><p class="credit">Drawn live at Queers & Comics (SVA) and published as reporting. The Comics Journal, 2019.</p><div class="chips"><span class="chip">Editorial illustration</span><span class="chip">Writing sample</span><span class="chip">LGBTQ+</span></div></div></article></div></section><section class="sec"><div class="sechead"><span class="kick">interviews & written work</span><h2>In my own words</h2></div><div class="grid"><article class="card" data-tags="writing"><a class="thumb" href="http://web.archive.org/web/20200919195105/https://blog.sfgate.com/inthemission/2015/05/22/mission-cartoonist-draws-the-lexington-clubs-last-days/"><img src="missionlocal-2015.jpg" alt="Mission Local — the Lexington Club" loading="lazy" onerror="this.remove()"></a><div class="cbody"><h3>Mission Local — the Lexington Club</h3><p class="credit">An oral history from 100+ interviews, covered by Mission Local. “Both documentarian and participant.”</p><div class="chips"><span class="chip">Writing sample</span></div></div></article><article class="card" data-tags="writing lgbtq"><div class="cbody"><h3>HuffPost — “Why I Create Bisexual Comics”</h3><p class="credit">Personal essay, my byline, 2017.</p><div class="chips"><span class="chip">Writing sample</span><span class="chip">LGBTQ+</span></div></div></article></div></section><section class="sec featurewrap" data-tags="artdirection quick editorial-illustration motion democracy"><div class="sechead"><span class="kick">advocacy at scale</span><h2>Choose Democracy — 2020 election rapid response</h2></div><div class="feature"><div class="feature-media" style="aspect-ratio:16/10"><img src="j-cd-adventure.jpg" alt="Choose Democracy — 2020 election rapid response" loading="lazy" onerror="this.remove()"></a><div class="feature-body"><p class="fprose">Rapid-response animated explainers for the 2020 election, plus original illustration for the Choose Democracy site and a published book. I illustrated, shaped the script and visual style, and cast and directed the voice actor.</p><div class="metrics"><div class="metric"><span class="fig">400+</span><span class="lbl">illustrations</span></div><div class="metric"><span class="fig">26K</span><span class="lbl">explainer views</span></div></div><div class="chips"><span class="chip">Art direction</span><span class="chip">Quick news response</span><span class="chip">Editorial illustration</span><span class="chip">Motion & animation</span></div></div></div></section><section class="sec"><div class="sechead"><span class="kick">visual identity system</span><h2>Building a brand, and holding it</h2><p class="intro">The Lily work above is holding a house brand across reported pieces. This is the other half: a brand built end to end.</p></div><div class="grid"><article class="card" data-tags="vis adobe"><div class="thumb"><img src="j-bonobo.jpg" alt="Bonobo Network — brand identity & website" loading="lazy" onerror="this.remove()"></a><div class="cbody"><h3>Bonobo Network — brand identity & website</h3><p class="credit">Built the visual identity system and the website for a sexual-wellness brand — from brand direction through a live site.</p><div class="chips"><span class="chip">Visual identity system</span><span class="chip">Adobe CS</span></div></div></article><article class="card" data-tags="vis social adobe"><div class="thumb"><img src="rebrand-before-after.jpg" alt="Painting the Southwest — rebrand & biggest month" loading="lazy" onerror="this.remove()"></div><div class="cbody"><h3>Painting the Southwest — rebrand & biggest month</h3><p class="credit">Built the brand end to end. The March 2026 rebrand fed the biggest sales month yet — emails and social graphics by me.</p><div class="chips"><span class="chip">Visual identity system</span><span class="chip">Social graphics</span><span class="chip">Adobe CS</span></div></div></article><article class="card" data-tags="vis"><div class="thumb"><img src="pts-airport-vitrine.jpg" alt="Painting the Southwest — out in the world" loading="lazy" onerror="this.remove()"></div><div class="cbody"><h3>Painting the Southwest — out in the world</h3><p class="credit">New Mexico True Certified, and a solo branded display at the Albuquerque airport.</p><div class="chips"><span class="chip">Visual identity system</span></div></div></article></div></section><section class="sec"><div class="sechead"><span class="kick">infographics & explainers</span><h2>Making the complicated clear</h2></div><div class="grid"><article class="card" data-tags="infographic"><div class="thumb"><img src="aristotle-preview.jpg" alt="The Aristotle's Poetics poster showing the six parts of tragedy, each with a drawn icon." loading="lazy"></div><div class="cbody"><h3>Aristotle’s Poetics</h3><p class="credit">Structure of story, drawn as one diagram.</p><div class="chips"><span class="chip">Infographic</span></div></div></article><article class="card" data-tags="infographic"><div class="thumb"><img src="sa-preview.jpg" alt="A cutaway drawing of a sleep apnea machine showing the filter, impeller and humidifier." loading="lazy"></div><div class="cbody"><h3>Sleep Apnea Machine</h3><p class="credit">A CPAP and the airway it treats, walked through in a fixed seven-part sequence.</p><div class="chips"><span class="chip">Infographic</span></div></div></article><article class="card" data-tags="infographic motion vis"><a class="thumb" href="https://whatthebot.vercel.app/"><img src="belleofthebot-spotlight.jpg" alt="Belle of the Bot" loading="lazy" onerror="this.remove()"></a><div class="cbody"><h3>Belle of the Bot</h3><p class="credit">An AI-literacy explainer project — site, quizzes, and social generated from one data file.</p><div class="chips"><span class="chip">Infographic</span><span class="chip">Motion & animation</span><span class="chip">Visual identity system</span></div></div></article></div></section><section class="sec"><div class="sechead"><span class="kick">nonprofit work</span><h2>Live visual storytelling</h2></div><div class="grid"><article class="card" data-tags="editorial-illustration artdirection environment"><div class="thumb"><img src="aud-chapters.jpg" alt="Audubon" loading="lazy" onerror="this.remove()"></div><div class="cbody"><h3>Audubon</h3><p class="credit">Live visual storytelling for Audubon, through the Illustrious roster.</p><div class="chips"><span class="chip">Environment</span><span class="chip">Editorial illustration</span><span class="chip">Art direction</span></div></div></article><article class="card" data-tags="editorial-illustration environment"><div class="thumb"><img src="gf-sif-banki.jpg" alt="Sustainability conference" loading="lazy" onerror="this.remove()"></div><div class="cbody"><h3>Sustainability conference</h3><p class="credit">Live scribing across a multi-day conference — the client’s brand held live, in the room.</p><div class="chips"><span class="chip">Environment</span><span class="chip">Editorial illustration</span></div></div></article></div></section><section class="sec"><div class="sechead"><span class="kick">ux design</span><h2>Research and product</h2></div><div class="grid"><article class="card" data-tags="figma"><a class="thumb" href="work-bookspot.html"><img src="bookspot-preview.jpg" alt="BookSpot" loading="lazy" onerror="this.remove()"></a><div class="cbody"><h3>BookSpot</h3><p class="credit">A reading app, taken from user interviews and research through to Figma prototype.</p><div class="chips"><span class="chip">Figma</span></div></div></article><article class="card" data-tags="figma caregiving"><a class="thumb" href="work-passage.html"><img src="passage-preview.jpg" alt="Three screens from Passage: the caregiver's home with today's three small tasks, a meditation player, and the journal." loading="lazy"></a><div class="cbody"><h3>Passage</h3><p class="credit">A group project on caregiving — collaborative design work, built in Figma.</p><div class="chips"><span class="chip">Figma</span><span class="chip">Caregiving</span></div></div></article></div></section><section class="sec"><div class="sechead"><span class="kick">public speaking</span><h2>On stage</h2></div><div class="grid"><article class="card" data-tags="writing"><div class="cbody"><h3>The Moth</h3><p class="credit">StorySLAM winner → the Moth GrandSLAM at the Castro Theatre, in front of 1,200 people.</p><div class="chips"><span class="chip">Writing sample</span></div></div></article><article class="card" data-tags="writing"><div class="cbody"><h3>RADAR Reading Series</h3><p class="credit">A reading at the San Francisco Public Library, on the library’s own channel.</p><div class="chips"><span class="chip">Writing sample</span></div></div></article></div></section><section class="sec"><div class="sechead"><span class="kick">more work</span><h2>More work</h2></div><div class="grid mwgrid"><article class="card mwrow" data-tags="editorial-illustration lgbtq"><a class="mwlink" href="#">ALPHABET — “V is for Virginia”</a><span class="mwmeta">Comic on Virginia Woolf. Prism Comics anthology, 2016.</span></article><article class="card mwrow" data-tags="writing"><a class="mwlink" href="#">Albuquerque Journal — feature</a><span class="mwmeta">Press coverage of Painting the Southwest.</span></article></div></section>
+</div>
+
+<div class="backbar"><div class="wrap"><a class="backbtn" href="index.html">&larr; Elizabeth Beier: the main portfolio</a><span class="backnote">This page is a focused view of the visual journalism. The full portfolio has the marketing, analytics and product work.</span></div></div>
+<footer class="foot"><div class="wrap">
+<p class="avail">open to visual journalism and editorial roles · remote</p>
+<h2>Let’s talk.</h2>
+<div>
+<a href="mailto:elizabethbportfolio@gmail.com">elizabethbportfolio@gmail.com</a>
+<a href="resume.html">résumé</a>
+<a href="https://whatthebot.vercel.app/">belle of the bot</a>
+</div>
+<p class="fnote">Albuquerque, New Mexico · designed, built, and drawn by me</p>
+</div></footer>
+
+<script>
+var pills=document.querySelectorAll('.pill'), cards=document.querySelectorAll('.card'), secs=document.querySelectorAll('.sec');
+function apply(tag){
+ cards.forEach(function(c){
+   var ok = tag==='all' || (' '+c.getAttribute('data-tags')+' ').indexOf(' '+tag+' ')>-1;
+   c.classList.toggle('hidden', !ok);
+ });
+ secs.forEach(function(s){
+   if(s.classList.contains('featured')) return;
+   if(s.hasAttribute('data-tags')){
+     var dt=' '+s.getAttribute('data-tags')+' ';
+     s.classList.toggle('hidden', !(tag==='all' || dt.indexOf(' '+tag+' ')>-1));
+     return;
+   }
+   var vis=s.querySelectorAll('.card:not(.hidden)').length;
+   var hasCards=s.querySelectorAll('.card').length>0;
+   s.classList.toggle('hidden', hasCards && vis===0);
+ });
+}
+pills.forEach(function(p){p.addEventListener('click',function(){
+ pills.forEach(function(x){x.classList.remove('active')});
+ p.classList.add('active'); apply(p.getAttribute('data-tag'));
+});});
+document.querySelectorAll('[data-slider]').forEach(function(sl){
+ var slides=sl.querySelectorAll('.slide'), i=0;
+ sl.querySelectorAll('.arw').forEach(function(b){b.addEventListener('click',function(){
+   if(slides.length<2) return;
+   slides[i].classList.remove('active');
+   i=(i+parseInt(b.getAttribute('data-dir'))+slides.length)%slides.length;
+   slides[i].classList.add('active');
+ });});
+});
+</script>
+</body></html>
