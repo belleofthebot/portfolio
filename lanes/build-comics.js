@@ -7,39 +7,39 @@ const SRC = '/root/comics';
 const files = JSON.parse(fs.readFileSync(SRC + '/manifest_files.json', 'utf8'));
 
 const STORIES = [
-  { dir:'nib', slug:'nib-prop8',
+  { dir:'nib', slug:'nib-prop8', date:'2018',
     title:'It’s Been a Decade Since Prop 8. Marriage Equality Isn’t Enough.',
     outlet:'The Nib', outletUrl:'https://thenib.com/', role:'Written and illustrated by Elizabeth Beier',
     dek:'Ten years after California voted to take marriage away, three organisers on what was won, what was not, and who is still being targeted.',
     note:'This piece reports on family rejection and includes a statistic on suicide among queer teenagers.' },
-  { dir:'stonewall', slug:'lily-stonewall',
+  { dir:'stonewall', slug:'lily-stonewall', date:'28 june 2019',
     title:'I went to the Stonewall Inn expecting history. I found something better.',
     outlet:'The Lily', outletUrl:'https://www.thelily.com/', role:'Reported, written and illustrated by Elizabeth Beier · Art direction by Rachel Orr',
     dek:'A reported visit to the bar where Pride began, fifty years on, where the merchandise is louder than the plaque and the people are the point.' },
-  { dir:'convo', slug:'lily-conversation',
+  { dir:'convo', slug:'lily-conversation', date:'23 december 2018',
     title:'Ten steps for talking to someone you love about something you deeply disagree on',
     outlet:'The Lily', outletUrl:'https://www.thelily.com/', role:'Written and illustrated by Elizabeth Beier · Art direction by Rachel Orr',
     dek:'A service comic, built as ten numbered steps, on having the conversation instead of avoiding it.' },
-  { dir:'weight', slug:'lily-weight',
+  { dir:'weight', slug:'lily-weight', date:'7 january 2019',
     title:'Weight, health, and appearance',
     outlet:'The Lily', outletUrl:'https://www.thelily.com/', role:'Written and illustrated by Elizabeth Beier · Art direction by Rachel Orr',
     dek:'On the contradictory noise about women’s bodies that gets loudest every January, and on drawing a quiet circle inside it.',
     note:'This piece is about diet culture and messages women receive about body size.' },
-  { dir:'scotus', slug:'lily-scotus',
+  { dir:'scotus', slug:'lily-scotus', date:'6 may 2019',
     title:'The Supreme Court will decide whether LGBT workers can be fired for who they are',
     outlet:'The Lily', outletUrl:'https://www.thelily.com/', role:'Written and illustrated by Elizabeth Beier · Art direction by Rachel Orr',
     dek:'An explainer on three employment discrimination cases, the state by state patchwork underneath them, and what the ruling could reach.' },
-  { dir:'sa', slug:'lily-openletter',
+  { dir:'sa', slug:'lily-openletter', date:'7 april 2019',
     title:'An open letter to anyone who is suffering after a rape',
     outlet:'The Lily', outletUrl:'https://www.thelily.com/', role:'Written and illustrated by Elizabeth Beier · Art direction by Rachel Orr',
     dek:'What helped, offered directly, from one survivor to another.',
     note:'This piece is written for survivors and is about recovering after a rape.',
     resource:'The comic closes with RAINN, which runs a 24 hour hotline at <a href="https://www.rainn.org/" target="_blank" rel="noopener">rainn.org</a>.' },
-  { dir:'hm', slug:'lily-goosebumps',
+  { dir:'hm', slug:'lily-goosebumps', date:'27 october 2019',
     title:'The Haunted Mask, and learning to love reading',
     outlet:'The Lily', outletUrl:'https://www.thelily.com/', role:'Written and illustrated by Elizabeth Beier · Art direction by Rachel Orr',
     dek:'On growing up inside R. L. Stine’s Goosebumps, and the one that stuck.' },
-  { dir:'safeprotest', slug:'lily-safeprotest',
+  { dir:'safeprotest', slug:'lily-safeprotest', date:'5 june 2020',
     title:'How to protest safely',
     outlet:'The Lily', outletUrl:'https://www.thelily.com/', role:'Written and illustrated by Elizabeth Beier · Art direction by Rachel Orr',
     dek:'A do’s and don’ts guide for the street: eyes, masks, water, heat, gas, phones, medics and your rights if detained.',
@@ -81,7 +81,7 @@ function page(st, panels) {
 <main id="main">
 <div class="wrap narrow case-hero">
 <a class="backlink" href="work-comics-journalism.html">← back to comics journalism</a>
-<span class="kicker">${esc(st.outlet.toLowerCase())} · ${panels.length} panels</span>
+<span class="kicker">${esc(st.outlet.toLowerCase())} · ${st.date} · ${panels.length} panels</span>
 <h1>${esc(st.title)}</h1>
 <p class="meta">${esc(st.role)}</p>
 <p class="oneline">${esc(st.dek)}</p>
